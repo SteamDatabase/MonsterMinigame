@@ -88,10 +88,57 @@ class CTowerAttackEnemy
 	optional double timer = 6;
 	optional double gold = 7;
 	*/
+	private $Id;
+	private $Type;
+	private $Hp;
+	private $MaxHp;
+	private $Dps;
+	private $Timer;
+	private $Gold;
 	
-	public function __construct()
+	public function __construct( $Id, ETowerAttackEnemyType $Type, $Hp, $MaxHp, $Dps, $Timer, $Gold )
 	{
-		
+		$this->Id = $Id;
+		$this->Type = $Type;
+		$this->MaxHp = $MaxHp;
+		$this->Dps = $Dps;
+		$this->Timer = $Timer;
+		$this->Gold = $Gold;
+	}
+
+	public function GetId()
+	{
+		return $this->Id;
+	}
+
+	public function GetType()
+	{
+		return $this->Id;
+	}
+
+	public function GetHp()
+	{
+		return $this->Type;
+	}
+
+	public function GetMaxHp()
+	{
+		return $this->MaxHp;
+	}
+
+	public function GetDps()
+	{
+		return $this->Dps;
+	}
+
+	public function GetTimer()
+	{
+		return $this->Timer;
+	}
+
+	public function GetGold()
+	{
+		return $this->Gold;
 	}
 }
 
