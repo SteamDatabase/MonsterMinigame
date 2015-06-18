@@ -7,21 +7,7 @@
 	
 	header( 'Content-type: application/json' );
 	
-	class EMiniGameStatus
-	{
-		const WaitingForPlayers = 1;
-		const Running = 2;
-		const Ended = 3;
-	}
-	
-	class EEnemyType
-	{
-		const Spawner = 0;
-		const Creep = 1;
-		const Boss = 2;
-		const MiniBoss = 3;
-		const Treasure = 4;
-	}
+	require __DIR__ . '/../../Enums.php';
 	
 	$Lane =
 	[
@@ -41,7 +27,7 @@
 		[
 			[
 				'id' => 2353793,
-				'type' => EEnemyType::Boss,
+				'type' => ETowerAttackEnemyType::Boss,
 				'hp' => 6851814772839,
 				'max_hp' => 6851814772839,
 				'dps' => 2805538,
