@@ -16,7 +16,7 @@ class CTowerAttackServer
 	public $TickRate;
 	private $LastTick;
 	private $Socket;
-	private $CurrentGame;
+	private $Games;
 	
 	public function __construct( $Port )
 	{
@@ -29,7 +29,14 @@ class CTowerAttackServer
 		
 		l( 'Listening on port ' . $Port );
 		
-		$this->CurrentGame = new CTowerAttackGame;
+		$Game = new CTowerAttackGame;
+		$this->Games[$Game->GetId()] = $Game;
+	}
+
+	private function SendResponse( $Peer, $Response )
+	{
+		$Response = json_encode( array( 'response' => $Response ) );
+		stream_socket_sendto ( $this->Socket , $Response, 0, $Peer );
 	}
 	
 	public function Listen( )
@@ -37,8 +44,36 @@ class CTowerAttackServer
 		while( true )
 		{
 			$Data = stream_socket_recvfrom( $this->Socket, 1500, 0, $Peer );
-			
+			$PeerArray = explode( ':', $Peer);
+			$PeerIp = $PeerArray[0];
+			$PeerPort = $PeerArray[1];
 			l( $Peer . ' - ' . $Data );
+
+			$Data = @json_decode($Data, TRUE);
+			if( ( $Data === null && json_last_error() !== JSON_ERROR_NONE ) || !array_key_exists( 'method', $Data ) ) {
+				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
+			    continue;
+			}
+			
+			#l( $Peer . ' - ' . $Data['method'] );
+
+			// Handle the request, this could be moved elsewhere...
+			switch ( $Data['method'] ) {
+				case 'GetGameData':
+					$GameId = $Data['gameid'];
+					$Game = $this->GetGame( $GameId );
+					$Response = NULL;
+					if( $Game !== NULL ) {
+						$Response = array(
+							'game_data' => $Game->ToArray(),
+							'stats' => array() //TODO
+						);
+					}
+					$this->SendResponse( $Peer, $Response );
+					break;
+				default:
+					break;
+			}
 			
 			$Tick = microtime( true );
 			
@@ -54,6 +89,16 @@ class CTowerAttackServer
 	private function Tick()
 	{
 		l( 'Ticking...' );
+	}
+
+	public function GetGames()
+	{
+		return $this->Games;
+	}
+
+	public function GetGame( $GameId )
+	{
+		return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
 	}
 }
 
@@ -95,9 +140,32 @@ class CTowerAttackLane
 		$this->ActivePlayerAbilityGoldPerClick = $ActivePlayerAbilityGoldPerClick;
 	}
 
+	public function ToArray()
+	{
+		return array(
+			'enemies' => $this->GetEnemiesArray(),
+			'dps' => $this->GetDps(),
+			'gold_dropped' => $this->GetGoldDropped(),
+			'active_player_abilities' => $this->GetActivePlayerAbilities(),
+			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
+			'element' => $this->GetElement(),
+			'active_player_ability_decrease_cooldowns' => $this->GetActivePlayerAbilityDecreaseCooldowns(),
+			'active_player_ability_gold_per_click' => $this->GetActivePlayerAbilityGoldPerClick()
+		);
+	}
+
 	public function GetEnemies()
 	{
 		return $this->Enemies;
+	}
+
+	public function GetEnemiesArray()
+	{
+		$EnemyArray = array();
+		foreach ( $this->GetEnemies() as $Enemy ){
+			$EnemyArray[] = $Enemy->ToArray();
+		}
+		return $EnemyArray;
 	}
 
 	public function GetDps()
@@ -208,6 +276,19 @@ class CTowerAttackEnemy
 		l( "Created new enemy [Id=$Id, Type=$Type, Hp=$Hp, MaxHp=$MaxHp, Dps=$Dps, Timer=$Timer, Gold=$Gold]" );
 	}
 
+	public function ToArray()
+	{
+		return array(
+			'Id' => $this->GetId(),
+			'Type' => $this->GetType(),
+			'Hp' => $this->GetHp(),
+			'MaxHp' => $this->GetMaxHp(),
+			'Dps' => $this->GetDps(),
+			'Timer' => $this->GetTimer(),
+			'Gold' => $this->GetGold()
+		);
+	}
+
 	public function GetId()
 	{
 		return $this->Id;
@@ -256,8 +337,9 @@ class CTowerAttackGame
 	optional uint32 timestamp_level_start = 7;
 	optional string universe_state = 8;
 	*/
-	
+
 	private $AbilityQueue;
+	private $GameId;
 	private $Level;
 	private $Lanes;
 	//private $Timestamp; - Use function instead?
@@ -282,11 +364,29 @@ class CTowerAttackGame
 	public function __construct()
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
+		$this->GameId = 1;
 		$this->SetLevel( 1 );
 		$this->GenerateNewLanes();
 		$this->SetStatus( EMiniGameStatus::Running );
 		$this->TimestampGameStart = time();
-		l( 'Created game' );
+		l( 'Created game #' . $this->GetId() );
+	}
+
+	public function ToArray()
+	{
+		return array(
+			'level' => $this->GetLevel(),
+			'lanes' => $this->GetLanesArray(),
+			'timestamp' => $this->GetTimestamp(),
+			'status' => $this->GetStatus(),
+			'timestamp_game_start' => $this->GetTimestampGameStart(),
+			'timestamp_level_start' => $this->GetTimestampLevelStart()
+		);
+	}
+
+	public function GetId()
+	{
+		return $this->GameId;
 	}
 
 	public function GetLevel()
@@ -336,6 +436,15 @@ class CTowerAttackGame
 	public function GetLanes()
 	{
 		return $this->Lanes;
+	}
+
+	public function GetLanesArray()
+	{
+		$LaneArray = array();
+		foreach ( $this->GetLanes() as $Lane ){
+			$LaneArray[] = $Lane->ToArray();
+		}
+		return $LaneArray;
 	}
 
 	public function GetTimestamp()
