@@ -1,0 +1,230 @@
+
+boss_volcano.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: true
+  xy: 334, 137
+  size: 117, 135
+  orig: 117, 135
+  offset: 0, 0
+  index: -1
+Face
+  rotate: false
+  xy: 175, 47
+  size: 105, 84
+  orig: 105, 84
+  offset: 0, 0
+  index: -1
+Hit Flash
+  rotate: false
+  xy: 2, 71
+  size: 171, 183
+  orig: 171, 183
+  offset: 0, 0
+  index: -1
+OOoooooh
+  rotate: true
+  xy: 165, 62
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: -1
+Steam Logo
+  rotate: false
+  xy: 471, 186
+  size: 32, 20
+  orig: 32, 20
+  offset: 0, 0
+  index: -1
+arm_low_l
+  rotate: false
+  xy: 301, 92
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_low_r
+  rotate: false
+  xy: 301, 92
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_up_l
+  rotate: false
+  xy: 301, 109
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_up_r
+  rotate: false
+  xy: 301, 109
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_wrist_l
+  rotate: false
+  xy: 471, 170
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+arm_wrist_r
+  rotate: false
+  xy: 315, 117
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+boss_volcano_chainmail
+  rotate: false
+  xy: 2, 29
+  size: 124, 40
+  orig: 124, 40
+  offset: 0, 0
+  index: -1
+boss_volcano_cloak01
+  rotate: true
+  xy: 471, 208
+  size: 46, 38
+  orig: 46, 38
+  offset: 0, 0
+  index: -1
+boss_volcano_cloak02
+  rotate: false
+  xy: 128, 37
+  size: 35, 32
+  orig: 35, 32
+  offset: 0, 0
+  index: -1
+boss_volcano_helmet
+  rotate: false
+  xy: 175, 133
+  size: 157, 121
+  orig: 157, 121
+  offset: 0, 0
+  index: -1
+eyes_default
+  rotate: true
+  xy: 291, 58
+  size: 73, 8
+  orig: 73, 8
+  offset: 0, 0
+  index: -1
+eyes_happy
+  rotate: false
+  xy: 2, 6
+  size: 73, 3
+  orig: 73, 3
+  offset: 0, 0
+  index: -1
+eyes_mad
+  rotate: true
+  xy: 282, 56
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_sad
+  rotate: false
+  xy: 2, 11
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_shut
+  rotate: false
+  xy: 334, 133
+  size: 75, 2
+  orig: 75, 2
+  offset: 0, 0
+  index: -1
+frown
+  rotate: false
+  xy: 282, 50
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+grin
+  rotate: false
+  xy: 291, 52
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+leg_ankle_l
+  rotate: false
+  xy: 128, 32
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_ankle_r
+  rotate: false
+  xy: 505, 203
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_low_l
+  rotate: true
+  xy: 31, 2
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_low_r
+  rotate: true
+  xy: 31, 2
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_up_l
+  rotate: true
+  xy: 2, 2
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+leg_up_r
+  rotate: true
+  xy: 2, 2
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+nothing
+  rotate: false
+  xy: 79, 17
+  size: 13, 1
+  orig: 13, 1
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 2, 20
+  size: 120, 7
+  orig: 120, 7
+  offset: 0, 0
+  index: -1
+smirk
+  rotate: false
+  xy: 52, 2
+  size: 14, 2
+  orig: 14, 2
+  offset: 0, 0
+  index: -1
+tiny_mouth
+  rotate: true
+  xy: 124, 24
+  size: 3, 1
+  orig: 3, 1
+  offset: 0, 0
+  index: -1

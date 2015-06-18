@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Steam Community :: Monster Summer Sale</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link href="/css/motiva_sans.css?v=F3z3QpekjE2f" rel="stylesheet" type="text/css" >
+	<link href="/css/buttons.css?v=4iAytERcUqWU" rel="stylesheet" type="text/css" >
+	<link href="/css/shared_global.css?v=XXN4vhirCNMy" rel="stylesheet" type="text/css" >
+	<link href="/css/globalv2.css?v=yWZ8QbCWv1se" rel="stylesheet" type="text/css" >
+	<link href="/css/towerattack.css?v=HtGNvP_dQ7Ik" rel="stylesheet" type="text/css" >
+	<script>
+		g_CacheKey = "01023cbf5f5c00ac11b4dabfc087fdda";
+	</script>
+	<script type="text/javascript" src="/javascript/prototype-1.7.js?v=.55t44gwuwgvw"></script>
+<script type="text/javascript" src="/javascript/scriptaculous/_combined.js?v=9XVsa_Ni33oN&amp;l=english&amp;load=effects,controls,slider,dragdrop"></script>
+<script type="text/javascript" src="/javascript/global.js?v=hCxPThA3-aeH&amp;l=english"></script>
+<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js?v=.isFTSRckeNhC"></script>
+<script type="text/javascript" src="/javascript/tooltip.js?v=.nCjeRtNcVhbG"></script>
+<script type="text/javascript" src="/javascript/shared_global.js?v=eDIuTMT_fnXg&amp;l=english"></script>
+<script type="text/javascript">$J = jQuery.noConflict();
+if ( typeof JSON != 'object' || !JSON.stringify || !JSON.parse ) { document.write( "<scr" + "ipt type=\"text\/javascript\" src=\"\/public\/javascript\/json2.js?v=pmScf4470EZP&amp;l=english\"><\/script>\n" ); };
+</script><script type="text/javascript" src="/javascript/pixi-3.0.2.js?v=.mejdSKrpRHsA"></script>
+		<script type="text/javascript" src="/javascript/pixi-spine-3.0.2.js?v=.GQmuKn3YrSnG"></script>
+		<script type="text/javascript" src="/javascript/pixi-particles-3.0.2.js?v=b2836170&amp;l=english"></script>
+		<script type="text/javascript" src="/javascript/protobuf/Long.min.js?v=.f8moAlzexR0x"></script>
+		<script type="text/javascript" src="/javascript/protobuf/ByteBufferAB.min.js?v=.22CPL1xu_KEH"></script>
+		<script type="text/javascript" src="/javascript/protobuf/ProtoBuf.js?v=.oLNKmPHVDd0t"></script>
+		<script type="text/javascript" src="/javascript/jquery-ajax-native.js?v=.tVg4PgQn0y2G"></script>
+		<script type="text/javascript" src="/javascript/minigame/minigame.js?v=0-6JLp6pJyHl&amp;l=english"></script>
+		<script type="text/javascript" src="/javascript/minigame/towerattack.js?v=oJIS22CYjGIR&amp;l=english"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
+	<script>
+		g_GameID = '44925';
+		g_TuningData = {"version":1434566220,"player":{"respawn_time":60,"min_dead_time":5,"hp":1000,"dps":0,"gold_multiplier_while_dead":"0.75","damage_per_click":10,"damage_multiplier_fire":1,"damage_multiplier_water":1,"damage_multiplier_air":1,"damage_multiplier_earth":1,"damage_multiplier_crit":2,"crit_percentage":"0.1","loot_chance":"0.25","start_condition_minigame_badge":{"badge_points_per_level_factor":"0.1"},"start_condition_summersale_badge":{"badge_points_per_level_factor":1},"start_condition_summersale_foil_badge":{"badge_points_per_level_factor":10}},"tower":{"respawn_time":30,"hp":60000,"dps":"1.25","gold":100,"hp_multiplier":"1.2","hp_exponent":"1.5","dps_multiplier":1,"dps_exponent":"1.2","gold_multiplier":"1.6","gold_exponent":"1.1"},"mob":{"hp":5000,"dps":1,"gold":30,"hp_multiplier":"1.2","hp_multiplier_variance":"0.2","hp_exponent":"1.5","dps_multiplier":1,"dps_exponent":"1.2","gold_multiplier":"1.2","gold_exponent":"1.02"},"miniboss":{"respawn_time":900,"hp":60000,"dps":"1.25","gold":100,"hp_multiplier":"1.2","hp_exponent":"1.5","dps_multiplier":1,"dps_exponent":"1.2","gold_multiplier":"1.7","gold_exponent":"1.1"},"boss":{"hp":260000,"dps":3,"gold":500,"hp_multiplier":"1.5","hp_exponent":3,"dps_multiplier":1,"dps_exponent":"1.2","gold_multiplier":"1.9","gold_exponent":"1.25"},"treasure_mob":{"hp":60000,"dps":1,"gold":200,"hp_multiplier":"1.2","hp_exponent":"1.5","dps_exponent":"1.2","lifetime":10,"chance":"0.01","gold_multiplier":"1.7","gold_exponent":"1.1"},"abilities":{"1":{"name":"Fire Weapon","max_num_clicks":20},"2":{"name":"Change Lane","cost":0},"3":{"name":"Respawn","cost":0},"4":{"name":"Change Target","cost":0},"5":{"name":"Morale Booster","multiplier":"0.2","cost":0,"duration":10,"cooldown":1800,"desc":"Increases all damage done by players in the current lane"},"6":{"name":"Good Luck Charms","multiplier":"0.1","cost":0,"duration":15,"cooldown":1800,"desc":"Increases chance to do critical click damage for players in the current lane"},"7":{"name":"Medics","multiplier":"0.1","cost":0,"duration":5,"cooldown":300,"desc":"Slowly heals everyone in the current lane that is still alive"},"8":{"name":"Metal Detector","multiplier":"0.1","cost":0,"duration":20,"cooldown":3600,"desc":"Increases gold dropped by enemies in the current lane"},"9":{"name":"Decrease Cooldowns","multiplier":"0.25","cost":0,"duration":15,"cooldown":3600,"desc":"While active, decreases cooldowns for any newly activated ability in the current lane (does not stack)."},"10":{"name":"Tactical Nuke","multiplier":"0.5","multiplier_boss":"0.2","cost":0,"instant":1,"duration":5,"cooldown":3600,"desc":"Launches a tactical nuclear missile that does high damage to your current target."},"11":{"name":"Cluster Bomb","multiplier":"0.20","cost":0,"instant":1,"duration":5,"cooldown":3600,"desc":"Drops a cluster bomb, damaging all enemies in your lane."},"12":{"name":"Napalm","multiplier":"0.05","cost":0,"duration":10,"cooldown":3600,"desc":"Drops napalm, inflicting damage on all enemies in your lane over time."},"13":{"name":"Resurrection","multiplier":1,"badge_points_cost":10,"instant":1,"duration":5,"cooldown":30,"desc":"Resurrects dead players in your lane and restores them to 100% health."},"14":{"name":"Cripple Spawner","multiplier":1,"badge_points_cost":10,"instant":1,"duration":5,"cooldown":60,"desc":"Damages a spawner down to 1 HP."},"15":{"name":"Cripple Monster","multiplier":"0.05","badge_points_cost":5,"instant":1,"duration":5,"cooldown":60,"desc":"Reduces player's current target to 1 HP for normal monsters or up to 5% max health for a boss monster."},"16":{"name":"Max Elemental Damage","multiplier":1,"badge_points_cost":10,"duration":5,"cooldown":60,"desc":"All players in your lane apply their highest elemental damage multiplier, regardless of the monster's elemental weakness."},"17":{"name":"Raining Gold","multiplier":"0.01","badge_points_cost":10,"duration":10,"cooldown":30,"desc":"All players in your lane will receive 1% of their target's gold per click while this is active."},"18":{"name":"Crit","multiplier":"0.01","badge_points_cost":10,"instant":1,"duration":5,"cooldown":60,"desc":"Permanently increases your chance to do critical click damage by 1% and automatically deploys Good Luck Charms for free."},"19":{"name":"Pumped Up","multiplier":"0.1","badge_points_cost":1,"instant":1,"duration":5,"cooldown":10,"desc":"Permanently increases your max health and automatically deploys Medics in your lane for free."},"20":{"name":"Throw Money At Screen","multiplier":"0.1","badge_points_cost":10,"duration":5,"cooldown":10,"desc":"Spend 10% of your gold and damage your current target by up to 10% of their max health."},"21":{"name":"GOD MODE","multiplier":1,"badge_points_cost":1,"duration":5,"cooldown":5,"desc":"Temporarily take no damage."},"22":{"name":"Treasure!","multiplier":100000,"badge_points_cost":2,"instant":1,"duration":0,"cooldown":5,"desc":"Gives you a base 100k of gold and automatically deploys Metal Detector in your lane for free.<br><br>More gold will be given based on the level you are on when this item is used."},"23":{"name":"Steal Health","multiplier":"0.1","badge_points_cost":5,"duration":10,"cooldown":10,"desc":"Replenishes the health of all players in your lane based on the click damage they do to their target."},"24":{"name":"Reflect Damage","multiplier":"0.5","badge_points_cost":5,"duration":10,"cooldown":30,"desc":"Monsters take damage based on how much damage they deal out."},"25":{"name":"Feeling Lucky","multiplier":1,"badge_points_cost":200,"instant":1,"duration":10,"cooldown":1800,"start_of_game_cooldown":0,"desc":"Grant every alive player in your lane one random special item.<br><br>This item can only be acquired by spending badge points."},"26":{"name":"Wormhole","multiplier":1,"gold_multiplier":50000,"badge_points_cost":100,"instant":1,"duration":10,"cooldown":60,"start_of_game_cooldown":0,"desc":"Skip a level with each use (stackable) after the current level has been cleared, and grants 50k of gold to every player. Enemies will not drop gold or loot for any skipped levels.<br><br>When used on every 100th level, will skip 10 levels with each use and grant the appropriate amount of gold.<br><br>You must defeat a boss level after using Wormhole in order to level up your Monster Summer Badge.<br><br>This item can only be acquired by spending badge points."},"27":{"name":"Like New","multiplier":1,"badge_points_cost":100,"duration":5,"cooldown":1,"start_of_game_cooldown":0,"desc":"While active, clears the cooldown on every ability for all players in your lane.<br><br>This item can only be acquired by spending badge points."}},"upgrades":{"0":{"name":"Light Armor","multiplier":"1.3","type":0,"cost":100,"cost_exponential_base":"2.5","desc":"Increases your health (HP)"},"1":{"name":"Auto-fire Cannon","initial_value":10,"multiplier":1,"type":1,"cost":150,"cost_exponential_base":"1.3","desc":"Inflicts damage on your target every second"},"2":{"name":"Armor Piercing Round","multiplier":1,"type":2,"cost":200,"cost_exponential_base":"1.2","desc":"Increases your click damage"},"3":{"name":"+Damage to Fire Monsters","multiplier":"1.5","type":3,"cost":50,"cost_exponential_base":"2.2","desc":"Do additional damage to Fire Monsters"},"4":{"name":"+Damage to Water Monsters","multiplier":"1.5","type":4,"cost":50,"cost_exponential_base":"2.2","desc":"Do additional damage to Water Monsters"},"5":{"name":"+Damage to Air Monsters","multiplier":"1.5","type":5,"cost":50,"cost_exponential_base":"2.2","desc":"Do additional damage to Air Monsters"},"6":{"name":"+Damage to Earth Monsters","multiplier":"1.5","type":6,"cost":50,"cost_exponential_base":"2.2","desc":"Do additional damage to Earth Monsters"},"7":{"name":"Lucky Shot","multiplier":"1.5","type":7,"cost":50,"cost_exponential_base":"2.5","required_upgrade":2,"required_upgrade_level":5,"desc":"Increase your critical hit click damage"},"8":{"name":"Heavy Armor","multiplier":10,"type":0,"cost":10000,"cost_exponential_base":"2.2","required_upgrade":0,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"9":{"name":"Advanced Targeting","multiplier":10,"type":1,"cost":10000,"cost_exponential_base":"2.2","required_upgrade":1,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"10":{"name":"Explosive Rounds","multiplier":10,"type":2,"cost":10000,"cost_exponential_base":"2.2","required_upgrade":2,"required_upgrade_level":10,"desc":"Increases your click damage"},"11":{"name":"Medics","type":8,"cost":5000,"cost_exponential_base":"2.2","required_upgrade":0,"ability":7,"desc":"Slowly heals everyone in the current lane that is still alive"},"12":{"name":"Morale Booster","type":8,"cost":10000000,"cost_exponential_base":"2.2","required_upgrade":1,"required_upgrade_level":20,"ability":5,"desc":"Increases all damage done by players in the current lane"},"13":{"name":"Good Luck Charms","type":8,"cost":1000000,"cost_exponential_base":"2.2","required_upgrade":2,"required_upgrade_level":5,"ability":6,"desc":"Increases chance to do critical click damage for players in the current lane"},"14":{"name":"Metal Detector","type":8,"cost":10000000,"cost_exponential_base":"2.2","ability":8,"desc":"Increases gold dropped by enemies in the current lane"},"15":{"name":"Decrease Cooldowns","type":8,"cost":10000000,"cost_exponential_base":"2.2","ability":9,"desc":"While active, decreases cooldowns for any newly activated ability in the current lane (does not stack)."},"16":{"name":"Tactical Nuke","type":8,"cost":100000,"cost_exponential_base":5,"required_upgrade":2,"required_upgrade_level":10,"ability":10,"desc":"Launches a tactical nuclear missile that does high damage to your current target."},"17":{"name":"Cluster Bomb","type":8,"cost":1000000,"cost_exponential_base":"2.2","ability":11,"required_upgrade":1,"required_upgrade_level":10,"desc":"Drops a cluster bomb, damaging all enemies in your lane."},"18":{"name":"Napalm","type":8,"cost":2000000,"cost_exponential_base":"2.2","ability":12,"required_upgrade":1,"required_upgrade_level":10,"desc":"Drops napalm, inflicting damage on all enemies in your lane over time."},"19":{"name":"Boss Loot","multiplier":"0.01","type":9,"cost":100000,"cost_exponential_base":"2.2","required_upgrade":1,"required_upgrade_level":10,"desc":"Increase your chance to get loot after defeating a boss"},"20":{"name":"Energy Shields","multiplier":100,"type":0,"cost":100000,"cost_exponential_base":"2.2","required_upgrade":8,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"21":{"name":"Farming Equipment","multiplier":100,"type":1,"cost":100000,"cost_exponential_base":"2.2","required_upgrade":9,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"22":{"name":"Railgun","multiplier":100,"type":2,"cost":100000,"cost_exponential_base":"2.2","required_upgrade":10,"required_upgrade_level":10,"desc":"Increases your click damage"},"23":{"name":"Personal Training","multiplier":1000,"type":0,"cost":1000000,"cost_exponential_base":"2.2","required_upgrade":20,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"24":{"name":"AFK Equipment","multiplier":1000,"type":1,"cost":1000000,"cost_exponential_base":"2.2","required_upgrade":21,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"25":{"name":"New Mouse Button","multiplier":1000,"type":2,"cost":1000000,"cost_exponential_base":"2.2","required_upgrade":22,"required_upgrade_level":10,"desc":"Increases your click damage"},"26":{"name":"Cybernetic Enhancements","multiplier":10000,"type":0,"cost":"10000000.0","cost_exponential_base":"2.2","required_upgrade":23,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"27":{"name":"Level 1 Sentry Gun","multiplier":10000,"type":1,"cost":"10000000.0","cost_exponential_base":"2.2","required_upgrade":24,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"28":{"name":"Titanium Mouse Button","multiplier":10000,"type":2,"cost":"10000000.0","cost_exponential_base":"2.2","required_upgrade":25,"required_upgrade_level":10,"desc":"Increases your click damage"},"29":{"name":"Exoskeleton","multiplier":100000,"type":0,"cost":"100000000.0","cost_exponential_base":"2.2","required_upgrade":26,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"30":{"name":"Level 2 Sentry Gun","multiplier":100000,"type":1,"cost":"100000000.0","cost_exponential_base":"2.2","required_upgrade":27,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"31":{"name":"Double-Barrelled Mouse","multiplier":100000,"type":2,"cost":"100000000.0","cost_exponential_base":"2.2","required_upgrade":28,"required_upgrade_level":10,"desc":"Increases your click damage"},"32":{"name":"Yoga Training","multiplier":1000000,"type":0,"cost":"1000000000.0","cost_exponential_base":"2.2","required_upgrade":29,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"33":{"name":"Level 3 Sentry Gun","multiplier":1000000,"type":1,"cost":"1000000000.0","cost_exponential_base":"2.2","required_upgrade":30,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"34":{"name":"Bionic Finger","multiplier":1000000,"type":2,"cost":"1000000000.0","cost_exponential_base":"2.2","required_upgrade":31,"required_upgrade_level":10,"desc":"Increases your click damage"},"35":{"name":"Protein Shakes","multiplier":10000000,"type":0,"cost":"10000000000.0","cost_exponential_base":"2.2","required_upgrade":32,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"36":{"name":"Level 1 Drones","multiplier":10000000,"type":1,"cost":"10000000000.0","cost_exponential_base":"2.2","required_upgrade":33,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"37":{"name":"Two Bionic Fingers","multiplier":10000000,"type":2,"cost":"10000000000.0","cost_exponential_base":"2.2","required_upgrade":34,"required_upgrade_level":10,"desc":"Increases your click damage"},"38":{"name":"Martial Arts Training","multiplier":100000000,"type":0,"cost":"100000000000.0","cost_exponential_base":"2.2","required_upgrade":35,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"39":{"name":"Level 2 Drones","multiplier":100000000,"type":1,"cost":"100000000000.0","cost_exponential_base":"2.2","required_upgrade":36,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"40":{"name":"Bionic Hand","multiplier":100000000,"type":2,"cost":"100000000000.0","cost_exponential_base":"2.2","required_upgrade":37,"required_upgrade_level":10,"desc":"Increases your click damage"},"41":{"name":"Seriously? Another HP Upgrade","multiplier":1000000000,"type":0,"cost":"1000000000000.0","cost_exponential_base":"2.2","required_upgrade":38,"required_upgrade_level":10,"desc":"Increases your health (HP)"},"42":{"name":"Level 3 Drones","multiplier":1000000000,"type":1,"cost":"1000000000000.0","cost_exponential_base":"2.2","required_upgrade":39,"required_upgrade_level":10,"desc":"Increases the damage inflicted by your Auto-fire Cannon"},"43":{"name":"Bionic Arm","multiplier":1000000000,"type":2,"cost":"1000000000000.0","cost_exponential_base":"2.2","required_upgrade":40,"required_upgrade_level":10,"desc":"Increases your click damage"}}};
+		g_DebugMode = 0;
+		g_IncludeGameStats = g_DebugMode;
+
+		
+		function CheckTuningDataVersion()
+		{
+			$J.ajax({
+				url: 'http://steamcommunity.com/minigame/ajaxgettuningdataversion/'
+			}).success(function(json){
+				if ( json.version > g_TuningData['version'] )
+				{
+					top.location.reload();
+				}
+			} );
+		}
+
+		$J( document ).ready(function() {
+			WebFont.load({
+				google: {
+					families: ['Press Start 2P']
+				},
+				active: Boot
+			});
+
+			setInterval( function() { CheckTuningDataVersion(); }, 1000 * 60 * 30 );
+
+					});
+
+		function RespawnPlayer()
+		{
+			g_Minigame.CurrentScene().m_rgAbilityQueue.push({
+				'ability': k_ETowerAttackAbility_Respawn
+			});
+		}
+
+		function LeaveGame()
+		{
+			$J.post(
+				'http://steamcommunity.com/minigame/ajaxleavegame/',
+				{ 'gameid' : '44925', 'sessionid' : g_sessionID }
+			);
+		}
+
+		
+	</script>
+
+</head>
+
+<body class="flat_page game " lang="en" style="background-position: 0px 0px;">
+<!-- header bar, contains info browsing user if logged in -->
+
+<div id="modalBG" style="display: none"></div><script type="text/javascript">
+	g_sessionID = "a";
+	g_steamID = "76561197990586091";
+	$J( InitMiniprofileHovers );
+	$J( InitEmoticonHovers );
+
+	$J( function() {
+		window.BindCommunityTooltip = function( $Selector ) { $Selector.v_tooltip( {'tooltipClass': 'community_tooltip', 'dataName': 'communityTooltip' } ); };
+		BindCommunityTooltip( $J('[data-community-tooltip]') );
+	})
+
+	$J( function() { InitEconomyHovers( "http:\/\/steamcommunity-a.akamaihd.net\/public\/css\/skin_1\/economy.css?v=KhJxplnpbd14", "http:\/\/steamcommunity-a.akamaihd.net\/public\/javascript\/economy_common.js?v=1LohOdoSLPYI&l=english", "http:\/\/steamcommunity-a.akamaihd.net\/public\/javascript\/economy.js?v=9M-IA08ygFnH&l=english" );});</script><!-- /header bar -->
+<div class="pagecontent auction_home_page">
+<div class="breadcrumbs">
+	<a href="http://store.steampowered.com/">Summer Sale</a> &gt; <a href="http://steamcommunity.com/minigame/">Summer Game Info</a> &gt; Monster Game</div>
+	<div id="gamecontainer">
+		<div id="uicontainer">
+			<div class="tv_ui"></div>
+			<div class="scanlines"></div>
+
+			<div id="col_left">
+
+				<div class="gold_count">
+					<img src="http://cdn.steamcommunity.com/economy/emoticon/:coinz:">
+					<div id="info_gold"></div>
+					<br clear="both">
+				</div>
+
+
+				<div id="upgrades">
+					<div id="upgradescontainer">
+						<div>
+							<span class="title_upgrates">Upgrades</span>
+							<div class="container_upgrades"></div>
+							<span class="title_upgrates abilities">Abilities</span>
+							<div class="container_purchase"></div>
+
+						</div>
+					</div><div id="upgradesscroll">
+						<div></div>
+					</div>
+
+				</div>
+
+				<div id="elements">
+					<span class="title_elements">Elemental Damage</span>
+					<div class="element_cost">Next Level Cost:<span class="cost" id="element_cost">00,000</span></div>
+					<div class="upgrades">
+						<div class="element_upgrade" id="upgr_3">
+							<img src="http://cdn.steamcommunity.com/economy/emoticon/:shelterwildfire:">
+							<span class="level">0</span>
+							<br>
+							<a class="link element_upgrade_btn" data-type="3" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+						</div>
+						<div class="element_upgrade"  id="upgr_4">
+							<img src="http://cdn.steamcommunity.com/economy/emoticon/:waterrune:">
+							<span class="level">0</span>
+							<br>
+							<a class="link element_upgrade_btn" data-type="4" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+						</div>
+						<div class="element_upgrade" id="upgr_6">
+							<img src="http://cdn.steamcommunity.com/economy/emoticon/:FateTree:">
+							<span class="level">0</span>
+							<br>
+							<a class="link element_upgrade_btn" data-type="6" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+						</div>
+						<div class="element_upgrade" id="upgr_5">
+							<img src="http://cdn.steamcommunity.com/economy/emoticon/:Wisp:">
+							<span class="level">0</span>
+							<br>
+							<a class="link element_upgrade_btn" data-type="5" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+
+			<div id="col_right">
+				<div class="lanes desert">
+					<a id="lane0" class="lane active" onclick="g_Minigame.CurrentScene().TryChangeLane( 0 )">
+						<span class="label">Lane 1</span>
+						<div class="bar"><div></div></div>
+						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
+						--><div class="lane_enemy enemy_icon_2" id="lane0_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src=""></div><!--
+						--><div class="lane_enemy enemy_icon_4" id="lane0_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src=""></div>
+					</a><a id="lane1" class="lane middle"  onclick="g_Minigame.CurrentScene().TryChangeLane( 1 )">
+						<span class="label">Lane 2</span>
+						<div class="bar"><div></div></div>
+						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
+						--><div class="lane_enemy enemy_icon_2" id="lane1_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src=""></div><!--
+						--><div class="lane_enemy enemy_icon_4" id="lane1_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="" ></div>
+					</a><a id="lane2" class="lane"  onclick="g_Minigame.CurrentScene().TryChangeLane( 2 )">
+						<span class="label">Lane 3</span>
+						<div class="bar"><div></div></div>
+						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
+						--><div class="lane_enemy enemy_icon_2" id="lane2_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="" ></div><!--
+						--><div class="lane_enemy enemy_icon_4" id="lane2_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src=""></div>
+					</a>
+				</div>
+				<div class="teamdpscontainer">
+					<span class="title_teamdps">Team DPS</span>
+					<div id="teamdps"></div>
+				</div><div  class="teamhealthcontainer">
+					<span class="title_teamhealth">Team Health</span>
+					<div>
+						<div class="teamhealth" id="teamhealth_0"><div></div></div><div class="teamhealth" id="teamhealth_1"><div></div></div><div class="teamhealth" id="teamhealth_2"><div></div></div><div class="teamhealth" id="teamhealth_3"><div></div></div><div class="teamhealth" id="teamhealth_4"><div></div></div><div class="teamhealth" id="teamhealth_5"><div></div></div><div class="teamhealth" id="teamhealth_6"><div></div></div><div class="teamhealth" id="teamhealth_7"><div></div></div><div class="teamhealth" id="teamhealth_8"><div></div></div><div class="teamhealth" id="teamhealth_9"><div></div></div>					</div>
+				</div>
+
+				<div id="activeinlanecontainer">
+					<span class="title_active">Abilities active in lane</span>
+
+				</div>
+
+				<div id="activitylog">
+					<span class="title_activity"><span id="players_in_lane"></span>&nbsp;Players in lane</span>
+					<div id="activitycontainer">
+						<div>
+
+						</div>
+					</div><div id="activityscroll">
+						<div></div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<div id="row_top">
+				<div id="level_container">
+					<div class="game_time">
+						Game Time<br>
+						<span id="game_time"></span>
+					</div>
+
+					<div class="level_container2">
+						Level						<div id="level"></div>
+					</div>
+
+					<div class="level_time">
+						Level Time<br>
+						<span id="level_time"></span>
+					</div>
+
+				</div>
+			</div>
+
+			<div id="waiting_for_players_dialog" style="display: none">
+				<div class="waiting_for_players_ctn">
+					<div class="title_waiting">Waiting for more players to join the game</div>
+					<div class="num_players_waiting_info">
+						<div class="num_players_waiting_bar">
+							<div></div>
+						</div>
+						<span id="num_players_waiting"></span> / <span>1,000</span>
+					</div>
+				</div>
+			</div>
+
+			<div id="player_dead_dialog" style="display: none">
+				<div class="player_dead_ctn">
+					<div class="title_dead">You are dead</div>
+					<div class="title_dead_break">Time for a break?<br>Check out <a href="http://store.steampowered.com/">today's deals</a> in the Steam Store</div>
+					<div class="title_dead_sub">Don't worry, you'll still be in this game helping to take down the Summer Sale Monsters and earning in-game gold and items.</div>
+					<div class="cannot_respawn">
+						Can respawn in: 						<span class="timeleft"></span>
+					</div>
+					<span class="btn_respawn" id="player_respawn_btn" onclick="RespawnPlayer();">
+						<span>Respawn Now</span>
+					</span>
+					<div class="automatically_respawn">
+						You will respawn<br>automatically in: 						<span class="timeleft"></span>
+					</div>
+					<div style="clear: left"></div>
+				</div>
+			</div>
+
+			<div id="spend_badge_points_dialog" style="display: none">
+				<div class="spend_badge_ponts_border">
+					<div class="spend_badge_ponts_ctn">
+						<div class="welcome_back">Welcome Back!</div>
+						<div class="desc">You have badge points from defeating boss levels in your previous games, as well as leveling up your Summer Sale badge and Monster Game badge. You can use badge points to purchase one-time use special items below.</div>
+						<div class="badge_points"><span id="num_badge_points"></span>&nbsp;Badge Points available</div>
+						<div id="badge_items"></div>
+					</div>
+				</div>
+			</div>
+
+			<div id="loot_notification" style="display: none">
+				<span>Loot dropped: </span><br><span id="loot_name"></span>
+			</div>
+
+			<div class="player_ctn">
+				<div class="player">
+					<div id="avatar_container">
+						<img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/3f/3f668d1d04b995681cd24dab06fee5927b36330f.jpg">
+					</div>
+					<div id="info_block">
+						<div id="info_hp"></div>
+						<div class="bar" id="health_bar">
+							<div></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="row_bottom">
+
+				<div id="abilities">
+
+					<div id="abilitiescontainer">
+					</div>
+				</div>
+
+			</div>
+
+			<div id="newplayer">
+				Click monsters to attack
+			</div>
+
+			<div id="nextlevel">
+				Level <span class="level"></span>!			</div>
+
+
+		</div>
+	</div>
+
+	<div style="display: none">
+		<!-- Templates -->
+
+		<div id="purchase_ability_item_template" class="purchase_ability_item ta_tip" data-tooltip-func="fnTooltipAbilityDesc">
+			<img src="http://steamcommunity-a.akamaihd.net/economy/image/U8721VM9p9C2v1o6cKJ4qEnGqnE7IoTQgZI-VTdwyTBeimAcIoxXpgK8bPeslY9pPJIvB5IWW2-452kaM8heLSRgleGApbVLxu94aKEhhOf-Xlwg67VEUGDrGxKGgTfGe-mtnAQzZcJ9J0vzxZwX6thWXZ9jVuJq3M2thA">
+			<span class="nameblock">
+				<span class="name"></span>
+				<span class="cost"></span>
+			</span>
+			<div class="sub_item">
+				x10
+			</div>
+		</div>
+
+		<div id="upgradetemplate">
+
+			<div class="upgrade" >
+				<div class="info">
+					<div class="name"></div>
+					<div class="level"></div>
+					<div class="subcontainer">
+
+					</div>
+				</div>
+
+				<a class="link" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
+					<span>
+						<span class="upgrade_text">Upgrade</span>
+						<div class="cost"></div>
+					</span>
+
+				</a>
+			</div>
+		</div>
+
+		<div id="purchasetemplate">
+
+			<div class="upgrade purchase" >
+				<div class="info">
+					<div>
+						<img class="icon">
+						<span class="name"></span>
+					</div>
+					<div class="level"></div>
+					<div class="subcontainer">
+
+					</div>
+				</div>
+
+				<a class="link" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
+					<span>
+						<div class="cost"></div>
+					</span>
+
+				</a>
+			</div>
+		</div>
+
+		<div id="abilitytemplate" class="abilitytemplate">
+			<a class="link ta_tip" href="#" onclick="g_Minigame.CurrentScene().TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
+				<img src="http://steamcommunity-a.akamaihd.net/economy/image/U8721VM9p9C2v1o6cKJ4qEnGqnE7IoTQgZI-VTdwyTBeimAcIoxXpgK8bPeslY9pPJIvB5IWW2-452kaM8heLSRgleGApbVLxu94aKEhhOf-Xlwg67VEUGDrGxKGgTfGe-mtnAQzZcJ9J0vzxZwX6thWXZ9jVuJq3M2thA">
+				<div class="timeleft"></div>
+			</a>
+		</div>
+
+		<div id="abilityitemtemplate" class="abilitytemplate">
+			<a class="link ta_tip" href="#" onclick="g_Minigame.CurrentScene().TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
+				<img src="http://steamcommunity-a.akamaihd.net/economy/image/U8721VM9p9C2v1o6cKJ4qEnGqnE7IoTQgZI-VTdwyTBeimAcIoxXpgK8bPeslY9pPJIvB5IWW2-452kaM8heLSRgleGApbVLxu94aKEhhOf-Xlwg67VEUGDrGxKGgTfGe-mtnAQzZcJ9J0vzxZwX6thWXZ9jVuJq3M2thA">
+				<div class="timeleft abilityitem"></div>
+				<div class="abilityitemquantity"></div>
+			</a>
+		</div>
+
+		<div id="activitytemplate" class="activitytemplate" data-tooltip-func="fnTooltipAbilityDesc">
+			<span class="icon"><img></span>
+			<span class="ability_text">
+				<span class="name"></span> used <span class="ability"></span>
+			</span>
+		</div>
+
+		<div id="activeinlanetemplate" class="activeinlanetemplate" data-tooltip-func="fnTooltipAbilityDesc">
+			<div class="icon">
+				<img src="http://steamcommunity-a.akamaihd.net/economy/image/U8721VM9p9C2v1o6cKJ4qEnGqnE7IoTQgZI-VTdwyTBeimAcIoxXpgK8bPeslY9pPJIvB5IWW2-452kaM8heLSRgleGHorVWw-luaaAo07P5C1oh7rZHAWPnHEfW1GXEeeaslwU0MJIvJxmrk8wf6cAXB9aWXInY0w">
+				<div class="quantity"></div>
+			</div>
+
+		</div>
+
+		<div id="healthbartemplate" class="healthbartemplate">
+			<div>
+				<div class="name_wrapper">
+					<div class="name"></div>
+				</div>
+				<div class="barwrapper">
+					<div class="bar"><div></div></div>
+					<div class="text"></div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="game_options">
+
+		<span onclick="ToggleSound()" class="toggle_sfx_btn">
+			<span>Toggle SFX</span>
+		</span>
+
+		<span onclick="g_AudioManager.ToggleMusic()" class="toggle_music_btn">
+			<span>Toggle Music</span>
+		</span>
+
+		<a href="http://steamcommunity.com/minigame/" class="leave_game_btn">
+			<span>Close<br>Game</span>
+		</a>
+
+		<br clear="both">
+
+		<div class="leave_game_helper">You can safely close the game or leave this screen at any time—you will continue collecting gold and damaging monsters even while away from your computer. Check back occasionally to see how you're doing and use in-game gold to purchase upgrades.</div>
+
+	</div>
+
+
+</div>
+
+	</body>
+</html>
+

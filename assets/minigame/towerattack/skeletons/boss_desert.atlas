@@ -1,0 +1,265 @@
+
+boss_desert.png
+size: 512,256
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Body
+  rotate: false
+  xy: 298, 119
+  size: 117, 135
+  orig: 117, 135
+  offset: 0, 0
+  index: -1
+Face
+  rotate: true
+  xy: 175, 2
+  size: 105, 84
+  orig: 105, 84
+  offset: 0, 0
+  index: -1
+Hit Flash
+  rotate: false
+  xy: 2, 71
+  size: 171, 183
+  orig: 171, 183
+  offset: 0, 0
+  index: -1
+OOoooooh
+  rotate: false
+  xy: 499, 246
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: -1
+Steam Logo
+  rotate: false
+  xy: 417, 141
+  size: 32, 20
+  orig: 32, 20
+  offset: 0, 0
+  index: -1
+arm_low_l
+  rotate: false
+  xy: 274, 39
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_low_r
+  rotate: false
+  xy: 274, 39
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_up_l
+  rotate: false
+  xy: 274, 56
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_up_r
+  rotate: false
+  xy: 274, 56
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_wrist_l
+  rotate: false
+  xy: 138, 45
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+arm_wrist_r
+  rotate: true
+  xy: 159, 40
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+boss_desert_bone01
+  rotate: false
+  xy: 121, 37
+  size: 15, 22
+  orig: 15, 22
+  offset: 0, 0
+  index: -1
+boss_desert_bone02
+  rotate: false
+  xy: 417, 121
+  size: 23, 18
+  orig: 23, 18
+  offset: 0, 0
+  index: -1
+boss_desert_bone03
+  rotate: true
+  xy: 451, 142
+  size: 19, 21
+  orig: 19, 21
+  offset: 0, 0
+  index: -1
+boss_desert_exhaust_l
+  rotate: false
+  xy: 417, 163
+  size: 66, 91
+  orig: 66, 91
+  offset: 0, 0
+  index: -1
+boss_desert_exhaust_r
+  rotate: true
+  xy: 2, 3
+  size: 66, 91
+  orig: 66, 91
+  offset: 0, 0
+  index: -1
+boss_desert_grill
+  rotate: false
+  xy: 175, 109
+  size: 121, 145
+  orig: 121, 145
+  offset: 0, 0
+  index: -1
+boss_desert_hair
+  rotate: false
+  xy: 95, 34
+  size: 24, 25
+  orig: 24, 25
+  offset: 0, 0
+  index: -1
+boss_desert_skull01
+  rotate: false
+  xy: 274, 80
+  size: 19, 27
+  orig: 19, 27
+  offset: 0, 0
+  index: -1
+boss_desert_skull02
+  rotate: false
+  xy: 95, 2
+  size: 19, 30
+  orig: 19, 30
+  offset: 0, 0
+  index: -1
+eyes_default
+  rotate: false
+  xy: 95, 61
+  size: 73, 8
+  orig: 73, 8
+  offset: 0, 0
+  index: -1
+eyes_happy
+  rotate: true
+  xy: 494, 181
+  size: 73, 3
+  orig: 73, 3
+  offset: 0, 0
+  index: -1
+eyes_mad
+  rotate: true
+  xy: 261, 32
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_sad
+  rotate: true
+  xy: 485, 179
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_shut
+  rotate: true
+  xy: 270, 32
+  size: 75, 2
+  orig: 75, 2
+  offset: 0, 0
+  index: -1
+frown
+  rotate: false
+  xy: 442, 135
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+grin
+  rotate: false
+  xy: 451, 136
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+leg_ankle_l
+  rotate: true
+  xy: 170, 65
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_ankle_r
+  rotate: false
+  xy: 474, 158
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_low_l
+  rotate: true
+  xy: 138, 41
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_low_r
+  rotate: true
+  xy: 138, 41
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_up_l
+  rotate: false
+  xy: 261, 3
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+leg_up_r
+  rotate: false
+  xy: 261, 3
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+nothing
+  rotate: true
+  xy: 116, 19
+  size: 13, 1
+  orig: 13, 1
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 298, 110
+  size: 120, 7
+  orig: 120, 7
+  offset: 0, 0
+  index: -1
+smirk
+  rotate: true
+  xy: 485, 163
+  size: 14, 2
+  orig: 14, 2
+  offset: 0, 0
+  index: -1
+tiny_mouth
+  rotate: false
+  xy: 170, 62
+  size: 3, 1
+  orig: 3, 1
+  offset: 0, 0
+  index: -1

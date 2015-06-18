@@ -1,0 +1,244 @@
+
+boss_city_day.png
+size: 740,188
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Body
+  rotate: false
+  xy: 495, 51
+  size: 117, 135
+  orig: 117, 135
+  offset: 0, 0
+  index: -1
+Face
+  rotate: false
+  xy: 620, 69
+  size: 105, 84
+  orig: 105, 84
+  offset: 0, 0
+  index: -1
+Hit Flash
+  rotate: false
+  xy: 248, 3
+  size: 171, 183
+  orig: 171, 183
+  offset: 0, 0
+  index: -1
+OOoooooh
+  rotate: false
+  xy: 620, 4
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: -1
+Steam Logo
+  rotate: true
+  xy: 545, 13
+  size: 32, 20
+  orig: 32, 20
+  offset: 0, 0
+  index: -1
+arm_low_l
+  rotate: true
+  xy: 572, 37
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_low_r
+  rotate: true
+  xy: 572, 37
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_up_l
+  rotate: false
+  xy: 567, 13
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_up_r
+  rotate: false
+  xy: 567, 13
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_wrist_l
+  rotate: true
+  xy: 581, 16
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+arm_wrist_r
+  rotate: false
+  xy: 597, 21
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+boss_city_day_body
+  rotate: false
+  xy: 421, 3
+  size: 122, 42
+  orig: 122, 42
+  offset: 0, 0
+  index: -1
+boss_city_day_exhaust
+  rotate: false
+  xy: 619, 14
+  size: 15, 53
+  orig: 15, 53
+  offset: 0, 0
+  index: -1
+boss_city_day_hat
+  rotate: true
+  xy: 421, 47
+  size: 139, 72
+  orig: 139, 72
+  offset: 0, 0
+  index: -1
+boss_city_day_headstrap
+  rotate: false
+  xy: 614, 155
+  size: 118, 22
+  orig: 118, 22
+  offset: 0, 0
+  index: -1
+boss_city_day_left_scoop
+  rotate: false
+  xy: 2, 2
+  size: 121, 184
+  orig: 121, 184
+  offset: 0, 0
+  index: -1
+boss_city_day_right_scoop
+  rotate: false
+  xy: 125, 2
+  size: 121, 184
+  orig: 121, 184
+  offset: 0, 0
+  index: -1
+eyes_default
+  rotate: false
+  xy: 545, 3
+  size: 73, 8
+  orig: 73, 8
+  offset: 0, 0
+  index: -1
+eyes_happy
+  rotate: true
+  xy: 614, 61
+  size: 73, 3
+  orig: 73, 3
+  offset: 0, 0
+  index: -1
+eyes_mad
+  rotate: false
+  xy: 629, 5
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_sad
+  rotate: true
+  xy: 731, 73
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_shut
+  rotate: false
+  xy: 495, 47
+  size: 75, 2
+  orig: 75, 2
+  offset: 0, 0
+  index: -1
+frown
+  rotate: true
+  xy: 734, 150
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+grin
+  rotate: true
+  xy: 614, 146
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+leg_ankle_l
+  rotate: false
+  xy: 614, 141
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_ankle_r
+  rotate: false
+  xy: 614, 136
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_low_l
+  rotate: false
+  xy: 614, 37
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_low_r
+  rotate: false
+  xy: 614, 37
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_up_l
+  rotate: false
+  xy: 736, 159
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+leg_up_r
+  rotate: false
+  xy: 736, 159
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+nothing
+  rotate: false
+  xy: 581, 13
+  size: 13, 1
+  orig: 13, 1
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 614, 179
+  size: 120, 7
+  orig: 120, 7
+  offset: 0, 0
+  index: -1
+smirk
+  rotate: true
+  xy: 727, 139
+  size: 14, 2
+  orig: 14, 2
+  offset: 0, 0
+  index: -1
+tiny_mouth
+  rotate: false
+  xy: 614, 58
+  size: 3, 1
+  orig: 3, 1
+  offset: 0, 0
+  index: -1

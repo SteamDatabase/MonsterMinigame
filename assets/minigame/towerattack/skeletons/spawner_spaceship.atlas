@@ -1,0 +1,622 @@
+
+spawner_spaceship.png
+size: 1024,128
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+UFO_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+city_destroyed_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+snow_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+volcano_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+stadium_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+ocean_floor_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+city_day_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+island_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+city_night_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+desert_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+space_ufo_glow
+  rotate: false
+  xy: 2, 26
+  size: 114, 99
+  orig: 114, 99
+  offset: 0, 0
+  index: -1
+city_day_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+volcano_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+island_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+stadium_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+city_night_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+snow_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+desert_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+ocean_floor_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+city_destroyed_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+space_foot_l
+  rotate: false
+  xy: 2, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+city_day_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+island_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+snow_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+ocean_floor_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+stadium_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+space_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+city_destroyed_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+volcano_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+city_night_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+desert_foot_r
+  rotate: false
+  xy: 999, 104
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+city_day_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+island_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+desert_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+city_destroyed_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+volcano_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+space_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+snow_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+ocean_floor_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+stadium_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+city_night_leg_l
+  rotate: true
+  xy: 422, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+city_day_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+space_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+snow_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+city_destroyed_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+stadium_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+ocean_floor_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+city_night_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+volcano_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+island_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+desert_leg_r
+  rotate: true
+  xy: 454, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+city_day_pilot
+  rotate: true
+  xy: 942, 84
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+city_day_ufo_body
+  rotate: false
+  xy: 118, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+city_day_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+island_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+city_destroyed_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+ocean_floor_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+city_night_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+space_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+snow_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+volcano_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+desert_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+stadium_ufo_dome
+  rotate: false
+  xy: 324, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+city_destroyed_pilot
+  rotate: true
+  xy: 427, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+city_destroyed_ufo_body
+  rotate: false
+  xy: 221, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+city_night_pilot
+  rotate: true
+  xy: 484, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+city_night_ufo_body
+  rotate: false
+  xy: 324, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+desert_pilot
+  rotate: true
+  xy: 541, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+desert_ufo_body
+  rotate: false
+  xy: 427, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+island_pilot
+  rotate: true
+  xy: 598, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+island_ufo_body
+  rotate: false
+  xy: 530, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+l_foot
+  rotate: false
+  xy: 550, 9
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+l_leg
+  rotate: true
+  xy: 486, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+ocean_floor_pilot
+  rotate: true
+  xy: 655, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+ocean_floor_ufo_body
+  rotate: false
+  xy: 633, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+pilot
+  rotate: true
+  xy: 712, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+r_foot
+  rotate: false
+  xy: 19, 3
+  size: 15, 21
+  orig: 15, 21
+  offset: 0, 0
+  index: -1
+r_leg
+  rotate: true
+  xy: 518, 6
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1
+snow_pilot
+  rotate: true
+  xy: 769, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+snow_ufo_body
+  rotate: false
+  xy: 736, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+space_pilot
+  rotate: true
+  xy: 826, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+space_ufo_body
+  rotate: false
+  xy: 839, 75
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+stadium_pilot
+  rotate: true
+  xy: 883, 32
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+stadium_ufo_body
+  rotate: false
+  xy: 118, 23
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1
+ufo_body
+  rotate: false
+  xy: 324, 39
+  size: 101, 34
+  orig: 101, 34
+  offset: 0, 0
+  index: -1
+ufo_dome
+  rotate: false
+  xy: 373, 2
+  size: 47, 35
+  orig: 47, 35
+  offset: 0, 0
+  index: -1
+volcano_pilot
+  rotate: true
+  xy: 942, 41
+  size: 41, 55
+  orig: 41, 55
+  offset: 0, 0
+  index: -1
+volcano_ufo_body
+  rotate: false
+  xy: 221, 23
+  size: 101, 50
+  orig: 101, 50
+  offset: 0, 0
+  index: -1

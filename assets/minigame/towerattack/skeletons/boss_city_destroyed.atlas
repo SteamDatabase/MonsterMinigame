@@ -1,0 +1,279 @@
+
+boss_city_destroyed.png
+size: 819,188
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Body
+  rotate: true
+  xy: 379, 69
+  size: 117, 135
+  orig: 117, 135
+  offset: 0, 0
+  index: -1
+Face
+  rotate: true
+  xy: 720, 81
+  size: 105, 84
+  orig: 105, 84
+  offset: 0, 0
+  index: -1
+Hit Flash
+  rotate: false
+  xy: 2, 3
+  size: 171, 183
+  orig: 171, 183
+  offset: 0, 0
+  index: -1
+OOoooooh
+  rotate: true
+  xy: 695, 81
+  size: 7, 8
+  orig: 7, 8
+  offset: 0, 0
+  index: -1
+Steam Logo
+  rotate: false
+  xy: 456, 7
+  size: 32, 20
+  orig: 32, 20
+  offset: 0, 0
+  index: -1
+arm_low_l
+  rotate: false
+  xy: 490, 12
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_low_r
+  rotate: false
+  xy: 490, 12
+  size: 12, 15
+  orig: 12, 15
+  offset: 0, 0
+  index: -1
+arm_up_l
+  rotate: false
+  xy: 695, 90
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_up_r
+  rotate: false
+  xy: 695, 90
+  size: 12, 22
+  orig: 12, 22
+  offset: 0, 0
+  index: -1
+arm_wrist_l
+  rotate: true
+  xy: 764, 2
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+arm_wrist_r
+  rotate: true
+  xy: 780, 2
+  size: 19, 14
+  orig: 19, 14
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_50cal
+  rotate: false
+  xy: 764, 23
+  size: 37, 21
+  orig: 37, 21
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_barrel
+  rotate: true
+  xy: 658, 84
+  size: 28, 35
+  orig: 28, 35
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_goggles
+  rotate: false
+  xy: 379, 38
+  size: 126, 29
+  orig: 126, 29
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_hat
+  rotate: false
+  xy: 516, 18
+  size: 140, 94
+  orig: 140, 94
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_muzzle_flash
+  rotate: false
+  xy: 764, 46
+  size: 33, 33
+  orig: 33, 33
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_tank
+  rotate: false
+  xy: 175, 79
+  size: 202, 107
+  orig: 202, 107
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_tank_treads_anim01
+  rotate: false
+  xy: 175, 42
+  size: 202, 35
+  orig: 202, 35
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_tank_treads_anim02
+  rotate: false
+  xy: 516, 151
+  size: 202, 35
+  orig: 202, 35
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_tank_treads_anim03
+  rotate: false
+  xy: 175, 5
+  size: 202, 35
+  orig: 202, 35
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_tank_treads_anim04
+  rotate: false
+  xy: 516, 114
+  size: 202, 35
+  orig: 202, 35
+  offset: 0, 0
+  index: -1
+boss_city_destroyed_zombie_head
+  rotate: false
+  xy: 658, 13
+  size: 104, 66
+  orig: 104, 66
+  offset: 0, 0
+  index: -1
+eyes_default
+  rotate: false
+  xy: 379, 10
+  size: 73, 8
+  orig: 73, 8
+  offset: 0, 0
+  index: -1
+eyes_happy
+  rotate: false
+  xy: 379, 5
+  size: 73, 3
+  orig: 73, 3
+  offset: 0, 0
+  index: -1
+eyes_mad
+  rotate: true
+  xy: 806, 111
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_sad
+  rotate: false
+  xy: 379, 20
+  size: 75, 7
+  orig: 75, 7
+  offset: 0, 0
+  index: -1
+eyes_shut
+  rotate: true
+  xy: 815, 111
+  size: 75, 2
+  orig: 75, 2
+  offset: 0, 0
+  index: -1
+frown
+  rotate: false
+  xy: 810, 105
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+grin
+  rotate: false
+  xy: 810, 99
+  size: 7, 4
+  orig: 7, 4
+  offset: 0, 0
+  index: -1
+leg_ankle_l
+  rotate: true
+  xy: 511, 63
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_ankle_r
+  rotate: true
+  xy: 511, 57
+  size: 4, 3
+  orig: 4, 3
+  offset: 0, 0
+  index: -1
+leg_low_l
+  rotate: false
+  xy: 796, 2
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_low_r
+  rotate: false
+  xy: 796, 2
+  size: 2, 19
+  orig: 2, 19
+  offset: 0, 0
+  index: -1
+leg_up_l
+  rotate: false
+  xy: 507, 40
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+leg_up_r
+  rotate: false
+  xy: 507, 40
+  size: 2, 27
+  orig: 2, 27
+  offset: 0, 0
+  index: -1
+nothing
+  rotate: false
+  xy: 658, 81
+  size: 13, 1
+  orig: 13, 1
+  offset: 0, 0
+  index: -1
+shadow
+  rotate: false
+  xy: 379, 29
+  size: 120, 7
+  orig: 120, 7
+  offset: 0, 0
+  index: -1
+smirk
+  rotate: true
+  xy: 806, 95
+  size: 14, 2
+  orig: 14, 2
+  offset: 0, 0
+  index: -1
+tiny_mouth
+  rotate: false
+  xy: 673, 81
+  size: 3, 1
+  orig: 3, 1
+  offset: 0, 0
+  index: -1

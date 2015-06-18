@@ -1,0 +1,318 @@
+enum EMiniGameType
+{
+	k_EMiniGameType_Invalid = 0;
+	k_EMiniGameType_TowerAttack = 1;
+}
+enum EMiniGameStatus
+{
+	k_EMiniGameStatus_Invalid = 0;
+	k_EMiniGameStatus_WaitingForPlayers = 1;
+	k_EMiniGameStatus_Running = 2;
+	k_EMiniGameStatus_Ended = 3;
+}
+
+enum ETowerAttackElement
+{
+	k_ETowerAttackElement_Invalid = 0;
+	k_ETowerAttackElement_Fire = 1;
+	k_ETowerAttackElement_Water = 2;
+	k_ETowerAttackElement_Air = 3;
+	k_ETowerAttackElement_Earth = 4;
+}
+
+enum ETowerAttackAbility
+{
+	k_ETowerAttackAbility_Invalid = 0;
+	k_ETowerAttackAbility_Attack = 1;
+	k_ETowerAttackAbility_ChangeLane = 2;
+	k_ETowerAttackAbility_Respawn = 3;
+	k_ETowerAttackAbility_ChangeTarget = 4;
+
+	// support abilities
+	k_ETowerAttackAbility_Support_IncreaseDamage = 5;
+	k_ETowerAttackAbility_Support_IncreaseCritPercentage = 6;
+	k_ETowerAttackAbility_Support_Heal = 7;
+	k_ETowerAttackAbility_Support_IncreaseGoldDropped = 8;
+	k_ETowerAttackAbility_Support_DecreaseCooldowns = 9;
+
+	// offensive abilities
+	k_ETowerAttackAbility_Offensive_HighDamageOneTarget = 10;
+	k_ETowerAttackAbility_Offensive_DamageAllTargets = 11;
+	k_ETowerAttackAbility_Offensive_DOTAllTargets = 12;
+
+	// item
+	k_ETowerAttackAbility_Item_Resurrection = 13;
+	k_ETowerAttackAbility_Item_KillTower = 14;
+	k_ETowerAttackAbility_Item_KillMob = 15;
+	k_ETowerAttackAbility_Item_MaxElementalDamage = 16;
+	k_ETowerAttackAbility_Item_GoldPerClick = 17;
+	k_ETowerAttackAbility_Item_IncreaseCritPercentagePermanently = 18;
+	k_ETowerAttackAbility_Item_IncreaseHPPermanently = 19;
+	k_ETowerAttackAbility_Item_GoldForDamage = 20;
+	k_ETowerAttackAbility_Item_Invulnerability = 21;
+	k_ETowerAttackAbility_Item_GiveGold = 22;
+	k_ETowerAttackAbility_Item_StealHealth = 23;
+	k_ETowerAttackAbility_Item_ReflectDamage = 24;
+	k_ETowerAttackAbility_Item_Start = 13;
+	k_ETowerAttackAbility_Item_End = 24;
+
+	k_ETowerAttackAbility_MaxAbilities = 25;
+}
+enum ETowerAttackUpgradeType
+{
+	k_ETowerAttackUpgradeType_HitPoints = 0;
+	k_ETowerAttackUpgradeType_DPS = 1;
+	k_ETowerAttackUpgradeType_ClickDamage = 2;
+	k_ETowerAttackUpgradeType_DamageMultiplier_Fire = 3;
+	k_ETowerAttackUpgradeType_DamageMultiplier_Water = 4;
+	k_ETowerAttackUpgradeType_DamageMultiplier_Air = 5;
+	k_ETowerAttackUpgradeType_DamageMultiplier_Earth = 6;
+	k_ETowerAttackUpgradeType_DamageMultiplier_Crit = 7;
+	k_ETowerAttackUpgradeType_PurchaseAbility = 8;
+	k_ETowerAttackUpgradeType_BossLootDropPercentage = 9;
+	k_ETowerAttackUpgradeType_MaxTypes = 10;
+}
+
+enum ETowerAttackEnemyType
+{
+	k_ETowerAttackEnemyType_Tower = 0;
+	k_ETowerAttackEnemyType_Mob = 1;
+	k_ETowerAttackEnemyType_Boss = 2;
+	k_ETowerAttackEnemyType_MiniBoss = 3;
+	k_ETowerAttackEnemyType_TreasureMob = 4;
+	k_ETowerAttackEnemyType_Max = 5;
+}
+
+enum ETowerAttackEvent
+{
+	k_ETowerAttackEvent_Invalid = 0;
+	k_ETowerAttackEvent_NewStoreDeals_Morning = 1;
+	k_ETowerAttackEvent_NewStoreDeals_Evening = 2;
+}
+
+message CTowerAttack_GameData
+{
+	message ActiveAbility
+	{
+		optional uint32 accountid_caster = 1;
+		optional uint32 ability = 2;
+		optional uint32 timestamp_done = 3;
+		optional double multiplier = 4;
+	}
+
+	message Enemy
+	{
+		optional uint64 id = 1;
+		optional ETowerAttackEnemyType type = 2;
+		optional double hp = 3;
+		optional double max_hp = 4;
+		optional double dps = 5;
+		optional double timer = 6;
+		optional double gold = 7;
+	}
+
+	message Lane
+	{
+		repeated Enemy enemies = 1;
+		optional double dps = 2;
+		optional double gold_dropped = 3;
+		repeated ActiveAbility active_player_abilities = 4;
+		repeated uint32 player_hp_buckets = 5;
+		optional ETowerAttackElement element = 6;
+		// for faster lookup
+		optional double active_player_ability_decrease_cooldowns = 7 [default = 1];
+		optional double active_player_ability_gold_per_click = 8 [default = 0];
+	}
+
+	message Event
+	{
+		optional ETowerAttackEvent event = 1;
+		optional uint32 time_start = 2;
+		optional uint32 time_end = 3;
+	}
+
+	optional uint32 level = 1;
+	repeated Lane lanes = 2;
+	optional uint32 timestamp = 3;
+	optional EMiniGameStatus status = 4;
+	repeated Event events = 5;
+	optional uint32 timestamp_game_start = 6;
+	optional uint32 timestamp_level_start = 7;
+}
+
+message CTowerAttack_Stats
+{
+	optional uint32 num_players = 1;
+	optional uint64 num_mobs_killed = 2;
+	optional uint64 num_towers_killed = 3;
+	optional uint64 num_minibosses_killed = 4;
+	optional uint64 num_bosses_killed = 5;
+	optional uint64 num_clicks = 6;
+	optional uint64 num_abilities_activated = 7;
+	optional uint64 num_players_reaching_milestone_level = 8;
+	optional uint64 num_ability_items_activated = 9;
+	optional uint32 num_active_players = 10;
+	optional double time_simulating = 11;
+	optional double time_saving = 12;
+}
+
+// player related
+message CTowerAttack_PlayerData
+{
+	message ActiveAbility
+	{
+		optional uint32 ability = 1;
+		optional uint32 timestamp_done = 2;
+		optional uint32 timestamp_cooldown = 3;
+	}
+	message Loot
+	{
+		optional ETowerAttackAbility ability = 1;
+	}
+	optional double hp = 1;
+	optional uint32 current_lane = 2;
+	optional uint32 target = 3;
+	optional uint32 time_died = 4;
+	optional double gold = 5;
+	optional uint64 active_abilities_bitfield = 6;
+	repeated ActiveAbility active_abilities = 7;
+	optional double crit_damage = 8;
+	repeated Loot loot = 9;
+}
+
+message CTowerAttack_PlayerTechTree
+{
+	message Upgrade
+	{
+		optional uint32 upgrade = 1;
+		optional uint32 level = 2;
+		optional double cost_for_next_level = 3;
+	}
+	message AbilityItem
+	{
+		optional ETowerAttackAbility ability = 1;
+		optional uint32 quantity = 2;
+	}
+	repeated Upgrade upgrades = 1;		
+	optional double damage_per_click = 2 [default = 1.0];
+	optional double damage_multiplier_fire = 3 [default = 1.0];
+	optional double damage_multiplier_water = 4 [default = 1.0];
+	optional double damage_multiplier_air = 5 [default = 1.0];
+	optional double damage_multiplier_earth = 6 [default = 1.0];
+	optional double damage_multiplier_crit = 7 [default = 2.0];
+	optional uint64 unlocked_abilities_bitfield = 8 [default = 0];
+	optional double hp_multiplier = 9 [default = 1.0];
+	optional double crit_percentage = 10 [default = 0];
+	optional double badge_points = 11;
+	repeated AbilityItem ability_items = 12;
+	optional double boss_loot_drop_percentage = 13 [default = 0.25];
+	optional double damage_multiplier_dps = 14 [default = 1.0];
+	optional double base_dps = 15;
+	optional double damage_per_click_multiplier = 16 [default = 1.0];
+	optional double max_hp = 17;
+	optional double dps = 18;
+}
+
+message CTowerAttack_GetGameData_Request
+{
+	optional uint64 gameid = 1;
+	optional bool include_stats = 2;
+}
+message CTowerAttack_GetGameData_Response
+{
+	optional CTowerAttack_GameData game_data = 1;
+	optional CTowerAttack_Stats stats = 2;
+}
+
+message CTowerAttack_GetPlayerNames_Request
+{
+	optional uint64 gameid = 1;
+	repeated uint32 accountids = 2;
+}
+message CTowerAttack_GetPlayerNames_Response
+{
+	message PlayerName
+	{
+		optional uint32 accountid = 1;
+		optional string name = 2;
+	}
+	repeated PlayerName names = 1;
+}
+
+message CTowerAttack_GetPlayerData_Request
+{
+	optional uint64 gameid = 1;
+	optional bool include_tech_tree = 2 [default = false];
+	optional uint64 steamid = 3;
+}
+message CTowerAttack_GetPlayerData_Response
+{
+	optional CTowerAttack_PlayerData player_data = 1;
+	optional CTowerAttack_PlayerTechTree tech_tree = 2;
+}
+
+message CTowerAttack_UseAbilities_Request
+{
+	message UseAbilityData
+	{
+		optional ETowerAttackAbility ability = 1;
+		optional uint32 new_lane = 2;
+		optional uint32 new_target = 3;
+		optional uint32 num_clicks = 4;
+	}
+	optional uint64 gameid = 1;
+	repeated UseAbilityData requested_abilities = 2;
+}
+
+message CTowerAttack_UseAbilities_Response
+{
+	optional CTowerAttack_PlayerData player_data = 1;
+	optional CTowerAttack_PlayerTechTree tech_tree = 2;
+}
+
+message CTowerAttack_ChooseUpgrade_Request
+{
+	optional uint64 gameid = 1;
+	repeated uint32 upgrades = 2;
+}
+
+message CTowerAttack_ChooseUpgrade_Response
+{
+	optional CTowerAttack_PlayerTechTree tech_tree = 1;
+}
+
+message CTowerAttack_GetTuningData_Request
+{
+}
+message CTowerAttack_GetTuningData_Response
+{
+	optional string json = 1;
+}
+
+message CTowerAttack_GetDailyStatsRollup_Request
+{
+	optional uint32 timestamp = 1;
+}
+message CTowerAttack_GetDailyStatsRollup_Response
+{
+	optional CTowerAttack_Stats stats = 1;
+}
+
+message CTowerAttack_HandleGameEvent_Request
+{
+	optional uint64 gameid = 1;
+	optional ETowerAttackEvent event = 2;
+}
+message CTowerAttack_HandleGameEvent_Response
+{
+}
+
+message CTowerAttack_UseBadgePoints_Request
+{
+	optional uint64 gameid = 1;
+	repeated ETowerAttackAbility ability_items = 2;
+}
+message CTowerAttack_UseBadgePoints_Response
+{
+	optional CTowerAttack_PlayerTechTree tech_tree = 1;
+}
