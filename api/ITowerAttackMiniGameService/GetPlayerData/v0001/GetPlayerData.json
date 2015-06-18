@@ -2,7 +2,7 @@
 	"response": {
 		"player_data": {
 			"hp": 5112116099.9994869,
-			"current_lane": 1,
+			"current_lane": 0,
 			"target": 0,
 			"time_died": 1434569720,
 			"gold": 1050470939749.42,
