@@ -399,24 +399,23 @@ class CTowerAttackGame
 
 	public function GenerateNewLanes()
 	{
-		$Enemies = array();
-
-		// Create 1 enemy
-		$Enemies[] = new CTowerAttackEnemy(
-			$this->GetNextMobId(),
-			ETowerAttackEnemyType::Mob,
-			1, //hp
-			1, //max hp
-			1, //dps
-			null, //timer
-			1 //gold
-		);
-
 		$ActivePlayerAbilities = array();
 		$PlayerHpBuckets = array();
 
 		// Create 3 lanes
 		for ( $i = 0; 3 > $i; $i++ ) {
+			// Create 1 enemy
+			$Enemies = array();
+			$Enemies[] = new CTowerAttackEnemy(
+				$this->GetNextMobId(),
+				ETowerAttackEnemyType::Mob,
+				1, //hp
+				1, //max hp
+				1, //dps
+				null, //timer
+				1 //gold
+			);
+
 			$this->Lanes[] = new CTowerAttackLane(
 				$Enemies,
 				0, //dps
