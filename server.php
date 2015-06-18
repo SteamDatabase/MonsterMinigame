@@ -81,7 +81,7 @@ class CTowerAttackLane
 		$GoldDropped, 
 		array $ActivePlayerAbilities, 
 		array $PlayerHpBuckets, 
-		ETowerAttackElement $Element, 
+		$Element, 
 		$ActivePlayerAbilityDecreaseCooldowns, 
 		$ActivePlayerAbilityGoldPerClick 
 	) {
@@ -197,7 +197,7 @@ class CTowerAttackEnemy
 	private $Timer;
 	private $Gold;
 	
-	public function __construct( $Id, ETowerAttackEnemyType $Type, $Hp, $MaxHp, $Dps, $Timer, $Gold )
+	public function __construct( $Id, $Type, $Hp, $MaxHp, $Dps, $Timer, $Gold )
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
@@ -205,6 +205,7 @@ class CTowerAttackEnemy
 		$this->Dps = $Dps;
 		$this->Timer = $Timer;
 		$this->Gold = $Gold;
+		l( "Created new enemy [Id=$Id, Type=$Type, Hp=$Hp, MaxHp=$MaxHp, Dps=$Dps, Timer=$Timer, Gold=$Gold]" );
 	}
 
 	public function GetId()
@@ -257,9 +258,118 @@ class CTowerAttackGame
 	*/
 	
 	private $AbilityQueue;
+	private $Level;
+	private $Lanes;
+	//private $Timestamp; - Use function instead?
+	private $Status;
+	//private $Events; - Not used, morning/evning deals
+	private $TimestampGameStart;
+	private $TimestampLevelStart;
+	private $UniverseState;
+	private $LastMobId = 0;
+
+	private function GetLastMobId()
+	{
+		return $this->LastMobId;
+	}
+
+	private function GetNextMobId()
+	{
+		$this->LastMobId++;
+		return $this->LastMobId;
+	}
 	
 	public function __construct()
 	{
+		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
+		$this->SetLevel( 1 );
+		$this->GenerateNewLanes();
+		$this->SetStatus( EMiniGameStatus::Running );
+		$this->TimestampGameStart = time();
 		l( 'Created game' );
+	}
+
+	public function GetLevel()
+	{
+		return $this->Level;
+	}
+
+	public function SetLevel( $Level )
+	{
+		$this->Level = $Level;
+		$this->TimestampLevelStart = time();
+	}
+
+	public function GenerateNewLanes()
+	{
+		$Enemies = array();
+
+		// Create 1 enemy
+		$Enemies[] = new CTowerAttackEnemy(
+			$this->GetNextMobId(),
+			ETowerAttackEnemyType::Mob,
+			1, //hp
+			1, //max hp
+			1, //dps
+			null, //timer
+			1 //gold
+		);
+
+		$ActivePlayerAbilities = array();
+		$PlayerHpBuckets = array();
+
+		// Create 3 lanes
+		for ( $i = 0; 3 > $i; $i++ ) {
+			$this->Lanes[] = new CTowerAttackLane(
+				$Enemies,
+				0, //dps
+				0, //gold dropped
+				$ActivePlayerAbilities,
+				$PlayerHpBuckets,
+				ETowerAttackElement::Fire, //element
+				0, //decrease cooldown
+				0 //gold per click
+			);
+		}
+	}
+
+	public function GetLanes()
+	{
+		return $this->Lanes;
+	}
+
+	public function GetTimestamp()
+	{
+		return time();
+	}
+
+	public function GetStatus()
+	{
+		return $this->Status;
+	}
+
+	public function SetStatus( $Status )
+	{
+		$this->Status = $Status;
+	}
+
+	public function GetEvents()
+	{
+		return $this->Events;
+	}
+
+	public function GetTimestampGameStart()
+	{
+		return $this->TimestampGameStart;
+	}
+
+	public function GetTimestampLevelStart()
+	{
+		return $this->TimestampLevelStart;
+	}
+
+	public function GetUniverseState()
+	{
+		return $this->UniverseState;
 	}
 }
