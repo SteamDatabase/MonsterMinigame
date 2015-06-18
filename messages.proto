@@ -53,10 +53,13 @@ enum ETowerAttackAbility
 	k_ETowerAttackAbility_Item_GiveGold = 22;
 	k_ETowerAttackAbility_Item_StealHealth = 23;
 	k_ETowerAttackAbility_Item_ReflectDamage = 24;
+	k_ETowerAttackAbility_Item_GiveRandomItem = 25;
+	k_ETowerAttackAbility_Item_SkipLevels = 26;
+	k_ETowerAttackAbility_Item_ClearCooldowns = 27;
 	k_ETowerAttackAbility_Item_Start = 13;
-	k_ETowerAttackAbility_Item_End = 24;
+	k_ETowerAttackAbility_Item_End = 27;
 
-	k_ETowerAttackAbility_MaxAbilities = 25;
+	k_ETowerAttackAbility_MaxAbilities = 28;
 }
 enum ETowerAttackUpgradeType
 {
@@ -138,6 +141,7 @@ message CTowerAttack_GameData
 	repeated Event events = 5;
 	optional uint32 timestamp_game_start = 6;
 	optional uint32 timestamp_level_start = 7;
+	optional string universe_state = 8;
 }
 
 message CTowerAttack_Stats
