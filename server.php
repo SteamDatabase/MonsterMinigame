@@ -44,10 +44,6 @@ class CTowerAttackServer
 		while( true )
 		{
 			$Data = stream_socket_recvfrom( $this->Socket, 1500, 0, $Peer );
-			$PeerArray = explode( ':', $Peer);
-			$PeerIp = $PeerArray[0];
-			$PeerPort = $PeerArray[1];
-			l( $Peer . ' - ' . $Data );
 
 			$Data = @json_decode($Data, TRUE);
 			if( ( $Data === null && json_last_error() !== JSON_ERROR_NONE ) || !array_key_exists( 'method', $Data ) ) {
@@ -55,7 +51,7 @@ class CTowerAttackServer
 			    continue;
 			}
 			
-			#l( $Peer . ' - ' . $Data['method'] );
+			l( $Peer . ' - ' . $Data['method'] );
 
 			// Handle the request, this could be moved elsewhere...
 			switch ( $Data['method'] ) {
@@ -279,13 +275,13 @@ class CTowerAttackEnemy
 	public function ToArray()
 	{
 		return array(
-			'Id' => $this->GetId(),
-			'Type' => $this->GetType(),
-			'Hp' => $this->GetHp(),
-			'MaxHp' => $this->GetMaxHp(),
-			'Dps' => $this->GetDps(),
-			'Timer' => $this->GetTimer(),
-			'Gold' => $this->GetGold()
+			'id' => $this->GetId(),
+			'type' => $this->GetType(),
+			'hp' => $this->GetHp(),
+			'max_hp' => $this->GetMaxHp(),
+			'dps' => $this->GetDps(),
+			'timer' => $this->GetTimer(),
+			'gold' => $this->GetGold()
 		);
 	}
 
