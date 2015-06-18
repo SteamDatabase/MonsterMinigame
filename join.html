@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>Steam Community :: Monster Summer Sale</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link href='//fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href="/css/motiva_sans.css?v=F3z3QpekjE2f" rel="stylesheet" type="text/css" >
+	<link href="/css/buttons.css?v=4iAytERcUqWU" rel="stylesheet" type="text/css" >
+	<link href="/css/shared_global.css?v=XXN4vhirCNMy" rel="stylesheet" type="text/css" >
+	<link href="/css/globalv2.css?v=yWZ8QbCWv1se" rel="stylesheet" type="text/css" >
+	<link href="/css/towerattack_listgames.css?v=UYpREnpPsNO9" rel="stylesheet" type="text/css" >
+	<link href="/css/header.css?v=quvm2wU5yG0p" rel="stylesheet" type="text/css" >
+	<script type="text/javascript" src="/javascript/prototype-1.7.js?v=.55t44gwuwgvw"></script>
+	<script type="text/javascript" src="/javascript/scriptaculous/_combined.js?v=9XVsa_Ni33oN&amp;l=english&amp;load=effects,controls,slider,dragdrop"></script>
+	<script type="text/javascript" src="/javascript/global.js?v=hCxPThA3-aeH&amp;l=english"></script>
+	<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js?v=.isFTSRckeNhC"></script>
+	<script type="text/javascript" src="/javascript/tooltip.js?v=.nCjeRtNcVhbG"></script>
+	<script type="text/javascript" src="/javascript/shared_global.js?v=eDIuTMT_fnXg&amp;l=english"></script>
+	<script type="text/javascript">$J = jQuery.noConflict();
+		if ( typeof JSON != 'object' || !JSON.stringify || !JSON.parse ) { document.write( "<scr" + "ipt type=\"text\/javascript\" src=\"\/javascript\/json2.js?v=pmScf4470EZP&amp;l=english\"><\/script>\n" ); };
+	</script><script type="text/javascript" src="/javascript/minigame/towerattack/ui.js?v=nnRz0Z8fWVNm&amp;l=english"></script>
+
+	<script>
+		$J( function() {
+			$J( "#player_stat_highest_level").text( FormatNumberForDisplay( '10061040' ) );
+			$J( "#player_stat_most_gold").text( FormatNumberForDisplay( '2806530424180614.5' ) );
+			$J( "#player_stat_most_damage").text( FormatNumberForDisplay( '4.3698203032315623e+025' ) );
+			$J( "#player_gold").text( FormatNumberForDisplay( '66315547920810.539' ) );
+			$J( "#player_current_level").text( FormatNumberForDisplay( '2458676' ) );
+		});
+
+		function StartNewGame()
+		{
+			JoinGame( 0 );
+		}
+
+		function JoinGame( gameid )
+		{
+			var promptLeaveGame = ShowConfirmDialog( 'Leave Existing Game?', gameid == 0 ? 'You\'ll have to leave your current game to join a new game.<br><br>You will not be able to rejoin your current game.<br><br>Are you sure you want to do this?' : 'You\'ll have to leave your current game to join this game.<br><br>You will not be able to rejoin your current game.<br><br>Do you still want to join this game?' );
+			promptLeaveGame.done(
+				function () {
+					$J.post(
+						'http://steamcommunity.com/minigame/ajaxleavegame/',
+						{ 'gameid' : '45869', 'sessionid' : g_sessionID }
+						).done( function() {
+							JoinGameHelper( gameid );
+						}
+						);
+					}
+					);
+		}
+
+		function JoinGameHelper( gameid )
+		{
+			$J.post(
+				'http://steamcommunity.com/minigame/ajaxjoingame/',
+				{ 'gameid' : gameid, 'sessionid' : g_sessionID }
+				).done( function( json ) {
+					if ( json.success == '1' )
+					{
+						top.location.href = 'http://steamcommunity.com/minigame/towerattack/';
+					}
+					else
+					{
+						ShowAlertDialog( 'Error', 'There was a problem trying to join a game. Please try again later.' );
+					}
+				}
+				).fail( function( jqXHR ) {
+					var responseJSON = jqXHR.responseText.evalJSON();
+					if ( responseJSON.success == '24' && responseJSON.errorMsg )
+					{
+						ShowAlertDialog( 'Error', responseJSON.errorMsg );
+					}
+					else if ( responseJSON.success == '25' )
+					{
+						ShowAlertDialog( 'Error', 'There was a problem trying to join the game: it already has the maximum number of players.' );
+					}
+					else if ( responseJSON.success == '28' )
+					{
+						ShowAlertDialog( 'Error', 'You have previously left this game. You cannot join this game again.' );
+					}
+					else
+					{
+						ShowAlertDialog( 'Error', 'There was a problem trying to join a game. Please try again later.' );
+					}
+				}
+				);
+			}
+
+			function FindGame()
+			{
+				JoinGame( 0 );
+			}
+
+			function ShowFriendsGames()
+			{
+				var waiting = ShowBlockingWaitDialog( 'Please Wait', 'Retrieving friends games...' );
+				$J.ajax(
+				{
+					url: 'http://steamcommunity.com/minigame/ajaxlistfriendsgames/',
+					type: 'POST',
+					data: { 'current_gameid' : '45869' },
+					dataType: 'json'
+				}
+				).done(
+				function( data ) {
+					waiting.Dismiss();
+					if ( data.num_games == 0 )
+					{
+						ShowAlertDialog( 'Friends\' Games','Your friends are not currently in any active games.' );
+					}
+					else
+					{
+						ShowAlertDialog( 'Friends\' Games', data.html, 'Cancel ' );
+					}
+				}
+				).fail(
+				function( jqXHR ) {
+					waiting.Dismiss();
+					ShowAlertDialog( 'Error', 'There was a problem trying to retrieve the list of games your friends are playing in. Please try again later.' );
+				}
+				);
+			}
+		</script>
+	</head>
+	<body class="flat_page "  lang="en">
+		<!-- header bar, contains info browsing user if logged in -->
+
+		<div id="modalBG" style="display: none"></div><script type="text/javascript">
+		g_sessionID = "";
+		g_steamID = "76561197990586091";
+		$J( InitMiniprofileHovers );
+		$J( InitEmoticonHovers );
+
+		$J( function() {
+			window.BindCommunityTooltip = function( $Selector ) { $Selector.v_tooltip( {'tooltipClass': 'community_tooltip', 'dataName': 'communityTooltip' } ); };
+			BindCommunityTooltip( $J('[data-community-tooltip]') );
+		})
+	</script>
+	<div class="page_background" style="background-image: url('/assets/minigame/towerattack/promo_bg/page_background_volcano.jpg');">
+
+		<div class="section_overview">
+			<div class="section_monster">
+				<div class="monster_ctn">
+					<img class="promo_creep" src="http://cdn.akamai.steamstatic.com/steamcommunity/public/assets/minigame/towerattack/promo_bg/08_volcano_creep.gif?v=1">
+					<img class="promo_creep_shadow" src="http://cdn.akamai.steamstatic.com/steamcommunity/public/assets//minigame/towerattack/promo_bg/shadow_small.png">
+					<div class="boss_ctn">
+						<img class="promo_boss" src="http://cdn.akamai.steamstatic.com/steamcommunity/public/assets/minigame/towerattack/promo_bg/boss_volcano.gif?v=1">
+					</div>
+					<img class="promo_boss_shadow" src="http://cdn.akamai.steamstatic.com/steamcommunity/public/assets//minigame/towerattack/promo_bg/shadow_large.png">
+				</div>
+			</div>
+
+
+			<div class="section_play">
+				<div class="logo"><img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/logo_main_english.png"></div>
+
+
+				<!-- Play Button -->
+				<div class="current_game">
+					<div>
+						<a href="http://steamcommunity.com/minigame/towerattack/" class="main_btn">
+							<span>Resume Your Game</span>
+						</a>
+						<p class="start_new">or, <a href="javascript:StartNewGame();">start a new game</a></p>
+					</div>
+				</div>
+				
+				<!-- Player count -->
+				<div class="player_count">
+					609,056 people playing<br>
+					566 games in progress
+				</div>
+
+			</div>
+			<br clear="both">
+
+			<div class="section_status">
+				<div class="section_yours">
+
+					<div class="friends_games">
+						<div class="title">Join a friend's game</div>
+						<div class="friends_games_area">
+							<div class="friends">
+								<div class="friend" data-miniprofile="48805661"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/c4/c4dc405eb801b0bac21aea5aa56a7b41388fb948.jpg"></div>
+								<div class="friend" data-miniprofile="106903875"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/55/557e221da19bb5b886ca2913f194c25755211a99.jpg"></div>
+								<div class="friend" data-miniprofile="33211255"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/15/15cf2c12f56b209a755c02890950cde243af6ff3.jpg"></div>
+								<div class="friend" data-miniprofile="13736466"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/01/018d580af07c1e7e0b0c87beda251448e02b90b6.jpg"></div>
+								<div class="friend" data-miniprofile="21481964"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/79/797fbdb94434b6c20cd704f555632ddc39d5aedb.jpg"></div>
+								<div class="friend" data-miniprofile="27399738"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/25/251306251ec790efe631110700e3df9f9536fc70.jpg"></div>
+								<div class="friend" data-miniprofile="28783291"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/02/027e9e926fc0aa3a798fc2d723275d4b8036a90b.jpg"></div>
+								<div class="friend" data-miniprofile="34802094"><img src="http://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/c3/c346a78f815aa7ea3a977f4d266d91de7a589a22.jpg"></div>
+							</div>
+							<div class="see_friends_btn" onclick="ShowFriendsGames()"><span>See friends games</span></div>
+							
+						</div>
+					</div>
+					<div class="your_stats">
+						<div class="title">Your stats</div>
+						<div class="stat_ctn">
+							<div class="stat">
+								Highest Level<br>
+								<span id="player_stat_highest_level">10,061,040</span>
+							</div>
+							<div class="stat">
+								Most Gold<br>
+								<span id="player_stat_most_gold"></span>
+							</div>
+							<div class="stat">
+								Most Damage<br>
+								<span id="player_stat_most_damage"></span>
+							</div>
+							<div class="stat">
+								Cards Unlocked<br>
+								<span>16</span> <a class="tooltip" data-tooltip-content="Earn Summer Sale trading cards for free by playing the Monster Game. See FAQ below for details.">(?)</a>
+							</div>
+							<br clear="both">
+
+							<div class="badges">
+								<div class="left_badge">
+									<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/badge_none.png">
+									<span>Summer Sale 2015<br>Level 1</span>
+								</div>
+								<div class="right_badge">
+									<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/badge_none.png">
+									<span>Summer Sale 2015 Foil<br>Level 1</span>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="section_today">
+					<div class="title">Today's Game</div>
+
+					<div class="stat">
+						Your Level<br>
+						<span id="player_current_level">
+							2,458,676											</span>
+						</div>
+						<div class="stat two">
+							Your Gold<br>
+							<span id="player_gold"></span>
+						</div>
+						<br clear="both">
+
+						<div class="summary_milestones">Community Milestones<br>6/9 unlocked</div>
+
+						<div class="milestone_indicators">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_checked.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_checked.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_checked.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_checked.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_checked.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_checked.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_pending.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_pending.png">
+							<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestone_pending.png">
+							<br clear="both">
+						</div>
+
+						<a href="#milestones" class="milestone_btn"><span>See Milestones</span></a>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- HOW IT WORKS -->
+			<div class="section_how_it_works">
+				<div class="title"><span>How it works</span></div>
+
+				<div class="section_hiw_left">
+					<div class="one">
+						<div class="title">Get Summer Sale Badge</div>
+						<p class="subtitle">Collect all 10 Summer Sale trading cards to craft the badge.</p>
+						<img src="http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/how_it_works_cards.png?v=3">
+						<p>You can get trading cards in a few ways:
+							<ul>
+								<li>As a reward for purchasing from the Steam Store</li>
+								<li>Crafting game badges</li>
+								<li>Playing the Monster Game</li>
+								<li>Trading with friends</li>
+								<li>Purchasing them in the Community Market</li>
+							</ul></p>
+							<p>See the <a href="#FAQ">Frequently Asked Questions</a> for more details on earning Summer Sale trading cards.</p>
+						</div>
+						<div class="two">
+							<div class="title">Level Up Your Badge</div>
+							<p>Increasing the level of your Summer Sale badge by crafting Summer Sale trading cards will grant you additional abilities and rewards in the Monster Game.</p>
+						</div>
+					</div>
+
+					<div class="section_hiw_right">
+						<div class="one">
+							<div class="title">Play Monster Game</div>
+							<p>Join a game and fight the enemy monsters as you help your team level up, unlock new abilities, and achieve community milestones. Plus, get Summer Sale Trading Cards just for playing.</p>
+						</div>
+						<div class="two">
+							<div class="title">Get Upgrades And<br>Help Your Team</div>
+							<p>The more damage you do to the enemies, the more your team benefits. Plus, special abilities can heal your teammates or boost everyone’s damage and help the whole team level up faster.</p>
+						</div>
+						<div class="three">
+							<div class="title">Unlock Special Discounts</div>
+							<p>Defeat monsters, activate abilities, reach new worlds, and complete other event milestones to help unlock special game discounts for everyone.</p>
+							<a href="#milestones" class="milestone_btn"><span>See Milestones</span></a>
+						</div>
+					</div>
+
+				</div>
+
+
+
+				<!-- MILESTONES -->
+				<a name="milestones"></a><div class="section_milestones">
+				<div class="title"><span>Daily Milestones</span></div>
+				<p>With your help, players of the Monster Game can work together to unlock special 48-hour discounts on select games. Each milestone reached unlocks a new discount on a mystery game, available to everyone on Steam at 10am Pacific time the following day. New milestones each day through June 18.</p>
+
+				<div class="instructions">
+					<div class="one">
+						<span>1</span>
+						<p>Work together each day to achieve group milestones in the Monster Game.</p>
+					</div>
+					<div class="two">
+						<span>2</span>
+						<p>Each milestone will unlock a special 48-hour discount on a new game</p>
+					</div>
+					<div class="three">
+						<span>3</span>
+						<p>At 10am each day, the games unlocked during the previous day will be unveiled and put on sale.</p>
+					</div>
+
+				</div>
+
+				<br clear="both">
+
+				<div class="milestones">
+					<div class="title_block">
+						<div class="title">Today's Milestones (Day 8)</div>
+						<div class="time_display">
+							20:34:49				</div>
+							<div class="time_remaining">Time Remaining: </div>
+							<br clear="both">
+						</div>
+
+
+						<div class="milestone">
+							<div class="title">Join The Game</div>
+							<div class="desc">Unlocks once the specified number of people have joined any Monster Summer Game today</div>
+							<!-- <div>Current Stat: 600,939</div> -->
+							<div class="milestone_step">
+								<div class="milestone_number">50,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 100%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Hacking\">Hacking</a>
+										<a href="http://store.steampowered.com/tag/en/FPS\">FPS</a>
+										<br><a href="http://store.steampowered.com/tag/en/Cyberpunk\">Cyberpunk</a>
+									</div>
+									<div class="milestone_deal_will_unlock">Milestone Reached!<br>Deal will unlock at 10am Pacific Time</div>
+									<div class="milestone_game_logo">
+										<a href="http://store.steampowered.com/app/91700/">
+											<img src="http://cdn.akamai.steamstatic.com/steam/apps/91700/header.jpg?t=1432655911">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="milestone_step">
+								<div class="milestone_number">250,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 100%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Boardgame\">Boardgame</a>
+										<a href="http://store.steampowered.com/tag/en/Turn-based\">Turn-based</a>
+										<br><a href="http://store.steampowered.com/tag/en/Strategy\">Strategy</a>
+									</div>
+									<div class="milestone_deal_will_unlock">Milestone Reached!<br>Deal will unlock at 10am Pacific Time</div>
+									<div class="milestone_game_logo">
+										<a href="http://store.steampowered.com/app/247000/">
+											<img src="http://cdn.akamai.steamstatic.com/steam/apps/247000/header.jpg?t=1432655911">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="milestone_step">
+								<div class="milestone_number">1,000,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 46%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Utilities\">Utilities</a>
+										<a href="http://store.steampowered.com/tag/en/Education\">Education</a>
+										<br><a href="http://store.steampowered.com/tag/en/Web Publishing\">Web Publishing</a>
+									</div>
+									<div class="milestone_status">Milestone Not Yet Reached</div>
+								</div>
+							</div>
+							<div style="clear: left"></div>
+						</div>
+						<div class="milestone">
+							<div class="title">Defeat Monsters</div>
+							<div class="desc">Unlocks once the specified number of monsters have been defeated today</div>
+							<!-- <div>Current Stat: 9,492,020</div> -->
+							<div class="milestone_step">
+								<div class="milestone_number">1,000,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 100%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Audio Production\">Audio Production</a>
+									</div>
+									<div class="milestone_deal_will_unlock">Milestone Reached!<br>Deal will unlock at 10am Pacific Time</div>
+									<div class="milestone_game_logo">
+										<a href="http://store.steampowered.com/app/319990/">
+											<img src="http://cdn.akamai.steamstatic.com/steam/apps/319990/header.jpg?t=1432655911">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="milestone_step">
+								<div class="milestone_number">2,000,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 100%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Open World\">Open World</a>
+										<a href="http://store.steampowered.com/tag/en/Superhero\">Superhero</a>
+										<br><a href="http://store.steampowered.com/tag/en/Adventure\">Adventure</a>
+									</div>
+									<div class="milestone_deal_will_unlock">Milestone Reached!<br>Deal will unlock at 10am Pacific Time</div>
+									<div class="milestone_game_logo">
+										<a href="http://store.steampowered.com/app/267550/">
+											<img src="http://cdn.akamai.steamstatic.com/steam/apps/267550/header.jpg?t=1432655911">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="milestone_step">
+								<div class="milestone_number">3,000,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 100%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Boardgame\">Boardgame</a>
+										<a href="http://store.steampowered.com/tag/en/Strategy\">Strategy</a>
+										<br><a href="http://store.steampowered.com/tag/en/Anime\">Anime</a>
+									</div>
+									<div class="milestone_deal_will_unlock">Milestone Reached!<br>Deal will unlock at 10am Pacific Time</div>
+									<div class="milestone_game_logo">
+										<a href="http://store.steampowered.com/app/282800/">
+											<img src="http://cdn.akamai.steamstatic.com/steam/apps/282800/header.jpg?t=1432655911">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div style="clear: left"></div>
+						</div>
+						<div class="milestone">
+							<div class="title">Defeat Bosses</div>
+							<div class="desc">Unlocks once the specified number of boss monsters have been defeated today</div>
+							<!-- <div>Current Stat: 91,471</div> -->
+							<div class="milestone_step">
+								<div class="milestone_number">50,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 100%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Strategy\">Strategy</a>
+										<a href="http://store.steampowered.com/tag/en/Building\">Building</a>
+										<br><a href="http://store.steampowered.com/tag/en/Sandbox\">Sandbox</a>
+									</div>
+									<div class="milestone_deal_will_unlock">Milestone Reached!<br>Deal will unlock at 10am Pacific Time</div>
+									<div class="milestone_game_logo">
+										<a href="http://store.steampowered.com/app/285920/">
+											<img src="http://cdn.akamai.steamstatic.com/steam/apps/285920/header.jpg?t=1432655911">
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class="milestone_step">
+								<div class="milestone_number">150,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 41%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Strategy\">Strategy</a>
+										<a href="http://store.steampowered.com/tag/en/Simulation\">Simulation</a>
+										<br><a href="http://store.steampowered.com/tag/en/Space\">Space</a>
+									</div>
+									<div class="milestone_status">Milestone Not Yet Reached</div>
+								</div>
+							</div>
+							<div class="milestone_step">
+								<div class="milestone_number">250,000</div>
+								<div class="milestone_progress"><div class="progress_indicator" style="width: 0%"><img src="http://steamcommunity-a.akamaihd.net/public/images/blank.gif"></div></div>
+
+								<div class="milestone_game">
+									<div class="milestone_tag">
+										<a href="http://store.steampowered.com/tag/en/Naval\">Naval</a>
+										<a href="http://store.steampowered.com/tag/en/Pirates\">Pirates</a>
+										<br><a href="http://store.steampowered.com/tag/en/RPG\">RPG</a>
+									</div>
+									<div class="milestone_status">Milestone Not Yet Reached</div>
+								</div>
+							</div>
+							<div style="clear: left"></div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="section_deals">
+					<div class="title"><span>Unlocked Deals</span></div>
+					<p>These special deals were unlocked by the community by achieving milestones yesterday. Help complete the milestones above to unlock more deals tomorrow.</p>
+
+					<div class="deals">
+						<div class="title_block">
+							<div class="title">Today's Unlocked Deals</div>
+							<div class="time_display">
+								44:34:49				</div>
+								<div class="time_remaining">Deals end in: </div>
+								<br clear="both">
+							</div>
+
+
+							<div class="deals_list">
+
+								<!-- Repeat this section with unlocked deals -->
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/39500/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/39500/header.jpg?t=1432655911"></a>
+									<span>80%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/204530/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/204530/header.jpg?t=1432655911"></a>
+									<span>75%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/222730/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/222730/header.jpg?t=1432655911"></a>
+									<span>75%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/235210/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/235210/header.jpg?t=1432655911"></a>
+									<span>70%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/248310/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/248310/header.jpg?t=1432655911"></a>
+									<span>70%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/253330/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/253330/header.jpg?t=1432655911"></a>
+									<span>66%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/298480/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/298480/header.jpg?t=1432655911"></a>
+									<span>75%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/321360/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/321360/header.jpg?t=1432655911"></a>
+									<span>50%</span>
+								</div>
+								<div class="deal_game">
+									<a href="http://store.steampowered.com/app/325420/"><img src="http://cdn.akamai.steamstatic.com/steam/apps/325420/header.jpg?t=1432655911"></a>
+									<span>60%</span>
+								</div>
+								
+
+								<!-- End repeat -->
+
+								<br clear="both">
+
+							</div>
+
+							<div class="no_deals" style="display: none;">No deals unlocked yet. Join the Monster Summer Game to help defeat monsters and unlock special deals for tomorrow.</div>
+
+
+						</div>
+
+					</div>
+
+					<div class="section_faq">
+						<div class="title"><span>Frequently Asked Questions</span></div>
+
+						<div class="faq_left">
+							<div class="faq_q">Does the game go on forever?</div>
+							<div class="faq_a"><p>At 9am Pacific time each day, all game sessions in the Monster Summer Game will end. All players can then join a new game, beginning with attacking the level 1 enemies again. When you start a new game, you will start with special badge points that you can spend on abilities. The amount of badge points you get is based on the maximum boss level you’ve completed in the game on any previous day, plus the level of your Steam Summer Sale badge.</p>
+								<p>The Monster Summer Game will be available to play until June 20th at 10am PDT.</p>
+							</div>
+
+							<div class="faq_q">Can I die in the game?</div>
+							<div class="faq_a"><p>Yes, you have limited number of health points and the enemy monsters are doing damage to you. If your health points reach zero, you will die. Once dead, you can click to respawn in 5 seconds, or you will respawn automatically in five minutes--even when you are not signed in to Steam.</p></div>
+
+							<div class="faq_q">Can I join a game that is already in progress?</div>
+							<div class="faq_a"><p>When you click to start a game, you will be matched up with other players starting out at level 0. If you have a friend in an active game, you may join that game if you have previously achieved a similar level or higher than the game you are joining.</p></div>
+
+						</div>
+
+
+						<div class="faq_right">
+							<div class="faq_q">What happens to the game when I close Steam?</div>
+							<div class="faq_a"><p>Once you’ve joined a game session (which you accomplish by clicking the huge green ‘play now’ button near the top of this page) then you are in the game for the day unless you specifically choose to join a different game. While in a game, you will collect gold from any monster killed in your lane, whether you helped damage them or not.</p></div>
+
+							<div class="faq_q">What is the Monster Summer Game badge?</div>
+							<div class="faq_a"><p>Once you join a game session in the Monster Summer Game, you'll earn a new Monster Summer Game badge on your Steam profile. This badge will automatically level up to the highest boss level you’ve completed in the Monster Summer game.</p></div>
+
+							<div class="faq_q">What does the Summer Sale badge and Monster Game badge get me?</div>
+							<div class="faq_a"><p>Each level of your Summer Sale badge and each 10 levels of your Monster Game badge will get you a special Badge Point to spend when you start a Monster Summer Game. These points can be used to buy special abilities to help you and your team.</p></div>
+
+						</div>
+						<br clear="both">
+
+					</div>
+
+					<a name="FAQ"></a><div class="section_faq">
+					<div class="title"><span>More Frequently Asked Questions</span></div>
+
+					<div class="faq_left">
+						<div class="faq_q">What are trading cards?</div>
+						<div class="faq_a"><p>Steam Trading Cards are virtual cards earned by buying and playing games on Steam that can be crafted into game badges that grant community rewards.</p>
+							<p>Get an <a href="http://steamcommunity.com/tradingcards/">introduction to trading cards</a></p></div>
+
+							<div class="faq_q">How do I get the Summer Sale badge?</div>
+							<div class="faq_a"><p>Once you’ve collected the entire set of cards you can craft them into the Summer Sale badge to show off on your profile. From your Badges page, select a ready to craft badge to view its details and click on the blue 'Craft a Badge' button.</p>
+								<p>View <a href="http://steamcommunity.com/my/badges/">your Summer Sale badge page</a></p></div>
+
+								<div class="faq_q">What do I get when I craft the badge?</div>
+								<div class="faq_a"><p>Crafting the Summer Sale badge earns you an emoticon and profile background. All rewards are tradable and marketable. Collecting and crafting another set of cards will level up your badge and earn you more items. Each time you craft a badge your Steam Level will also increase.</p></div>
+
+								<div class="faq_q">And the foil badge?</div>
+								<div class="faq_a"><p>Crafting the foil Summer Sale badge earns you extra Steam Level XP, plus an emoticon and profile background.</p></div>
+
+								<div class="faq_q">What is unique to this badge?</div>
+								<div class="faq_a"><p>During the sale there is no limit to the number of times you can upgrade this badge. The Summer Sale badge will drop a set of one emoticon and background each time you craft a new level.</p>
+									<p>Unlike previous badges, once the sale ends the cards will disappear. Make sure to trade and craft your badges before June 22nd 10am PDT.</p></div>
+
+									<div class="faq_q">Got more questions?</div>
+									<div class="faq_a"><p>Check out the <a href="http://steamcommunity.com/tradingcards/faq/">full Trading Cards FAQ</a></p></div>
+
+								</div>
+
+								<div class="faq_right">
+									<div class="faq_q">How do I get Summer Sale trading cards?</div>
+									<div class="faq_a"><p>Summer Sale trading cards are only available during the Monster Summer Sale. There are five ways to get the cards:</p></div>
+
+									<div class="faq_subset">
+										<div class="faq_q first">Craft a game badge</div>
+										<div class="faq_a"><p>Starting June 1st, crafting a game badge earned you a Summer Sale trading card rather than a coupon, so if you crafted a badge in the last week you’re already ahead of the game. During the sale, each game badge you craft will get you an additional Summer Sale trading card.</p></div>
+
+										<div class="faq_q">Make a purchase</div>
+										<div class="faq_a"><p>As an extra reward for purchasing, for every $10 USD spent during the sale, you’ll receive a Summer Sale trading card. From your Summer Sale badge page select “How do I get more cards?” to track your purchasing progress.</p></div>
+
+										<div class="faq_q">Play the Monster Summer Game</div>
+										<div class="faq_a"><p>If you’re Steam Level 8 and above, you’ll get a Summer Sale trading card at random intervals while playing, up to three per 24-hour period. (If you reach Steam Level 8 before the end of the sale, you’ll be granted the cards you earned by playing the Monster Summer Game).</p></div>
+
+										<div class="faq_q">Trade for them</div>
+										<div class="faq_a"><p>That’s why they’re called trading cards! Find friends with other cards and make trades. Your Monster Card badge page shows which friends have the cards you need.</p></div>
+
+										<div class="faq_q">Buy them from the Community Market</div>
+										<div class="faq_a"><p>Sell the cards you don’t need and buy the ones you do, all with other Community members. Turn those duplicate cards into Steam Wallet funds to buy games.</p>
+											<p>View the <a href="http://steamcommunity.com/market/">Community market</a>.</p></div>
+										</div>
+
+									</div>
+
+									<br clear="both">
+
+								</div>
+
+								<div class="section_credits">
+									<div class="title"><span>Credits &amp; Acknowledgements</span></div>
+									<p>As you can probably tell from the style of the summer game, we’ve been kind of obsessed with a few clicker games that have become popular. It started a while ago with Cookie Clicker, then with <a href="http://store.steampowered.com/app/346900/">AdVenture Capitalist</a> and more recently with <a href="http://store.steampowered.com/app/363970/">Clicker Heroes</a> (which has roughly 56 Trillion players on Steam). The Monster Summer Game is a bit of an homage to those clicker games as well as old pixel artwork from generations of past favorites.</p>
+									<p>With the Monster Summer Game, we're also trying to take the opportunity to highlight as many of the great titles available on Steam as we can. One of the ways we're doing this is by utilizing the Steam Emoticons provided by a few titles and using them as ability icons within the Monster Summer Game. If you're interested in learning more about the games behind these icons, check out the list here.</p>
+
+									<div class="credits_left">
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/244710-%3Ashelterwildfire%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:shelterwildfire:"></a>
+											<a href="http://store.steampowered.com/app/244710/" class="name">Shelter</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/330450-%3Awaterrune%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:waterrune:"></a>
+											<a href="http://store.steampowered.com/app/330450/" class="name">Runes of Brennos</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/303690-%3AFateTree%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:FateTree:"></a>
+											<a href="http://store.steampowered.com/app/303690/" class="name">FATE: The Cursed King</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/288060-%3AWisp%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:Wisp:"></a>
+											<a href="http://store.steampowered.com/app/288060/" class="name">Whispering Willows</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/346810-%3Alike_king%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:like_king:"></a>
+											<a href="http://store.steampowered.com/app/346810/" class="name">Pre-Civilization Marble Age</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/295590-%3Ahgtreasure%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:hgtreasure:"></a>
+											<a href="http://store.steampowered.com/app/295590/" class="name">Hero Generations</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/263880-%3Agoldenmilkminer%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:goldenmilkminer:"></a>
+											<a href="http://store.steampowered.com/app/263880/" class="name">Aqua Kitty - Milk Mine Defender</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/239220-%3Acoinz%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:coinz:"></a>
+											<a href="http://store.steampowered.com/app/239220/" class="name">The Mighty Quest For Epic Loot</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/270450-%3Add_target%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:dd_target:"></a>
+											<a href="http://store.steampowered.com/app/270450/" class="name">Robot Roller-Derby Disco Dodgeball</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/214360-%3Atwteamrandom%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:twteamrandom:"></a>
+											<a href="http://store.steampowered.com/app/214360/" class="name">Tower Wars</a>
+										</div>
+
+									</div>
+
+									<div class="credits_middle">
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/228260-%3Ahourglass%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:hourglass:"></a>
+											<a href="http://store.steampowered.com/app/228260/" class="name">Fallen Enchantress: Legendary Heroes</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/294370-%3Ahealplz%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:healplz:"></a>
+											<a href="http://store.steampowered.com/app/294370/" class="name">Crowntakers</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/302650-%3Ahappycyto%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:happycyto:"></a>
+											<a href="http://store.steampowered.com/app/302650/" class="name">Cyto</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/277870-%3Alucky%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:lucky:"></a>
+											<a href="http://store.steampowered.com/app/277870/" class="name">Diehard Dungeon</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/243950-%3Agoldstack%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:goldstack:"></a>
+											<a href="http://store.steampowered.com/app/243950/" class="name">Divinity: Dragon Commander</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/25890-%3Aabomb%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:abomb:"></a>
+											<a href="http://store.steampowered.com/app/25890/" class="name">Hearts of Iron III</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/227480-%3Agmbomb%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:gmbomb:"></a>
+											<a href="http://store.steampowered.com/app/227480/" class="name">God Mode</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/35700-%3Ahealthvial%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:healthvial:"></a>
+											<a href="http://store.steampowered.com/app/35700/" class="name">Trine</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/253030-%3Asunportal%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:sunportal:"></a>
+											<a href="http://store.steampowered.com/app/253030/" class="name">Race The Sun</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/329130-%3Awormwarp%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:wormwarp:"></a>
+											<a href="http://store.steampowered.com/app/329130/" class="name">Reassembly</a>
+										</div>
+
+									</div>
+
+									<div class="credits_right">
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/252570-%3Aburned%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:burned:"></a>
+											<a href="http://store.steampowered.com/app/252570/" class="name">Depths of Fear :: Knossos</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href=" http://steamcommunity.com/market/listings/753/273070-%3AAlive%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:Alive:"></a>
+											<a href="http://store.steampowered.com/app/273070/" class="name">The Last Federation</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/308360-%3Alogiaim%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:logiaim:"></a>
+											<a href="http://store.steampowered.com/app/308360/" class="name">LogiGun</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/243780-%3Apjkaboom%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:pjkaboom:"></a>
+											<a href="http://store.steampowered.com/app/243780/" class="name">PixelJunk™ Monsters Ultimate</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/249990-%3Atheorb%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:theorb:"></a>
+											<a href="http://store.steampowered.com/app/249990/" class="name">FORCED</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/209670-%3Accgold%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:ccgold:"></a>
+											<a href="http://store.steampowered.com/app/209670/" class="name">Cortex Command</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/231430-%3Acritical%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:critical:"></a>
+											<a href="http://store.steampowered.com/app/231430/" class="name">Company of Heroes 2</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href=" http://steamcommunity.com/market/listings/753/293880-%3AFistpump%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:Fistpump:"></a>
+											<a href="http://store.steampowered.com/app/293880/" class="name">Dark Scavenger</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/338140-%3AVeneticaGoldCoin%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:VeneticaGoldCoin:"></a>
+											<a href="http://store.steampowered.com/app/338140/" class="name">Venetica</a>
+										</div>
+
+										<div class="icon_credit">
+											<a href="http://steamcommunity.com/market/listings/753/258010-%3Acooldown%3A" class="icon"><img src="http://cdn.steamcommunity.com//economy/emoticon/:cooldown:"></a>
+											<a href="http://store.steampowered.com/app/258010" class="name">Ring Runner: Flight of the Sages</a>
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+
+							<div id="footer_spacer"></div>
+							<div id="footer">
+								<div class="footer_content">
+									<span id="footerLogo"><img src="http://steamcommunity-a.akamaihd.net/public/images/skin_1/footerLogo_valve.png?v=1" width="96" height="26" border="0" alt="Valve Logo" /></span>
+									<span id="footerText">
+										&copy; Valve Corporation. All rights reserved. All trademarks are property of their respective owners in the US and other countries.<br/>Some geospatial data on this website is provided by <a target="_blank" href="https://steamcommunity.com/linkfilter/?url=http://www.geonames.org">geonames.org</a>.				<br>
+										<span class="valve_links">
+											<a href="http://store.steampowered.com/privacy_agreement/" target="_blank">Privacy Policy</a>
+											&nbsp; | &nbsp;<a href="http://www.valvesoftware.com/legal.htm" target="_blank">Legal</a>
+											&nbsp;| &nbsp;<a href="http://store.steampowered.com/subscriber_agreement/" target="_blank">Steam Subscriber Agreement</a>
+										</span>
+										
+									</span>
+								</div>
+							</div>
+						</body>
+						</html>

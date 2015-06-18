@@ -1,0 +1,1014 @@
+
+body {
+	background: #000;
+	margin: 0;
+	padding: 0;
+}
+.page_background {
+	background-position: center top;
+	background-repeat: no-repeat;
+}
+.chromeless .page_background {
+	background-position: center top;
+}
+
+/* Overview ================================ */
+.section_overview {
+	width: 948px;
+	height: 672px;
+	margin: 0px auto;
+	position: relative;
+}
+.section_monster {
+	width: 436px;
+	height: 388px;
+	display: inline-block;
+}
+.monster_ctn {
+	width: 436px;
+	height: 388px;
+	display: inline-block;
+}
+.monster_ctn .promo_creep {
+	bottom: 321px;
+	left: 231px;
+	position: absolute;
+	z-index: 9;
+}
+.monster_ctn .boss_ctn {
+	bottom: 363px;
+	width: 436px;
+	text-align: center;
+	position: absolute;
+	z-index: 8;
+}
+.monster_ctn .promo_boss_shadow {
+	top: 295px;
+	left: 121px;
+	position: absolute;
+	z-index: 7;
+}
+.monster_ctn .promo_creep_shadow {
+	top: 340px;
+	left: 243px;
+	position: absolute;
+	z-index: 7;
+}
+.section_play {
+	width: 464px;
+	text-align: center;
+	height: 388px;
+	display: inline-block;
+	vertical-align: bottom;
+}
+.section_play .logo {
+	margin-top: 40px;
+	display: inline-block;
+}
+.section_play .current_game,
+.section_play .new_game {
+	margin-top: 75px;
+	margin-bottom: 10px;
+}
+.section_play .current_game .start_new {
+	font-family: 'Press Start 2P', arial, sans-serif;
+	font-size: 8px;
+	color: #fff;
+	}
+	.section_play .current_game .start_new:lang(ja), /* Japanese */
+	.section_play .current_game .start_new:lang(zh-cn), /* Simplified Chinese */
+	.section_play .current_game .start_new:lang(zh-tw), /* Traditional Chinese */
+	.section_play .current_game .start_new:lang(ko), /* Korean */
+	.section_play .current_game .start_new:lang(th) /* Thai */
+		{
+		font-size: 10px;
+	}
+
+.section_play .current_game .start_new a {
+	text-decoration: underline;
+	color: #fff;
+}
+.section_play .main_btn,
+.section_yours .signin_btn {
+	background-color: #8aaf05;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	color: #d9ff54;
+	border: 2px solid #a3cf06;
+	font-size: 16px;
+	text-align: center;
+	cursor: pointer;
+	display: inline-block;
+	box-shadow: 2px 2px 0px #000;
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.5);
+}
+.section_play .main_btn:hover,
+.section_yours .signin_btn:hover {
+	background-color: #a3cf06;
+	color: #fff;
+}
+.section_play .main_btn span,
+.section_yours .signin_btn span {
+	padding: 0px 15px;
+	line-height: 32px;
+}
+.section_play .player_count {
+	font-size: 13px;
+	color: #fff;
+	text-align: center;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	line-height: 17px;
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3);
+}
+.section_status {
+
+}
+.section_yours {
+	background-color: #4f463d;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/stats_bg.png');
+	background-repeat: repeat-x;
+	width: 600px;
+	height: 267px;
+	margin-left: 16px;
+	float: left;
+	box-shadow: 4px 4px 0 #000;
+}
+.section_yours .signin {
+	padding: 70px 16px 16px 16px;
+	text-align: center;
+
+	color: #d2baa3;
+	font-family: 'Motiva Sans', Arial, Helvetica, sans-serif;
+	text-shadow: 1px 1px 0 rgba( 0, 0, 0, 0.5 );
+	font-size: 16px;
+}
+.friends_games .title,
+.your_stats .title,
+.section_today .title {
+	font-family: 'Press Start 2P', arial, sans-serif;
+	font-size: 16px;
+	color: #fff;
+	margin-bottom: 9px;
+}
+.friends_games
+{
+	padding: 11px 16px 16px 16px;
+}
+.friends_games_area {
+	background-color: #3d362f;
+	background-color: rgba( 61, 54, 47, 0.8 );
+	padding: 8px;
+	height: 32px;
+}
+.friends_games_area .friends {
+	float: left;
+	color: #ad9e86;
+}
+.friends_games_area .friends .friend {
+	float: left;
+	margin-right: 4px;
+}
+.friends_games_area .see_friends_btn {
+	background-color: #8aaf05;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	color: #d9ff54;
+	border: 2px solid #a3cf06;
+	font-size: 8px;
+	text-align: center;
+	cursor: pointer;
+	display: inline-block;
+	box-shadow: 2px 2px 0px #000;
+	text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.2);
+	float: right;
+	}
+	.friends_games_area .see_friends_btn:lang(ja), /* Japanese */
+	.friends_games_area .see_friends_btn:lang(zh-cn), /* Simplified Chinese */
+	.friends_games_area .see_friends_btn:lang(zh-tw), /* Traditional Chinese */
+	.friends_games_area .see_friends_btn:lang(ko), /* Korean */
+	.friends_games_area .see_friends_btn:lang(th) /* Thai */
+		{
+		font-size: 10px;
+	}
+
+.friends_games_area .see_friends_btn:hover {
+	background-color: #a3cf06;
+	color: #fff;
+}
+.friends_games_area .see_friends_btn span {
+	padding: 0px 15px;
+	line-height: 28px;
+}
+.your_stats {
+	padding: 16px;
+	padding-top: 0px;
+}
+	.your_stats .stat_ctn {
+		background: #3d362f;
+		height: 130px;
+		padding-left: 8px;
+	}
+	.your_stats .stat_ctn .stat {
+		background: #2a2624;
+		color: #8f816e;
+		font-size: 8px;
+		font-family: 'Press Start 2P', arial, sans-serif;
+		float: left;
+		width: 116px;
+		margin: 8px 8px 8px 0px;
+		padding: 4px 8px 0px 8px;
+		line-height: 12px;
+		height: 50px;
+		position: relative;
+	}
+	.your_stats .stat_ctn .stat:lang(ja), /* Japanese */
+	.your_stats .stat_ctn .stat:lang(zh-cn), /* Simplified Chinese */
+	.your_stats .stat_ctn .stat:lang(zh-tw), /* Traditional Chinese */
+	.your_stats .stat_ctn .stat:lang(ko), /* Korean */
+	.your_stats .stat_ctn .stat:lang(th) /* Thai */
+		{
+		font-size: 10px;
+	}
+
+.your_stats .stat_ctn .stat .tooltip {
+		position: absolute;
+		right: 10px;
+		bottom: 4px;
+	}
+
+.your_stats .stat_ctn .stat span {
+		font-size: 16px;
+		color: #fff;
+		line-height: 24px;
+		position: absolute;
+		top: 28px;
+	}
+	.your_stats .stat_ctn .summer_sale_badge {
+		position: relative;
+		background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/badge_bg.png');
+		background-repeat: no-repeat;
+		/*border: 1px solid #212121;
+		border-radius: 3px;
+		*/
+
+		padding: 12px 4px;
+		height: 34px;
+		width: 265px;
+		display: inline-block;
+		margin-right: 4px;
+	}
+	.your_stats .stat_ctn .summer_sale_badge .badge_icon {
+		position: absolute;
+		top: 5px;
+		left: 2px;
+	}
+	.your_stats .stat_ctn .summer_sale_badge .badge_icon img {
+		width: 50px;
+		height: 50px;
+	}
+	.your_stats .stat_ctn .summer_sale_badge .badge_description {
+		font-size: 12px;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		padding-left: 54px;
+		padding-top: 3px;
+	}
+	.your_stats .stat_ctn .summer_sale_badge .badge_description .name {
+		font-family: 'Press Start 2P', arial, sans-serif;
+		font-size: 8px;
+		line-height: 17px;
+	}
+	.your_stats .stat_ctn .summer_sale_badge .badge_description .level {
+		font-family: 'Press Start 2P', arial, sans-serif;
+		font-size: 8px;
+	}
+
+.badges {
+	color: #8e806d;
+}
+	.badges .left_badge {
+		float: left;
+		width: 270px;
+	}
+	.badges .right_badge {
+		float: left;
+		width: 270px;
+	}
+	.badges img {
+		display: inline-block;
+	}
+	.badges span {
+		display: inline-block;
+		vertical-align: top;
+		padding-top: 7px;
+		padding-left: 4px;
+	}
+
+.section_today {
+	background-color: #4f463d;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/stats_bg.png');
+	background-repeat: no-repeat;
+	width: 260px;
+	height: 240px;
+	float: left;
+	margin-left: 16px;
+	padding: 11px 16px 16px 16px;
+	box-shadow: 4px 4px 0 #000;
+}
+.section_today .your_game {
+	font-size: 8px;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	color: #8f816e;
+	margin-bottom: 4px;
+}
+.section_today .stat {
+	background: #2a2624;
+	background-color: rgba( 61, 54, 47, 0.8 );
+	color: #8f816e;
+	font-size: 8px;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	float: left;
+	width: 112px;
+	padding: 8px;
+	line-height: 10px;
+	}
+	.section_today .stat:lang(ja), /* Japanese */
+	.section_today .stat:lang(zh-cn), /* Simplified Chinese */
+	.section_today .stat:lang(zh-tw), /* Traditional Chinese */
+	.section_today .stat:lang(ko), /* Korean */
+	.section_today .stat:lang(th) /* Thai */
+		{
+		font-size: 12px;
+	}
+
+.section_today .stat.two {
+	margin-left: 4px;
+}
+.section_today .stat span {
+	font-size: 16px;
+	color: #fff;
+	line-height: 26px;
+}
+.section_today .summary_milestones {
+	font-size: 8px;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	color: #8f816e;
+	margin-top: 20px;
+	margin-bottom: 4px;
+	line-height: 10px;
+	}
+	.section_today .summary_milestones:lang(ja), /* Japanese */
+	.section_today .summary_milestones:lang(zh-cn), /* Simplified Chinese */
+	.section_today .summary_milestones:lang(zh-tw), /* Traditional Chinese */
+	.section_today .summary_milestones:lang(ko), /* Korean */
+	.section_today .summary_milestones:lang(th) /* Thai */
+		{
+		font-size: 12px;
+		line-height: 15px;
+	}
+
+.milestone_indicators img {
+	float: left;
+	margin-right: 4px;
+	margin-bottom: 4px;
+}
+.milestone_indicators img:nth-child(6) {
+	margin-right: 0px;
+}
+
+/* HOW IT WORKS ================================ */
+
+.section_how_it_works {
+	width: 948px;
+	height: 687px;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/how_it_works_bg.png?v=3');
+	background-repeat: no-repeat;
+	margin: 0px auto;
+}
+	.section_how_it_works .title {
+		font-family: 'Press Start 2P', arial, sans-serif;
+		font-size: 16px;
+		color: #e0b11d;
+		text-shadow: 2px 2px 0px #000;
+		line-height: 23px;
+	}
+	.section_how_it_works>.title {
+		text-align: center;
+		padding-top: 14px;
+		display: block;
+		height: 46px;
+	}
+	.section_how_it_works .title span {
+		background-color: #54430b;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+	.section_how_it_works p {
+		margin-top: 0px;
+	}
+	.section_how_it_works p,
+	.section_how_it_works li {
+		color: #ad9e86;
+	}
+.section_hiw_left {
+
+	margin-left: 16px;
+	width: 418px;
+	padding: 16px;
+	float: left;
+}
+	.section_hiw_left .one {
+
+		height: 457px;
+		margin-bottom: 16px;
+	}
+		.section_hiw_left .one img {
+			margin-bottom: 16px;
+		 }
+	.section_hiw_left .two {
+
+		height: 115px;
+	}
+.section_hiw_right {
+
+	margin-left: 16px;
+	width: 418px;
+	padding: 16px;
+	float: left;
+}
+	.section_hiw_right .one {
+
+		height: 199px;
+		margin-bottom: 16px;
+	}
+		.section_hiw_right .one p {
+			width: 240px;
+		}
+	.section_hiw_right .two {
+
+		height: 195px;
+		margin-bottom: 16px;
+	}
+	.section_hiw_right .three {
+
+		height: 170px;
+		margin-bottom: 16px;
+		position: relative;
+	}
+	.milestone_btn {
+		background-color: #884691;
+		font-family: 'Press Start 2P', arial, sans-serif;
+		color: #ee7aff;
+		border: 2px solid #a554b1;
+		font-size: 8px;
+		text-align: center;
+		cursor: pointer;
+		display: inline-block;
+
+		box-shadow: 2px 2px 0px #000;
+		}
+		.milestone_btn:lang(ja), /* Japanese */
+		.milestone_btn:lang(zh-cn), /* Simplified Chinese */
+		.milestone_btn:lang(zh-tw), /* Traditional Chinese */
+		.milestone_btn:lang(ko), /* Korean */
+		.milestone_btn:lang(th) /* Thai */
+		{
+		font-size: 12px;
+	}
+
+.three .milestone_btn {
+		position: absolute;
+		bottom: 16px;
+	}
+	.milestone_btn:hover {
+		background-color: #a554b1;
+		color: #fff;
+	}
+	.milestone_btn span {
+		padding: 0px 15px;
+		line-height: 32px;
+	}
+
+
+/* Milestones ================================ */
+
+.section_milestones
+{
+	width: 948px;
+	min-height: 657px;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestones_bg.png');
+	background-repeat: no-repeat;
+	margin: 0px auto;
+	background-color: #1e1a19;
+	padding-bottom: 24px;
+}
+	.section_milestones .title {
+		font-family: 'Press Start 2P', arial, sans-serif;
+		font-size: 16px;
+		color: #ed79ff;
+		text-shadow: 2px 2px 0px #000;
+		display: block;
+		padding-top: 12px;
+		height: 28px;
+	}
+	.section_milestones>.title {
+		height: 28px;
+		padding-top: 20px;
+		text-align: center;
+	}
+	.section_milestones .title span {
+		background-color: #481746;
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+	.section_milestones>p {
+		color: #ccc9c0;
+		font-size: 16px;
+		width: 742px;
+		margin-left: 94px;
+		height: 78px;
+		text-align: center;
+		margin-top: 4px;
+		margin-bottom: 0px;
+	}
+	.section_milestones .instructions {
+		margin-left: 16px;
+		padding-top: 16px;
+	}
+	.section_milestones .instructions p {
+		color: #ed79ff;
+		font-size: 16px;
+		display: block;
+		width: 200px;
+		float: left;
+		margin-top: -2px;
+	}
+	.section_milestones .instructions div {
+		width: 270px;
+		height: 137px;
+		float: left;
+		padding-left: 16px;
+	}
+	.section_milestones .instructions span {
+		font-size: 32px;
+		color: #ee7aff;
+		font-family: 'Press Start 2P', arial, sans-serif;
+		display: block;
+		float: left;
+		margin-right: 8px;
+	}
+	.section_milestones .instructions .two {
+		margin-left: 29px;
+	}
+	.section_milestones .instructions .three {
+		margin-left: 29px;
+	}
+.milestones {
+	border: 2px solid #a554b1;
+	background-color: #2a2624;
+	margin: 36px 24px 0px 24px;
+}
+.milestones .title_block {
+	background: #a554b1;
+	margin: 2px;
+}
+	.milestones .title_block .title {
+		font-size: 16px;
+		float: left;
+		color: #2a2624;
+		text-shadow: none;
+		padding-left: 8px;
+	}
+	.milestones .title_block .time_remaining {
+		font-size: 8px;
+		float: right;
+		color: #2a2624;
+		padding-top: 14px;
+		font-family: 'Press Start 2P', arial, sans-serif;
+		padding-right: 8px;
+	}
+	.milestones .title_block .time_remaining:lang(ja), /* Japanese */
+	.milestones .title_block .time_remaining:lang(zh-cn), /* Simplified Chinese */
+	.milestones .title_block .time_remaining:lang(zh-tw), /* Traditional Chinese */
+	.milestones .title_block .time_remaining:lang(ko), /* Korean */
+	.milestones .title_block .time_remaining:lang(th) /* Thai */
+		{
+		font-size: 10px;
+	}
+
+.milestones .title_block .time_display {
+		font-size: 16px;
+		float: right;
+		color: #2a2624;
+		padding-top: 14px;
+		font-family: 'Press Start 2P', arial, sans-serif;
+		padding-right: 8px;
+	}
+.milestone {
+	margin: 16px;
+}
+
+	.milestone .title {
+		font-size: 16px;
+		font-family: 'Press Start 2P', arial, sans-serif;
+		color: white;
+		padding-top: 10px;
+		text-align: left;
+		height: 21px;
+	}
+
+	.milestone .desc {
+		padding-bottom: 10px;
+		font-size: 13px;
+		color: #ad9e86;
+	}
+
+	.milestone_step {
+		position: relative;
+		float: left;
+		width: 285px;
+		margin-right: 3px;
+	}
+
+	.milestone_step:nth-child(3) {
+		/* margin-right: 0px; */
+	}
+		.milestone_step .milestone_number {
+			font-size: 8px;
+			font-family: 'Press Start 2P', arial, sans-serif;
+			color: #80746f;
+			text-align: right;
+			margin-bottom: 4px;
+		}
+		.milestone_step .milestone_progress {
+			background-color: #403a37;
+			height: 8px;
+			width: 277px;
+			padding: 4px;
+		}
+		.milestone_step .milestone_progress .progress_indicator {
+			background-color: #ee7aff;
+			height: 8px;
+			width: 40%;
+			position: relative;
+		}
+		.milestone_tag {
+			text-align: center;
+			font-size: 8px;
+			font-family: 'Press Start 2P', arial, sans-serif;
+			margin-top: 4px;
+		}
+			.milestone_tag a {
+				background: #2a2624;
+				color: #8f816e;
+				padding: 4px 6px 4px 8px;
+				margin-top: 4px;
+				display: inline-block;
+			}
+		.milestone_game {
+			width: 285px;
+			height: 180px;
+			background: #1e1a19;
+			position: relative;
+		}
+		.milestone_deal_will_unlock {
+			position: absolute;
+			top: 105px;
+			background: rgba( 0, 0, 0, 0.8 );
+			color: #ee7aff;
+			font-size: 12px;
+			padding: 4px 0px;
+			width: 285px;
+			z-index: 15;
+			text-align: center;
+		}
+		.milestone_game_logo {
+			position: absolute;
+			bottom: 0px;
+		}
+		.milestone_game_logo img {
+			margin-top: 9px;
+			width: 285px;
+		}
+	.milestone_status {
+		text-align: center;
+		display: block;
+		color: #ad9e86;
+		width: 285px;
+		top: 70px;
+		position: absolute;
+	}
+
+/* Unlocked Deals ================================ */
+
+.section_deals
+{
+	width: 948px;
+	min-height: 257px;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/deals_bg.png');
+	background-repeat: no-repeat;
+	margin: 0px auto;
+	background-color: #1e1a19;
+	padding-bottom: 24px;
+
+}
+.section_deals .title {
+	font-family: 'Press Start 2P', arial, sans-serif;
+	font-size: 16px;
+	color: #a3cf06;
+	text-shadow: 2px 2px 0px #000;
+	text-align: center;
+	padding-top: 27px;
+	display: block;
+	height: 28px;
+}
+.section_deals .title span {
+	background-color: #4b5e04;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.section_deals>p {
+	color: #ccc9c0;
+	font-size: 16px;
+	width: 655px;
+	margin-left: 140px;
+	height: 30px;
+	text-align: center;
+	margin-top: 4px;
+}
+.deals {
+	border: 2px solid #6a8704;
+	background-color: #2a2624;
+	margin: 36px 24px 0px 24px;
+}
+.deals .title_block {
+	background: #6a8704;
+	margin: 2px;
+}
+.deals .title_block .title {
+	font-size: 16px;
+	float: left;
+	color: #2a2624;
+	text-shadow: none;
+	padding-left: 8px;
+	padding-top: 12px;
+}
+.deals .title_block .time_remaining {
+	font-size: 8px;
+	float: right;
+	color: #2a2624;
+	padding-top: 14px;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	padding-right: 8px;
+	}
+	.deals .title_block .time_remaining:lang(ja), /* Japanese */
+	.deals .title_block .time_remaining:lang(zh-cn), /* Simplified Chinese */
+	.deals .title_block .time_remaining:lang(zh-tw), /* Traditional Chinese */
+	.deals .title_block .time_remaining:lang(ko), /* Korean */
+	.deals .title_block .time_remaining:lang(th) /* Thai */
+			{
+		font-size: 10px;
+	}
+.deals .title_block .time_display {
+	font-size: 16px;
+	float: right;
+	color: #2a2624;
+	padding-top: 14px;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	padding-right: 8px;
+}
+.deal_game {
+	width: 224px;
+	height: 140px;
+	float: left;
+	text-align: right;
+}
+.deal_game span {
+	background: #4c6b22;
+	color: #fff;
+	padding: 4px 6px;
+	margin-right: 4px;
+}
+.deal_game img {
+	width: 214px;
+	height: 100px;
+	margin: 4px;
+	margin-bottom: 1px;
+}
+.no_deals {
+	padding: 16px;
+	height: 50px;
+	color: #ccbab1;
+}
+
+/* FAQ ================================ */
+
+.section_faq
+{
+	width: 948px;
+	min-height: 657px;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/faq_bg.jpg?v=1');
+	background-repeat: no-repeat;
+	margin: 0px auto;
+	background-color: #2a2624;
+
+}
+.section_faq .title {
+	font-family: 'Press Start 2P', arial, sans-serif;
+	font-size: 16px;
+	color: #ccbab1;
+	text-shadow: 2px 2px 0px #000;
+	text-align: center;
+	padding-top: 27px;
+	display: block;
+	height: 28px;
+}
+.section_faq .title span {
+	background-color: #3b3532;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.faq_left {
+	width: 434px;
+	margin-left: 16px;
+	float: left;
+	padding-right: 16px;
+}
+.faq_right {
+	width: 450px;
+	margin-left: 16px;
+	float: left;
+}
+.faq_q {
+	color: #ccbab1;
+	font-size: 24px;
+	font-family: 'Motiva Sans Thin', Arial, Helvetica, sans-serif;
+	margin-top: 24px;
+	text-shadow: 1px 1px 1px #000;
+}
+.faq_q.first {
+	margin-top: 0px;
+}
+.faq_a {
+	color: #a89a91;
+	font-size: 14px;
+	font-family: 'Motiva Sans', Arial, Helvetica, sans-serif;
+	line-height: 21px;
+	text-shadow: 1px 1px 1px #000;
+}
+.faq_a p {
+	margin-top: 4px;
+}
+.faq_subset {
+	background: #1e1a19;
+	padding: 16px;
+}
+.faq_subset>.faq_q {
+	font-size: 18px;
+}
+.faq_subset>.faq_a {
+	font-size: 13px;
+}
+
+/* Join Friend Game ================================ */
+
+.friends_games_modal {
+	width: 650px;
+	max-height: 400px;
+	overflow-y: auto;
+}
+.friends_games_modal .friend_game {
+	background: #000;
+	margin-bottom: 4px;
+	color: #8f816e;
+	font-size: 8px;
+	font-family: 'Press Start 2P', "Lucida Console", Consolas, Arial;
+	padding: 4px;
+}
+.friends_games_modal  .join_ctn {
+	float: right;
+	display: block;
+}
+.join_btn {
+	background-color: #8aaf05;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	color: #d9ff54;
+	border: 2px solid #a3cf06;
+	font-size: 8px;
+	text-align: center;
+	cursor: pointer;
+	display: inline-block;
+	box-shadow: 2px 2px 0px #000;
+	float: right;
+}
+.join_btn span {
+	padding: 0px 15px;
+	line-height: 28px;
+}
+.join_btn:hover {
+	background-color: #a3cf06;
+	color: #fff;
+}
+.join_btn.disabled {
+	box-shadow: none;
+	background: #8f816e;
+	border: 2px solid #8f816e;
+	color: #3d362f;
+}
+
+.friends_games_modal .friend_status,
+.friends_games_modal .friend_level,
+.friends_games_modal .friend_number {
+	float: left;
+	display: block;
+	margin-right: 12px;
+	line-height: 13px;
+	margin-top: 4px;
+}
+.friends_games_modal .friend_status {
+	width: 90px;
+}
+.friends_games_modal .friend_level {
+	width: 70px;
+	text-align: center;
+}
+.friends_games_modal .friend_number {
+	width: 70px;
+	text-align: center;
+}
+.friends_games_modal .friend_avatar {
+	float: left;
+	display: block;
+	margin-right: 2px;
+}
+
+/* Credits ================================ */
+
+.section_credits
+{
+	width: 948px;
+	min-height: 657px;
+	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/credits_bg.png');
+	background-repeat: no-repeat;
+	margin: 0px auto;
+	background-color: #303c44;
+
+}
+.section_credits .title {
+	font-family: 'Press Start 2P', arial, sans-serif;
+	font-size: 16px;
+	color: #66c0f4;
+	text-shadow: 2px 2px 0px #000;
+	text-align: center;
+	padding-top: 27px;
+	display: block;
+	height: 28px;
+}
+.section_credits>p {
+	color: #ccc9c0;
+	font-size: 16px;
+	width: 740px;
+	margin-left: 77px;
+	text-align: center;
+	margin-top: 4px;
+}
+.section_credits>p a {
+	color: #fff;
+	text-decoration: underline;
+}
+.section_credits>p a:hover {
+	text-decoration: underline;
+	color: #66c0f4;
+}
+.section_credits .title span {
+	background-color: #334b59;
+	padding-left: 16px;
+	padding-right: 16px;
+}
+.credits_left {
+	width: 280px;
+	margin-left: 16px;
+	float: left;
+	padding-right: 16px;
+}
+.credits_middle {
+	width: 280px;
+	margin-left: 16px;
+	float: left;
+}
+.credits_right {
+	width: 280px;
+	margin-left: 16px;
+	float: left;
+}
+.icon_credit {
+	margin-bottom: 6px;
+}
+.icon_credit .icon {
+	display: inline-block;
+}
+.icon_credit .name {
+	display: inline-block;
+	vertical-align: top;
+	padding-top: 2px;
+	padding-left: 2px;
+}
