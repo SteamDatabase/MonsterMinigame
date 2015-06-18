@@ -80,7 +80,7 @@ class CTowerAttackLane
 		$Dps, 
 		$GoldDropped, 
 		array $ActivePlayerAbilities, 
-		$PlayerHpBuckets, 
+		array $PlayerHpBuckets, 
 		ETowerAttackElement $Element, 
 		$ActivePlayerAbilityDecreaseCooldowns, 
 		$ActivePlayerAbilityGoldPerClick 
