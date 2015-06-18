@@ -275,15 +275,18 @@ class CTowerAttackEnemy
 
 	public function ToArray()
 	{
-		return array(
+		$ReturnArray = array(
 			'id' => $this->GetId(),
 			'type' => $this->GetType(),
 			'hp' => $this->GetHp(),
 			'max_hp' => $this->GetMaxHp(),
 			'dps' => $this->GetDps(),
-			'timer' => $this->GetTimer(),
 			'gold' => $this->GetGold()
 		);
+		if ($this->GetTimer() !== null) {
+			$ReturnArray['timer'] = $this->GetTimer();
+		}
+		return $ReturnArray;
 	}
 
 	public function GetId()
@@ -362,7 +365,7 @@ class CTowerAttackGame
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
 		$this->GameId = 1;
-		$this->SetLevel( 1 );
+		$this->SetLevel( 0 );
 		$this->GenerateNewLanes();
 		$this->SetStatus( EMiniGameStatus::Running );
 		$this->TimestampGameStart = time();
