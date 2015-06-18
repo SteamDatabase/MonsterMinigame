@@ -279,24 +279,15 @@ CScenePreload.prototype.Tick = function()
 		this.m_bTriedInitializing = true;
 		console.log("Finished preloading.");
 
-		var builder = this.ParseProtobufFile();
-
 		// DO STUFF
 		this.m_cScriptsLoaded = 0;
 		this.m_cEmittersLoaded = 0;
 		this.m_cEmittersLoading = 0;
-		g_Server = new CServerInterface( builder );
+		g_Server = new CServerInterface( );
 
 		var gamescene = new CSceneGame( this.m_Manager );
 		this.m_Manager.EnterScene( gamescene );
 	}
-}
-
-CScenePreload.prototype.ParseProtobufFile = function()
-{
-	// Synchronously request this for now
-	var ProtoBuf = dcodeIO.ProtoBuf;
-	return ProtoBuf.loadProtoFile( '/assets/minigame/towerattack/messages.proto?v='+g_CacheKey );
 }
 
 window.g_cPendingRequests = 0;
@@ -617,4 +608,3 @@ CAudioManager.prototype.ToggleMusic = function( )
 		this.m_eleMusic.play();
 	}
 }
-

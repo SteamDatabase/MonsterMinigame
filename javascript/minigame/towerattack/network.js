@@ -4,7 +4,7 @@
 var g_bHalt = false;
 var g_IncludeGameStats = false;
 
-window.CServerInterface = function( builder )
+window.CServerInterface = function( )
 {
 	// Get token
 
@@ -12,13 +12,6 @@ window.CServerInterface = function( builder )
 
 	this.m_nLastTick = false
 	this.m_bRequestUpdates = false;
-	this.m_protobufMessageBuilder = builder;
-	this.m_protobuf_GetGameDataResponse = builder.build( "CTowerAttack_GetGameData_Response" );
-	this.m_protobuf_GetPlayerNamesResponse = builder.build( "CTowerAttack_GetPlayerNames_Response" );
-	this.m_protobuf_GetPlayerDataResponse = builder.build( "CTowerAttack_GetPlayerData_Response" );
-	this.m_protobuf_UseAbilitiesResponse = builder.build( "CTowerAttack_UseAbilities_Response" );
-	this.m_protobuf_ChooseUpgradeResponse = builder.build( "CTowerAttack_ChooseUpgrade_Response" );
-	this.m_protobuf_UseBadgePointsResponse = builder.build( "CTowerAttack_UseBadgePoints_Response" );
 
 	var instance = this;
 
@@ -33,7 +26,7 @@ CServerInterface.prototype.Connect = function( callback )
 
 	$J.ajax({
 		url: '/gettoken',
-		dataType: "json"
+		dataType: 'json'
 	}).success(function(rgResult){
 		if( rgResult.success == 1)
 		{
@@ -71,7 +64,7 @@ CServerInterface.prototype.GetGameData = function( callback, error, bIncludeStat
 	var rgParams = {
 		gameid: this.m_nGameID,
 		include_stats: ( bIncludeStats || g_IncludeGameStats ) ? 1 : 0,
-		format: 'protobuf_raw'
+		format: 'json'
 	};
 
 	var instance = this;
@@ -79,15 +72,8 @@ CServerInterface.prototype.GetGameData = function( callback, error, bIncludeStat
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'GetGameData', false ),
 		data: rgParams,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
-	}).success(function(rgResult){
-		var message = instance.m_protobuf_GetGameDataResponse.decode(rgResult);
-		var result = { 'response': message.toRaw( true, true ) };
-		callback( result );
-	} )
+		dataType: 'json'
+	}).success(callback)
 	.fail( error );
 }
 
@@ -102,21 +88,14 @@ CServerInterface.prototype.GetPlayerNames = function( callback, error, rgAccount
 
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
-		'format': "protobuf_raw",
+		'format': 'json',
 	};
 
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'GetPlayerNames', false ),
 		data: rgRequest,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
-	}).success(function(rgResult){
-		var message = instance.m_protobuf_GetPlayerNamesResponse.decode(rgResult);
-		var result = { 'response': message.toRaw( true, true ) };
-		callback( result );
-	} )
+		dataType: 'json'
+	}).success(callback)
 	.fail( error );
 }
 
@@ -126,7 +105,7 @@ CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTe
 		gameid: this.m_nGameID,
 		steamid: g_steamID,
 		include_tech_tree: (bIncludeTechTree) ? 1 : 0,
-		format: 'protobuf_raw'
+		format: 'json'
 	};
 
 	var instance = this;
@@ -134,15 +113,8 @@ CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTe
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'GetPlayerData', false ),
 		data: rgParams,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
-	}).success(function(rgResult){
-		var message = instance.m_protobuf_GetPlayerDataResponse.decode(rgResult);
-		var result = { 'response': message.toRaw( true, true ) };
-		callback( result );
-	} )
+		dataType: 'json'
+	}).success(callback)
 	.fail( error );
 }
 
@@ -155,20 +127,15 @@ CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
 		'access_token': instance.m_WebAPI.m_strOAuth2Token,
-		'format': "protobuf_raw",
+		'format': 'json',
 	};
 
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'UseAbilities', true ),
 		method: 'POST',
 		data: rgRequest,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
-	}).success(function(rgResult){
-		var message = instance.m_protobuf_UseAbilitiesResponse.decode(rgResult);
-		var result = { 'response': message.toRaw( true, true ) };
+		dataType: 'json'
+	}).success(function(result){
 		if ( result.response.player_data )
 		{
 			result.response.player_data.active_abilities_bitfield = result.response.player_data.active_abilities_bitfield ? parseInt( result.response.player_data.active_abilities_bitfield ) : 0;
@@ -194,20 +161,15 @@ CServerInterface.prototype.ChooseUpgrades = function( callback, upgrades )
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
 		'access_token': instance.m_WebAPI.m_strOAuth2Token,
-		'format': "protobuf_raw"
+		'format': 'json'
 	};
 
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'ChooseUpgrade', true ),
 		method: 'POST',
 		data: rgRequest,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
-	}).success(function(rgResult){
-		var message = instance.m_protobuf_ChooseUpgradeResponse.decode(rgResult);
-		var result = { 'response': message.toRaw( true, true ) };
+		dataType: 'json'
+	}).success(function(result){
 		if ( result.response.tech_tree )
 		{
 			result.response.tech_tree.unlocked_abilities_bitfield = result.response.tech_tree.unlocked_abilities_bitfield ? parseInt( result.response.tech_tree.unlocked_abilities_bitfield ) : 0;
@@ -233,20 +195,15 @@ CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
 		'access_token': instance.m_WebAPI.m_strOAuth2Token,
-		'format': "protobuf_raw"
+		'format': 'json'
 	};
 
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'UseBadgePoints', true ),
 		method: 'POST',
 		data: rgRequest,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
-	}).success(function(rgResult){
-		var message = instance.m_protobuf_UseBadgePointsResponse.decode(rgResult);
-		var result = { 'response': message.toRaw( true, true ) };
+		dataType: 'json'
+	}).success(function(result){
 		if ( result.response.tech_tree )
 		{
 			result.response.tech_tree.unlocked_abilities_bitfield = result.response.tech_tree.unlocked_abilities_bitfield ? parseInt( result.response.tech_tree.unlocked_abilities_bitfield ) : 0;
