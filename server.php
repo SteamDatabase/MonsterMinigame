@@ -94,7 +94,8 @@ class CTowerAttackServer
 
 	public function GetGame( $GameId )
 	{
-		return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
+		//TODO: return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
+		return $this->Games[1];
 	}
 }
 
