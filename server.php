@@ -70,10 +70,111 @@ class CTowerAttackLane
 	optional double active_player_ability_decrease_cooldowns = 7 [default = 1];
 	optional double active_player_ability_gold_per_click = 8 [default = 0];
 	*/
+	private $Enemies;
+	private $Dps;
+	private $GoldDropped;
+	private $ActivePlayerAbilities;
 	
-	public function __construct()
+	public function __construct(
+		array $Enemies, 
+		$Dps, 
+		$GoldDropped, 
+		array $ActivePlayerAbilities, 
+		$PlayerHpBuckets, 
+		ETowerAttackElement $Element, 
+		$ActivePlayerAbilityDecreaseCooldowns, 
+		$ActivePlayerAbilityGoldPerClick 
+	) {
+		$this->Enemies = $Enemies;
+		$this->Dps = $Dps;
+		$this->GoldDropped = $GoldDropped;
+		$this->ActivePlayerAbilities = $ActivePlayerAbilities;
+		$this->PlayerHpBuckets = $PlayerHpBuckets;
+		$this->Element = $Element;
+		$this->ActivePlayerAbilityDecreaseCooldowns = $ActivePlayerAbilityDecreaseCooldowns;
+		$this->ActivePlayerAbilityGoldPerClick = $ActivePlayerAbilityGoldPerClick;
+	}
+
+	public function GetEnemies()
 	{
-		
+		return $this->Enemies;
+	}
+
+	public function GetDps()
+	{
+		return $this->Dps;
+	}
+
+	public function GetGoldDropped()
+	{
+		return $this->GoldDropped;
+	}
+
+	public function GetActivePlayerAbilities()
+	{
+		return $this->ActivePlayerAbilities;
+	}
+
+	public function GetPlayerHpBuckets()
+	{
+		return $this->PlayerHpBuckets;
+	}
+
+	public function GetElement()
+	{
+		return $this->Element;
+	}
+
+	public function GetActivePlayerAbilityDecreaseCooldowns()
+	{
+		return $this->ActivePlayerAbilityDecreaseCooldowns;
+	}
+
+	public function GetActivePlayerAbilityGoldPerClick()
+	{
+		return $this->ActivePlayerAbilityGoldPerClick;
+	}
+}
+
+class CTowerAttackActiveAbility
+{
+	/*
+	optional uint32 accountid_caster = 1;
+	optional uint32 ability = 2;
+	optional uint32 timestamp_done = 3;
+	optional double multiplier = 4;
+	*/
+	private $AccountIdCaster;
+	private $Ability;
+	private $TimestampDone;
+	private $Multiplier;
+
+	public function __construct( $AccountIdCaster, $Ability, $TimestampDone, $Multiplier )
+	{
+		$this->AccountIdCaster = $AccountIdCaster;
+		$this->Ability = $Ability;
+		$this->TimestampDone = $TimestampDone;
+		$this->Multiplier = $Multiplier;
+	}
+
+	public function GetAccountIdCaster()
+	{
+		return $this->AccountIdCaster;
+	}
+
+	public function GetAbility()
+	{
+		return $this->Ability;
+	}
+
+	public function GetTimestampDone()
+	{
+		return $this->TimestampDone;
+	}
+
+	public function GetMultiplier()
+	{
+		return $this->Multiplier;
 	}
 }
 
