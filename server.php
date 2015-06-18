@@ -295,7 +295,7 @@ class CTowerAttackEnemy
 	public function ToArray()
 	{
 		$ReturnArray = array(
-			'id' => $this->GetGameId(),
+			'id' => $this->GetId(),
 			'type' => $this->GetType(),
 			'hp' => $this->GetHp(),
 			'max_hp' => $this->GetMaxHp(),
@@ -573,7 +573,12 @@ class CTowerAttackGame
 				0, //gold dropped
 				$ActivePlayerAbilities,
 				$PlayerHpBuckets,
-				ETowerAttackElement::Fire, //element
+				array_rand(array(
+					ETowerAttackElement::Fire,
+					ETowerAttackElement::Water,
+					ETowerAttackElement::Air,
+					ETowerAttackElement::Earth
+				)), //element
 				0, //decrease cooldown
 				0 //gold per click
 			);
