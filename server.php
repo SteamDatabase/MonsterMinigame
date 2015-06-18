@@ -16,6 +16,7 @@ class CTowerAttackServer
 	public $TickRate;
 	private $LastTick;
 	private $Socket;
+	private $LastGameId = 0;
 	private $Games;
 	
 	public function __construct( $Port )
@@ -29,8 +30,8 @@ class CTowerAttackServer
 		
 		l( 'Listening on port ' . $Port );
 		
-		$Game = new CTowerAttackGame;
-		$this->Games[$Game->GetId()] = $Game;
+		$Game = new CTowerAttackGame($this->LastGameId + 1);
+		$this->Games[$Game->GetGameId()] = $Game;
 	}
 
 	private function SendResponse( $Peer, $Response )
@@ -58,8 +59,8 @@ class CTowerAttackServer
 				case 'GetGameData':
 					$GameId = $Data['gameid'];
 					$Game = $this->GetGame( $GameId );
-					$Response = NULL;
-					if( $Game !== NULL ) {
+					$Response = null;
+					if( $Game !== null ) {
 						$Response = array(
 							'game_data' => $Game->ToArray(),
 							'stats' => array() //TODO
@@ -67,7 +68,25 @@ class CTowerAttackServer
 					}
 					$this->SendResponse( $Peer, $Response );
 					break;
+				case 'GetPlayerData':
+					$GameId = $Data['gameid'];
+					$SteamId = $Data['steamid'];
+					$Game = $this->GetGame( $GameId );
+					$Response = null;
+					if( $Game !== null ) {
+						$Player = $Game->GetPlayer( $SteamId );
+						if( $Player !== null ) {
+							$Response = array(
+								'player_data' => $Player->ToArray(),
+								'tech_tree' => array() //TODO
+							);
+						}
+					}
+					$this->SendResponse( $Peer, $Response );
+					break;
 				default:
+					// TODO: handle unknown methods
+					$this->SendResponse( $Peer, null );
 					break;
 			}
 			
@@ -276,7 +295,7 @@ class CTowerAttackEnemy
 	public function ToArray()
 	{
 		$ReturnArray = array(
-			'id' => $this->GetId(),
+			'id' => $this->GetGameId(),
 			'type' => $this->GetType(),
 			'hp' => $this->GetHp(),
 			'max_hp' => $this->GetMaxHp(),
@@ -296,7 +315,7 @@ class CTowerAttackEnemy
 
 	public function GetType()
 	{
-		return $this->Id;
+		return $this->Type;
 	}
 
 	public function GetHp()
@@ -325,6 +344,120 @@ class CTowerAttackEnemy
 	}
 }
 
+class CTowerAttackPlayer
+{
+	/*
+	optional double hp = 1;
+	optional uint32 current_lane = 2;
+	optional uint32 target = 3;
+	optional uint32 time_died = 4;
+	optional double gold = 5;
+	optional uint64 active_abilities_bitfield = 6;
+	repeated ActiveAbility active_abilities = 7;
+	optional double crit_damage = 8;
+	repeated Loot loot = 9;
+	*/
+
+	private $AccountId;
+	private $Hp;
+	private $CurrentLane;
+	private $Target;
+	private $TimeDied;
+	private $Gold;
+	private $ActiveAbilitiesBitfield;
+	private $ActiveAbilities = array();
+	private $CritDamage;
+	private $Loot;
+
+	public function __construct(
+		$AccountId,
+		$Hp,
+		$CurrentLane,
+		$Target,
+		$TimeDied,
+		$Gold,
+		$ActiveAbilitiesBitfield,
+		$ActiveAbilities,
+		$CritDamage,
+		$Loot
+	)
+	{
+		$this->AccountId = $AccountId;
+		$this->Hp = $Hp;
+		$this->CurrentLane = $CurrentLane;
+		$this->Target = $Target;
+		$this->TimeDied = $TimeDied;
+		$this->Gold = $Gold;
+		$this->ActiveAbilitiesBitfield = $ActiveAbilitiesBitfield;
+		$this->ActiveAbilities = $ActiveAbilities;
+		$this->CritDamage = $CritDamage;
+		$this->Loot = $Loot;
+	}
+
+	public function ToArray()
+	{
+		return array(
+			'hp' => $this->GetHp(),
+			'current_lane' => $this->GetCurrentLane(),
+			'target' => $this->GetTarget(),
+			'time_died' => $this->GetTimeDied(),
+			'gold' => $this->GetGold(),
+			'active_abilities_bitfield' => $this->GetActiveAbilitiesBitfield(),
+			'crit_damage' => $this->GetCritDamage()
+		);
+	}
+
+	public function GetAccountId()
+	{
+		return $this->AccountId;
+	}
+
+	public function GetHp()
+	{
+		return $this->Hp;
+	}
+
+	public function GetCurrentLane()
+	{
+		return $this->CurrentLane;
+	}
+
+	public function GetTarget()
+	{
+		return $this->Target;
+	}
+
+	public function GetTimeDied()
+	{
+		return $this->TimeDied;
+	}
+
+	public function GetGold()
+	{
+		return $this->Gold;
+	}
+
+	public function GetActiveAbilitiesBitfield()
+	{
+		return $this->ActiveAbilitiesBitfield;
+	}
+
+	public function GetActiveAbilities()
+	{
+		return $this->ActiveAbilities;
+	}
+
+	public function GetCritDamage()
+	{
+		return $this->CritDamage;
+	}
+
+	public function GetLoot()
+	{
+		return $this->Loot;
+	}
+}
+
 class CTowerAttackGame
 {
 	/*
@@ -339,9 +472,10 @@ class CTowerAttackGame
 	*/
 
 	private $AbilityQueue;
+	private $Players = array();
 	private $GameId;
-	private $Level;
-	private $Lanes;
+	private $Level = 0;
+	private $Lanes = array();
 	//private $Timestamp; - Use function instead?
 	private $Status;
 	//private $Events; - Not used, morning/evning deals
@@ -361,15 +495,29 @@ class CTowerAttackGame
 		return $this->LastMobId;
 	}
 	
-	public function __construct()
+	public function __construct($GameId)
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
-		$this->GameId = 1;
+		$this->GameId = $GameId;
+		//TODO: Set players correctly
+		$this->Players['76561197990586091'] = new CTowerAttackPlayer(
+			'76561197990586091', //steam id/account id, remember to cast (string)
+			rand(3000, 6000), //hp
+			1, //current lane
+			0, //target
+			time(), //time died (timestamp)
+			rand(1000, 5000), //gold
+			0, // active abilities bitfield (generate from active abilities?)
+			array(), // active abilities
+			0, // crit damage
+			array() // loot
+		);
+
 		$this->SetLevel( 0 );
 		$this->GenerateNewLanes();
 		$this->SetStatus( EMiniGameStatus::Running );
 		$this->TimestampGameStart = time();
-		l( 'Created game #' . $this->GetId() );
+		l( 'Created game #' . $this->GetGameId() );
 	}
 
 	public function ToArray()
@@ -384,7 +532,7 @@ class CTowerAttackGame
 		);
 	}
 
-	public function GetId()
+	public function GetGameId()
 	{
 		return $this->GameId;
 	}
@@ -403,20 +551,20 @@ class CTowerAttackGame
 	public function GenerateNewLanes()
 	{
 		$ActivePlayerAbilities = array();
-		$PlayerHpBuckets = array();
+		$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 300); // active players with health between 10 levels (bars) = team health
 
 		// Create 3 lanes
 		for ( $i = 0; 3 > $i; $i++ ) {
-			// Create 1 enemy
+			// Create 1 enemy in each lane
 			$Enemies = array();
 			$Enemies[] = new CTowerAttackEnemy(
 				$this->GetNextMobId(),
 				ETowerAttackEnemyType::Mob,
-				1, //hp
-				1, //max hp
+				rand(1, 10), //hp
+				10, //max hp
 				1, //dps
 				null, //timer
-				1 //gold
+				rand(10, 100) //gold
 			);
 
 			$this->Lanes[] = new CTowerAttackLane(
@@ -430,6 +578,11 @@ class CTowerAttackGame
 				0 //gold per click
 			);
 		}
+	}
+
+	public function GetLane($LaneId)
+	{
+		return $this->Lanes[$LaneId];
 	}
 
 	public function GetLanes()
@@ -479,5 +632,16 @@ class CTowerAttackGame
 	public function GetUniverseState()
 	{
 		return $this->UniverseState;
+	}
+
+	public function GetPlayers()
+	{
+		return $this->Players;
+	}
+
+	public function GetPlayer( $AccountId )
+	{
+		//TODO: return array_key_exists( $AccountId, $this->Players ) ? $this->Players[$AccountId] : null;
+		return $this->Players[$AccountId];
 	}
 }
