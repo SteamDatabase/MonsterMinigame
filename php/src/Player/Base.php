@@ -76,7 +76,7 @@ class Base
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Enemy->DecreaseHp( $Damage );
-					if ($Enemy->GetHp() <= 0) {
+					if( $Enemy->IsDead() ) {
 						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
 					}
 					$DeadLanes = 0;
@@ -84,11 +84,11 @@ class Base
 						$Enemies = $Lane->GetEnemies();
 						$DeadEnemies = 0;
 						foreach( $Enemies as $Enemy ) {
-							if( $Enemy->getHp() <= 0 ) {
+							if( $Enemy->IsDead() ) {
 								$DeadEnemies++;
 							}
 						}
-						if( $DeadEnemies === count($Enemies) ) {
+						if( $DeadEnemies === count( $Enemies ) ) {
 							$DeadLanes++;
 						}
 					}

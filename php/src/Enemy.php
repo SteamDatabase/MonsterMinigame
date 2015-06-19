@@ -24,14 +24,21 @@ class Enemy
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
-		if ($this->GetType() === \ETowerAttackEnemyType::Mob) {
-			// add variance GetHpMultiplierVariance();
+		// TODO: Check if health works
+		// TODO: Tower and MiniBoss respawns, see GetRespawnTime()
+		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
+		if( $this->GetType() === \ETowerAttackEnemyType::Mob ) {
+			$Variance = $this->GetHpMultiplierVariance();
+			$LowestHp = $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance) * pow( $Level + 1, $this->GetHpExponent() );
+			$HighestHp = $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance) * pow( $Level + 1, $this->GetHpExponent() );
+			$this->MaxHp = rand( $LowestHp, $HighestHp );
+		} else {
+			$this->MaxHp = $this->GetTuningHp() * $this->GetHpMultiplier() * pow( $Level + 1, $this->GetHpExponent() );
 		}
-		$this->Hp = $this->GetHpMultiplier() * pow( $this->GetTuningHp(), $Level ) ;
-		$this->MaxHp = $this->Hp;
-		$this->Dps = 0;
-		$this->Timer = 0;
-		$this->Gold = 0;
+		$this->Hp = $this->MaxHp;
+		$this->Dps = $this->GetTuningDps() * $this->GetDpsMultiplier() * pow( $Level + 1, $this->GetDpsExponent() );
+		$this->Timer = 0; // Todo
+		$this->Gold = $this->GetTuninGold() * $this->GetGoldMultiplier() * pow( $Level + 1, $this->GetGoldExponent() );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
@@ -46,9 +53,14 @@ class Enemy
 			'gold' => (double) $this->GetGold()
 		);
 		if ($this->GetTimer() !== null) {
-			$ReturnArray['timer'] = $this->GetTimer();
+			$ReturnArray[ 'timer' ] = $this->GetTimer();
 		}
 		return $ReturnArray;
+	}
+
+	public function IsDead()
+	{
+		return $this->GetHp() <= 0;
 	}
 
 	public function GetId()
@@ -117,6 +129,11 @@ class Enemy
 	public function GetGold()
 	{
 		return $this->Gold;
+	}
+
+	public function GetRespawnTime()
+	{
+		return $this->GetRespawnTime( 'respawn_time' );
 	}
 
 	public function GetTuningHp()
