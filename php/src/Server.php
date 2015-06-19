@@ -33,6 +33,8 @@ class Server
 		{
 			$Message = socket_accept( $this->Socket );
 
+			$DebugTime = microtime( true ); 
+
 			$Data = socket_read( $Message, 2048, PHP_NORMAL_READ );
 
 			$Data = json_decode( $Data, TRUE );
@@ -135,6 +137,12 @@ class Server
 
 				$this->Tick();
 			}
+			
+			$DebugTime = microtime( true ) - $DebugTime;
+			
+			l( 'Spent ' . ( microtime( true ) - $DebugTime ) . ' seconds handling sockets and ticks' );
+			
+			$this->Games[ $Game->GetGameId() ]->TimeSimulating += $DebugTime;
 		}
 	}
 

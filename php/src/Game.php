@@ -28,6 +28,7 @@ class Game
 	private $TimestampLevelStart;
 	private $UniverseState;
 	private $LastMobId = 0;
+	public $TimeSimulating = 0.0;
 
 	private function GetLastMobId()
 	{
@@ -92,8 +93,8 @@ class Game
 			'num_players_reaching_milestone_level' => '991',
 			'num_ability_items_activated' => '5177',
 			'num_active_players' => 126,
-			'time_simulating' => 3.0477301080604891,
-			'time_saving' => 41.225250769888
+			'time_simulating' => $this->TimeSimulating,
+			'time_saving' => 0
 		);
 	}
 
