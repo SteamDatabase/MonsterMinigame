@@ -3,6 +3,8 @@ namespace SteamDB\CTowerAttack\Player;
 
 class Base
 {
+	const MAX_CLICKS = 20;
+	
 	/*
 	optional double hp = 1;
 	optional uint32 current_lane = 2;
@@ -60,7 +62,17 @@ class Base
 		foreach( $RequestedAbilities as $RequestedAbility ) {
 			switch( $RequestedAbility['ability'] ) {
 				case \ETowerAttackAbility::Attack:
-					$NumClicks = $RequestedAbility[ 'num_clicks' ];
+					$NumClicks = (int)$RequestedAbility[ 'num_clicks' ];
+					
+					if( $NumClicks > self::MAX_CLICKS )
+					{
+						$NumClicks = self::MAX_CLICKS;
+					}
+					else if( $NumClicks < 1 )
+					{
+						$NumClicks = 1;
+					}
+					
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
