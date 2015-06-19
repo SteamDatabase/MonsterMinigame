@@ -88,19 +88,19 @@ class Base
 						switch( $Enemy->GetType() ) 
 						{
 							case \ETowerAttackEnemyType::Tower:
-								$game->NumTowersKilled++;
+								$Game->NumTowersKilled++;
 								break;
 							case \ETowerAttackEnemyType::Mob:
-								$game->NumMobsKilled++;
+								$Game->NumMobsKilled++;
 								break;
 							case \ETowerAttackEnemyType::Boss:
-								$game->NumBossesKilled++;
+								$Game->NumBossesKilled++;
 								break;
 							case \ETowerAttackEnemyType::MiniBoss:
-								$game->NumMiniBossesKilled++;
+								$Game->NumMiniBossesKilled++;
 								break;
 							case \ETowerAttackEnemyType::TreasureMob:
-								$game->NumTreasureMobsKilled++;
+								$Game->NumTreasureMobsKilled++;
 								break;
 						}
 						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
