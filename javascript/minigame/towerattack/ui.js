@@ -262,11 +262,11 @@ CUI.prototype.Tick = function()
 			if ( !this.m_gameOverDialog )
 			{
 				this.m_gameOverDialog = ShowAlertDialog( 'Game Over', 'This game is over. Click OK to continue.' );
-				this.m_gameOverDialog.done(
+				/*this.m_gameOverDialog.done(
 					function() {
-						top.location.href = 'http://steamcommunity.com/minigame/';
+						top.location.href = '/';
 					}
-				);
+				);*/
 			}
 			this.UpdateLevelAndTimes();
 			break;

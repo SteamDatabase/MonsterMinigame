@@ -751,7 +751,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 		var instance = this;
 
 		$J.ajax({
-			url: 'http://steamcommunity-a.akamaihd.net/public/javascript/minigame/towerattack/' + this.m_rgGameData.universe_state + '/script.js?v=' + g_CacheKey,
+			url: '/javascript/minigame/towerattack/endgame.js?v=' + g_CacheKey,
 			dataType: "script",
 			cache: true
 		}).done(
