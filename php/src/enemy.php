@@ -58,6 +58,24 @@ class Enemy
 		return $this->Type;
 	}
 
+	public function GetTypeName()
+	{
+		switch( $this->Type ) {
+			case 0:
+				return 'Tower';
+			case 1:
+				return 'Mob';
+			case 2:
+				return 'Boss';
+			case 3:
+				return 'MiniBoss';
+			case 4:
+				return 'Tresure_Mob';
+			case 5:
+				return 'Max';
+		}
+	}
+
 	public function GetHp()
 	{
 		return $this->Hp;
@@ -96,6 +114,67 @@ class Enemy
 	public function GetGold()
 	{
 		return $this->Gold;
+	}
+
+	public function GetTuningHp()
+	{
+		return $this->GetTuningData( 'hp' );
+	}
+
+	public function GetTuningDps()
+	{
+		return $this->GetTuningData( 'dps' );
+	}
+
+	public function GetTuninGold()
+	{
+		return $this->GetTuningData( 'gold' );
+	}
+
+	public function GetHpMultiplier()
+	{
+		return $this->GetTuningData( 'hp_multiplier' );
+	}
+
+	public function GetHpMultiplierVariance()
+	{
+		return $this->GetTuningData( 'hp_multiplier_variance' );
+	}
+
+	public function GetHpExponent()
+	{
+		return $this->GetTuningData( 'hp_exponent' );
+	}
+
+	public function GetDpsMultiplier()
+	{
+		return $this->GetTuningData( 'dps_multiplier' );
+	}
+
+	public function GetDpsExponent()
+	{
+		return $this->GetTuningData( 'dps_exponent' );
+	}
+
+	public function GetGoldMultiplier()
+	{
+		return $this->GetTuningData( 'gold_multiplier' );
+	}
+
+	public function GetGoldExponent()
+	{
+		return $this->GetTuningData( 'gold_exponent' );
+	}
+
+	private function GetTuningData( $Key = null )
+	{	
+		$Upgrades = \SteamDB\CTowerAttack\Server::GetTuningData( strtolower( $this->GetTypeName() ) );
+		if ($Key === null) {
+			return $Upgrades[ $this->GetUpgradeId() ];
+		} else if (!array_key_exists( $Key, $Upgrades[ $this->GetUpgradeId() ] )) {
+			return null;
+		}
+		return $Upgrades[ $this->GetUpgradeId() ][ $Key ];
 	}
 }
 ?>
