@@ -1,5 +1,27 @@
 // <style>
 
+html {
+	height: 100%;
+}
+
+body {
+	background-color: #000000;
+
+	text-align: left;
+
+	color: #8F98A0;
+	font-size: 14px;
+
+	margin:0;
+	padding:0;
+}
+
+a {
+	color: #ebebeb;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .something {
 
 }
