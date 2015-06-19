@@ -75,13 +75,12 @@ class Server
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
 					// TODO: use ticks/queue instead
-					$AccessToken = $Data[ 'access_token' ];
+					$SteamId = $Data[ 'access_token' ];
 					$InputJson = $Data[ 'input_json' ];
 					$Input = json_decode( $InputJson, true );
 					$Game = $this->GetGame( $Input[ 'gameid' ] );
 					$Response = null;
 					if( $Game !== null ) {
-						$SteamId = $this->GetSteamIdFromAccessToken( $AccessToken );
 						$Player = $Game->GetPlayer( $SteamId );
 						if( $Player !== null ) {
 							if( $Data[ 'method' ] == 'ChooseUpgrade' ) {
@@ -148,13 +147,7 @@ class Server
 		//TODO: return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
 		return $this->Games[1];
 	}
-
-	public function GetSteamIdFromAccessToken( $AccessToken )
-	{
-		// TODO: pls
-		return "8015562370";
-	}
-
+	
 	public function UpdateGame( $Game )
 	{
 		/*foreach( $Game->GetLanes() as $Lane ) {
