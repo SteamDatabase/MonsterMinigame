@@ -61,17 +61,17 @@ class Enemy
 	public function GetTypeName()
 	{
 		switch( $this->Type ) {
-			case 0:
+			case \ETowerAttackEnemyType::Tower:
 				return 'Tower';
-			case 1:
+			case \ETowerAttackEnemyType::Mob:
 				return 'Mob';
-			case 2:
+			case \ETowerAttackEnemyType::Boss:
 				return 'Boss';
-			case 3:
+			case \ETowerAttackEnemyType::MiniBoss:
 				return 'MiniBoss';
-			case 4:
-				return 'Tresure_Mob';
-			case 5:
+			case \ETowerAttackEnemyType::TreasureMob:
+				return 'Treasure_Mob';
+			case \ETowerAttackEnemyType::Max:
 				return 'Max';
 		}
 	}
