@@ -85,6 +85,14 @@ class Game
 		l( 'Created game #' . $this->GetGameId() );
 	}
 
+	public function GenerateNewLevel()
+	{
+		$this->IncreaseLevel();
+		$this->GenerateNewLanes();
+		// Remove status? $this->SetStatus( \EMiniGameStatus::Running );
+		l( 'Game #' . $this->GetGameId() . ' moved to level #' . $this->GetLevel() );
+	}
+
 	public function ToArray()
 	{
 		return array(
@@ -132,8 +140,15 @@ class Game
 		$this->TimestampLevelStart = time();
 	}
 
+	public function IncreaseLevel()
+	{
+		$this->Level++;
+		$this->TimestampLevelStart = time();
+	}
+
 	public function GenerateNewLanes()
 	{
+		$this->Lanes = array();
 		$ActivePlayerAbilities = array();
 		$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 300); // active players with health between 10 levels (bars) = team health
 
