@@ -120,9 +120,7 @@ class Lane
 
 	public function RemovePlayer( $Player )
 	{
-		if( array_key_exists( $Player->GetAccountId(), $this->Players )) {
-			unset( $this->Players[ $Player ] );
-		}
+		unset( $this->Players[ $Player->GetAccountId() ] );
 	}
 
 	public function GiveGoldToPlayers( $Game, $Amount )
