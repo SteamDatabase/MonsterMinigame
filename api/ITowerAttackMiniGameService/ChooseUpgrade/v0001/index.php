@@ -17,15 +17,22 @@
 		'method' => 'ChooseUpgrade',
 		'access_token' => $_POST[ 'access_token' ],
 		'input_json' => $_POST['input_json']
-	));
+	)) . PHP_EOL;
 	
-	$Socket = socket_create( AF_INET, SOCK_DGRAM, SOL_UDP ); 
-	if ( socket_bind( $Socket, '127.0.0.1' ) === false ) {
-	    die( "Error socket_bind():" . socket_strerror( socket_last_error( $Socket ) ) );
+	$Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
+	
+	if( socket_connect( $Socket, 'localhost', 5337 ) )
+	{
+		socket_write( $Socket, $Data, strlen( $Data ) );
+		
+		$Buffer = '';
+		
+		while( $Response = @socket_read( $Socket, 2048 ) )
+		{
+			$Buffer .= $Response;
+		}
+		
+		echo $Buffer;
 	}
-
-	socket_sendto( $Socket, $Data, strlen( $Data ), 0, '127.0.0.1', 5337 );
-	socket_recvfrom( $Socket, $Buffer, 4096, 0, $From, $Port ); // Proper buffer 4096?
+	
 	socket_close( $Socket );
-	echo $Buffer;
-?>

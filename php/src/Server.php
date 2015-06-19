@@ -14,12 +14,10 @@ class Server
 	
 	public function __construct( $Port )
 	{
-		$this->Socket = stream_socket_server( 'udp://127.0.0.1:' . $Port, $errno, $errstr, STREAM_SERVER_BIND );
+		$this->Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 		
-		if( !$this->Socket )
-		{
-			die( "$errstr ($errno)" );
-		}
+		socket_bind( $this->Socket, 'localhost', $Port);
+		socket_listen( $this->Socket, 5 );
 		
 		l( 'Listening on port ' . $Port );
 
@@ -28,26 +26,23 @@ class Server
 		$Game = new Game($this->LastGameId + 1);
 		$this->Games[$Game->GetGameId()] = $Game;
 	}
-
-	private function SendResponse( $Peer, $Response )
-	{
-		$Response = json_encode( array( 'response' => $Response ) );
-		stream_socket_sendto ( $this->Socket , $Response, 0, $Peer );
-	}
 	
 	public function Listen( )
 	{
 		while( true )
 		{
-			$Data = stream_socket_recvfrom( $this->Socket, 1500, 0, $Peer );
-
-			$Data = @json_decode($Data, TRUE);
+			$Message = socket_accept( $this->Socket );
+			
+			$Data = socket_read( $Message, 2048, PHP_NORMAL_READ );
+			
+			$Data = json_decode( $Data, TRUE );
+			
 			if( ( $Data === null && json_last_error() !== JSON_ERROR_NONE ) || !array_key_exists( 'method', $Data ) ) {
 				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
 			    continue;
 			}
 			
-			l( $Peer . ' - ' . $Data[ 'method' ] );
+			l( $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
 			$Response = null;
@@ -112,8 +107,10 @@ class Server
 					// TODO: handle unknown methods
 					break;
 			}
-
-			$this->SendResponse( $Peer, $Response );
+			
+			$Response = json_encode( [ 'response' => $Response ], JSON_PRETTY_PRINT ) . PHP_EOL;
+			socket_write( $Message, $Response, strlen( $Response ) );
+			socket_close( $Message );
 			
 			$Tick = microtime( true );
 			
@@ -169,4 +166,3 @@ class Server
 		$this->Games[ $Game->GetGameId() ] = $Game;
 	}
 }
-?>
