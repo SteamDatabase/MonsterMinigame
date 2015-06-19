@@ -29,9 +29,6 @@ class Base
 	public function __construct(
 		$AccountId,
 		$Hp,
-		$CurrentLane,
-		$Target,
-		$TimeDied,
 		$Gold,
 		$ActiveAbilitiesBitfield,
 		$ActiveAbilities,
@@ -41,16 +38,16 @@ class Base
 	)
 	{
 		$this->AccountId = $AccountId;
-		$this->Hp = $Hp;
-		$this->CurrentLane = $CurrentLane;
-		$this->Target = $Target;
-		$this->TimeDied = $TimeDied;
-		$this->Gold = $Gold;
-		$this->ActiveAbilitiesBitfield = $ActiveAbilitiesBitfield;
-		$this->ActiveAbilities = $ActiveAbilities;
-		$this->CritDamage = $CritDamage;
-		$this->Loot = $Loot;
-		$this->TechTree = $TechTree;
+		$this->Hp = $this->GetTuningData( 'hp' );
+		$this->CurrentLane = 1;
+		$this->Target = 0;
+		$this->TimeDied = 0;
+		$this->Gold = 1000; // TODO: Start gold?
+		$this->ActiveAbilitiesBitfield = 0;
+		$this->ActiveAbilities = array();
+		$this->CritDamage = 0; // TODO
+		$this->Loot = array() // TODO
+		$this->TechTree = new Player\TechTree\Base();
 	}
 
 	public function ToArray()
@@ -218,9 +215,15 @@ class Base
 		return $this->Loot;
 	}
 
-	public function GetRoom()
-	{
-
+	private function GetTuningData( $Key = null )
+	{	
+		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
+		if ($Key === null) {
+			return $TuningData;
+		} else if (!array_key_exists( $Key, $TuningData)) {
+			return null;
+		}
+		return $TuningData[ $Key ];
 	}
 }
 ?>

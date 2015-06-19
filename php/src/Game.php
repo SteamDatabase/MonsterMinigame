@@ -54,36 +54,7 @@ class Game
 	private function CreatePlayer( $AccountId )
 	{
 		$this->Players[ $AccountId ] = new Player\Base(
-			$AccountId, //steam id/account id, remember to cast (string)
-			rand(3000, 6000), //hp
-			1, //current lane
-			0, //target
-			time(), //time died (timestamp)
-			rand(1000, 5000), //gold
-			0, // active abilities bitfield (generate from active abilities?)
-			array(), // active abilities
-			0, // crit damage
-			array(), // loot
-			new Player\TechTree\Base( // tech tree
-				array(), // upgrades
-				1.0, // damage per click
-				$DamageMultiplierFire = 1.0, // damage multiplier fire
-				$DamageMultiplierWater = 1.0, // damage multiplier water
-				$DamageMultiplierAir = 1.0, // damage multiplier air
-				$DamageMultiplierEarth = 1.0, // damage multiplier earth
-				$DamageMultiplierCrit = 2.0, // damage multiplier crit
-				$UnlockedAbilitiesBitfield = 0, // unlocked abilities bitfield
-				$HpMultiplier = 1.0, // hp multiplier
-				$CritPercentage = 0, // crit percentage
-				$BadgePoints = 0, // badge points
-				$AbilityItems = array(), // ability items
-				$BossLootDropPercentage = 0.25, // boss loot drop percentage
-				$DamageMultiplierDps = 1.0, // damage multiplier dps
-				$BaseDps = 0, // base dps
-				$DamagePerClickMultiplier = 1.0, // damage per click multiplier
-				$MaxHp = 0, // max hp
-				$Dps = 0 // dps
-			)
+			$AccountId //steam id/account id, remember to cast (string)
 		);
 	}
 
