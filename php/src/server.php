@@ -1,0 +1,112 @@
+<?php
+namespace SteamDB\CTowerAttack;
+
+use SteamDB\CTowerAttack\Game as Game;
+
+class Server
+{
+	public $TickRate;
+	private $LastTick;
+	private $Socket;
+	private $LastGameId = 0;
+	private $Games;
+	
+	public function __construct( $Port )
+	{
+		$this->Socket = stream_socket_server( 'udp://127.0.0.1:' . $Port, $errno, $errstr, STREAM_SERVER_BIND );
+		
+		if( !$this->Socket )
+		{
+			die( "$errstr ($errno)" );
+		}
+		
+		l( 'Listening on port ' . $Port );
+		
+		$Game = new Game($this->LastGameId + 1);
+		$this->Games[$Game->GetGameId()] = $Game;
+	}
+
+	private function SendResponse( $Peer, $Response )
+	{
+		$Response = json_encode( array( 'response' => $Response ) );
+		stream_socket_sendto ( $this->Socket , $Response, 0, $Peer );
+	}
+	
+	public function Listen( )
+	{
+		while( true )
+		{
+			$Data = stream_socket_recvfrom( $this->Socket, 1500, 0, $Peer );
+
+			$Data = @json_decode($Data, TRUE);
+			if( ( $Data === null && json_last_error() !== JSON_ERROR_NONE ) || !array_key_exists( 'method', $Data ) ) {
+				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
+			    continue;
+			}
+			
+			l( $Peer . ' - ' . $Data['method'] );
+
+			// Handle the request, this could be moved elsewhere...
+			switch ( $Data['method'] ) {
+				case 'GetGameData':
+					$GameId = $Data['gameid'];
+					$Game = $this->GetGame( $GameId );
+					$Response = null;
+					if( $Game !== null ) {
+						$Response = array(
+							'game_data' => $Game->ToArray(),
+							'stats' => array() //TODO
+						);
+					}
+					$this->SendResponse( $Peer, $Response );
+					break;
+				case 'GetPlayerData':
+					$GameId = $Data['gameid'];
+					$SteamId = $Data['steamid'];
+					$Game = $this->GetGame( $GameId );
+					$Response = null;
+					if( $Game !== null ) {
+						$Player = $Game->GetPlayer( $SteamId );
+						if( $Player !== null ) {
+							$Response = array(
+								'player_data' => $Player->ToArray(),
+								'tech_tree' => $Player->GetTechTree()->ToArray()
+							);
+						}
+					}
+					$this->SendResponse( $Peer, $Response );
+					break;
+				default:
+					// TODO: handle unknown methods
+					$this->SendResponse( $Peer, null );
+					break;
+			}
+			
+			$Tick = microtime( true );
+			
+			if( $Tick >= $this->LastTick )
+			{
+				$this->LastTick = $Tick + $this->TickRate;
+				
+				$this->Tick();
+			}
+		}
+	}
+	
+	private function Tick()
+	{
+		l( 'Ticking...' );
+	}
+
+	public function GetGames()
+	{
+		return $this->Games;
+	}
+
+	public function GetGame( $GameId )
+	{
+		//TODO: return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
+		return $this->Games[1];
+	}
+}
+?>
