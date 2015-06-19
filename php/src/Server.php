@@ -140,7 +140,7 @@ class Server
 			
 			$DebugTime = microtime( true ) - $DebugTime;
 			
-			l( 'Spent ' . ( microtime( true ) - $DebugTime ) . ' seconds handling sockets and ticks' );
+			l( 'Spent ' . $DebugTime . ' seconds handling sockets and ticks' );
 			
 			$this->Games[ $Game->GetGameId() ]->TimeSimulating += $DebugTime;
 		}
