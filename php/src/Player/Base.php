@@ -109,7 +109,7 @@ class Base
 	{
 		foreach( $Upgrades as $UpgradeId ) {
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
-			if( 
+			if(
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
 			||  ( $Upgrade->IsLevelOneUpgrade() && $Upgrade->GetLevel() >= 1) // One level upgrades
 			||  ( $Upgrade->HasRequiredUpgrade() && $this->GetTechTree()->GetUpgrade($Upgrade->GetRequiredUpgrade())->GetLevel() < $Upgrade->GetRequiredLevel()) // Does not have the required upgrade & level
@@ -145,7 +145,7 @@ class Base
 
 	public function GetHp()
 	{
-		return $this->Hp;
+		return $this->Hp * $this->GetTechTree()->GetHpMultiplier();
 	}
 
 	public function GetCurrentLane()
@@ -209,7 +209,7 @@ class Base
 	}
 
 	private function GetTuningData( $Key = null )
-	{	
+	{
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
 		if ($Key === null) {
 			return $TuningData;
