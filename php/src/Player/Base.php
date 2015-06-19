@@ -73,6 +73,8 @@ class Base
 						$NumClicks = 1;
 					}
 					
+					$Game->NumClicks += $NumClicks;
+					
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();

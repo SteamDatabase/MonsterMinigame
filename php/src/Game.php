@@ -28,6 +28,8 @@ class Game
 	private $TimestampLevelStart;
 	private $UniverseState;
 	private $LastMobId = 0;
+	
+	public $NumClicks = 0;
 	public $TimeSimulating = 0.0;
 
 	private function GetLastMobId()
@@ -84,15 +86,15 @@ class Game
 		// TODO: get real data
 		return array(
 			'num_players' => count( $this->Players ),
-			'num_mobs_killed' => '691',
-			'num_towers_killed' => '232',
-			'num_minibosses_killed' => '66',
-			'num_bosses_killed' => '11',
-			'num_clicks' => '665422',
-			'num_abilities_activated' => '1214',
-			'num_players_reaching_milestone_level' => '991',
-			'num_ability_items_activated' => '5177',
-			'num_active_players' => 126,
+			'num_mobs_killed' => 0,
+			'num_towers_killed' => 0,
+			'num_minibosses_killed' => 0,
+			'num_bosses_killed' => 0,
+			'num_clicks' => $this->NumClicks,
+			'num_abilities_activated' => 0,
+			'num_players_reaching_milestone_level' => 0,
+			'num_ability_items_activated' => 0,
+			'num_active_players' => 0,
 			'time_simulating' => $this->TimeSimulating,
 			'time_saving' => 0
 		);
