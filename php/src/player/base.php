@@ -72,10 +72,10 @@ class Base
 			switch( $RequestedAbility['ability'] ) {
 				case \ETowerAttackAbility::Attack:
 					$NumClicks = $RequestedAbility[ 'num_clicks' ];
-					var_dump($NumClicks);
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					var_dump($Enemy);
+					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
+					$Enemy->DecreaseHp( $Damage );
 					break;
 				case \ETowerAttackAbility::ChangeLane:
 					$this->SetLane( $RequestedAbility[ 'new_lane' ] );

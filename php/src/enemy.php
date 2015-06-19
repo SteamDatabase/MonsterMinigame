@@ -63,6 +63,21 @@ class Enemy
 		return $this->Hp;
 	}
 
+	public function DecreaseHp( $Hp )
+	{
+		$this->Hp -= $Hp;
+	}
+
+	public function IncreaseHp( $Hp )
+	{
+		$this->Hp += $Hp;
+	}
+
+	public function SetHp( $Hp )
+	{
+		$this->Hp = $Hp;
+	}
+
 	public function GetMaxHp()
 	{
 		return $this->MaxHp;
