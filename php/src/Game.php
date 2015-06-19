@@ -44,9 +44,17 @@ class Game
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
 		$this->GameId = $GameId;
-		//TODO: Set players correctly
-		$this->Players['76561197990586091'] = new Player\Base(
-			'76561197990586091', //steam id/account id, remember to cast (string)
+		$this->SetLevel( 0 );
+		$this->GenerateNewLanes();
+		$this->SetStatus( \EMiniGameStatus::Running );
+		$this->TimestampGameStart = time();
+		l( 'Created game #' . $this->GetGameId() );
+	}
+
+	private function CreatePlayer( $ID )
+	{
+		$this->Players[ $ID ] = new Player\Base(
+			$ID, //steam id/account id, remember to cast (string)
 			rand(3000, 6000), //hp
 			1, //current lane
 			0, //target
@@ -77,12 +85,6 @@ class Game
 				$Dps = 0 // dps
 			)
 		);
-
-		$this->SetLevel( 0 );
-		$this->GenerateNewLanes();
-		$this->SetStatus( \EMiniGameStatus::Running );
-		$this->TimestampGameStart = time();
-		l( 'Created game #' . $this->GetGameId() );
 	}
 
 	public function GenerateNewLevel()
@@ -249,6 +251,12 @@ class Game
 
 	public function GetPlayer( $AccountId )
 	{
+		//TODO: remove this
+		if( !isset( $this->Players[ $AccountId ] ) )
+		{
+			$this->CreatePlayer( $AccountId );
+		}
+		
 		//TODO: return array_key_exists( $AccountId, $this->Players ) ? $this->Players[$AccountId] : null;
 		return $this->Players[ $AccountId ];
 	}
