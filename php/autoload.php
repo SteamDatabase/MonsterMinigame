@@ -8,7 +8,7 @@ $Loader = new \SteamDB\Psr4AutoloaderClass;
 $Loader->register();
 
 // register the base directories for the namespace prefix
-$Loader->addNamespace('SteamDB\CTowerAttack', __DIR__ . '\src');
+$Loader->addNamespace('SteamDB\CTowerAttack', __DIR__ . '/src');
 
 define('ROOT_DIR', __DIR__);
 define('FILES_DIR', ROOT_DIR . '/files/');
