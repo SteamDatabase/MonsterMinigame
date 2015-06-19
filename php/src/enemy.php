@@ -20,16 +20,19 @@ class Enemy
 	private $Timer;
 	private $Gold;
 	
-	public function __construct( $Id, $Type, $Hp, $MaxHp, $Dps, $Timer, $Gold )
+	public function __construct( $Id, $Type, $Level )
 	{
 		$this->Id = $Id;
-		$this->Hp = $Hp;
 		$this->Type = $Type;
-		$this->MaxHp = $MaxHp;
-		$this->Dps = $Dps;
-		$this->Timer = $Timer;
-		$this->Gold = $Gold;
-		l( "Created new enemy [Id=$Id, Type=$Type, Hp=$Hp, MaxHp=$MaxHp, Dps=$Dps, Timer=$Timer, Gold=$Gold]" );
+		if ($this->GetType() === \ETowerAttackEnemyType::Mob) {
+			// add variance GetHpMultiplierVariance();
+		}
+		$this->Hp = $this->GetHpMultiplier() * pow( $this->GetTuningHp(), $Level ) ;
+		$this->MaxHp = $this->Hp;
+		$this->Dps = 0;
+		$this->Timer = 0;
+		$this->Gold = 0;
+		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
 	public function ToArray()
@@ -156,6 +159,16 @@ class Enemy
 		return $this->GetTuningData( 'dps_exponent' );
 	}
 
+	public function GetLifetime()
+	{
+		return $this->GetTuningData( 'lifetime' );
+	}
+
+	public function getChance()
+	{
+		return $this->GetTuningData( 'chance' );
+	}
+
 	public function GetGoldMultiplier()
 	{
 		return $this->GetTuningData( 'gold_multiplier' );
@@ -168,13 +181,14 @@ class Enemy
 
 	private function GetTuningData( $Key = null )
 	{	
-		$Upgrades = \SteamDB\CTowerAttack\Server::GetTuningData( strtolower( $this->GetTypeName() ) );
+		$TypeName = strtolower( $this->GetTypeName() );
+		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( $TypeName );
 		if ($Key === null) {
-			return $Upgrades[ $this->GetUpgradeId() ];
-		} else if (!array_key_exists( $Key, $Upgrades[ $this->GetUpgradeId() ] )) {
+			return $TuningData;
+		} else if (!array_key_exists( $Key, $TuningData)) {
 			return null;
 		}
-		return $Upgrades[ $this->GetUpgradeId() ][ $Key ];
+		return $TuningData[ $Key ];
 	}
 }
 ?>

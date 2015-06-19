@@ -143,23 +143,15 @@ class Game
 			$Enemies = array();
 			$Enemies[] = new Enemy(
 				$this->GetNextMobId(),
-				\ETowerAttackEnemyType::Tower, // 1
-				rand(100, 500), //hp
-				500, //max hp
-				rand(1, 3), //dps
-				3.6000000000000019, //timer
-				rand(10, 100) //gold
+				\ETowerAttackEnemyType::Tower, // 0
+				$this->GetLevel()
 			);
 
 			for ( $a = 0; 3 > $a; $a++ ) {
 				$Enemies[] = new Enemy(
 					$this->GetNextMobId(),
 					\ETowerAttackEnemyType::Mob, // 1
-					rand(5, 30), //hp
-					30, //max hp
-					rand(1, 3), //dps
-					null, //timer
-					rand(10, 100) //gold
+					$this->GetLevel()
 				);
 			}
 
