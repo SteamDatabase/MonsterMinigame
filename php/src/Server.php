@@ -141,6 +141,15 @@ class Server
 	private function Tick()
 	{
 		l( 'Ticking...' );
+
+		// Give Players money (TEMPLORARY)
+		foreach($this->GetGames() as $Game)
+		{
+			foreach($Game->GetPlayers() as $Player)
+			{
+				$Player->IncreaseGold(50000);
+			}
+		}
 	}
 
 	public static function LoadTuningData()
