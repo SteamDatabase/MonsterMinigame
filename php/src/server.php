@@ -91,14 +91,14 @@ class Server
 						$Player = $Game->GetPlayer( $SteamId );
 						if( $Player !== null ) {
 							if( $Data[ 'method' ] == 'ChooseUpgrade' ) {
-								$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ] );
+								$Player->HandleUpgrade( $Input[ 'upgrades' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
 									'player_data' => $Player->ToArray()
 								);
 							} else if( $Data[ 'method' ] == 'UseAbilities' ) {
-								$Player->HandleUpgrade( $Input[ 'upgrades' ] );
+								$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
