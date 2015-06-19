@@ -715,8 +715,11 @@ function SmackTV()
 
 CSceneGame.prototype.OnSimulatedServerTick = function()
 {
+	/* keep constant tickrate
 	if( g_msTickRate < 10000 )
 		g_msTickRate += 10;
+	*/
+
 
 	if ( !this.m_rgPlayerData || !this.m_rgGameData || this.m_rgGameData.status != 2 )
 		return;
