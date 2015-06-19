@@ -62,7 +62,8 @@ class Base
 		foreach( $RequestedAbilities as $RequestedAbility ) {
 			switch( $RequestedAbility['ability'] ) {
 				case \ETowerAttackAbility::Attack:
-					$NumClicks = (int)$RequestedAbility[ 'num_clicks' ];
+					# TODO: Add numclicks/enemies killed per player?
+					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
 					
 					if( $NumClicks > self::MAX_CLICKS )
 					{
@@ -79,7 +80,25 @@ class Base
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Enemy->DecreaseHp( $Damage );
+					# TODO: check if gold has already been rewareded for killing this enemy
 					if( $Enemy->IsDead() ) {
+						switch( $Enemy->GetType() ) {
+							case \ETowerAttackEnemyType::Tower:
+								$game->NumTowersKilled++
+								break;
+							case \ETowerAttackEnemyType::Mob:
+								$game->NumMobsKilled++
+								break;
+							case \ETowerAttackEnemyType::Boss:
+								$game->NumBossesKilled++
+								break;
+							case \ETowerAttackEnemyType::MiniBoss:
+								$game->NumMiniBossesKilled++
+								break;
+							case \ETowerAttackEnemyType::TreasureMob:
+								$game->NumTreasureMobsKilled++
+								break;
+						}
 						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
 					}
 					$DeadLanes = 0;

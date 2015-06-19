@@ -30,6 +30,11 @@ class Game
 	private $LastMobId = 0;
 	
 	public $NumClicks = 0;
+	public $NumMobsKilled = 0;
+	public $NumTowersKilled = 0;
+	public $NumMiniBossesKilled = 0;
+	public $NumBossesKilled = 0;
+	public $NumTreasuresKilled = 0;
 	public $TimeSimulating = 0.0;
 
 	private function GetLastMobId()
@@ -86,10 +91,11 @@ class Game
 		// TODO: get real data
 		return array(
 			'num_players' => count( $this->Players ),
-			'num_mobs_killed' => 0,
-			'num_towers_killed' => 0,
-			'num_minibosses_killed' => 0,
-			'num_bosses_killed' => 0,
+			'num_mobs_killed' => $this->NumMobsKilled,
+			'num_towers_killed' => $this->NumTowersKilled,
+			'num_minibosses_killed' => $this->NumMiniBossesKilled,
+			'num_bosses_killed' => $this->NumBossesKilled,
+			'num_treasures_killed' => $this->NumTreasuresKilled,
 			'num_clicks' => $this->NumClicks,
 			'num_abilities_activated' => 0,
 			'num_players_reaching_milestone_level' => 0,
