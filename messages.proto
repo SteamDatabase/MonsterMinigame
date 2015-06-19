@@ -97,7 +97,8 @@ message CTowerAttack_GameData
 {
 	message ActiveAbility
 	{
-		optional uint32 accountid_caster = 1;
+		//optional uint32 accountid_caster = 1;
+		optional string caster = 1; // xPaw: We don't leak accountids
 		optional uint32 ability = 2;
 		optional uint32 timestamp_done = 3;
 		optional double multiplier = 4;

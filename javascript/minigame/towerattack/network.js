@@ -81,28 +81,6 @@ CServerInterface.prototype.GetGameData = function( callback, error, bIncludeStat
 	.fail( error );
 }
 
-CServerInterface.prototype.GetPlayerNames = function( callback, error, rgAccountIDs )
-{
-	var rgParams = {
-		gameid: this.m_nGameID,
-		accountids: rgAccountIDs && rgAccountIDs.length < 100 ? rgAccountIDs : null,
-	};
-
-	var instance = this;
-
-	var rgRequest = {
-		'input_json': V_ToJSON( rgParams ),
-		'format': 'json',
-	};
-
-	$J.ajax({
-		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'GetPlayerNames', false ),
-		data: rgRequest,
-		dataType: 'json'
-	}).success(callback)
-	.fail( error );
-}
-
 CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTechTree )
 {
 	var rgParams = {

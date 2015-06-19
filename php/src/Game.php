@@ -123,7 +123,16 @@ class Game
 	public function GenerateNewLanes()
 	{
 		$this->Lanes = array();
-		$ActivePlayerAbilities = array();
+		$ActivePlayerAbilities =
+		[
+			[
+				'accountid_caster' => 0, 
+				'caster' => 'Test User',
+				'ability' => rand( \ETowerAttackAbility::Item_Resurrection, \ETowerAttackAbility::Item_ReflectDamage ),
+				'timestamp_done' => time() + 500,
+				'multiplier' => 1.0,
+			]
+		];
 		$PlayerHpBuckets = array(10, 20, 30, 40, 50, 60, 70, 80, 90, 100); // active players with health between 10 levels (bars) = team health
 
 		// Create 3 lanes

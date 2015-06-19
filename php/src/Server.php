@@ -73,22 +73,6 @@ class Server
 						}
 					}
 					break;
-				case 'GetPlayerNames':
-					$Input = json_decode( $Data[ 'input_json' ], true );
-					$Game = $this->GetGame( $Input[ 'gameid' ] );
-					if( $Game !== null ) {
-						$Names = array();
-						foreach( $Game->GetPlayers() as $Player ) {
-							$Names[] = array(
-								'accountid' => $Player->GetAccountId(),
-								'name' => 'SteamDBGuy' # TODO: Add option for names?
-							);
-						}
-						$Response = array(
-							'names' => $Names
-						);
-					}
-					break;
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
 					// TODO: use ticks/queue instead

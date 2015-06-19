@@ -32,7 +32,6 @@ window.CSceneGame = function()
 	this.m_nLastTick = 0;
 	this.m_bReceivedStaleData = false;
 	this.m_bWaitingForResponse = false;
-	this.m_bRequestedPlayerNames = false;
 	this.m_nTicks = 0;
 	this.m_nBGTicks = 0;
 	this.m_nClicks = 0;
@@ -41,8 +40,6 @@ window.CSceneGame = function()
 	this.m_rgAbilityQueue = [];
 	this.m_rgUpgradesQueue = [];
 	this.m_rgPurchaseItemsQueue = [];
-	this.m_rgPlayerNameCache = {};
-	this.m_rgPlayerNameRequests = [];
 	this.m_rgLaneData = {};
 	this.m_rgEmitters = [];
 
@@ -188,13 +185,6 @@ CSceneGame.prototype.Tick = function()
 	if( this.m_bRunning && !this.m_bWaitingForResponse )
 	{
 		var instance = this;
-
-		// request player names as soon as we go running
-		if ( !this.m_bRequestedPlayerNames && this.m_rgGameData.status == '2' )
-		{
-			this.m_bRequestedPlayerNames = true;
-			this.RequestOutstandingPlayerNames( true, null );
-		}
 
 		var bTickAll = ( ( nNow - this.m_nLastTick ) > g_msTickRate || this.m_nLastTick === false );
 		if ( bTickAll )
@@ -750,60 +740,6 @@ CSceneGame.prototype.GetCurrentEnemyData = function()
 	return this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].enemies[this.m_rgPlayerData.target];
 }
 
-CSceneGame.prototype.PreloadPlayerName = function( accountid )
-{
-	if ( !this.m_rgPlayerNameCache[accountid] )
-	{
-		this.m_rgPlayerNameCache[accountid] = 'Player ' + accountid;
-		this.m_rgPlayerNameRequests.push( accountid );
-	}
-}
-
-CSceneGame.prototype.GetPlayerName = function( accountid )
-{
-	if ( this.m_rgPlayerNameCache[accountid] )
-	{
-		return this.m_rgPlayerNameCache[accountid];
-	}
-	return 'Player ' + accountid;
-}
-
-CSceneGame.prototype.RequestOutstandingPlayerNames = function( bAllowEmpty, callback )
-{
-	if ( this.m_rgPlayerNameRequests.length != 0 || bAllowEmpty )
-	{
-		var instance = this;
-		var rgPlayerNameRequests = this.m_rgPlayerNameRequests;
-		this.m_rgPlayerNameRequests = [];
-		g_Server.GetPlayerNames(
-			function(rgResult){
-				if( rgResult.response.names )
-				{
-					for ( var i = 0; i < rgResult.response.names.length; ++i )
-					{
-						var nameData = rgResult.response.names[i];
-						instance.m_rgPlayerNameCache[nameData.accountid] = nameData.name;
-					}
-				}
-				if ( callback )
-					callback();
-			},
-			function( err )
-			{
-				console.log("Network error");
-				console.log(err);
-				if ( callback )
-					callback();
-			},
-			rgPlayerNameRequests
-		);
-	}
-	else if ( callback )
-	{
-		callback();
-	}
-}
-
 CSceneGame.prototype.OnGameDataUpdate = function()
 {
 	this.m_bRunning = this.m_rgGameData.status != '3';
@@ -861,42 +797,28 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 		var rgAbilities = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].active_player_abilities;
 		if( rgAbilities )
 		{
+			var instance = this;
+			
 			for( var i=0; i<rgAbilities.length; i++ )
 			{
-				var nTimestampStart = rgAbilities[i].timestamp_done -  this.m_rgTuningData.abilities[ rgAbilities[i].ability ].duration;
-				if( nTimestampStart <= this.m_nLastAbilitySeen )
+				var nTimestampStart = rgAbilities[i].timestamp_done -  instance.m_rgTuningData.abilities[ rgAbilities[i].ability ].duration;
+				if( nTimestampStart <= instance.m_nLastAbilitySeen )
 					continue;
-				this.PreloadPlayerName( rgAbilities[i].accountid_caster );
+
+				instance.m_rgActionLog.push({
+					'icon': false,
+					'type': 'ability',
+					'ability': rgAbilities[i].ability ,
+					'actor_name': rgAbilities[i].caster,
+					'time': nTimestampStart
+				});
+
+				if( instance.m_rgActionLog.length > 50 )
+					instance.m_rgActionLog.splice(0,instance.m_rgActionLog.length - 50);
+
+				if( nTimestampStart > nHighestTime )
+					nHighestTime = nTimestampStart;
 			}
-
-			var instance = this;
-
-			this.RequestOutstandingPlayerNames(
-				false,
-				function() {
-					for( var i=0; i<rgAbilities.length; i++ )
-					{
-						var nTimestampStart = rgAbilities[i].timestamp_done -  instance.m_rgTuningData.abilities[ rgAbilities[i].ability ].duration;
-						if( nTimestampStart <= instance.m_nLastAbilitySeen )
-							continue;
-
-						instance.m_rgActionLog.push({
-							'icon': false,
-							'type': 'ability',
-							'ability': rgAbilities[i].ability ,
-							'actor_name': instance.GetPlayerName( rgAbilities[i].accountid_caster ),
-							'actor': rgAbilities[i].accountid_caster,
-							'time': nTimestampStart
-						});
-
-						if( instance.m_rgActionLog.length > 50 )
-							instance.m_rgActionLog.splice(0,instance.m_rgActionLog.length - 50);
-
-						if( nTimestampStart > nHighestTime )
-							nHighestTime = nTimestampStart;
-					}
-				}
-			);
 		}
 	}
 
