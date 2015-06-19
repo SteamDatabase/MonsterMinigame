@@ -4,7 +4,7 @@
 window.k_ScreenWidth = 1280;
 window.k_ScreenHeight = 720;
 
-var g_JSCacheKey = 'a8Dw02Fe';
+var g_JSCacheKey = Math.random();
 
 var g_rgTextureCache = {
 	// Particles
@@ -219,18 +219,6 @@ var CScenePreload = function()
 {
 	CSceneMinigame.call(this, arguments[0]);
 
-	if( typeof CUI === 'undefined' )
-	{
-		this.m_rgScriptsToLoad = [
-			'/javascript/minigame/towerattack/running.js?v=' + g_JSCacheKey + '&l=english',
-			'/javascript/minigame/towerattack/network.js?v=' + g_JSCacheKey + '&l=english',
-			'/javascript/minigame/towerattack/ui.js?v=' + g_JSCacheKey + '&l=english',
-			'/javascript/minigame/towerattack/easing.js?v=' + g_JSCacheKey + '&l=english',
-			'/javascript/minigame/towerattack/enemies.js?v=' + g_JSCacheKey + '&l=english'
-		];
-	} else {
-		this.m_rgScriptsToLoad = [];
-	}
 	this.m_cScriptsLoaded = 0;
 	this.m_cAudioLoaded = 0;
 	this.m_cAudioTriedLoad = 0;
@@ -369,29 +357,6 @@ CScenePreload.prototype.Enter = function()
 					)(j)
 			);
 		});
-	}
-
-	for( var i=0; i<this.m_rgScriptsToLoad.length; i++)
-	{
-		var instance = this;
-		LoadLater(
-			(function(instance, i){
-				return function()
-				{
-					$J.ajax({
-						url: instance.m_rgScriptsToLoad[i],
-						dataType: "script",
-						cache: true
-					});
-
-					window.g_cCompletedRequests++;
-					window.g_cActiveRequests--;
-				}
-			})(this, i)
-
-		);
-
-
 	}
 
 	/*$J.each(g_rgEmitterCache, function(i,j)
