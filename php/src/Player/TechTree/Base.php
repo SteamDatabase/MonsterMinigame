@@ -208,24 +208,24 @@ class Base
 	public function RecalulateUpgrades()
 	{
 		$Data = array(
-			'damage_per_click' => (double) 0,
-			'damage_multiplier_fire' => (double) 0,
-			'damage_multiplier_water' => (double) 0,
-			'damage_multiplier_air' => (double) 0,
-			'damage_multiplier_earth' => (double) 0,
-			'damage_multiplier_crit' => (double) 0,
-			'unlocked_abilities_bitfield' => (int) 0,
-			'hp_multiplier' => (double) 0,
-			'crit_percentage' => (double) 0,
-			'boss_loot_drop_percentage' => (double) 0,
-			'damage_multiplier_dps' => (double) 0,
-			'damage_per_click_multiplier' => (double) 0,
-			'max_hp' => (double) 0,
-			'dps' => (double) 0
+			'damage_per_click' => (double) $this->GetTuningData( 'damage_per_click' ),
+			'damage_multiplier_fire' => (double) $this->GetTuningData( 'damage_multiplier_fire' ),
+			'damage_multiplier_water' => (double) $this->GetTuningData( 'damage_multiplier_water' ),
+			'damage_multiplier_air' => (double) $this->GetTuningData( 'damage_multiplier_air' ),
+			'damage_multiplier_earth' => (double) $this->GetTuningData( 'damage_multiplier_earth' ),
+			'damage_multiplier_crit' => (double) $this->GetTuningData( 'damage_multiplier_crit' ),
+			'hp_multiplier' => (double) 1,
+			'crit_percentage' => (double) $this->GetTuningData( 'crit_percentage' ),
+			'boss_loot_drop_percentage' => (double) $this->GetTuningData( 'loot_chance' ),
+			'damage_multiplier_dps' => (double) 1,
+			'damage_per_click_multiplier' => (double) 1
 		);
+
 		foreach( $this->GetUpgrades() as $Upgrade ) {
 			$Value = $Upgrade->GetMultiplier() * $Upgrade->GetLevel();
-			var_dump($Value);
+			if( $Value === 0 ) {
+				continue;
+			}
 			switch( $Upgrade->GetType() ) {
 				case \ETowerAttackUpgradeType::HitPoints:
 					$Data[ 'hp_multiplier' ] += $Value;
@@ -234,6 +234,8 @@ class Base
 					$Data[ 'damage_multiplier_dps' ] += $Value; // TODO: initial_value?
 					break;
 				case \ETowerAttackUpgradeType::ClickDamage:
+					var_dump($Upgrade);
+					var_dump($Value);
 					$Data[ 'damage_per_click_multiplier' ] += $Value;
 					break;
 				case \ETowerAttackUpgradeType::DamageMultiplier_Fire:
@@ -270,6 +272,7 @@ class Base
 		$this->BossLootDropPercentage = $Data['boss_loot_drop_percentage'];
 		$this->DamageMultiplierDps = $Data['damage_multiplier_dps'];
 		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
+		$this->DamagePerClick = 10 * $this->GetDamagePerClickMultiplier();
 	}
 
 	private function GetTuningData( $Key = null )
