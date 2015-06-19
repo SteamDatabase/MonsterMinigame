@@ -42,47 +42,30 @@ class Base
 	private $MaxHp = 0;
 	private $Dps = 0;
 	
-	public function __construct( 
-		$Upgrades = array(),
-		$DamagePerClick = 1.0,
-		$DamageMultiplierFire = 1.0,
-		$DamageMultiplierWater = 1.0,
-		$DamageMultiplierAir = 1.0,
-		$DamageMultiplierEarth = 1.0,
-		$DamageMultiplierCrit = 2.0,
-		$UnlockedAbilitiesBitfield = 0,
-		$HpMultiplier = 1.0,
-		$CritPercentage = 0,
-		$BadgePoints = 0,
-		$AbilityItems = array(),
-		$BossLootDropPercentage = 0.25,
-		$DamageMultiplierDps = 1.0,
-		$BaseDps = 0,
-		$DamagePerClickMultiplier = 1.0,
-		$MaxHp = 0,
-		$Dps = 0
-	) {
+	public function __construct() {
 		$this->Upgrades = array();
 		foreach( \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' ) as $UpgradeId => $Upgrade) {
 			$this->Upgrades[] = new Upgrade( $UpgradeId, 0, $Upgrade[ 'cost' ] );
 		}
-		$this->DamagePerClick = $DamagePerClick;
-		$this->DamageMultiplierFire = $DamageMultiplierFire;
-		$this->DamageMultiplierWater = $DamageMultiplierWater;
-		$this->DamageMultiplierAir = $DamageMultiplierAir;
-		$this->DamageMultiplierEarth = $DamageMultiplierEarth;
-		$this->DamageMultiplierCrit = $DamageMultiplierCrit;
-		$this->UnlockedAbilitiesBitfield = $UnlockedAbilitiesBitfield;
-		$this->HpMultiplier = $HpMultiplier;
-		$this->CritPercentage = $CritPercentage;
-		$this->BadgePoints = $BadgePoints;
-		$this->AbilityItems = $AbilityItems;
-		$this->BossLootDropPercentage = $BossLootDropPercentage;
-		$this->DamageMultiplierDps = $DamageMultiplierDps;
-		$this->BaseDps = $BaseDps;
-		$this->DamagePerClickMultiplier = $DamagePerClickMultiplier;
-		$this->MaxHp = $MaxHp;
-		$this->Dps = $Dps;
+		$this->DamagePerClick = $this->GetTuningData( 'damage_per_click' );
+		$this->DamageMultiplierFire = $this->GetTuningData( 'damage_multiplier_fire' );
+		$this->DamageMultiplierWater = $this->GetTuningData( 'damage_multiplier_water' );
+		$this->DamageMultiplierAir = $this->GetTuningData( 'damage_multiplier_air' );
+		$this->DamageMultiplierEarth = $this->GetTuningData( 'damage_multiplier_earth' );
+		$this->DamageMultiplierCrit = $this->GetTuningData( 'damage_multiplier_crit' );
+		$this->UnlockedAbilitiesBitfield = 0;
+		$this->HpMultiplier = 1; # TODO
+		$this->CritPercentage = $this->GetTuningData( 'crit_percentage' );
+		// TODO: Give 0.1 badgepoints per previous level (start_condition_minigame_badge)
+		// TODO: Give badgepoints for badge (1 & 10 points)
+		$this->BadgePoints = 0;
+		$this->AbilityItems = array();
+		$this->BossLootDropPercentage = $this->GetTuningData( 'loot_chance' );
+		$this->DamageMultiplierDps = 1; # TODO
+		$this->BaseDps = $this->GetTuningData( 'Dps' );
+		$this->DamagePerClickMultiplier = 1; # TODO
+		$this->MaxHp = 0; # TODO: Delete?
+		$this->Dps = $this->GetTuningData( 'Dps' );
 	}
 
 	public function ToArray()
@@ -220,6 +203,17 @@ class Base
 	public function GetDps()
 	{
 		return $this->Dps;
+	}
+
+	private function GetTuningData( $Key = null )
+	{	
+		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
+		if ($Key === null) {
+			return $TuningData;
+		} else if (!array_key_exists( $Key, $TuningData)) {
+			return null;
+		}
+		return $TuningData[ $Key ];
 	}
 }
 ?>

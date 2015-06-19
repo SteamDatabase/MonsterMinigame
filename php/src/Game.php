@@ -51,10 +51,10 @@ class Game
 		l( 'Created game #' . $this->GetGameId() );
 	}
 
-	private function CreatePlayer( $ID )
+	private function CreatePlayer( $AccountId )
 	{
-		$this->Players[ $ID ] = new Player\Base(
-			$ID, //steam id/account id, remember to cast (string)
+		$this->Players[ $AccountId ] = new Player\Base(
+			$AccountId, //steam id/account id, remember to cast (string)
 			rand(3000, 6000), //hp
 			1, //current lane
 			0, //target
@@ -155,7 +155,7 @@ class Game
 		$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 300); // active players with health between 10 levels (bars) = team health
 
 		// Create 3 lanes
-		for ( $i = 0; 3 > $i; $i++ ) {
+		for( $i = 0; 3 > $i; $i++ ) {
 			// Create 3 enemy in each lane
 			$Enemies = array();
 			$Enemies[] = new Enemy(
@@ -164,7 +164,7 @@ class Game
 				$this->GetLevel()
 			);
 
-			for ( $a = 0; 3 > $a; $a++ ) {
+			for( $a = 0; 3 > $a; $a++ ) {
 				$Enemies[] = new Enemy(
 					$this->GetNextMobId(),
 					\ETowerAttackEnemyType::Mob, // 1
@@ -185,7 +185,7 @@ class Game
 				0, //gold dropped
 				$ActivePlayerAbilities,
 				$PlayerHpBuckets,
-				$ElementalArray[array_rand($ElementalArray)], //element
+				$ElementalArray[ array_rand( $ElementalArray ) ], //element
 				0, //decrease cooldown
 				0 //gold per click
 			);

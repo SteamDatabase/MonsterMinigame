@@ -59,6 +59,16 @@ class Upgrade
 		$this->SetCostForNextLevel( $this->GetPredictedCost( $NextLevel ) );
 	}
 
+	public function IsLevelOneUpgrade()
+	{
+		return $this->GetUpgradeId() >= 11 && $this->GetUpgradeId() <= 18;
+	}
+
+	public function IsElementalUpgrade()
+	{
+		return $this->GetUpgradeId() >= 3 && $this->GetUpgradeId() <= 6;
+	}
+
 	public function GetName()
 	{
 		return $this->GetTuningData( 'name' );

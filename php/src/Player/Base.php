@@ -122,21 +122,21 @@ class Base
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
 			if( 
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
-			||  (( $UpgradeId >= 11 && $UpgradeId <= 18 ) && $Upgrade->GetLevel() >= 1) // One level upgrades
+			||  ( $Upgrade->IsLevelOneUpgrade() && $Upgrade->GetLevel() >= 1) // One level upgrades
 			||  ( $Upgrade->HasRequiredUpgrade() && $this->GetTechTree()->GetUpgrade($Upgrade->GetRequiredUpgrade())->GetLevel() < $Upgrade->GetRequiredLevel()) // Does not have the required upgrade & level
 			) {
 				continue;
 			}
 			$this->DecreaseGold( $Upgrade->GetCostForNextLevel() );
 			$Upgrade->IncreaseLevel();
-			if( $UpgradeId >= 3 && $UpgradeId <= 6 ) { // Elemental upgrade
+			if( $Upgrade->IsElementalUpgrade() ) { // Elemental upgrade
 				$ElementalUpgrades = $this->GetTechTree()->GetElementalUpgrades();
 				$TotalLevel = 0;
-				foreach ($ElementalUpgrades as $ElementalUpgrade) {
+				foreach( $ElementalUpgrades as $ElementalUpgrade ) {
 					$TotalLevel += $ElementalUpgrade->GetLevel();
 				}
-				// Loop again to set the next level cost
-				foreach ($ElementalUpgrades as $ElementalUpgrade) {
+				// Loop again to set the next level cost for each elemental
+				foreach( $ElementalUpgrades as $ElementalUpgrade ) {
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
 			}
