@@ -10,6 +10,9 @@ $Loader->register();
 // register the base directories for the namespace prefix
 $Loader->addNamespace('SteamDB\CTowerAttack', __DIR__ . '\src');
 
+define('ROOT_DIR', __DIR__);
+define('FILES_DIR', ROOT_DIR . '/files/');
+
 class Psr4AutoloaderClass
 {
     /**

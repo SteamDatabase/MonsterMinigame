@@ -86,6 +86,11 @@ class Base
 		}
 	}
 
+	public function HandleUpgrade( $Upgrades )
+	{
+		//
+	}
+
 	public function GetTechTree()
 	{
 		return $this->TechTree;

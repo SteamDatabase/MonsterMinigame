@@ -1,7 +1,7 @@
 <?php
 namespace SteamDB\CTowerAttack\Player\TechTree;
 
-class AbilityItem
+class Upgrade
 {
 	/*
 	optional uint32 upgrade = 1;
@@ -17,6 +17,15 @@ class AbilityItem
 		$this->Upgrade = $Upgrade;
 		$this->Level = $Level;
 		$this->CostForNextLevel = $CostForNextLevel;
+	}
+
+	public function ToArray()
+	{
+		return array(
+			'upgrade' => $this->GetUpgrade(),
+			'level' => $this->GetLevel(),
+			'cost_for_next_level' => $this->GetCostForNextLevel()
+		);
 	}
 
 	public function GetUpgrade()

@@ -62,7 +62,10 @@ class Base
 		$MaxHp = 0,
 		$Dps = 0
 	) {
-		$this->Upgrades = $Upgrades;
+		$this->Upgrades = array();
+		foreach( \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' ) as $UpgradeId => $Upgrade) {
+			$this->Upgrades[] = new Upgrade( $UpgradeId, 0, $Upgrade[ 'cost' ] );
+		}
 		$this->DamagePerClick = $DamagePerClick;
 		$this->DamageMultiplierFire = $DamageMultiplierFire;
 		$this->DamageMultiplierWater = $DamageMultiplierWater;
@@ -85,7 +88,7 @@ class Base
 	public function ToArray()
 	{
 		return array(
-			"upgrades" => $this->GetUpgrades(),
+			"upgrades" => $this->GetUpgradesArray(),
 			"damage_per_click" => $this->GetDamagePerClick(),
 			"damage_multiplier_fire" => $this->GetDamageMultiplierFire(),
 			"damage_multiplier_water" => $this->GetDamageMultiplierWater(),
@@ -108,6 +111,15 @@ class Base
 	public function GetUpgrades()
 	{
 		return $this->Upgrades;
+	}
+
+	public function GetUpgradesArray()
+	{
+		$Upgrades = array();
+		foreach( $this->GetUpgrades() as $Upgrade ) {
+			$Upgrades[] = $Upgrade->ToArray();
+		}
+		return $Upgrades;
 	}
 
 	public function GetDamagePerClick()

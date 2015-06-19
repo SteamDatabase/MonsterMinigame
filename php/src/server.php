@@ -10,6 +10,7 @@ class Server
 	private $Socket;
 	private $LastGameId = 0;
 	private $Games;
+	protected static $TuningData = array();
 	
 	public function __construct( $Port )
 	{
@@ -21,6 +22,8 @@ class Server
 		}
 		
 		l( 'Listening on port ' . $Port );
+
+		self::LoadTuningData();
 		
 		$Game = new Game($this->LastGameId + 1);
 		$this->Games[$Game->GetGameId()] = $Game;
@@ -47,7 +50,7 @@ class Server
 			l( $Peer . ' - ' . $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
-			switch ( $Data['method'] ) {
+			switch ( $Data[ 'method' ] ) {
 				case 'GetGameData':
 					$GameId = $Data[ 'gameid' ];
 					$Game = $this->GetGame( $GameId );
@@ -76,6 +79,7 @@ class Server
 					}
 					$this->SendResponse( $Peer, $Response );
 					break;
+				case 'ChooseUpgrade':
 				case 'UseAbilities':
 					$AccessToken = $Data[ 'access_token' ];
 					$InputJson = $Data[ 'input_json' ];
@@ -86,12 +90,21 @@ class Server
 						$SteamId = $this->GetSteamIdFromAccessToken( $AccessToken );
 						$Player = $Game->GetPlayer( $SteamId );
 						if( $Player !== null ) {
-							$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ] );
-							$Game->UpdatePlayer( $Player );
-							$this->UpdateGame( $Game );
-							$Response = array(
-								'player_data' => $Player->ToArray()
-							);
+							if( $Data[ 'method' ] == 'ChooseUpgrade' ) {
+								$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ] );
+								$Game->UpdatePlayer( $Player );
+								$this->UpdateGame( $Game );
+								$Response = array(
+									'player_data' => $Player->ToArray()
+								);
+							} else if( $Data[ 'method' ] == 'UseAbilities' ) {
+								$Player->HandleUpgrade( $Input[ 'upgrades' ] );
+								$Game->UpdatePlayer( $Player );
+								$this->UpdateGame( $Game );
+								$Response = array(
+									'tech_tree' => $Player->GetTechTree()->ToArray()
+								);
+							}
 						}
 					}
 					$this->SendResponse( $Peer, $Response );
@@ -116,6 +129,17 @@ class Server
 	private function Tick()
 	{
 		l( 'Ticking...' );
+	}
+
+	public static function LoadTuningData()
+	{
+		$file = file_get_contents( FILES_DIR . 'tuningData.json' );
+		self::$TuningData = json_decode( $file, true );
+	}
+
+	public static function GetTuningData( $key = null )
+	{
+		return $key !== null ? self::$TuningData[$key] : self::$TuningData;
 	}
 
 	public function GetGames()
