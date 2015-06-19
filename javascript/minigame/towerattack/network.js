@@ -126,7 +126,7 @@ CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
-		'access_token': instance.m_WebAPI.m_strOAuth2Token,
+		'access_token': g_steamID,
 		'format': 'json',
 	};
 
@@ -160,7 +160,7 @@ CServerInterface.prototype.ChooseUpgrades = function( callback, upgrades )
 
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
-		'access_token': instance.m_WebAPI.m_strOAuth2Token,
+		'access_token': g_steamID,
 		'format': 'json'
 	};
 
@@ -194,7 +194,7 @@ CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 
 	var rgRequest = {
 		'input_json': V_ToJSON( rgParams ),
-		'access_token': instance.m_WebAPI.m_strOAuth2Token,
+		'access_token': g_steamID,
 		'format': 'json'
 	};
 
