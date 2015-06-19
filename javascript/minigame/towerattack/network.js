@@ -30,6 +30,10 @@ CServerInterface.prototype.Connect = function( callback )
 	}).success(function(rgResult){
 		if( rgResult.success == 1)
 		{
+			// todo hacks
+			rgResult.token = g_steamID;
+			rgResult.steamid = g_steamID;
+			
 			instance.m_strSteamID = rgResult.steamid;
 			instance.m_strWebAPIHost = rgResult.webapi_host;
 			instance.m_WebAPI = new CWebAPI( rgResult.webapi_host, rgResult.webapi_host_secure, rgResult.token );
