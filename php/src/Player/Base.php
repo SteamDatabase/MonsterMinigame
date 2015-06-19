@@ -113,7 +113,7 @@ class Base
 		}
 	}
 
-	public function HandleUpgrade( $Upgrades )
+	public function HandleUpgrade( $Game, $Upgrades )
 	{
 		foreach( $Upgrades as $UpgradeId ) {
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );

@@ -91,7 +91,7 @@ class Server
 						$Player = $Game->GetPlayer( $SteamId );
 						if( $Player !== null ) {
 							if( $Data[ 'method' ] == 'ChooseUpgrade' ) {
-								$Player->HandleUpgrade( $Input[ 'upgrades' ] );
+								$Player->HandleUpgrade( $Game, $Input[ 'upgrades' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
