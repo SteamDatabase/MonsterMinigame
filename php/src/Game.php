@@ -225,8 +225,9 @@ class Game
 	public function GetPlayer( $AccountId )
 	{
 		//TODO: remove this
-		if( !isset( $this->Players[ $AccountId ] ) )
+		if( !array_key_exists( $AccountId, $this->Players ) )
 		{
+			l( 'Creating new player ' . $AccountId . ' in Game ID #' . $this->GetGameId() );
 			$this->CreatePlayer( $AccountId );
 		}
 		

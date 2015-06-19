@@ -48,8 +48,7 @@ class Server
 			$Response = null;
 			switch ( $Data[ 'method' ] ) {
 				case 'GetGameData':
-					$GameId = $Data[ 'gameid' ];
-					$Game = $this->GetGame( $GameId );
+					$Game = $this->GetGame( $Data[ 'gameid' ] );
 					$Response = null;
 					if( $Game !== null ) {
 						$Response = array(
@@ -59,13 +58,13 @@ class Server
 					}
 					break;
 				case 'GetPlayerData':
-					$GameId = $Data[ 'gameid' ];
-					$SteamId = $Data[ 'steamid' ];
-					$Game = $this->GetGame( $GameId );
+					$Game = $this->GetGame( $Data[ 'gameid' ] );
 					$Response = null;
 					if( $Game !== null ) {
-						$Player = $Game->GetPlayer( $SteamId );
+						$Player = $Game->GetPlayer( $Data[ 'steamid' ] );
 						if( $Player !== null ) {
+							var_dump(count($Player->GetTechTree()->ToArray()));
+							#die();
 							$Response = array(
 								'player_data' => $Player->ToArray(),
 								'tech_tree' => $Player->GetTechTree()->ToArray()
@@ -90,14 +89,14 @@ class Server
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
-									'player_data' => $Player->ToArray()
+									'tech_tree' => $Player->GetTechTree()->ToArray()
 								);
 							} else if( $Data[ 'method' ] == 'UseAbilities' ) {
 								$Player->HandleAbilityUsage( $Game, $Input[ 'requested_abilities' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
-									'tech_tree' => $Player->GetTechTree()->ToArray()
+									'player_data' => $Player->ToArray()
 								);
 							}
 						}
@@ -153,7 +152,7 @@ class Server
 	public function GetSteamIdFromAccessToken( $AccessToken )
 	{
 		// TODO: pls
-		return "76561197990586091";
+		return "8015562370";
 	}
 
 	public function UpdateGame( $Game )
