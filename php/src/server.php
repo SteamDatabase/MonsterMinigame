@@ -44,12 +44,12 @@ class Server
 			    continue;
 			}
 			
-			l( $Peer . ' - ' . $Data['method'] );
+			l( $Peer . ' - ' . $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
 			switch ( $Data['method'] ) {
 				case 'GetGameData':
-					$GameId = $Data['gameid'];
+					$GameId = $Data[ 'gameid' ];
 					$Game = $this->GetGame( $GameId );
 					$Response = null;
 					if( $Game !== null ) {
@@ -61,8 +61,8 @@ class Server
 					$this->SendResponse( $Peer, $Response );
 					break;
 				case 'GetPlayerData':
-					$GameId = $Data['gameid'];
-					$SteamId = $Data['steamid'];
+					$GameId = $Data[ 'gameid' ];
+					$SteamId = $Data[ 'steamid' ];
 					$Game = $this->GetGame( $GameId );
 					$Response = null;
 					if( $Game !== null ) {
@@ -71,6 +71,26 @@ class Server
 							$Response = array(
 								'player_data' => $Player->ToArray(),
 								'tech_tree' => $Player->GetTechTree()->ToArray()
+							);
+						}
+					}
+					$this->SendResponse( $Peer, $Response );
+					break;
+				case 'UseAbilities':
+					$AccessToken = $Data[ 'access_token' ];
+					$InputJson = $Data[ 'input_json' ];
+					$Input = json_decode( $InputJson, true );
+					$Game = $this->GetGame( $Input[ 'gameid' ] );
+					$Response = null;
+					if( $Game !== null ) {
+						$SteamId = $this->GetSteamIdFromAccessToken( $AccessToken );
+						$Player = $Game->GetPlayer( $SteamId );
+						if( $Player !== null ) {
+							$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ] );
+							$Game->UpdatePlayer( $Player );
+							$this->UpdateGame( $Game );
+							$Response = array(
+								'player_data' => $Player->ToArray()
 							);
 						}
 					}
@@ -107,6 +127,17 @@ class Server
 	{
 		//TODO: return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
 		return $this->Games[1];
+	}
+
+	public function GetSteamIdFromAccessToken( $AccessToken )
+	{
+		// TODO: pls
+		return "76561197990586091";
+	}
+
+	public function UpdateGame( $Game )
+	{
+		$this->Games[ $Game->GetGameId() ] = $Game;
 	}
 }
 ?>

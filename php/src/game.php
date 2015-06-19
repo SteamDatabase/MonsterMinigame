@@ -212,7 +212,12 @@ class Game
 	public function GetPlayer( $AccountId )
 	{
 		//TODO: return array_key_exists( $AccountId, $this->Players ) ? $this->Players[$AccountId] : null;
-		return $this->Players[$AccountId];
+		return $this->Players[ $AccountId ];
+	}
+
+	public function UpdatePlayer( $Player )
+	{
+		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
 }
 ?>

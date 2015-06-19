@@ -66,6 +66,26 @@ class Base
 		);
 	}
 
+	public function HandleAbilityUsage( $RequestedAbilities )
+	{
+		foreach( $RequestedAbilities as $RequestedAbility ) {
+			switch( $RequestedAbility['ability'] ) {
+				case \ETowerAttackAbility::Attack:
+					break;
+				case \ETowerAttackAbility::ChangeLane:
+					$this->SetLane( $RequestedAbility[ 'new_lane' ] );
+					break;
+				case \ETowerAttackAbility::Respawn:
+					break;
+				case \ETowerAttackAbility::ChangeTarget:
+					break;
+				default:
+					// Handle unknown ability?
+					break;
+			}
+		}
+	}
+
 	public function GetTechTree()
 	{
 		return $this->TechTree;
@@ -84,6 +104,11 @@ class Base
 	public function GetCurrentLane()
 	{
 		return $this->CurrentLane;
+	}
+
+	public function SetLane( $Lane )
+	{
+		return $this->CurrentLane = $Lane;
 	}
 
 	public function GetTarget()
