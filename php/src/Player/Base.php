@@ -79,6 +79,22 @@ class Base
 					if ($Enemy->GetHp() <= 0) {
 						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
 					}
+					$DeadLanes = 0;
+					foreach( $Game->GetLanes() as $Lane ) {
+						$Enemies = $Lane->GetEnemies();
+						$DeadEnemies = 0;
+						foreach( $Enemies as $Enemy ) {
+							if( $Enemy->getHp() <= 0 ) {
+								$DeadEnemies++;
+							}
+						}
+						if( $DeadEnemies === count($Enemies) ) {
+							$DeadLanes++;
+						}
+					}
+					if( $DeadLanes === 3 ) {
+						$Game->GenerateNewLevel();
+					}
 					break;
 				case \ETowerAttackAbility::ChangeLane:
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
