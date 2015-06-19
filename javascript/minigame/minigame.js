@@ -21,13 +21,12 @@ CMinigameManager.prototype.Initialize = function(ele)
 	ele.appendChild( this.Renderer.view );
 	$J(ele).css({ width: k_ScreenWidth + 'px', margin: '0 auto', position: 'relative'  });
 
+	var that = this;
 
-	requestAnimationFrame(
-		(function(that){
-			return function(){ that.Render() }
-		})(this)
-	);
-
+	PIXI.ticker.shared.add(function()
+	{
+		that.Render();
+	});
 }
 
 CMinigameManager.prototype.EnterScene = function( NewScene )
@@ -37,20 +36,12 @@ CMinigameManager.prototype.EnterScene = function( NewScene )
 
 	this.m_CurrentScene = NewScene;
 	this.m_CurrentScene.Enter();
-
-
 }
 
 CMinigameManager.prototype.Render = function()
 {
 	if( window.g_Stats )
 		window.g_Stats.begin();
-
-	requestAnimationFrame(
-		(function(that){
-			return function(){ that.Render() }
-		})(this)
-	);
 
 	if( this.m_CurrentScene != undefined )
 	{
@@ -120,6 +111,3 @@ function SortContainerByY(container)
 		return a.position.y - b.position.y
 	});
 }
-
-
-

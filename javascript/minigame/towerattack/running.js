@@ -175,7 +175,7 @@ CSceneGame.prototype.Tick = function()
 {
 
 
-	CSceneMinigame.prototype.Tick.call(this);
+	//CSceneMinigame.prototype.Tick.call(this);
 
 	var nNow = performance.now();
 
