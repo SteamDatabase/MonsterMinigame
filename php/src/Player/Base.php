@@ -25,17 +25,9 @@ class Base
 	private $ActiveAbilities = array();
 	private $CritDamage;
 	private $Loot;
+	private $TechTree;
 
-	public function __construct(
-		$AccountId,
-		$Hp,
-		$Gold,
-		$ActiveAbilitiesBitfield,
-		$ActiveAbilities,
-		$CritDamage,
-		$Loot,
-		TechTree\Base $TechTree
-	)
+	public function __construct( $AccountId )
 	{
 		$this->AccountId = $AccountId;
 		$this->Hp = $this->GetTuningData( 'hp' );

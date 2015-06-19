@@ -200,9 +200,9 @@ class Enemy
 	{	
 		$TypeName = strtolower( $this->GetTypeName() );
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( $TypeName );
-		if ($Key === null) {
+		if( $Key === null ) {
 			return $TuningData;
-		} else if (!array_key_exists( $Key, $TuningData)) {
+		} else if( !array_key_exists( $Key, $TuningData ) ) {
 			return null;
 		}
 		return $TuningData[ $Key ];
