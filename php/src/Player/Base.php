@@ -130,6 +130,7 @@ class Base
 				}
 			}
 		}
+		$this->GetTechTree()->RecalulateUpgrades();
 	}
 
 	public function GetTechTree()

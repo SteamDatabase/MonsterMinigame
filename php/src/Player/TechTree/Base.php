@@ -205,6 +205,73 @@ class Base
 		return $this->Dps;
 	}
 
+	public function RecalulateUpgrades()
+	{
+		$Data = array(
+			'damage_per_click' => (double) 0,
+			'damage_multiplier_fire' => (double) 0,
+			'damage_multiplier_water' => (double) 0,
+			'damage_multiplier_air' => (double) 0,
+			'damage_multiplier_earth' => (double) 0,
+			'damage_multiplier_crit' => (double) 0,
+			'unlocked_abilities_bitfield' => (int) 0,
+			'hp_multiplier' => (double) 0,
+			'crit_percentage' => (double) 0,
+			'boss_loot_drop_percentage' => (double) 0,
+			'damage_multiplier_dps' => (double) 0,
+			'damage_per_click_multiplier' => (double) 0,
+			'max_hp' => (double) 0,
+			'dps' => (double) 0
+		);
+		foreach( $this->GetUpgrades() as $Upgrade ) {
+			$Value = $Upgrade->GetMultiplier() * $Upgrade->GetLevel();
+			var_dump($Value);
+			switch( $Upgrade->GetType() ) {
+				case \ETowerAttackUpgradeType::HitPoints:
+					$Data[ 'hp_multiplier' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::DPS:
+					$Data[ 'damage_multiplier_dps' ] += $Value; // TODO: initial_value?
+					break;
+				case \ETowerAttackUpgradeType::ClickDamage:
+					$Data[ 'damage_per_click_multiplier' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::DamageMultiplier_Fire:
+					$Data[ 'damage_multiplier_fire' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::DamageMultiplier_Water:
+					$Data[ 'damage_multiplier_water' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::DamageMultiplier_Air:
+					$Data[ 'damage_multiplier_air' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::DamageMultiplier_Earth:
+					$Data[ 'damage_multiplier_earth' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::DamageMultiplier_Crit:
+					$Data[ 'damage_multiplier_crit' ] += $Value;
+					break;
+				case \ETowerAttackUpgradeType::PurchaseAbility:
+					# TODO: ?
+					break;
+				case \ETowerAttackUpgradeType::BossLootDropPercentage:
+					$Data[ 'boss_loot_drop_percentage' ] += $Value; // TODO: Not percentage but multiplier?
+					break;
+			}
+		}
+		#$this->DamagePerClick = $Data['damage_per_click'];
+		$this->DamageMultiplierFire = $Data['damage_multiplier_fire'];
+		$this->DamageMultiplierWater = $Data['damage_multiplier_water'];
+		$this->DamageMultiplierAir = $Data['damage_multiplier_air'];
+		$this->DamageMultiplierEarth = $Data['damage_multiplier_earth'];
+		$this->DamageMultiplierCrit = $Data['damage_multiplier_crit'];
+		$this->HpMultiplier = $Data['hp_multiplier'];
+		#$this->CritPercentage = $Data['crit_percentage'];
+		$this->BossLootDropPercentage = $Data['boss_loot_drop_percentage'];
+		$this->DamageMultiplierDps = $Data['damage_multiplier_dps'];
+		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
+	}
+
 	private function GetTuningData( $Key = null )
 	{	
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
