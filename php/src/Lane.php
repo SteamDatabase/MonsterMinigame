@@ -19,16 +19,16 @@ class Lane
 	private $Dps;
 	private $GoldDropped;
 	private $ActivePlayerAbilities;
-	
+
 	public function __construct(
-		array $Enemies, 
-		$Dps, 
-		$GoldDropped, 
-		array $ActivePlayerAbilities, 
-		array $PlayerHpBuckets, 
-		$Element, 
-		$ActivePlayerAbilityDecreaseCooldowns, 
-		$ActivePlayerAbilityGoldPerClick 
+		array $Enemies,
+		$Dps,
+		$GoldDropped,
+		array $ActivePlayerAbilities,
+		array $PlayerHpBuckets,
+		$Element,
+		$ActivePlayerAbilityDecreaseCooldowns,
+		$ActivePlayerAbilityGoldPerClick
 	) {
 		$this->Enemies = $Enemies;
 		$this->Dps = $Dps;

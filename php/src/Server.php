@@ -11,37 +11,37 @@ class Server
 	private $LastGameId = 0;
 	private $Games;
 	protected static $TuningData = array();
-	
+
 	public function __construct( $Port )
 	{
 		$this->Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
-		
+
 		socket_bind( $this->Socket, 'localhost', $Port);
 		socket_listen( $this->Socket, 5 );
-		
+
 		l( 'Listening on port ' . $Port );
 
 		self::LoadTuningData();
-		
+
 		$Game = new Game($this->LastGameId + 1);
 		$this->Games[$Game->GetGameId()] = $Game;
 	}
-	
+
 	public function Listen( )
 	{
 		while( true )
 		{
 			$Message = socket_accept( $this->Socket );
-			
+
 			$Data = socket_read( $Message, 2048, PHP_NORMAL_READ );
-			
+
 			$Data = json_decode( $Data, TRUE );
-			
+
 			if( ( $Data === null && json_last_error() !== JSON_ERROR_NONE ) || !array_key_exists( 'method', $Data ) ) {
 				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
 			    continue;
 			}
-			
+
 			l( $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
@@ -119,22 +119,22 @@ class Server
 					// TODO: handle unknown methods
 					break;
 			}
-			
+
 			$Response = json_encode( [ 'response' => $Response ], JSON_PRETTY_PRINT ) . PHP_EOL;
 			socket_write( $Message, $Response, strlen( $Response ) );
 			socket_close( $Message );
-			
+
 			$Tick = microtime( true );
-			
+
 			if( $Tick >= $this->LastTick )
 			{
 				$this->LastTick = $Tick + $this->TickRate;
-				
+
 				$this->Tick();
 			}
 		}
 	}
-	
+
 	private function Tick()
 	{
 		l( 'Ticking...' );

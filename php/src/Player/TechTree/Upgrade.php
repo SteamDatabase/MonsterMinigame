@@ -128,7 +128,7 @@ class Upgrade
 	}
 
 	private function GetTuningData( $Key = null )
-	{	
+	{
 		$Upgrades = \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' );
 		if( $Key === null ) {
 			return $Upgrades[ $this->GetUpgradeId() ];
@@ -141,11 +141,11 @@ class Upgrade
 	private function GetPredictedCost($Level = null)
 	{
 		return \SteamDB\CTowerAttack\Util::PredictValue(
-			$Level !== null ? $Level : $this->GetLevel(), 
-			$this->GetCost(), 
+			$Level !== null ? $Level : $this->GetLevel(),
+			$this->GetCost(),
 			$this->GetCostExponentialBase()
 		);
-		
+
 	}
 }
 ?>

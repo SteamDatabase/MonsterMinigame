@@ -10,7 +10,7 @@ class AbilityItem
 
 	private $Ability;
 	private $Quantity;
-	
+
 	public function __construct( $Ability, $Quantity )
 	{
 		$this->Ability = $Ability;

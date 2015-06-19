@@ -39,7 +39,7 @@ class Game
 		$this->LastMobId++;
 		return $this->LastMobId;
 	}
-	
+
 	public function __construct($GameId)
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
@@ -230,7 +230,7 @@ class Game
 			l( 'Creating new player ' . $AccountId . ' in Game ID #' . $this->GetGameId() );
 			$this->CreatePlayer( $AccountId );
 		}
-		
+
 		//TODO: return array_key_exists( $AccountId, $this->Players ) ? $this->Players[$AccountId] : null;
 		return $this->Players[ $AccountId ];
 	}

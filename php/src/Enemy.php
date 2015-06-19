@@ -19,7 +19,7 @@ class Enemy
 	private $Dps;
 	private $Timer;
 	private $Gold;
-	
+
 	public function __construct( $Id, $Type, $Level )
 	{
 		$this->Id = $Id;
@@ -197,7 +197,7 @@ class Enemy
 	}
 
 	private function GetTuningData( $Key = null )
-	{	
+	{
 		$TypeName = strtolower( $this->GetTypeName() );
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( $TypeName );
 		if( $Key === null ) {

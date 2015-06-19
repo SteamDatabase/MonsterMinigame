@@ -4,7 +4,7 @@ namespace SteamDB\CTowerAttack\Player\TechTree;
 class Base
 {
 	/*
-	repeated Upgrade upgrades = 1;		
+	repeated Upgrade upgrades = 1;
 	optional double damage_per_click = 2 [default = 1.0];
 	optional double damage_multiplier_fire = 3 [default = 1.0];
 	optional double damage_multiplier_water = 4 [default = 1.0];
@@ -41,7 +41,7 @@ class Base
 	private $DamagePerClickMultiplier = 1.0;
 	private $MaxHp = 0;
 	private $Dps = 0;
-	
+
 	public function __construct() {
 		$this->Upgrades = array();
 		foreach( \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' ) as $UpgradeId => $Upgrade) {
@@ -276,7 +276,7 @@ class Base
 	}
 
 	private function GetTuningData( $Key = null )
-	{	
+	{
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
 		if( $Key === null ) {
 			return $TuningData;

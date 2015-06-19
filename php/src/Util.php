@@ -6,10 +6,10 @@ class Util
 	public static function PredictValue( $Exponent, $Coefficient, $Base )
 	{
 		return self::FloorToMultipleOf(
-			10, 
+			10,
 			self::CalcExponentialTuningValve(
-				$Exponent, 
-				$Coefficient, 
+				$Exponent,
+				$Coefficient,
 				$Base
 			)
 		);
