@@ -50,6 +50,7 @@ class Server
 			l( $Peer . ' - ' . $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
+			$Response = null;
 			switch ( $Data[ 'method' ] ) {
 				case 'GetGameData':
 					$GameId = $Data[ 'gameid' ];
@@ -58,10 +59,9 @@ class Server
 					if( $Game !== null ) {
 						$Response = array(
 							'game_data' => $Game->ToArray(),
-							'stats' => array() //TODO
+							'stats' => $Game->GetStats()
 						);
 					}
-					$this->SendResponse( $Peer, $Response );
 					break;
 				case 'GetPlayerData':
 					$GameId = $Data[ 'gameid' ];
@@ -77,7 +77,6 @@ class Server
 							);
 						}
 					}
-					$this->SendResponse( $Peer, $Response );
 					break;
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
@@ -98,7 +97,7 @@ class Server
 									'player_data' => $Player->ToArray()
 								);
 							} else if( $Data[ 'method' ] == 'UseAbilities' ) {
-								$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ] );
+								$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ], $Game );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
@@ -107,13 +106,13 @@ class Server
 							}
 						}
 					}
-					$this->SendResponse( $Peer, $Response );
 					break;
 				default:
 					// TODO: handle unknown methods
-					$this->SendResponse( $Peer, null );
 					break;
 			}
+
+			$this->SendResponse( $Peer, $Response );
 			
 			$Tick = microtime( true );
 			

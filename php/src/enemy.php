@@ -23,6 +23,7 @@ class Enemy
 	public function __construct( $Id, $Type, $Hp, $MaxHp, $Dps, $Timer, $Gold )
 	{
 		$this->Id = $Id;
+		$this->Hp = $Hp;
 		$this->Type = $Type;
 		$this->MaxHp = $MaxHp;
 		$this->Dps = $Dps;
@@ -59,7 +60,7 @@ class Enemy
 
 	public function GetHp()
 	{
-		return $this->Type;
+		return $this->Hp;
 	}
 
 	public function GetMaxHp()

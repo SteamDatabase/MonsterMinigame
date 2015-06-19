@@ -53,6 +53,11 @@ class Lane
 		);
 	}
 
+	public function GetEnemy( $Key )
+	{
+		return $this->Enemies[ $Key ];
+	}
+
 	public function GetEnemies()
 	{
 		return $this->Enemies;

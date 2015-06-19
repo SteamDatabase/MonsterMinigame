@@ -97,6 +97,25 @@ class Game
 		);
 	}
 
+	public function GetStats()
+	{
+		// TODO: get real data
+		return array(
+			'num_players' => 991,
+			'num_mobs_killed' => '691',
+			'num_towers_killed' => '232',
+			'num_minibosses_killed' => '66',
+			'num_bosses_killed' => '11',
+			'num_clicks' => '665422',
+			'num_abilities_activated' => '1214',
+			'num_players_reaching_milestone_level' => '991',
+			'num_ability_items_activated' => '5177',
+			'num_active_players' => 126,
+			'time_simulating' => 3.0477301080604891,
+			'time_saving' => 41.225250769888
+		);
+	}
+
 	public function GetGameId()
 	{
 		return $this->GameId;
@@ -120,17 +139,29 @@ class Game
 
 		// Create 3 lanes
 		for ( $i = 0; 3 > $i; $i++ ) {
-			// Create 1 enemy in each lane
+			// Create 3 enemy in each lane
 			$Enemies = array();
 			$Enemies[] = new Enemy(
 				$this->GetNextMobId(),
-				\ETowerAttackEnemyType::Mob,
-				rand(1, 10), //hp
-				10, //max hp
-				1, //dps
-				null, //timer
+				\ETowerAttackEnemyType::Tower, // 1
+				rand(20, 30), //hp
+				30, //max hp
+				rand(1, 3), //dps
+				3.6000000000000019, //timer
 				rand(10, 100) //gold
 			);
+		
+			for ( $a = 0; 3 > $a; $a++ ) {
+				$Enemies[] = new Enemy(
+					$this->GetNextMobId(),
+					\ETowerAttackEnemyType::Mob, // 1
+					rand(20, 30), //hp
+					30, //max hp
+					rand(1, 3), //dps
+					null, //timer
+					rand(10, 100) //gold
+				);
+			}
 
 			$this->Lanes[] = new Lane(
 				$Enemies,

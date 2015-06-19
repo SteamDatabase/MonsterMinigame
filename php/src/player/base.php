@@ -66,18 +66,25 @@ class Base
 		);
 	}
 
-	public function HandleAbilityUsage( $RequestedAbilities )
+	public function HandleAbilityUsage( $RequestedAbilities, $Game )
 	{
 		foreach( $RequestedAbilities as $RequestedAbility ) {
 			switch( $RequestedAbility['ability'] ) {
 				case \ETowerAttackAbility::Attack:
+					$NumClicks = $RequestedAbility[ 'num_clicks' ];
+					var_dump($NumClicks);
+					$Lane = $Game->GetLane( $this->GetCurrentLane() );
+					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
+					var_dump($Enemy);
 					break;
 				case \ETowerAttackAbility::ChangeLane:
 					$this->SetLane( $RequestedAbility[ 'new_lane' ] );
 					break;
 				case \ETowerAttackAbility::Respawn:
+					// TODO: logic pls
 					break;
 				case \ETowerAttackAbility::ChangeTarget:
+					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
 				default:
 					// Handle unknown ability?
@@ -135,12 +142,17 @@ class Base
 
 	public function SetLane( $Lane )
 	{
-		return $this->CurrentLane = $Lane;
+		$this->CurrentLane = $Lane;
 	}
 
 	public function GetTarget()
 	{
 		return $this->Target;
+	}
+
+	public function SetTarget( $Target )
+	{
+		$this->Target = $Target;
 	}
 
 	public function GetTimeDied()
@@ -181,6 +193,11 @@ class Base
 	public function GetLoot()
 	{
 		return $this->Loot;
+	}
+
+	public function GetRoom()
+	{
+
 	}
 }
 ?>
