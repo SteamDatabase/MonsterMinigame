@@ -38,8 +38,8 @@ class Base
 		$this->ActiveAbilitiesBitfield = 0;
 		$this->ActiveAbilities = array();
 		$this->CritDamage = 0; // TODO
-		$this->Loot = array() // TODO
-		$this->TechTree = new Player\TechTree\Base();
+		$this->Loot = array(); // TODO
+		$this->TechTree = new TechTree\Base;
 	}
 
 	public function ToArray()
