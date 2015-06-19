@@ -123,7 +123,7 @@ class Game
 	{
 		$this->Lanes = array();
 		$ActivePlayerAbilities = array();
-		$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 300); // active players with health between 10 levels (bars) = team health
+		$PlayerHpBuckets = array(10, 20, 30, 40, 50, 60, 70, 80, 90, 100); // active players with health between 10 levels (bars) = team health
 
 		// Create 3 lanes
 		for( $i = 0; 3 > $i; $i++ ) {
