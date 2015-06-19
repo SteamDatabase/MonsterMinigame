@@ -66,7 +66,7 @@ class Base
 		);
 	}
 
-	public function HandleAbilityUsage( $RequestedAbilities, $Game )
+	public function HandleAbilityUsage( $Game, $RequestedAbilities )
 	{
 		foreach( $RequestedAbilities as $RequestedAbility ) {
 			switch( $RequestedAbility['ability'] ) {
@@ -76,9 +76,16 @@ class Base
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Enemy->DecreaseHp( $Damage );
+					if ($Enemy->GetHp() <= 0) {
+						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
+					}
 					break;
 				case \ETowerAttackAbility::ChangeLane:
+					$Lane = $Game->GetLane( $this->GetCurrentLane() );
+					$Lane->RemovePlayer( $this );
 					$this->SetLane( $RequestedAbility[ 'new_lane' ] );
+					$NewLane = $Game->GetLane( $this->GetCurrentLane() );
+					$NewLane->AddPlayer( $this );
 					break;
 				case \ETowerAttackAbility::Respawn:
 					// TODO: logic pls

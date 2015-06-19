@@ -80,6 +80,7 @@ class Server
 					break;
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
+					// TODO: use ticks/queue instead
 					$AccessToken = $Data[ 'access_token' ];
 					$InputJson = $Data[ 'input_json' ];
 					$Input = json_decode( $InputJson, true );
@@ -97,7 +98,7 @@ class Server
 									'player_data' => $Player->ToArray()
 								);
 							} else if( $Data[ 'method' ] == 'UseAbilities' ) {
-								$Player->HandleAbilityUsage( $Input[ 'requested_abilities' ], $Game );
+								$Player->HandleAbilityUsage( $Game, $Input[ 'requested_abilities' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
@@ -160,6 +161,11 @@ class Server
 
 	public function UpdateGame( $Game )
 	{
+		/*foreach( $Game->GetLanes() as $Lane ) {
+			foreach( $Lane->GetEnemies() as $Enemy ) {
+				if ($Enemey->GetHp() <= 0) {}
+			}
+		}*/
 		$this->Games[ $Game->GetGameId() ] = $Game;
 	}
 }

@@ -14,6 +14,7 @@ class Lane
 	optional double active_player_ability_decrease_cooldowns = 7 [default = 1];
 	optional double active_player_ability_gold_per_click = 8 [default = 0];
 	*/
+	private $Players = array();
 	private $Enemies;
 	private $Dps;
 	private $GoldDropped;
@@ -105,6 +106,30 @@ class Lane
 	public function GetActivePlayerAbilityGoldPerClick()
 	{
 		return $this->ActivePlayerAbilityGoldPerClick;
+	}
+
+	public function GetPlayers()
+	{
+		return $this->Players;
+	}
+
+	public function AddPlayer( $Player )
+	{
+		$this->Players[ $Player->GetAccountId() ] = 1;
+	}
+
+	public function RemovePlayer( $Player )
+	{
+		if( array_key_exists( $Player->GetAccountId(), $this->Players )) {
+			unset( $this->Players[ $Player ] );
+		}
+	}
+
+	public function GiveGoldToPlayers( $Game, $Amount )
+	{
+		foreach( $this->Players as $AccountId => $Set) {
+			$Game->GetPlayer( $AccountId )->increaseGold( $Amount );
+		}
 	}
 }
 ?>
