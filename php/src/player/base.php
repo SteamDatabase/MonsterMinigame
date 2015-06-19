@@ -92,7 +92,8 @@ class Base
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
 			if( 
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
-			|| (( $UpgradeId >= 11 && $UpgradeId <= 18 ) && $Upgrade->GetLevel() >= 1) // One level upgrades
+			||  (( $UpgradeId >= 11 && $UpgradeId <= 18 ) && $Upgrade->GetLevel() >= 1) // One level upgrades
+			||  ( $this->GetTechTree()->GetUpgrade($Upgrade->GetRequiredUpgrade())->GetLevel() < $Upgrade->GetRequiredLevel()) // Does not have the required upgrade & level
 			) {
 				continue;
 			}
