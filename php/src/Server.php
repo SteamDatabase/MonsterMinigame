@@ -37,7 +37,8 @@ class Server
 
 			$Data = json_decode( $Data, TRUE );
 
-			if( ( $Data === null && json_last_error() !== JSON_ERROR_NONE ) || !array_key_exists( 'method', $Data ) ) {
+			if( !isset( $Data[ 'method' ] ) )
+			{
 				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
 			    continue;
 			}
@@ -120,8 +121,10 @@ class Server
 					break;
 			}
 
-			$Response = json_encode( [ 'response' => $Response ], JSON_PRETTY_PRINT ) . PHP_EOL;
-			socket_write( $Message, $Response, strlen( $Response ) );
+			$Response = json_encode( [ 'response' => $Response ], JSON_PRETTY_PRINT );
+
+			socket_write( $Message, $Response );
+			socket_shutdown( $Message, 1 );
 			socket_close( $Message );
 
 			$Tick = microtime( true );
