@@ -63,8 +63,6 @@ class Server
 					if( $Game !== null ) {
 						$Player = $Game->GetPlayer( $Data[ 'steamid' ] );
 						if( $Player !== null ) {
-							var_dump(count($Player->GetTechTree()->ToArray()));
-							#die();
 							$Response = array(
 								'player_data' => $Player->ToArray(),
 								'tech_tree' => $Player->GetTechTree()->ToArray()
@@ -147,7 +145,7 @@ class Server
 		//TODO: return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
 		return $this->Games[1];
 	}
-	
+
 	public function UpdateGame( $Game )
 	{
 		/*foreach( $Game->GetLanes() as $Lane ) {
