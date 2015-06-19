@@ -88,7 +88,28 @@ class Base
 
 	public function HandleUpgrade( $Upgrades )
 	{
-		//
+		foreach( $Upgrades as $UpgradeId ) {
+			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
+			if( 
+				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
+			|| (( $UpgradeId >= 11 && $UpgradeId <= 18 ) && $Upgrade->GetLevel() >= 1) // One level upgrades
+			) {
+				continue;
+			}
+			$this->DecreaseGold( $Upgrade->GetCostForNextLevel() );
+			$Upgrade->IncreaseLevel();
+			if( $UpgradeId >= 3 && $UpgradeId <= 6 ) { // Elemental upgrade
+				$ElementalUpgrades = $this->GetTechTree()->GetElementalUpgrades();
+				$TotalLevel = 0;
+				foreach ($ElementalUpgrades as $ElementalUpgrade) {
+					$TotalLevel += $ElementalUpgrade->GetLevel();
+				}
+				// Loop again to set the next level cost
+				foreach ($ElementalUpgrades as $ElementalUpgrade) {
+					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
+				}
+			}
+		}
 	}
 
 	public function GetTechTree()
@@ -129,6 +150,16 @@ class Base
 	public function GetGold()
 	{
 		return $this->Gold;
+	}
+
+	public function IncreaseGold( $Amount )
+	{
+		$this->Gold += $Amount;
+	}
+
+	public function DecreaseGold( $Amount )
+	{
+		$this->Gold -= $Amount;
 	}
 
 	public function GetActiveAbilitiesBitfield()

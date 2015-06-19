@@ -108,6 +108,21 @@ class Base
 		);
 	}
 
+	public function GetElementalUpgrades()
+	{
+		return array(
+			3 => $this->GetUpgrade( 3 ), // Fire
+			4 => $this->GetUpgrade( 4 ), // Water
+			5 => $this->GetUpgrade( 5 ), // Air
+			6 => $this->GetUpgrade( 6 ) // Earth
+		);
+	}
+
+	public function GetUpgrade( $UpgradeId )
+	{
+		return $this->Upgrades[ $UpgradeId ];
+	}
+
 	public function GetUpgrades()
 	{
 		return $this->Upgrades;
