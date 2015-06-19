@@ -84,6 +84,11 @@ class Upgrade
 		return $this->GetTuningData( 'cost_exponential_base' );
 	}
 
+	public function HasRequiredUpgrade()
+	{
+		return $this->GetTuningData( 'required_upgrade' ) !== null;
+	}
+
 	public function GetRequiredUpgrade()
 	{
 		return $this->GetTuningData( 'required_upgrade' );
@@ -99,10 +104,15 @@ class Upgrade
 		return $this->GetTuningData( 'desc' );
 	}
 
-	private function GetTuningData( $key = null )
+	private function GetTuningData( $Key = null )
 	{	
 		$Upgrades = \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' );
-		return $key !== null ? $Upgrades[ $this->GetUpgradeId() ][ $key ] : $Upgrades[ $this->GetUpgradeId() ];
+		if ($Key === null) {
+			return $Upgrades[ $this->GetUpgradeId() ];
+		} else if (!array_key_exists( $Key, $Upgrades[ $this->GetUpgradeId() ] )) {
+			return null;
+		}
+		return $Upgrades[ $this->GetUpgradeId() ][ $Key ];
 	}
 
 	private function GetPredictedCost($Level = null)
@@ -125,7 +135,7 @@ class Upgrade
 
 	private static function CalcExponentialTuningValve( $Level, $Coefficient, $Base )
 	{
-		return $Coefficient * ( pow( $Base, $Level ) );
+		return $Coefficient * pow( $Base, $Level );
 	}
 }
 ?>
