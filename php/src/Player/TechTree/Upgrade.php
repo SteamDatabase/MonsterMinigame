@@ -130,9 +130,12 @@ class Upgrade
 	private function GetTuningData( $Key = null )
 	{
 		$Upgrades = \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' );
-		if( $Key === null ) {
+		if( $Key === null ) 
+		{
 			return $Upgrades[ $this->GetUpgradeId() ];
-		} else if( !array_key_exists( $Key, $Upgrades[ $this->GetUpgradeId() ] ) ) {
+		} 
+		else if( !array_key_exists( $Key, $Upgrades[ $this->GetUpgradeId() ] ) ) 
+		{
 			return null;
 		}
 		return $Upgrades[ $this->GetUpgradeId() ][ $Key ];

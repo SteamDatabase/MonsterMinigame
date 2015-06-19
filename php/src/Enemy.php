@@ -27,12 +27,15 @@ class Enemy
 		// TODO: Check if health works
 		// TODO: Tower and MiniBoss respawns, see GetRespawnTime()
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
-		if( $this->GetType() === \ETowerAttackEnemyType::Mob ) {
+		if( $this->GetType() === \ETowerAttackEnemyType::Mob ) 
+		{
 			$Variance = $this->GetHpMultiplierVariance();
 			$LowestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
 			$HighestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
 			$this->MaxHp = rand( $LowestHp, $HighestHp );
-		} else {
+		} 
+		else 
+		{
 			$this->MaxHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
 		}
 		$this->Hp = $this->MaxHp;
@@ -52,7 +55,8 @@ class Enemy
 			'dps' => (double) $this->GetDps(),
 			'gold' => (double) $this->GetGold()
 		);
-		if ($this->GetTimer() !== null) {
+		if( $this->GetTimer() !== null ) 
+		{
 			$ReturnArray[ 'timer' ] = $this->GetTimer();
 		}
 		return $ReturnArray;
@@ -75,7 +79,8 @@ class Enemy
 
 	public function GetTypeName()
 	{
-		switch( $this->Type ) {
+		switch( $this->Type ) 
+		{
 			case \ETowerAttackEnemyType::Tower:
 				return 'Tower';
 			case \ETowerAttackEnemyType::Mob:
@@ -200,9 +205,12 @@ class Enemy
 	{
 		$TypeName = strtolower( $this->GetTypeName() );
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( $TypeName );
-		if( $Key === null ) {
+		if( $Key === null ) 
+		{
 			return $TuningData;
-		} else if( !array_key_exists( $Key, $TuningData ) ) {
+		} 
+		else if( !array_key_exists( $Key, $TuningData ) ) 
+		{
 			return null;
 		}
 		return $TuningData[ $Key ];

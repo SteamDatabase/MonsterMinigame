@@ -144,7 +144,8 @@ class Game
 		$PlayerHpBuckets = array(10, 20, 30, 40, 50, 60, 70, 80, 90, 100); // active players with health between 10 levels (bars) = team health
 
 		// Create 3 lanes
-		for( $i = 0; 3 > $i; $i++ ) {
+		for( $i = 0; 3 > $i; $i++ ) 
+		{
 			// Create 3 enemy in each lane
 			$Enemies = array();
 			$Enemies[] = new Enemy(
@@ -153,7 +154,8 @@ class Game
 				$this->GetLevel()
 			);
 
-			for( $a = 0; 3 > $a; $a++ ) {
+			for( $a = 0; 3 > $a; $a++ ) 
+			{
 				$Enemies[] = new Enemy(
 					$this->GetNextMobId(),
 					\ETowerAttackEnemyType::Mob, // 1
@@ -194,7 +196,8 @@ class Game
 	public function GetLanesArray()
 	{
 		$LaneArray = array();
-		foreach ( $this->GetLanes() as $Lane ){
+		foreach( $this->GetLanes() as $Lane )
+		{
 			$LaneArray[] = $Lane->ToArray();
 		}
 		return $LaneArray;

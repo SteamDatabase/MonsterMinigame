@@ -125,7 +125,8 @@ class Lane
 
 	public function GiveGoldToPlayers( $Game, $Amount )
 	{
-		foreach( $this->Players as $AccountId => $Set) {
+		foreach( $this->Players as $AccountId => $Set ) 
+		{
 			$Game->GetPlayer( $AccountId )->increaseGold( $Amount );
 		}
 	}

@@ -59,8 +59,10 @@ class Base
 
 	public function HandleAbilityUsage( $Game, $RequestedAbilities )
 	{
-		foreach( $RequestedAbilities as $RequestedAbility ) {
-			switch( $RequestedAbility['ability'] ) {
+		foreach( $RequestedAbilities as $RequestedAbility ) 
+		{
+			switch( $RequestedAbility['ability'] ) 
+			{
 				case \ETowerAttackAbility::Attack:
 					# TODO: Add numclicks/enemies killed per player?
 					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
@@ -81,40 +83,47 @@ class Base
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Enemy->DecreaseHp( $Damage );
 					# TODO: check if gold has already been rewareded for killing this enemy
-					if( $Enemy->IsDead() ) {
-						switch( $Enemy->GetType() ) {
+					if( $Enemy->IsDead() ) 
+					{
+						switch( $Enemy->GetType() ) 
+						{
 							case \ETowerAttackEnemyType::Tower:
-								$game->NumTowersKilled++
+								$game->NumTowersKilled++;
 								break;
 							case \ETowerAttackEnemyType::Mob:
-								$game->NumMobsKilled++
+								$game->NumMobsKilled++;
 								break;
 							case \ETowerAttackEnemyType::Boss:
-								$game->NumBossesKilled++
+								$game->NumBossesKilled++;
 								break;
 							case \ETowerAttackEnemyType::MiniBoss:
-								$game->NumMiniBossesKilled++
+								$game->NumMiniBossesKilled++;
 								break;
 							case \ETowerAttackEnemyType::TreasureMob:
-								$game->NumTreasureMobsKilled++
+								$game->NumTreasureMobsKilled++;
 								break;
 						}
 						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
 					}
 					$DeadLanes = 0;
-					foreach( $Game->GetLanes() as $Lane ) {
+					foreach( $Game->GetLanes() as $Lane ) 
+					{
 						$Enemies = $Lane->GetEnemies();
 						$DeadEnemies = 0;
-						foreach( $Enemies as $Enemy ) {
-							if( $Enemy->IsDead() ) {
+						foreach( $Enemies as $Enemy )
+						{
+							if( $Enemy->IsDead() ) 
+							{
 								$DeadEnemies++;
 							}
 						}
-						if( $DeadEnemies === count( $Enemies ) ) {
+						if( $DeadEnemies === count( $Enemies ) ) 
+						{
 							$DeadLanes++;
 						}
 					}
-					if( $DeadLanes === 3 ) {
+					if( $DeadLanes === 3 ) 
+					{
 						$Game->GenerateNewLevel();
 					}
 					break;
@@ -146,19 +155,23 @@ class Base
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
 			||  ( $Upgrade->IsLevelOneUpgrade() && $Upgrade->GetLevel() >= 1) // One level upgrades
 			||  ( $Upgrade->HasRequiredUpgrade() && $this->GetTechTree()->GetUpgrade($Upgrade->GetRequiredUpgrade())->GetLevel() < $Upgrade->GetRequiredLevel()) // Does not have the required upgrade & level
-			) {
+			) 
+			{
 				continue;
 			}
 			$this->DecreaseGold( $Upgrade->GetCostForNextLevel() );
 			$Upgrade->IncreaseLevel();
-			if( $Upgrade->IsElementalUpgrade() ) { // Elemental upgrade
+			if( $Upgrade->IsElementalUpgrade() ) // Elemental upgrade
+			{
 				$ElementalUpgrades = $this->GetTechTree()->GetElementalUpgrades();
 				$TotalLevel = 0;
-				foreach( $ElementalUpgrades as $ElementalUpgrade ) {
+				foreach( $ElementalUpgrades as $ElementalUpgrade ) 
+				{
 					$TotalLevel += $ElementalUpgrade->GetLevel();
 				}
 				// Loop again to set the next level cost for each elemental
-				foreach( $ElementalUpgrades as $ElementalUpgrade ) {
+				foreach( $ElementalUpgrades as $ElementalUpgrade ) 
+				{
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
 			}
@@ -244,9 +257,12 @@ class Base
 	private function GetTuningData( $Key = null )
 	{
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
-		if ($Key === null) {
+		if( $Key === null ) 
+		{
 			return $TuningData;
-		} else if (!array_key_exists( $Key, $TuningData)) {
+		} 
+		else if ( !array_key_exists( $Key, $TuningData ) ) 
+		{
 			return null;
 		}
 		return $TuningData[ $Key ];

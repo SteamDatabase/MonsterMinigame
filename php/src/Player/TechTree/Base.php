@@ -221,12 +221,15 @@ class Base
 			'damage_per_click_multiplier' => (double) 1
 		);
 
-		foreach( $this->GetUpgrades() as $Upgrade ) {
+		foreach( $this->GetUpgrades() as $Upgrade ) 
+		{
 			$Value = $Upgrade->GetMultiplier() * $Upgrade->GetLevel();
-			if( $Value === 0 ) {
+			if( $Value === 0 ) 
+			{
 				continue;
 			}
-			switch( $Upgrade->GetType() ) {
+			switch( $Upgrade->GetType() ) 
+			{
 				case \ETowerAttackUpgradeType::HitPoints:
 					$Data[ 'hp_multiplier' ] += $Value;
 					break;
@@ -278,9 +281,12 @@ class Base
 	private function GetTuningData( $Key = null )
 	{
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
-		if( $Key === null ) {
+		if( $Key === null ) 
+		{
 			return $TuningData;
-		} else if( !array_key_exists( $Key, $TuningData ) ) {
+		} 
+		else if( !array_key_exists( $Key, $TuningData ) ) 
+		{
 			return null;
 		}
 		return $TuningData[ $Key ];

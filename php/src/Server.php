@@ -49,11 +49,13 @@ class Server
 
 			// Handle the request, this could be moved elsewhere...
 			$Response = null;
-			switch ( $Data[ 'method' ] ) {
+			switch ( $Data[ 'method' ] ) 
+			{
 				case 'GetGameData':
 					$Game = $this->GetGame( $Data[ 'gameid' ] );
 					$Response = null;
-					if( $Game !== null ) {
+					if( $Game !== null ) 
+					{
 						$Response = array(
 							'game_data' => $Game->ToArray(),
 							'stats' => $Game->GetStats()
@@ -63,9 +65,11 @@ class Server
 				case 'GetPlayerData':
 					$Game = $this->GetGame( $Data[ 'gameid' ] );
 					$Response = null;
-					if( $Game !== null ) {
+					if( $Game !== null ) 
+					{
 						$Player = $Game->GetPlayer( $Data[ 'steamid' ] );
-						if( $Player !== null ) {
+						if( $Player !== null ) 
+						{
 							$Response = array(
 								'player_data' => $Player->ToArray(),
 								'tech_tree' => $Player->GetTechTree()->ToArray()
@@ -81,17 +85,22 @@ class Server
 					$Input = json_decode( $InputJson, true );
 					$Game = $this->GetGame( $Input[ 'gameid' ] );
 					$Response = null;
-					if( $Game !== null ) {
+					if( $Game !== null ) 
+					{
 						$Player = $Game->GetPlayer( $SteamId );
-						if( $Player !== null ) {
-							if( $Data[ 'method' ] == 'ChooseUpgrade' ) {
+						if( $Player !== null ) 
+						{
+							if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
+							{
 								$Player->HandleUpgrade( $Game, $Input[ 'upgrades' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
 									'tech_tree' => $Player->GetTechTree()->ToArray()
 								);
-							} else if( $Data[ 'method' ] == 'UseAbilities' ) {
+							} 
+							else if( $Data[ 'method' ] == 'UseAbilities' ) 
+							{
 								$Player->HandleAbilityUsage( $Game, $Input[ 'requested_abilities' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
