@@ -29,16 +29,16 @@ class Enemy
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
 		if( $this->GetType() === \ETowerAttackEnemyType::Mob ) {
 			$Variance = $this->GetHpMultiplierVariance();
-			$LowestHp = $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance) * pow( $Level + 1, $this->GetHpExponent() );
-			$HighestHp = $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance) * pow( $Level + 1, $this->GetHpExponent() );
+			$LowestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
+			$HighestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
 			$this->MaxHp = rand( $LowestHp, $HighestHp );
 		} else {
-			$this->MaxHp = $this->GetTuningHp() * $this->GetHpMultiplier() * pow( $Level + 1, $this->GetHpExponent() );
+			$this->MaxHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
 		}
 		$this->Hp = $this->MaxHp;
-		$this->Dps = $this->GetTuningDps() * $this->GetDpsMultiplier() * pow( $Level + 1, $this->GetDpsExponent() );
+		$this->Dps = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() );
 		$this->Timer = 0; // Todo
-		$this->Gold = $this->GetTuninGold() * $this->GetGoldMultiplier() * pow( $Level + 1, $this->GetGoldExponent() );
+		$this->Gold = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent() );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 

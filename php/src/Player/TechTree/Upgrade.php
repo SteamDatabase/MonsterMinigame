@@ -140,25 +140,12 @@ class Upgrade
 
 	private function GetPredictedCost($Level = null)
 	{
-		return self::FloorToMultipleOf(
-			10, 
-			self::CalcExponentialTuningValve(
-				$Level !== null ? $Level : $this->GetLevel(), 
-				$this->GetCost(), 
-				$this->GetCostExponentialBase()
-			) 
+		return \SteamDB\CTowerAttack\Util::PredictValue(
+			$Level !== null ? $Level : $this->GetLevel(), 
+			$this->GetCost(), 
+			$this->GetCostExponentialBase()
 		);
 		
-	}
-
-	private static function FloorToMultipleOf( $MultipleOf, $Number )
-	{
-		return floor( $Number / $MultipleOf ) * $MultipleOf;
-	}
-
-	private static function CalcExponentialTuningValve( $Level, $Coefficient, $Base )
-	{
-		return $Coefficient * pow( $Base, $Level );
 	}
 }
 ?>
