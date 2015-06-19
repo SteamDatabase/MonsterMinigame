@@ -82,7 +82,7 @@ class Game
 	{
 		// TODO: get real data
 		return array(
-			'num_players' => 991,
+			'num_players' => count( $this->Players ),
 			'num_mobs_killed' => '691',
 			'num_towers_killed' => '232',
 			'num_minibosses_killed' => '66',
