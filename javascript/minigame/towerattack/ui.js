@@ -1337,4 +1337,21 @@ var g_rgUnits = [
 	{magnitude: Math.pow(10,65), unit: '?!'}
 ];
 
+// Stats functions we don't always include, redefine just in case.
+function FloorToMultipleOf( multipleOf, number )
+{
+	return Math.floor( number / multipleOf ) * multipleOf;
+}
 
+function CalcExponentialTuningValve( level, coefficient, base )
+{
+	return ( coefficient * ( Math.pow( base, level ) ) );
+}
+
+// A shoddy implementation of an otherwise reasonable prng
+function xorprng( x, nMax ) {
+	x ^= parseInt( g_GameID ); // a
+	x ^= x << 25; // b
+	x ^= x >> 27; // c
+	return ( x * 338717 ) % nMax;
+}

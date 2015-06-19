@@ -56,13 +56,13 @@ class Base
 	public function ToArray()
 	{
 		return array(
-			'hp' => $this->GetHp(),
-			'current_lane' => $this->GetCurrentLane(),
-			'target' => $this->GetTarget(),
-			'time_died' => $this->GetTimeDied(),
-			'gold' => $this->GetGold(),
-			'active_abilities_bitfield' => $this->GetActiveAbilitiesBitfield(),
-			'crit_damage' => $this->GetCritDamage()
+			'hp' => (double) $this->GetHp(),
+			'current_lane' => (int) $this->GetCurrentLane(),
+			'target' => (int) $this->GetTarget(),
+			'time_died' => (int) $this->GetTimeDied(),
+			'gold' => (double) $this->GetGold(),
+			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
+			'crit_damage' => (double) $this->GetCritDamage()
 		);
 	}
 

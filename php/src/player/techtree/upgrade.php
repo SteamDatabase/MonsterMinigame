@@ -22,9 +22,9 @@ class Upgrade
 	public function ToArray()
 	{
 		return array(
-			'upgrade' => $this->GetUpgradeId(),
-			'level' => $this->GetLevel(),
-			'cost_for_next_level' => $this->GetCostForNextLevel()
+			'upgrade' => (int) $this->GetUpgradeId(),
+			'level' => (int) $this->GetLevel(),
+			'cost_for_next_level' => (double) $this->GetCostForNextLevel()
 		);
 	}
 

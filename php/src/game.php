@@ -88,12 +88,12 @@ class Game
 	public function ToArray()
 	{
 		return array(
-			'level' => $this->GetLevel(),
+			'level' => (int) $this->GetLevel(),
 			'lanes' => $this->GetLanesArray(),
-			'timestamp' => $this->GetTimestamp(),
+			'timestamp' => (int) $this->GetTimestamp(),
 			'status' => $this->GetStatus(),
-			'timestamp_game_start' => $this->GetTimestampGameStart(),
-			'timestamp_level_start' => $this->GetTimestampLevelStart()
+			'timestamp_game_start' => (int) $this->GetTimestampGameStart(),
+			'timestamp_level_start' => (int) $this->GetTimestampLevelStart()
 		);
 	}
 

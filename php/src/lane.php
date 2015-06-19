@@ -43,13 +43,13 @@ class Lane
 	{
 		return array(
 			'enemies' => $this->GetEnemiesArray(),
-			'dps' => $this->GetDps(),
-			'gold_dropped' => $this->GetGoldDropped(),
+			'dps' => (double) $this->GetDps(),
+			'gold_dropped' => (double) $this->GetGoldDropped(),
 			'active_player_abilities' => $this->GetActivePlayerAbilities(),
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
-			'element' => $this->GetElement(),
-			'active_player_ability_decrease_cooldowns' => $this->GetActivePlayerAbilityDecreaseCooldowns(),
-			'active_player_ability_gold_per_click' => $this->GetActivePlayerAbilityGoldPerClick()
+			'element' => (int) $this->GetElement(),
+			'active_player_ability_decrease_cooldowns' => (double) $this->GetActivePlayerAbilityDecreaseCooldowns(),
+			'active_player_ability_gold_per_click' => (double) $this->GetActivePlayerAbilityGoldPerClick()
 		);
 	}
 

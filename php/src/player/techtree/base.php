@@ -88,23 +88,23 @@ class Base
 	public function ToArray()
 	{
 		return array(
-			"upgrades" => $this->GetUpgradesArray(),
-			"damage_per_click" => $this->GetDamagePerClick(),
-			"damage_multiplier_fire" => $this->GetDamageMultiplierFire(),
-			"damage_multiplier_water" => $this->GetDamageMultiplierWater(),
-			"damage_multiplier_air" => $this->GetDamageMultiplierAir(),
-			"damage_multiplier_earth" => $this->GetDamageMultiplierEarth(),
-			"damage_multiplier_crit" => $this->GetDamageMultiplierCrit(),
-			"unlocked_abilities_bitfield" => $this->GetUnlockedAbilitiesBitfield(),
-			"hp_multiplier" => $this->GetHpMultiplier(),
-			"crit_percentage" => $this->GetCritPercentage(),
-			"badge_points" => $this->GetBadgePoints(),
-			"ability_items" => $this->GetAbilityItems(),
-			"boss_loot_drop_percentage" => $this->GetBossLootDropPercentage(),
-			"damage_multiplier_dps" => $this->GetDamageMultiplierDps(),
-			"damage_per_click_multiplier" => $this->GetDamagePerClickMultiplier(),
-			"max_hp" => $this->GetMaxHp(),
-			"dps" => $this->GetDps()
+			'upgrades' => $this->GetUpgradesArray(),
+			'damage_per_click' => (double) $this->GetDamagePerClick(),
+			'damage_multiplier_fire' => (double) $this->GetDamageMultiplierFire(),
+			'damage_multiplier_water' => (double) $this->GetDamageMultiplierWater(),
+			'damage_multiplier_air' => (double) $this->GetDamageMultiplierAir(),
+			'damage_multiplier_earth' => (double) $this->GetDamageMultiplierEarth(),
+			'damage_multiplier_crit' => (double) $this->GetDamageMultiplierCrit(),
+			'unlocked_abilities_bitfield' => (int) $this->GetUnlockedAbilitiesBitfield(),
+			'hp_multiplier' => (double) $this->GetHpMultiplier(),
+			'crit_percentage' => (double) $this->GetCritPercentage(),
+			'badge_points' => (double) $this->GetBadgePoints(),
+			'ability_items' => $this->GetAbilityItems(),
+			'boss_loot_drop_percentage' => (double) $this->GetBossLootDropPercentage(),
+			'damage_multiplier_dps' => (double) $this->GetDamageMultiplierDps(),
+			'damage_per_click_multiplier' => (double) $this->GetDamagePerClickMultiplier(),
+			'max_hp' => (double) $this->GetMaxHp(),
+			'dps' => (double) $this->GetDps()
 		);
 	}
 

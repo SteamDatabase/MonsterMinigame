@@ -34,12 +34,12 @@ class Enemy
 	public function ToArray()
 	{
 		$ReturnArray = array(
-			'id' => $this->GetId(),
-			'type' => $this->GetType(),
-			'hp' => $this->GetHp(),
-			'max_hp' => $this->GetMaxHp(),
-			'dps' => $this->GetDps(),
-			'gold' => $this->GetGold()
+			'id' => (int) $this->GetId(),
+			'type' => (int) $this->GetType(),
+			'hp' => (double) $this->GetHp(),
+			'max_hp' => (double) $this->GetMaxHp(),
+			'dps' => (double) $this->GetDps(),
+			'gold' => (double) $this->GetGold()
 		);
 		if ($this->GetTimer() !== null) {
 			$ReturnArray['timer'] = $this->GetTimer();
