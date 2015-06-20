@@ -40,9 +40,9 @@ class Enemy
 			$this->MaxHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
 		}
 		$this->Hp = $this->MaxHp;
-		$this->Dps = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() );
-		$this->Timer = 0; // Todo
-		$this->Gold = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent() );
+		$this->Dps = floor( \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() ));
+		$this->Timer = null; // TODO: deal with this
+		$this->Gold = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent(), true );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 

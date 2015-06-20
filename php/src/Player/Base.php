@@ -19,8 +19,8 @@ class Base
 	*/
 
 	public $LastActive;
+	public $Hp;
 	private $AccountId;
-	private $Hp;
 	private $CurrentLane = 1;
 	private $Target = 0;
 	private $TimeDied = 0;

@@ -330,17 +330,17 @@ class Game
 
 	public function Update( $SecondsPassed )
 	{
-		$DoDPSDamage = $SecondsPassed !== false && $SecondsPassed > 0;
+		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
 		foreach( $this->Players as $Player )
 		{
 			// Give Players money (TEMPLORARY)
 			$Player->IncreaseGold(50000);
 
-			if ( $DoDPSDamage )
+			if ( $SecondPassed )
 			{
 				// Deal DPS damage to current target
 				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ];
-				$Enemy->DamageTaken += $Player->GetTechTree()->GetDPS();
+				$Enemy->DamageTaken += $Player->GetTechTree()->GetDps() * $SecondsPassed;
 			}
 		}
 
@@ -350,6 +350,7 @@ class Game
 		{
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
+			$EnemyDpsDamage = 0;
 			foreach( $Lane->Enemies as $Enemy )
 			{
 				if( $Enemy->IsDead() )
@@ -400,11 +401,28 @@ class Game
 						$DeadEnemies++;
 						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() );
 					}
+					else
+					{
+						$EnemyDpsDamage += $Enemy->GetDps();
+					}
 				}
 				$Enemy->DamageTaken = 0;
 			}
 			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
-			$Lane->UpdateHpBuckets( $this->GetPlayersInLane( $LaneId ) );
+			// Deal damage to players in lane
+			$PlayersInLane = array();
+			foreach( $this->Players as $Player )
+			{
+				if( $Player->GetCurrentLane() === $LaneId )
+				{
+					$PlayersInLane[] = $Player;
+					if( $SecondPassed )
+					{
+						$Player->Hp -= $EnemyDpsDamage * $SecondsPassed;
+					}
+				}
+			}
+			$Lane->UpdateHpBuckets( $PlayersInLane );
 		}
 		if( $DeadLanes === 3 ) 
 		{
