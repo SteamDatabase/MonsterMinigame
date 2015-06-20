@@ -19,8 +19,6 @@ window.g_eUniverseState = false;
 window.g_msTickRate = 1000;
 window.g_nLaneScrollAmount = 450;
 
-var g_bPrintGameStatusOnTick = false;
-
 window.CSceneGame = function()
 {
 	CSceneMinigame.call(this, arguments[0]);
@@ -109,8 +107,6 @@ window.CSceneGame = function()
 	this.m_nCurrentLevel = 0;
 
 	this.ChangeLevel( this.m_rgLevelMap[0] );
-
-	var instance = this;
 
 	this.m_containerEnemies.interactive = true;
 	this.m_containerEnemies.click = this.m_containerEnemies.tap = function( mouseData ) {
@@ -382,13 +378,15 @@ CSceneGame.prototype.Tick = function()
 		}
 	}*/
 
-	for( var i=0; i<this.m_rgEnemies.length; i++)
+	var i;
+
+	for( i=0; i<this.m_rgEnemies.length; i++)
 	{
 		this.m_rgEnemies[i].Tick();
 	}
 
 	// Tick click numbers
-	for( var i=0; i< this.m_rgClickNumbers.length; i++ )
+	for( i=0; i< this.m_rgClickNumbers.length; i++ )
 	{
 		var t = this.m_rgClickNumbers[i];
 		if( t.m_easeY )
@@ -432,9 +430,9 @@ CSceneGame.prototype.Tick = function()
 	var flDelta = (now - this.m_nLocalTime) * 0.001;
 	this.m_nLocalTime = now;
 
-	for ( var i=this.m_rgEmitters.length-1; i >= 0; i--)
+	for( i=this.m_rgEmitters.length-1; i >= 0; i--)
 	{
-		if( this.m_rgEmitters[i].emit == false && this.m_rgEmitters[i]._activeParticles.length == 0 )
+		if( this.m_rgEmitters[i].emit === false && this.m_rgEmitters[i]._activeParticles.length === 0 )
 		{
 
 			this.m_rgEmitters[i].destroy();
@@ -474,7 +472,7 @@ CSceneGame.prototype.Tick = function()
 			this.m_bDoShake = false;
 			this.m_Container.x = 0;
 			this.m_Container.y = 0;
-		} else if( this.m_nShakeTimer % 1 == 0 )
+		} else if( this.m_nShakeTimer % 1 === 0 )
 		{
 			this.m_Container.x = Math.random() * 10 - 5;
 			this.m_Container.y = Math.random() * 10 - 5;
@@ -612,48 +610,48 @@ CSceneGame.prototype.OnReceiveUpdate = function()
 
 function SmackTV()
 {
-	var r = null;
+	var f, r = null;
 	switch( Math.floor( Math.random() * 15 ) )
 	{
 		case 2:
-			var f = new PIXI.filters.RGBSplitFilter();
+			f = new PIXI.filters.RGBSplitFilter();
 			f.angle = Math.random();
 			r = [f];
 			break;
 		case 3:
-			var f = new PIXI.filters.GrayFilter();
+			f = new PIXI.filters.GrayFilter();
 			f.gray = Math.random();
 			r = [f];
 			break;
 
 		case 4:
-			var f = new PIXI.filters.InvertFilter();
+			f = new PIXI.filters.InvertFilter();
 			f.invert = Math.random();
 			r = [f];
 			break;
 
 		case 5:
-			var f = new PIXI.filters.PixelateFilter();
+			f = new PIXI.filters.PixelateFilter();
 			f.size.x = Math.floor( Math.random() * 20 );
 			f.size.y = Math.floor( Math.random() * 20 );
 			r = [f];
 			break;
 
 		case 6: // This inverts and offsets for some reason. Probably a bug in pixi, might look at it later
-			var f = new PIXI.filters.AsciiFilter();
+			f = new PIXI.filters.AsciiFilter();
 			r = [f];
 			break;
 		case 7:
-			var f = new PIXI.filters.BloomFilter();
+			f = new PIXI.filters.BloomFilter();
 			r = [f];
 			break;
 		case 8:
-			var f = new PIXI.filters.BlurDirFilter(Math.random(), Math.random());
+			f = new PIXI.filters.BlurDirFilter(Math.random(), Math.random());
 			r = [f];
 			break;
 
 		case 9:
-			var f = new PIXI.filters.ColorMatrixFilter();
+			f = new PIXI.filters.ColorMatrixFilter();
 			f.matrix =  [
 				1,0,0,0,0,
 				0,1,0,0,0,
@@ -667,7 +665,7 @@ function SmackTV()
 			break;
 
 		case 10:
-			var f = new PIXI.filters.ColorMatrixFilter();
+			f = new PIXI.filters.ColorMatrixFilter();
 			f.matrix =  [
 				1,0,0,0,0,
 				0,1,0,0,0,
@@ -681,7 +679,7 @@ function SmackTV()
 			break;
 
 		case 11:
-			var f = new PIXI.filters.ColorMatrixFilter();
+			f = new PIXI.filters.ColorMatrixFilter();
 			f.matrix =  [
 				1,0,0,0,0,
 				0,1,0,0,0,
@@ -808,7 +806,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 				instance.m_rgActionLog.push({
 					'icon': false,
 					'type': 'ability',
-					'ability': rgAbilities[i].ability ,
+					'ability': rgAbilities[i].ability,
 					'actor_name': rgAbilities[i].caster,
 					'time': nTimestampStart
 				});
@@ -849,24 +847,6 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 
 }
 
-function IndexOfObject( needle, rgHaystack )
-{
-	var rgKeys = Object.keys(needle);
-
-	haystackloop:
-		for( var i=0; i < rgHaystack.length; i++ )
-		{
-			for( var k=0; k < rgKeys.length; k++ )
-			{
-				var strKey = rgKeys[k];
-				if( rgHaystack[i][strKey] !== needle[strKey] )
-					continue haystackloop;
-			}
-			return i;
-		}
-	return false;
-}
-
 CSceneGame.prototype.FindEnemyByID = function( nID )
 {
 	for( var i=0; i < this.m_rgEnemies.length; i++ )
@@ -879,9 +859,9 @@ CSceneGame.prototype.FindEnemyByID = function( nID )
 
 CSceneGame.prototype.UpdateEnemies = function()
 {
-	var rgExpectedIDs = [];
+	var i, j, rgExpectedIDs = [];
 
-	for( var i=0; i<this.m_rgGameData.lanes.length; i++)
+	for( i=0; i<this.m_rgGameData.lanes.length; i++)
 	{
 		this.m_rgLaneData[i] = {
 			friendly_dps: 0,
@@ -895,7 +875,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 		};
 
 		// Update enemies in this lane
-		for( var j=0; j<this.m_rgGameData.lanes[i].enemies.length; j++)
+		for( j=0; j<this.m_rgGameData.lanes[i].enemies.length; j++)
 		{
 			var rgEnemyData = this.m_rgGameData.lanes[i].enemies[j];
 			var enemy = this.FindEnemyByID( rgEnemyData.id );
@@ -969,7 +949,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 		}
 
 		// Update lane statistics
-		for( var j=0; j<this.m_rgGameData.lanes[i].player_hp_buckets.length; j++)
+		for( j=0; j<this.m_rgGameData.lanes[i].player_hp_buckets.length; j++)
 		{
 			this.m_rgLaneData[i].players += this.m_rgGameData.lanes[i].player_hp_buckets[j];
 			if( this.m_rgGameData.lanes[i].player_hp_buckets[j] > this.m_rgLaneData[i].player_hpbuckets_max )
@@ -980,7 +960,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 		var rgAbilities = this.m_rgGameData.lanes[i].active_player_abilities;
 		if( rgAbilities )
 		{
-			for( var j=0; j<rgAbilities.length; j++ )
+			for( j=0; j<rgAbilities.length; j++ )
 			{
 				this.m_rgLaneData[i].abilities[rgAbilities[j].ability] = this.m_rgLaneData[i].abilities[rgAbilities[j].ability] + 1 || 1;
 
@@ -990,7 +970,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 	}
 
 	// Remove any enemies we still have with invalid IDs
-	for( var i = this.m_rgEnemies.length - 1; i >= 0; i--)
+	for( i = this.m_rgEnemies.length - 1; i >= 0; i--)
 	{
 		if( rgExpectedIDs.indexOf( this.m_rgEnemies[i].m_data.id ) == -1 || this.m_rgEnemies[i].m_bIsDestroyed )
 		{
@@ -1067,24 +1047,23 @@ CSceneGame.prototype.UpdateEnemies = function()
 			this.m_rgActiveParticles[ 8 ][2].emit = false;
 			this.m_rgActiveParticles[ 8 ] = false;
 		}
-	}
-
-	if( window.g_TESTG || this.m_rgLaneData[ this.m_rgPlayerData.current_lane ].abilities[ 9 ] )
-	{
-		if( !this.m_rgActiveParticles[ 9 ] )
+		
+		if( window.g_TESTG || this.m_rgLaneData[ this.m_rgPlayerData.current_lane ].abilities[ 9 ] )
 		{
-			this.m_rgActiveParticles[ 9 ] = [
-				this.SpawnEmitter( g_rgEmitterCache.time_explosion, 1280/2, 720/2, this.m_containerUIBehind),
-				this.SpawnEmitter( g_rgEmitterCache.time_clock, 1280/2, 720/2, this.m_containerUIBehind)
-			];
+			if( !this.m_rgActiveParticles[ 9 ] )
+			{
+				this.m_rgActiveParticles[ 9 ] = [
+					this.SpawnEmitter( g_rgEmitterCache.time_explosion, 1280/2, 720/2, this.m_containerUIBehind),
+					this.SpawnEmitter( g_rgEmitterCache.time_clock, 1280/2, 720/2, this.m_containerUIBehind)
+				];
+			}
+		} else if (this.m_rgActiveParticles[ 9 ])
+		{
+			this.m_rgActiveParticles[ 9 ][0].emit = false;
+			this.m_rgActiveParticles[ 9 ][1].emit = false;
+			this.m_rgActiveParticles[ 9 ] = false;
 		}
-	} else if (this.m_rgActiveParticles[ 9 ])
-	{
-		this.m_rgActiveParticles[ 9 ][0].emit = false;
-		this.m_rgActiveParticles[ 9 ][1].emit = false;
-		this.m_rgActiveParticles[ 9 ] = false;
 	}
-
 }
 
 CSceneGame.prototype.GetEnemy = function(nLane, nIndex)
@@ -1234,7 +1213,7 @@ CSceneGame.prototype.TryUpgrade = function( ele )
 CSceneGame.prototype.SendChooseUpgradesRequest = function()
 {
 	var upgrades = this.m_rgUpgradesQueue;
-	if ( upgrades.length != 0 )
+	if ( upgrades.length !== 0 )
 	{
 		this.m_rgUpgradesQueue = [];
 

@@ -107,7 +107,7 @@ CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 	var instance = this;
 
 	var rgRequest = {
-		'input_json': V_ToJSON( rgParams ),
+		'input_json': JSON.stringify( rgParams ),
 		'access_token': g_steamID,
 		'format': 'json',
 	};
@@ -141,7 +141,7 @@ CServerInterface.prototype.ChooseUpgrades = function( callback, upgrades )
 	var instance = this;
 
 	var rgRequest = {
-		'input_json': V_ToJSON( rgParams ),
+		'input_json': JSON.stringify( rgParams ),
 		'access_token': g_steamID,
 		'format': 'json'
 	};
@@ -175,7 +175,7 @@ CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 	var instance = this;
 
 	var rgRequest = {
-		'input_json': V_ToJSON( rgParams ),
+		'input_json': JSON.stringify( rgParams ),
 		'access_token': g_steamID,
 		'format': 'json'
 	};
@@ -209,7 +209,7 @@ CServerInterface.prototype.QuitGame = function( callback )
 	var instance = this;
 
 	var rgRequest = {
-		'input_json': V_ToJSON( rgParams )
+		'input_json': JSON.stringify( rgParams )
 	};
 
 	this.m_WebAPI.ExecJSONP( 'IMiniGameService', 'LeaveGame',  rgRequest, true, null )

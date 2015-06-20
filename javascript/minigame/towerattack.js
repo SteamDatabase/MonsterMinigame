@@ -219,7 +219,6 @@ var CScenePreload = function()
 {
 	CSceneMinigame.call(this, arguments[0]);
 
-	this.m_cScriptsLoaded = 0;
 	this.m_cAudioLoaded = 0;
 	this.m_cAudioTriedLoad = 0;
 	this.m_bImagesLoaded = false;
@@ -265,10 +264,8 @@ CScenePreload.prototype.Tick = function()
 		)
 	{
 		this.m_bTriedInitializing = true;
-		console.log("Finished preloading.");
 
 		// DO STUFF
-		this.m_cScriptsLoaded = 0;
 		this.m_cEmittersLoaded = 0;
 		this.m_cEmittersLoading = 0;
 		g_Server = new CServerInterface( );
@@ -321,10 +318,6 @@ CScenePreload.prototype.Enter = function()
 		strAudioFormat = 'urlv'
 	else if( formatTester.canPlayType( 'audio/mpeg' ) == 'probably' || formatTester.canPlayType( 'audio/mpeg' ) == 'maybe' ) // WHY.
 		strAudioFormat = 'urlm';
-
-	console.log("audio/ogg support is: %s", formatTester.canPlayType( 'audio/ogg' ));
-	console.log("audio/mpeg support is: %s", formatTester.canPlayType( 'audio/mpeg' ));
-	//console.log("WELCOME TO WEB DEVELOPMENT");
 
 	if( strAudioFormat )
 	{
@@ -451,10 +444,6 @@ CScenePreload.prototype.Enter = function()
 				)(g,h)
 		);
 	});
-
-	var instance = this;
-
-
 }
 
 function ToggleSound()

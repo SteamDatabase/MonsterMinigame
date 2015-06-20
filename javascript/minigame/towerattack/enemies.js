@@ -403,7 +403,7 @@ CEnemy.prototype.Destroy = function()
 		e.parent = text;
 		text.m_easeY = e;
 
-		var e = new CEasingSinOut( 1.5, -1.5, 1000  );
+		e = new CEasingSinOut( 1.5, -1.5, 1000  );
 		e.parent = text;
 		text.m_easeAlpha = e;
 

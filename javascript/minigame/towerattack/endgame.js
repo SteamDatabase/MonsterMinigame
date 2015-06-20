@@ -260,19 +260,16 @@ CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 	var instance = this;
 
 	var rgRequest = {
-		'input_json': V_ToJSON( rgParams ),
+		'input_json': JSON.stringify( rgParams ),
 		'access_token': instance.m_WebAPI.m_strOAuth2Token,
-		'format': "protobuf_raw",
+		'format': "json",
 	};
 
 	$J.ajax({
 		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'UseAbilities', true ),
 		method: 'POST',
 		data: rgRequest,
-		xhrFields : {
-			responseType : 'arraybuffer'
-		},
-		dataType : 'native'
+		dataType : 'json'
 	}).success(function(rgResult){
 		var message = instance.m_protobuf_UseAbilitiesResponse.decode(rgResult);
 		var result = { 'response': message.toRaw( true, true ) };

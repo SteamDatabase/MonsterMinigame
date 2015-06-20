@@ -21,11 +21,9 @@ CMinigameManager.prototype.Initialize = function(ele)
 	ele.appendChild( this.Renderer.view );
 	$J(ele).css({ width: k_ScreenWidth + 'px', margin: '0 auto', position: 'relative'  });
 
-	var that = this;
-
 	PIXI.ticker.shared.add(function()
 	{
-		that.Render();
+		g_Minigame.Render();
 	});
 }
 
@@ -52,20 +50,6 @@ CMinigameManager.prototype.Render = function()
 	if( window.g_Stats )
 		window.g_Stats.end();
 
-}
-
-CMinigameManager.prototype.Debug = function()
-{
-	// arguments isn't an array, need to translate it.
-	var rgArguments = [];
-	for (var i = 0; i < arguments.length; i++) {
-		rgArguments[i] = arguments[i];
-	}
-
-	rgArguments[0] = '%c' + arguments[0];
-	rgArguments.splice(1,0,'background-color: #000; color:#b8b6b4; padding-left:5px; padding-right:5px;')
-
-	console.log.apply(console, rgArguments);
 }
 
 CMinigameManager.prototype.CurrentScene = function()
