@@ -4,7 +4,7 @@ namespace SteamDB\CTowerAttack\Player;
 class Base
 {
 	const MAX_CLICKS = 20;
-	const ACTIVE_PERIOD = 60; // seconds
+	const ACTIVE_PERIOD = 120; // seconds
 	
 	/*
 	optional double hp = 1;
