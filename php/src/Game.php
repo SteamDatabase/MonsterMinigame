@@ -55,6 +55,7 @@ class Game
 		$this->GenerateNewLanes();
 		$this->SetStatus( \EMiniGameStatus::Running );
 		$this->TimestampGameStart = time();
+		$this->TimestampLevelStart = time();
 		l( 'Created new game' );
 	}
 
