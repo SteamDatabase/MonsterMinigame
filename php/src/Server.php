@@ -36,11 +36,13 @@ class Server
 			$DebugTime = microtime( true ); 
 
 			$Data = socket_read( $Message, 2048, PHP_NORMAL_READ );
-
 			$Data = json_decode( $Data, TRUE );
 
 			if( !isset( $Data[ 'method' ] ) )
 			{
+				socket_shutdown( $Message, 2 );
+				socket_close( $Message );
+				
 				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
 			    continue;
 			}
