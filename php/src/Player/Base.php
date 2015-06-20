@@ -22,6 +22,7 @@ class Base
 	public $Hp;
 	public $TimeDied = 0;
 	public $LaneDamageBuffer = [];
+	public $AbilityLastUsed = [];
 	private $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
@@ -71,7 +72,13 @@ class Base
 	{
 		foreach( $RequestedAbilities as $RequestedAbility ) 
 		{
-			switch( $RequestedAbility['ability'] ) 
+			if( isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ) 
+				&& $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > time()
+			) {
+				// Rate limit
+				continue;
+			}
+			switch( $RequestedAbility[ 'ability' ] ) 
 			{
 				case \ETowerAttackAbility::Attack:
 					if( $this->IsDead() )
@@ -134,6 +141,7 @@ class Base
 					// Handle unknown ability?
 					break;
 			}
+			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = time();
 		}
 	}
 
