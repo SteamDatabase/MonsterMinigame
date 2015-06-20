@@ -35,7 +35,7 @@ class Server
 
 			$DebugTime = microtime( true ); 
 
-			$Data = socket_read( $Message, 2048, PHP_NORMAL_READ );
+			$Data = socket_read( $Message, 2048 );
 			$Data = json_decode( $Data, TRUE );
 
 			if( !isset( $Data[ 'method' ] ) )
@@ -58,10 +58,15 @@ class Server
 					$Response = null;
 					if( $Game !== null ) 
 					{
-						$Response = array(
-							'game_data' => $Game->ToArray(),
-							'stats' => $Game->GetStats()
-						);
+						$Response =
+						[
+							'game_data' => $Game->ToArray()
+						];
+						
+						if( $Data[ 'include_stats' ] )
+						{
+							$Response[ 'stats' ] = $Game->GetStats();
+						}
 					}
 					break;
 				case 'GetPlayerData':
@@ -79,13 +84,12 @@ class Server
 						}
 					}
 					break;
+				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
 					// TODO: use ticks/queue instead
 					$SteamId = $Data[ 'access_token' ];
-					$InputJson = $Data[ 'input_json' ];
-					$Input = json_decode( $InputJson, true );
-					$Game = $this->GetGame( $Input[ 'gameid' ] );
+					$Game = $this->GetGame( $Data[ 'gameid' ] );
 					$Response = null;
 					if( $Game !== null ) 
 					{
@@ -94,7 +98,7 @@ class Server
 						{
 							if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
 							{
-								$Player->HandleUpgrade( $Game, $Input[ 'upgrades' ] );
+								$Player->HandleUpgrade( $Game, $Data[ 'upgrades' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(
@@ -103,7 +107,7 @@ class Server
 							} 
 							else if( $Data[ 'method' ] == 'UseAbilities' ) 
 							{
-								$Player->HandleAbilityUsage( $Game, $Input[ 'requested_abilities' ] );
+								$Player->HandleAbilityUsage( $Game, $Data[ 'requested_abilities' ] );
 								$Game->UpdatePlayer( $Player );
 								$this->UpdateGame( $Game );
 								$Response = array(

@@ -188,14 +188,12 @@ CSceneGame.prototype.Tick = function()
 			this.m_nLastTick = nNow;
 
 			// Do abilities
-			var rgRequest = {
-				'requested_abilities': this.m_rgAbilityQueue
-			};
+			var rgRequest = this.m_rgAbilityQueue;
 			this.m_rgAbilityQueue = [];
 
 			if( this.m_nClicks > 0 )
 			{
-				rgRequest.requested_abilities.push(
+				rgRequest.push(
 					{
 						'ability': k_ETowerAttackAbility_Attack,
 						'num_clicks': this.m_nClicks
@@ -203,11 +201,10 @@ CSceneGame.prototype.Tick = function()
 				);
 			}
 
-			this.m_nLastClicks = this.m_nClicks;
 			this.m_nClicks = 0;
 
 			this.m_bWaitingForResponse = true;
-			if( rgRequest.requested_abilities.length > 0 )
+			if( rgRequest.length > 0 )
 			{
 				g_Server.UseAbilities(function(rgResult)
 				{

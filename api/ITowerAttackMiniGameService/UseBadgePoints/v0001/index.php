@@ -1,5 +1,5 @@
 <?php
-	if( empty( $_POST[ 'requested_abilities' ] ) || empty( $_POST[ 'access_token' ] ) )
+	if( empty( $_POST[ 'ability_items' ] ) || empty( $_POST[ 'access_token' ] ) )
 	{
 		http_response_code( 400 );
 		die;
@@ -7,7 +7,7 @@
 	
 	require __DIR__ . '/../../Init.php';
 	
-	$Abilities = json_decode( $_POST[ 'requested_abilities' ], true );
+	$Abilities = json_decode( $_POST[ 'ability_items' ], true );
 	
 	if( empty( $Abilities ) || !is_array( $Abilities ) )
 	{
@@ -17,7 +17,7 @@
 	
 	foreach( $Abilities as $Ability )
 	{
-		if( !isset( $Ability[ 'ability' ] ) )
+		if( !is_int( $Ability ) )
 		{
 			http_response_code( 400 );
 			die;
@@ -27,7 +27,7 @@
 	}
 	
 	Handle( INPUT_POST, [
-		'method' => 'UseAbilities',
+		'method' => 'UseBadgePoints',
 		'access_token' => $_POST[ 'access_token' ],
-		'requested_abilities' => $Abilities
+		'ability_items' => $Abilities
 	] );

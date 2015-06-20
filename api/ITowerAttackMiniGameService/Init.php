@@ -2,9 +2,20 @@
 
 header( 'Content-type: application/json' );
 
-function Handle( $Data )
+function Handle( $Method, $Data = [] )
 {
-	$Data = json_encode( $Data ) . PHP_EOL;
+	// Require all API calls to have proper gameid
+	$GameID = (int)filter_input( $Method, 'gameid', FILTER_SANITIZE_NUMBER_INT );
+
+	if( $GameID < 1 )
+	{
+		http_response_code( 400 );
+		die;
+	}
+	
+	$Data[ 'gameid' ] = $GameID;
+	
+	$Data = json_encode( $Data );
 	
 	$Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 	

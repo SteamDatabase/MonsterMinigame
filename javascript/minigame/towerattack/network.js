@@ -6,18 +6,14 @@ var g_IncludeGameStats = false;
 
 window.CServerInterface = function( )
 {
-	// Get token
-
 	this.m_strSteamID = false;
 
-	this.m_nLastTick = false
+	this.m_nLastTick = false;
 	this.m_bRequestUpdates = false;
 
 	var instance = this;
 
 	this.m_WebAPI = false;//new CWebAPI( rgResult.webapi_host, rgResult.webapi_host_secure, rgResult.token );
-
-
 }
 
 CServerInterface.prototype.Connect = function( callback )
@@ -65,10 +61,10 @@ CServerInterface.prototype.GetGameTuningData = function( callback )
 
 CServerInterface.prototype.GetGameData = function( callback, error, bIncludeStats )
 {
-	var rgParams = {
+	var rgParams =
+	{
 		gameid: this.m_nGameID,
-		include_stats: ( bIncludeStats || g_IncludeGameStats ) ? 1 : 0,
-		format: 'json'
+		include_stats: ( bIncludeStats || g_IncludeGameStats ) ? 1 : 0
 	};
 
 	var instance = this;
@@ -83,11 +79,11 @@ CServerInterface.prototype.GetGameData = function( callback, error, bIncludeStat
 
 CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTechTree )
 {
-	var rgParams = {
+	var rgParams =
+	{
 		gameid: this.m_nGameID,
 		steamid: g_steamID,
-		include_tech_tree: (bIncludeTechTree) ? 1 : 0,
-		format: 'json'
+		include_tech_tree: bIncludeTechTree ? 1 : 0
 	};
 
 	var instance = this;
@@ -102,14 +98,13 @@ CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTe
 
 CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 {
-	rgParams["gameid"] = this.m_nGameID;
-
 	var instance = this;
 
-	var rgRequest = {
-		'input_json': JSON.stringify( rgParams ),
-		'access_token': g_steamID,
-		'format': 'json',
+	var rgRequest =
+	{
+		gameid: this.m_nGameID,
+		access_token: g_steamID,
+		requested_abilities: JSON.stringify( rgParams )
 	};
 
 	$J.ajax({
@@ -133,17 +128,13 @@ CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 
 CServerInterface.prototype.ChooseUpgrades = function( callback, upgrades )
 {
-	var rgParams = {
-		'gameid': this.m_nGameID,
-		'upgrades': upgrades
-	};
-
 	var instance = this;
 
-	var rgRequest = {
-		'input_json': JSON.stringify( rgParams ),
-		'access_token': g_steamID,
-		'format': 'json'
+	var rgRequest =
+	{
+		gameid: this.m_nGameID,
+		access_token: g_steamID,
+		upgrades: JSON.stringify( upgrades )
 	};
 
 	$J.ajax({
@@ -167,17 +158,13 @@ CServerInterface.prototype.ChooseUpgrades = function( callback, upgrades )
 
 CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 {
-	var rgParams = {
-		'gameid': this.m_nGameID,
-		'ability_items': abilityItems
-	};
-
 	var instance = this;
 
-	var rgRequest = {
-		'input_json': JSON.stringify( rgParams ),
-		'access_token': g_steamID,
-		'format': 'json'
+	var rgRequest =
+	{
+		gameid: this.m_nGameID,
+		access_token: g_steamID,
+		ability_items: JSON.stringify( abilityItems )
 	};
 
 	$J.ajax({
@@ -197,27 +184,4 @@ CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 		console.log("FAILED");
 		console.log(err);
 	});
-}
-
-CServerInterface.prototype.QuitGame = function( callback )
-{
-	var rgParams = {
-		'gameid': this.m_nGameID,
-	};
-
-
-	var instance = this;
-
-	var rgRequest = {
-		'input_json': JSON.stringify( rgParams )
-	};
-
-	this.m_WebAPI.ExecJSONP( 'IMiniGameService', 'LeaveGame',  rgRequest, true, null )
-		.done( callback )
-		.fail( function(err)
-		{
-			console.log("FAILED");
-			console.log(err);
-		});
-
 }
