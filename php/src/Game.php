@@ -331,16 +331,23 @@ class Game
 	public function Update( $SecondsPassed )
 	{
 		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
+
 		foreach( $this->Players as $Player )
 		{
 			// Give Players money (TEMPLORARY)
 			$Player->IncreaseGold(50000);
 
-			if ( $SecondPassed )
+			if( $SecondPassed )
 			{
 				// Deal DPS damage to current target
 				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ];
 				$Enemy->DamageTaken += $Player->GetTechTree()->GetDps() * $SecondsPassed;
+			}
+
+			if( $Player->IsDead() && $Player->CanRespawn( true ) )
+			{
+				// Respawn player
+				$Player->Respawn();
 			}
 		}
 
@@ -421,8 +428,7 @@ class Game
 						$Player->Hp -= $EnemyDpsDamage * $SecondsPassed;
 						if( $Player->IsDead() )
 						{
-							// TODO: deal with respawn
-							$Player->Hp = 0;
+							$Player->Kill();
 						}
 					}
 				}

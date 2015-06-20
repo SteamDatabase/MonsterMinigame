@@ -20,10 +20,10 @@ class Base
 
 	public $LastActive;
 	public $Hp;
+	public $TimeDied = 0;
 	private $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
-	private $TimeDied = 0;
 	private $Gold = 10;
 	private $ActiveAbilitiesBitfield = 0;
 	private $ActiveAbilities = [];
@@ -35,7 +35,7 @@ class Base
 	{
 		$this->LastActive = time();
 		$this->AccountId = $AccountId;
-		$this->Hp = $this->GetTuningData( 'hp' );
+		$this->Hp = self::GetTuningData( 'hp' );
 		$this->TechTree = new TechTree\Base;
 
 		// TODO
@@ -93,7 +93,10 @@ class Base
 					$NewLane->AddPlayer( $this );
 					break;
 				case \ETowerAttackAbility::Respawn:
-					// TODO: logic pls
+					if( $this->IsDead() && $this->CanRespawn() )
+					{
+						$this->Respawn();
+					}
 					break;
 				case \ETowerAttackAbility::ChangeTarget:
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
@@ -147,19 +150,19 @@ class Base
 		$this->GetTechTree()->RecalulateUpgrades();
 	}
 
-	public function GetRespawnTime()
+	public static function GetRespawnTime()
 	{
-		return $this->GetTuningData( 'respawn_time' );
+		return self::GetTuningData( 'respawn_time' );
 	}
 
-	public function GetMinDeadTime()
+	public static function GetMinDeadTime()
 	{
-		return $this->GetTuningData( 'min_dead_time' );
+		return self::GetTuningData( 'min_dead_time' );
 	}
 
-	public function GetGoldMultiplierWhileDead()
+	public static function GetGoldMultiplierWhileDead()
 	{
-		return $this->GetTuningData( 'gold_multiplier_while_dead' );
+		return self::GetTuningData( 'gold_multiplier_while_dead' );
 	}
 
 	public function IsDead()
@@ -190,7 +193,8 @@ class Base
 
 	public function GetHpLevel()
 	{
-		return floor($this->GetHpPercentage() / 10) - 1;
+		$HpLevel = floor($this->GetHpPercentage() / 10) - 1;
+		return $HpLevel <= 0 ? 0 : $HpLevel;
 	}
 
 	public function GetCurrentLane()
@@ -216,6 +220,30 @@ class Base
 	public function GetTimeDied()
 	{
 		return $this->TimeDied;
+	}
+
+	public function CanRespawn( $IsAutomatic = false )
+	{
+		if ($IsAutomatic)
+		{
+			return time() > $this->TimeDied + self::GetRespawnTime();
+		}
+		else
+		{
+			return time() > $this->TimeDied + self::GetMinDeadTime();
+		}
+	}
+
+	public function Respawn()
+	{
+		$this->Hp = $this->GetTechTree()->GetMaxHp();
+		$this->TimeDied = 0;
+	}
+
+	public function Kill()
+	{
+		$this->TimeDied = time();
+		$this->Hp = 0;
 	}
 
 	public function GetGold()
@@ -270,7 +298,7 @@ class Base
 		return $this->Loot;
 	}
 
-	private function GetTuningData( $Key = null )
+	public static function GetTuningData( $Key = null )
 	{
 		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
 		if( $Key === null ) 
