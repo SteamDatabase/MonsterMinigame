@@ -12,6 +12,7 @@ class Server
 	private $LastTick;
 	private $Socket;
 	private $Game;
+	private $Queue = array();
 	protected static $TuningData = array();
 
 	public function __construct( $Port )
@@ -90,30 +91,25 @@ class Server
 				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
-					// TODO: use ticks/queue instead
-					$SteamId = $Data[ 'access_token' ];
-					$Player = $this->Game->GetPlayer( $SteamId );
-					if( $Player !== null ) 
+					if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
 					{
-						if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
-						{
-							$Player->HandleUpgrade( $this->Game, $Data[ 'upgrades' ] );
-							$this->Game->UpdatePlayer( $Player );
-							$this->UpdateGame();
-							$Response = array(
-								'tech_tree' => $Player->GetTechTree()->ToArray()
-							);
-						} 
-						else if( $Data[ 'method' ] == 'UseAbilities' ) 
-						{
-							$Player->HandleAbilityUsage( $this->Game, $Data[ 'requested_abilities' ] );
-							$this->Game->UpdatePlayer( $Player );
-							$this->UpdateGame();
-							$Response = array(
-								'player_data' => $Player->ToArray()
-							);
-						}
+						$QueueData = $Data[ 'upgrades' ];
+						$Response = array(
+							'tech_tree' => $Player->GetTechTree()->ToArray()
+						);
 					}
+					else if( $Data[ 'method' ] == 'UseAbilities' ) 
+					{
+						$QueueData = $Data[ 'requested_abilities' ];
+						$Response = array(
+							'player_data' => $Player->ToArray()
+						);
+					}
+					$this->Queue[] = array(
+						'AccountId' => $Data[ 'access_token' ],
+						'Method' => $Data[ 'method' ],
+						'Data' => $QueueData
+					);
 					break;
 				default:
 					// TODO: handle unknown methods
@@ -175,6 +171,26 @@ class Server
 		{
 			$Player->IncreaseGold(50000);
 		}
+
+		foreach( $this->Queue as $Key => $QueueItem )
+		{
+			$Player = $this->Game->GetPlayer( $QueueItem[ 'AccountId' ] );
+			if( $Player !== null ) 
+			{
+				if( $QueueItem[ 'Method' ] == 'ChooseUpgrade' ) 
+				{
+					$Player->HandleUpgrade( $this->Game, $QueueItem[ 'Data' ] );
+					$this->Game->UpdatePlayer( $Player );
+				} 
+				else if( $QueueItem[ 'method' ] == 'UseAbilities' ) 
+				{
+					$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
+					$this->Game->UpdatePlayer( $Player );
+				}
+			}
+			unset( $this->Queue[ $Key ] );
+		}
+		$this->UpdateGame();
 	}
 
 	public static function LoadTuningData()
