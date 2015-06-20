@@ -49,7 +49,7 @@ class Base
 
 	public function IsActive()
 	{
-		return time() < $this->LastSeen + ACTIVE_PERIOD;
+		return time() < $this->LastSeen + self::ACTIVE_PERIOD;
 	}
 
 	public function ToArray()
