@@ -5,6 +5,7 @@ use SteamDB\CTowerAttack\Player as Player;
 
 class Game
 {
+	const START_LIMIT = 3; // Start game with 3 players
 	/*
 	optional uint32 level = 1;
 	repeated Lane lanes = 2;
@@ -53,7 +54,7 @@ class Game
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
 		$this->GenerateNewLanes();
-		$this->SetStatus( \EMiniGameStatus::Running );
+		$this->SetStatus( \EMiniGameStatus::WaitingForPlayers );
 		$this->TimestampGameStart = time();
 		$this->TimestampLevelStart = time();
 		l( 'Created new game' );
@@ -64,6 +65,10 @@ class Game
 		$this->Players[ $AccountId ] = new Player\Base(
 			$AccountId //steam id/account id, remember to cast (string)
 		);
+		if( count( $this->Players ) == self::START_LIMIT )
+		{
+			$this->SetStatus( \EMiniGameStatus::Running );
+		}
 	}
 
 	public function GenerateNewLevel()
