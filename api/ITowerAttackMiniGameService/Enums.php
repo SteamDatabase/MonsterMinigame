@@ -60,10 +60,13 @@ class ETowerAttackAbility
 	const Item_GiveGold = 22;
 	const Item_StealHealth = 23;
 	const Item_ReflectDamage = 24;
+	const Item_GiveRandomItem = 25;
+	const Item_SkipLevels = 26;
+	const Item_ClearCooldowns = 27;
 	const Item_Start = 13;
-	const Item_End = 24;
+	const Item_End = 27;
 
-	const MaxAbilities = 25;
+	const MaxAbilities = 28;
 }
 
 class ETowerAttackUpgradeType
