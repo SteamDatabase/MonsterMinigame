@@ -159,7 +159,18 @@ class Base
 
 	public function GetHp()
 	{
+		# TODO: move into a variable instead of calculating this every single time..
 		return $this->Hp * $this->GetTechTree()->GetHpMultiplier();
+	}
+
+	public function GetHpPercentage()
+	{
+		return ( $this->GetHp() / $this->GetTechTree()->GetMaxHp() ) * 100;
+	}
+
+	public function GetHpLevel()
+	{
+		return floor($this->GetHpPercentage() / 10) - 1;
 	}
 
 	public function GetCurrentLane()

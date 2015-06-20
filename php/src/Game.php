@@ -148,7 +148,6 @@ class Game
 				'multiplier' => 1.0,
 			]
 		];
-		$PlayerHpBuckets = array(10, 20, 30, 40, 50, 60, 70, 80, 90, 100); // active players with health between 10 levels (bars) = team health
 
 		if( $this->IsBossLevel() )
 		{
@@ -158,6 +157,15 @@ class Game
 		// Create 3 lanes
 		for( $i = 0; 3 > $i; $i++ ) 
 		{
+			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			foreach( $this->Players as $Player )
+			{
+				if( $Player->GetCurrentLane() === $i )
+				{
+					$PlayerHpBuckets[ $Player->GetHpLevel ]++;
+				}
+			}
+
 			$Enemies = array();
 			if( $this->IsBossLevel() )
 			{
@@ -300,6 +308,20 @@ class Game
 		return $this->Players[ $AccountId ];
 	}
 
+	public function GetPlayersInLane( $LaneId )
+	{
+		# TODO: Instead of looping, keep an updated array of current players in the lane?
+		$Players = array();
+		foreach( $this->Players as $Player )
+		{
+			if( $Player->GetCurrentLane() === $LaneId )
+			{
+				$Players[] = $Player;
+			}
+		}
+		return $Players;
+	}
+
 	public function UpdatePlayer( $Player )
 	{
 		$Player->LastActive = time();
@@ -324,7 +346,7 @@ class Game
 
 		// Loop through lanes and deal damage etc
 		$DeadLanes = 0;
-		foreach( $this->Lanes as $Lane )
+		foreach( $this->Lanes as $LaneId => $Lane )
 		{
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
@@ -345,7 +367,6 @@ class Game
 				}
 				else
 				{
-					l($Enemy->DamageTaken);
 					$Enemy->DecreaseHp( $Enemy->DamageTaken );
 					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
 					{
@@ -383,6 +404,7 @@ class Game
 				$Enemy->DamageTaken = 0;
 			}
 			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
+			$Lane->UpdateHpBuckets( $this->GetPlayersInLane( $LaneId ) );
 		}
 		if( $DeadLanes === 3 ) 
 		{

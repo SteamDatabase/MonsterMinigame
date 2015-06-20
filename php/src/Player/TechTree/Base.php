@@ -54,7 +54,7 @@ class Base
 		$this->DamageMultiplierEarth = $this->GetTuningData( 'damage_multiplier_earth' );
 		$this->DamageMultiplierCrit = $this->GetTuningData( 'damage_multiplier_crit' );
 		$this->UnlockedAbilitiesBitfield = 0;
-		$this->HpMultiplier = 1; # TODO
+		$this->HpMultiplier = 1;
 		$this->CritPercentage = $this->GetTuningData( 'crit_percentage' );
 		// TODO: Give 0.1 badgepoints per previous level (start_condition_minigame_badge)
 		// TODO: Give badgepoints for badge (1 & 10 points)
@@ -62,9 +62,9 @@ class Base
 		$this->AbilityItems = array();
 		$this->BossLootDropPercentage = $this->GetTuningData( 'loot_chance' );
 		$this->DamageMultiplierDps = 1; # TODO
-		$this->BaseDps = $this->GetTuningData( 'Dps' );
-		$this->MaxHp = 0; # TODO: Delete?
-		$this->Dps = $this->GetTuningData( 'Dps' );
+		$this->BaseDps = $this->GetTuningData( 'dps' );
+		$this->MaxHp = $this->GetTuningData( 'hp' );
+		$this->Dps = $this->GetTuningData( 'dps' );
 	}
 
 	public function ToArray()
@@ -285,6 +285,7 @@ class Base
 		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
 		$this->DamagePerClick = $Data['damage_multiplier_fire'] * $this->GetDamagePerClickMultiplier();
 		$this->Dps = $this->GetBaseDps() * $this->GetDamageMultiplierDps();
+		$this->MaxHp = $this->GetTuningData( 'hp' ) * $this->GetHpMultiplier();
 	}
 
 	private function GetTuningData( $Key = null )

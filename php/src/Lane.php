@@ -142,5 +142,14 @@ class Lane
 		}
 		return null;
 	}
+
+	public function UpdateHpBuckets( $Players )
+	{
+		$this->PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		foreach( $Players as $Player )
+		{
+			$this->PlayerHpBuckets[ $Player->GetHpLevel() ]++;
+		}
+	}
 }
 ?>
