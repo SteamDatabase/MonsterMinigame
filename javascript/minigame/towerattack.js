@@ -138,6 +138,7 @@ var g_rgIconMap = {
 	"element_4":									{ icon: '/assets/minigame/towerattack/FateTree' },
 	"enemy_2":									{ icon: '/assets/minigame/towerattack/like_king' },
 	"enemy_4":								{ icon: '/assets/minigame/towerattack/goldenmilkminer' },
+	"speech":								{ icon: '/assets/minigame/towerattack/speech' },
 };
 
 var g_rgSoundCache = {

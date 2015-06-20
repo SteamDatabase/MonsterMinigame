@@ -21,6 +21,7 @@ class Game
 	private $GameId;
 	private $Level = 0;
 	private $Lanes = array();
+	public $Chat = [];
 	//private $Timestamp; - Use function instead?
 	private $Status;
 	//private $Events; - Not used, morning/evning deals
@@ -78,6 +79,7 @@ class Game
 	public function ToArray()
 	{
 		return array(
+			'chat' => $this->Chat,
 			'level' => (int) $this->GetLevel(),
 			'lanes' => $this->GetLanesArray(),
 			'timestamp' => (int) $this->GetTimestamp(),
@@ -139,7 +141,7 @@ class Game
 				'accountid_caster' => 0, 
 				'caster' => 'Test User',
 				'ability' => rand( \ETowerAttackAbility::Item_Resurrection, \ETowerAttackAbility::Item_ReflectDamage ),
-				'timestamp_done' => time() + 500,
+				'timestamp_done' => time() + 1,
 				'multiplier' => 1.0,
 			]
 		];

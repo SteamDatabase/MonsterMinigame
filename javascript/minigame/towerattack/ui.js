@@ -1107,6 +1107,16 @@ CUI.prototype.UpdateLog = function( rgLaneLog )
 
 		switch( rgEntry.type )
 		{
+			case 'chat':
+
+				var ele = $J('#chattemplate').clone();
+				$J('.name', ele).text( rgEntry.actor_name );
+				$J('.ability', ele).text( rgEntry.message );
+				$J('img', ele).attr( 'src', g_rgIconMap['speech'].icon );
+
+				this.m_eleUpdateLogContainer[0].insertBefore(ele[0], this.m_eleUpdateLogContainer[0].firstChild);
+				break;
+
 			case 'ability':
 
 				var ele = this.m_eleUpdateLogTemplate.clone();

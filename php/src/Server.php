@@ -53,9 +53,22 @@ class Server
 			$Response = null;
 			switch ( $Data[ 'method' ] ) 
 			{
+				case 'ChatMessage':
+					$Game = $this->GetGame( $Data[ 'gameid' ] );
+					if( $Game !== null ) 
+					{
+						$Response = true;
+						
+						$Game->Chat[] =
+						[
+							'time' => time(),
+							'actor' => $Data[ 'steamid' ],
+							'message' => $Data[ 'message' ]
+						];
+					}
+					break;
 				case 'GetGameData':
 					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					$Response = null;
 					if( $Game !== null ) 
 					{
 						$Response =
@@ -71,7 +84,6 @@ class Server
 					break;
 				case 'GetPlayerData':
 					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					$Response = null;
 					if( $Game !== null ) 
 					{
 						$Player = $Game->GetPlayer( $Data[ 'steamid' ] );
@@ -90,7 +102,6 @@ class Server
 					// TODO: use ticks/queue instead
 					$SteamId = $Data[ 'access_token' ];
 					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					$Response = null;
 					if( $Game !== null ) 
 					{
 						$Player = $Game->GetPlayer( $SteamId );

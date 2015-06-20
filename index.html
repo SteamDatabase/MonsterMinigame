@@ -193,7 +193,11 @@
 				</div><div id="activityscroll">
 				<div></div>
 			</div>
-
+			
+			<form id="chatform" style="margin-top: 29px;margin-left: 6px;z-index:1337;position:relative">
+				<textarea name="message" maxlength="500" placeholder="Your chat message" style="height:40px;width:220px;box-sizing:border-box;"></textarea>
+				<button type="submit" name="button" style="vertical-align: top;height: 40px;width: 50px;box-sizing: border-box;">Send</button>
+			</form>
 		</div>
 
 	</div>
@@ -276,7 +280,7 @@
 		</div>
 	</div>
 
-	<div id="row_bottom">
+	<div id="row_bottom" style="width: 960px;">
 
 		<div id="abilities">
 
@@ -374,6 +378,13 @@
 		<span class="icon"><img></span>
 		<span class="ability_text">
 			<span class="name"></span> used <span class="ability"></span>
+		</span>
+	</div>
+	
+	<div id="chattemplate" class="activitytemplate">
+		<span class="icon"><img></span>
+		<span class="ability_text">
+			<span class="name"></span> said:<div class="ability"></div>
 		</span>
 	</div>
 

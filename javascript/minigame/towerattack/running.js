@@ -159,7 +159,29 @@ window.CSceneGame = function()
 
 	this.CheckNewPlayer();
 
-
+	$J('#chatform').on('submit', function()
+	{
+		var textarea = $J(this).find('textarea');
+		var message = textarea.val();
+		
+		if( message.length )
+		{
+			textarea.val( '' );
+			
+			$J.ajax({
+				url: g_Server.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'ChatMessage', true ),
+				method: 'POST',
+				data: {
+					gameid: g_Server.m_nGameID,
+					steamid: g_steamID,
+					message: message
+				},
+				dataType: 'json'
+			});
+		}
+		
+		return false;
+	});
 }
 
 CSceneGame.prototype = Object.create(CSceneMinigame.prototype);
@@ -812,6 +834,31 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 					instance.m_rgActionLog.splice(0,instance.m_rgActionLog.length - 50);
 
 				if( nTimestampStart > nHighestTime )
+					nHighestTime = nTimestampStart;
+			}
+		}
+		
+		// chat
+		rgAbilities = this.m_rgGameData.chat;
+		if( rgAbilities )
+		{
+			for( var i=0; i<rgAbilities.length; i++ )
+			{
+				if( rgAbilities[i].time <= instance.m_nLastAbilitySeen )
+					continue;
+
+				this.m_rgActionLog.push({
+					'icon': false,
+					'type': 'chat',
+					'actor_name': rgAbilities[i].actor,
+					'message': rgAbilities[i].message,
+					'time': rgAbilities[i].time
+				});
+
+				if( this.m_rgActionLog.length > 50 )
+					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
+
+				if( rgAbilities[i].time > nHighestTime )
 					nHighestTime = nTimestampStart;
 			}
 		}
