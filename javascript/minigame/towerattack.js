@@ -449,12 +449,12 @@ CScenePreload.prototype.Enter = function()
 
 function ToggleSound()
 {
-	WebStorage.SetLocal('minigame_mute', !WebStorage.GetLocal('minigame_mute') );
+	localStorage.setItem('minigame_mute', localStorage.getItem('minigame_mute') === '1' ? '0' : '1');
 }
 
 function bIsMuted()
 {
-	return WebStorage.GetLocal('minigame_mute') == true;
+	return localStorage.getItem('minigame_mute') === '1';
 }
 
 function PlaySound( sound )
@@ -524,7 +524,7 @@ CAudioManager.prototype.playMusic = function( sound )
 	this.m_eleMusic.currentTime = 0;
 	this.m_eleMusic.loop = 1;
 
-	if(  WebStorage.GetLocal('minigame_mutemusic') == true )
+	if( localStorage.getItem('minigame_mutemusic') === '1' )
 		return;
 
 
@@ -543,7 +543,7 @@ CAudioManager.prototype.CrossfadeTrack = function( strNewTrack )
 	this.m_eleMusic.loop = 1;
 	this.m_eleMusic.currentTime = 0;
 
-	if(  WebStorage.GetLocal('minigame_mutemusic') == true )
+	if( localStorage.getItem('minigame_mutemusic') === '1' )
 		return;
 
 	this.m_eleMusic.play();
@@ -551,12 +551,12 @@ CAudioManager.prototype.CrossfadeTrack = function( strNewTrack )
 
 CAudioManager.prototype.ToggleMusic = function( )
 {
-	WebStorage.SetLocal('minigame_mutemusic', !WebStorage.GetLocal('minigame_mutemusic') );
+	localStorage.setItem('minigame_mutemusic', localStorage.getItem('minigame_mutemusic') === '1' ? '0' : '1');
 
 	if( !this.m_eleMusic )
 		return;
 
-	if( WebStorage.GetLocal('minigame_mutemusic') == true )
+	if( localStorage.getItem('minigame_mutemusic') === '1' )
 	{
 		this.m_eleMusic.pause();
 	} else {

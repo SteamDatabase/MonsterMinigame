@@ -1848,7 +1848,7 @@ CSceneGame.prototype.ClearNewPlayer = function()
 	if( this.m_spriteFinger )
 	{
 		this.m_spriteFinger.visible = false;
-		var bPlayedBefore = WebStorage.SetLocal('mg_how2click', 1);
+		var bPlayedBefore = localStorage.setItem('minigame_how2click', '1');
 		this.m_spriteFinger = false;
 		$J('#newplayer').hide();
 	}
@@ -1856,9 +1856,7 @@ CSceneGame.prototype.ClearNewPlayer = function()
 
 CSceneGame.prototype.CheckNewPlayer = function( )
 {
-	var bPlayedBefore = WebStorage.GetLocal('mg_how2click');
-
-	if( !bPlayedBefore )
+	if( localStorage.getItem('minigame_how2click') !== '1' )
 	{
 		$J('#newplayer').show();
 		this.m_rgFingerTextures = [];
