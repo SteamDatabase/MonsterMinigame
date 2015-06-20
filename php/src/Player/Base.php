@@ -21,6 +21,7 @@ class Base
 	public $LastActive;
 	public $Hp;
 	public $TimeDied = 0;
+	public $LaneDamageBuffer = [];
 	private $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
@@ -37,6 +38,11 @@ class Base
 		$this->AccountId = $AccountId;
 		$this->Hp = self::GetTuningData( 'hp' );
 		$this->TechTree = new TechTree\Base;
+		$this->LaneDamageBuffer = [
+			0 => 0,
+			1 => 0,
+			2 => 0
+		];
 
 		// TODO
 		$this->AddAbilityItem( \ETowerAttackAbility::Item_SkipLevels, 1 );
@@ -68,6 +74,10 @@ class Base
 			switch( $RequestedAbility['ability'] ) 
 			{
 				case \ETowerAttackAbility::Attack:
+					if( $this->IsDead() )
+					{
+						continue;
+					}
 					# TODO: Add numclicks/enemies killed per player?
 					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
 					
@@ -80,12 +90,18 @@ class Base
 						$NumClicks = 1;
 					}
 					
+					$Damage += $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Game->NumClicks += $NumClicks;
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
+					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage;
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					$Enemy->DamageTaken += $NumClicks * $this->GetTechTree()->GetDamagePerClick();
+					$Enemy->DamageTaken += $Damage;
 					break;
 				case \ETowerAttackAbility::ChangeLane:
+					if( $this->IsDead() )
+					{
+						continue;
+					}
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Lane->RemovePlayer( $this );
 					$this->SetLane( $RequestedAbility[ 'new_lane' ] );
@@ -99,9 +115,17 @@ class Base
 					}
 					break;
 				case \ETowerAttackAbility::ChangeTarget:
+					if( $this->IsDead() )
+					{
+						continue;
+					}
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
 				case \ETowerAttackAbility::Item_SkipLevels:
+					if( $this->IsDead() )
+					{
+						continue;
+					}
 					// TODO: debugging
 					l( 'Skipping level' );
 					$Game->GenerateNewLevel();
@@ -145,6 +169,10 @@ class Base
 			{
 				$this->getTechTree()->BaseDps = $Upgrade->GetInitialValue();
 				$this->getTechTree()->Dps = $this->getTechTree()->BaseDps;
+			}
+			else if( $Upgrade->GetUpgradeId() === 1 ) // Auto-fire Cannon
+			{
+				$this->Hp = $this->getTechTree()->MaxHp; // TODO: Might have to set this after recalculating upgrades?
 			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();

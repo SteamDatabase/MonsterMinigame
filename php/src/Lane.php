@@ -16,7 +16,7 @@ class Lane
 	*/
 	public $Players = array();
 	public $Enemies;
-	private $Dps;
+	public $Dps;
 	private $GoldDropped;
 	private $ActivePlayerAbilities;
 

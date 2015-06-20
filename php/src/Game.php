@@ -332,16 +332,28 @@ class Game
 	{
 		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
 
+		$LaneDps = [
+			0 => 0,
+			1 => 0,
+			2 => 0
+		];
+
 		foreach( $this->Players as $Player )
 		{
 			// Give Players money (TEMPLORARY)
 			$Player->IncreaseGold(50000);
 
-			if( $SecondPassed )
+			if( $SecondPassed && !$Player->IsDead())
 			{
 				// Deal DPS damage to current target
 				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ];
 				$Enemy->DamageTaken += $Player->GetTechTree()->GetDps() * $SecondsPassed;
+				foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
+				{
+					$LaneDps[ $LaneId ] += $LaneDamage / $SecondPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
+					$Player->LaneDamageBuffer[ $LaneId ] = 0;
+				}
+				$LaneDps[ $Player->GetCurrentLane() ] += ($Player->GetTechTree()->GetDps() * $SecondsPassed);
 			}
 
 			if( $Player->IsDead() && $Player->CanRespawn( true ) )
@@ -362,7 +374,7 @@ class Game
 			{
 				if( $Enemy->IsDead() )
 				{
-					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
+					if( $Enemy->GetHpDifference() > 0 && $LaneId !== $EnemyCount )
 					{
 						// Find next enemy to deal the rest of the damage to
 						$NextEnemy = $Lane->GetAliveEnemy();
@@ -376,7 +388,7 @@ class Game
 				else
 				{
 					$Enemy->DecreaseHp( $Enemy->DamageTaken );
-					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
+					if( $Enemy->GetHpDifference() > 0 && $LaneId !== $EnemyCount )
 					{
 						// Find next enemy to deal the rest of the damage to
 						$NextEnemy = $Lane->GetAliveEnemy();
@@ -425,7 +437,7 @@ class Game
 					$PlayersInLane[] = $Player;
 					if( $SecondPassed && !$Player->IsDead() )
 					{
-						$Player->Hp -= $EnemyDpsDamage * $SecondsPassed;
+						$Player->Hp -= $EnemyDpsDamage * $SecondsPassed * 30; # Debugging, player dies faster, TODO: DELETE!
 						if( $Player->IsDead() )
 						{
 							$Player->Kill();
@@ -433,6 +445,7 @@ class Game
 					}
 				}
 			}
+			$Lane->Dps = $LaneDps[ $LaneId ];
 			$Lane->UpdateHpBuckets( $PlayersInLane );
 		}
 		if( $DeadLanes === 3 ) 
