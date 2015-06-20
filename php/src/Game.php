@@ -18,7 +18,7 @@ class Game
 
 	private $AbilityQueue;
 	public $Players = array();
-	private $Level = 0;
+	private $Level = 1;
 	private $Lanes = array();
 	public $Chat = [];
 	//private $Timestamp; - Use function instead?
@@ -52,7 +52,6 @@ class Game
 	public function __construct()
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
-		$this->SetLevel( 0 );
 		$this->GenerateNewLanes();
 		$this->SetStatus( \EMiniGameStatus::Running );
 		$this->TimestampGameStart = time();
@@ -125,6 +124,11 @@ class Game
 		$this->TimestampLevelStart = time();
 	}
 
+	public function IsBossLevel()
+	{
+		return $this->Level % 10 === 0;
+	}
+
 	public function GenerateNewLanes()
 	{
 		$this->Lanes = array();
@@ -140,44 +144,65 @@ class Game
 		];
 		$PlayerHpBuckets = array(10, 20, 30, 40, 50, 60, 70, 80, 90, 100); // active players with health between 10 levels (bars) = team health
 
+		if( $this->IsBossLevel() )
+		{
+			$BossLaneId = rand( 0, 2 );
+		}
+
 		// Create 3 lanes
 		for( $i = 0; 3 > $i; $i++ ) 
 		{
-			// Create 3 enemy in each lane
 			$Enemies = array();
-			$Enemies[] = new Enemy(
-				$this->GetNextMobId(),
-				\ETowerAttackEnemyType::Tower, // 0
-				$this->GetLevel()
-			);
-
-			for( $a = 0; 3 > $a; $a++ ) 
+			if( $this->IsBossLevel() )
 			{
+				// Boss
+				if( $BossLaneId === $i )
+				{
+					$Enemies[] = new Enemy(
+						$this->GetNextMobId(),
+						\ETowerAttackEnemyType::Boss, // 2
+						$this->GetLevel()
+					);
+				}
+			}
+			else
+			{
+				// Standard Tower (Spawner) + 3 Mobs per lane
 				$Enemies[] = new Enemy(
 					$this->GetNextMobId(),
-					\ETowerAttackEnemyType::Mob, // 1
+					\ETowerAttackEnemyType::Tower, // 0
 					$this->GetLevel()
 				);
+
+				for( $a = 0; 3 > $a; $a++ ) 
+				{
+					$Enemies[] = new Enemy(
+						$this->GetNextMobId(),
+						\ETowerAttackEnemyType::Mob, // 1
+						$this->GetLevel()
+					);
+				}
 			}
-
-			$ElementalArray = array(
-				\ETowerAttackElement::Fire,
-				\ETowerAttackElement::Water,
-				\ETowerAttackElement::Air,
-				\ETowerAttackElement::Earth
-			);
-
-			$this->Lanes[] = new Lane(
-				$Enemies,
-				0, //dps
-				0, //gold dropped
-				$ActivePlayerAbilities,
-				$PlayerHpBuckets,
-				$ElementalArray[ array_rand( $ElementalArray ) ], //element
-				0, //decrease cooldown
-				0 //gold per click
-			);
+			# TODO: Add Minibosses and treasure mobs
 		}
+
+		$ElementalArray = array(
+			\ETowerAttackElement::Fire,
+			\ETowerAttackElement::Water,
+			\ETowerAttackElement::Air,
+			\ETowerAttackElement::Earth
+		);
+
+		$this->Lanes[] = new Lane(
+			$Enemies,
+			0, //dps
+			0, //gold dropped
+			$ActivePlayerAbilities,
+			$PlayerHpBuckets,
+			$ElementalArray[ array_rand( $ElementalArray ) ], //element
+			0, //decrease cooldown
+			0 //gold per click
+		);
 	}
 
 	public function GetLane($LaneId)
