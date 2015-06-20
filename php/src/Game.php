@@ -19,7 +19,7 @@ class Game
 	private $AbilityQueue;
 	public $Players = array();
 	private $Level = 1;
-	private $Lanes = array();
+	public $Lanes = array();
 	public $Chat = [];
 	//private $Timestamp; - Use function instead?
 	private $Status;
@@ -185,7 +185,7 @@ class Game
 				}
 			}
 			# TODO: Add Minibosses and treasure mobs
-			
+
 			$ElementalArray = array(
 				\ETowerAttackElement::Fire,
 				\ETowerAttackElement::Water,
@@ -299,6 +299,56 @@ class Game
 	{
 		$Player->LastActive = time();
 		$this->Players[ $Player->GetAccountId() ] = $Player;
+	}
+
+	public function Update()
+	{
+		// Loop through lanes and deal damage etc
+		$DeadLanes = 0;
+		foreach( $this->Lanes as $Lane )
+		{
+			$DeadEnemies = 0;
+			foreach( $Lane->Enemies as $Enemy )
+			{
+				if( $Enemy->IsDead() )
+				{
+					$DeadEnemies++;
+				}
+				else
+				{
+					$Enemy->DecreaseHp( $Enemy->DamageTaken );
+					$Enemy->DamageTaken = 0;
+					if( $Enemy->IsDead() )
+					{
+						switch( $Enemy->GetType() ) 
+						{
+							case \ETowerAttackEnemyType::Tower:
+								$this->NumTowersKilled++;
+								break;
+							case \ETowerAttackEnemyType::Mob:
+								$this->NumMobsKilled++;
+								break;
+							case \ETowerAttackEnemyType::Boss:
+								$this->NumBossesKilled++;
+								break;
+							case \ETowerAttackEnemyType::MiniBoss:
+								$this->NumMiniBossesKilled++;
+								break;
+							case \ETowerAttackEnemyType::TreasureMob:
+								$this->NumTreasureMobsKilled++;
+								break;
+						}
+						$DeadEnemies++;
+						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() );
+					}
+				}
+			}
+			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
+		}
+		if( $DeadLanes === 3 ) 
+		{
+			$this->GenerateNewLevel();
+		}
 	}
 }
 ?>
