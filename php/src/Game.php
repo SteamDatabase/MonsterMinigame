@@ -308,6 +308,12 @@ class Game
 
 	public function Update()
 	{
+		// Give Players money (TEMPLORARY)
+		foreach( $this->Game->Players as $Player )
+		{
+			$Player->IncreaseGold(50000);
+		}
+
 		// Loop through lanes and deal damage etc
 		$DeadLanes = 0;
 		foreach( $this->Lanes as $Lane )

@@ -177,12 +177,6 @@ class Server
 			pcntl_signal_dispatch();
 		}
 
-		// TODO: Give Players money (TEMPLORARY)
-		foreach( $this->Game->Players as $Player )
-		{
-			$Player->IncreaseGold(50000);
-		}
-
 		foreach( $this->Queue as $Key => $QueueItem )
 		{
 			$Player = $this->Game->GetPlayer( $QueueItem[ 'AccountId' ] );
