@@ -317,8 +317,8 @@ class Game
 			if ( $DoDPSDamage )
 			{
 				// Deal DPS damage to current target
-				// TODO: deal with this logic when player is inactive..
-				$this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ]->DamageTaken += $Player->GetTechTree()->GetDPS();
+				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ];
+				$Enemy->DamageTaken += $Player->GetTechTree()->GetDPS();
 			}
 		}
 
@@ -327,16 +327,28 @@ class Game
 		foreach( $this->Lanes as $Lane )
 		{
 			$DeadEnemies = 0;
-			foreach( $Lane->Enemies as $Enemy )
+			$EnemyCount = count( $Lane->Enemies );
+			for( $i = 0; $i < $EnemyCount; $i++ )
 			{
+				$Enemy = $Lane->Enemies[ $i ];
 				if( $Enemy->IsDead() )
 				{
+					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
+					{
+						// Find next enemy to deal the rest of the damage to
+						$Lane->Enemies[ $i + 1]->DecreaseHp( $Enemy->GetHpDifference() );
+					}
 					$DeadEnemies++;
 				}
 				else
 				{
+					l($Enemy->DamageTaken);
 					$Enemy->DecreaseHp( $Enemy->DamageTaken );
-					$Enemy->DamageTaken = 0;
+					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
+					{
+						// Find next enemy to deal the rest of the damage to
+						$Lane->Enemies[ $i + 1]->DecreaseHp( $Enemy->GetHpDifference() );
+					}
 					if( $Enemy->IsDead() )
 					{
 						switch( $Enemy->GetType() ) 
@@ -361,6 +373,7 @@ class Game
 						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() );
 					}
 				}
+				$Enemy->DamageTaken = 0;
 			}
 			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
 		}
