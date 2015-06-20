@@ -349,5 +349,6 @@ class Game
 		{
 			$this->GenerateNewLevel();
 		}
+	}
 }
 ?>

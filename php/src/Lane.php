@@ -14,8 +14,8 @@ class Lane
 	optional double active_player_ability_decrease_cooldowns = 7 [default = 1];
 	optional double active_player_ability_gold_per_click = 8 [default = 0];
 	*/
-	private $Players = array();
-	private $Enemies;
+	public $Players = array();
+	public $Enemies;
 	private $Dps;
 	private $GoldDropped;
 	private $ActivePlayerAbilities;

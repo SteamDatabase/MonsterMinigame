@@ -19,6 +19,7 @@ class Enemy
 	private $Dps;
 	private $Timer;
 	private $Gold;
+	public $DamageTaken = 0;
 
 	public function __construct( $Id, $Type, $Level )
 	{

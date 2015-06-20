@@ -182,7 +182,7 @@ class Server
 					$Player->HandleUpgrade( $this->Game, $QueueItem[ 'Data' ] );
 					$this->Game->UpdatePlayer( $Player );
 				} 
-				else if( $QueueItem[ 'method' ] == 'UseAbilities' ) 
+				else if( $QueueItem[ 'Method' ] == 'UseAbilities' ) 
 				{
 					$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
 					$this->Game->UpdatePlayer( $Player );
