@@ -210,7 +210,7 @@ function UpdateBG()
 CUI.prototype.UpdateLevelAndTimes = function()
 {
 	var game = this.m_Game;
-	this.m_eleInfoLevel[0].textContent = QuickFixText( ""+game.m_rgGameData.level + 1 );
+	this.m_eleInfoLevel[0].textContent = QuickFixText( ""+game.m_rgGameData.level );
 
 	if( window.DEBUG_bUseServerTime )
 	{

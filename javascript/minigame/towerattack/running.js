@@ -869,7 +869,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 	{
 		if( this.m_nCurrentLevel )
 		{
-			$J('.level', '#nextlevel').text(this.m_rgGameData.level + 1);
+			$J('.level', '#nextlevel').text(this.m_rgGameData.level);
 			$J('#nextlevel').show();
 			setTimeout(function()
 			{

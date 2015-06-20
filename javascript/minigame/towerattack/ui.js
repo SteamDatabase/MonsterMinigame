@@ -288,7 +288,7 @@ CUI.prototype.Tick = function()
 
 CUI.prototype.UpdateLevelAndTimes = function()
 {
-	var game = this.m_Game, formatted = game.m_rgGameData.level + 1;
+	var game = this.m_Game, formatted = game.m_rgGameData.level;
 	
 	if( this.m_eleInfoLevel[0].textContent !== formatted )
 	{
@@ -1289,7 +1289,7 @@ window.fnTooltipAbilityDesc = function( context )
 
 	if ( idx == '22' )
 	{
-		var levelMultiplier = Math.pow( 10, Math.max( 0, Math.floor( log10( g_Minigame.CurrentScene().m_rgGameData.level + 1 ) ) - 1 ) );
+		var levelMultiplier = Math.pow( 10, Math.max( 0, Math.floor( log10( g_Minigame.CurrentScene().m_rgGameData.level ) ) - 1 ) );
 		var goldGiven = ability.multiplier * levelMultiplier;
 		strOut += '<br><br>Gold for this level: ' + FormatNumberForDisplay( goldGiven );
 	}

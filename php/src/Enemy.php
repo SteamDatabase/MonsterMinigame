@@ -30,18 +30,18 @@ class Enemy
 		if( $this->GetType() === \ETowerAttackEnemyType::Mob ) 
 		{
 			$Variance = $this->GetHpMultiplierVariance();
-			$LowestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
-			$HighestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
+			$LowestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
+			$HighestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
 			$this->MaxHp = rand( $LowestHp, $HighestHp );
 		} 
 		else 
 		{
-			$this->MaxHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
+			$this->MaxHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
 		}
 		$this->Hp = $this->MaxHp;
-		$this->Dps = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() );
+		$this->Dps = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() );
 		$this->Timer = 0; // Todo
-		$this->Gold = \SteamDB\CTowerAttack\Util::PredictValue( $Level + 1, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent() );
+		$this->Gold = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent() );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
