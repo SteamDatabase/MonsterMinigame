@@ -147,6 +147,11 @@ class Base
 		$this->GetTechTree()->RecalulateUpgrades();
 	}
 
+	public function IsDead()
+	{
+		return $this->GetHp() <= 0;
+	}
+
 	public function GetTechTree()
 	{
 		return $this->TechTree;

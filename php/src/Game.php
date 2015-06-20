@@ -416,9 +416,14 @@ class Game
 				if( $Player->GetCurrentLane() === $LaneId )
 				{
 					$PlayersInLane[] = $Player;
-					if( $SecondPassed )
+					if( $SecondPassed && !$Player->IsDead() )
 					{
 						$Player->Hp -= $EnemyDpsDamage * $SecondsPassed;
+						if( $Player->IsDead() )
+						{
+							// TODO: deal with respawn
+							$Player->Hp = 0;
+						}
 					}
 				}
 			}
