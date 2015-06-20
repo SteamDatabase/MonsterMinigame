@@ -37,10 +37,10 @@ class Base
 	private $AbilityItems = array();
 	private $BossLootDropPercentage = 0.25;
 	private $DamageMultiplierDps = 1.0;
-	private $BaseDps = 0;
-	private $DamagePerClickMultiplier = 1.0;
+	private $DamagePerClickMultiplier = 0;
 	private $MaxHp = 0;
-	private $Dps = 0;
+	public $BaseDps = 0;
+	public $Dps = 0;
 
 	public function __construct() {
 		$this->Upgrades = array();
@@ -63,7 +63,6 @@ class Base
 		$this->BossLootDropPercentage = $this->GetTuningData( 'loot_chance' );
 		$this->DamageMultiplierDps = 1; # TODO
 		$this->BaseDps = $this->GetTuningData( 'Dps' );
-		$this->DamagePerClickMultiplier = 1; # TODO
 		$this->MaxHp = 0; # TODO: Delete?
 		$this->Dps = $this->GetTuningData( 'Dps' );
 	}
@@ -229,7 +228,7 @@ class Base
 			'hp_multiplier' => (double) 1,
 			'crit_percentage' => (double) $this->GetTuningData( 'crit_percentage' ),
 			'boss_loot_drop_percentage' => (double) $this->GetTuningData( 'loot_chance' ),
-			'damage_multiplier_dps' => (double) 1,
+			'damage_multiplier_dps' => (double) 0,
 			'damage_per_click_multiplier' => (double) 1
 		);
 
@@ -246,7 +245,7 @@ class Base
 					$Data[ 'hp_multiplier' ] += $Value;
 					break;
 				case \ETowerAttackUpgradeType::DPS:
-					$Data[ 'damage_multiplier_dps' ] += $Value; // TODO: initial_value?
+					$Data[ 'damage_multiplier_dps' ] += $Value;
 					break;
 				case \ETowerAttackUpgradeType::ClickDamage:
 					$Data[ 'damage_per_click_multiplier' ] += $Value;
@@ -274,7 +273,6 @@ class Base
 					break;
 			}
 		}
-		#$this->DamagePerClick = $Data['damage_per_click'];
 		$this->DamageMultiplierFire = $Data['damage_multiplier_fire'];
 		$this->DamageMultiplierWater = $Data['damage_multiplier_water'];
 		$this->DamageMultiplierAir = $Data['damage_multiplier_air'];
@@ -285,7 +283,8 @@ class Base
 		$this->BossLootDropPercentage = $Data['boss_loot_drop_percentage'];
 		$this->DamageMultiplierDps = $Data['damage_multiplier_dps'];
 		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
-		$this->DamagePerClick = 10 * $this->GetDamagePerClickMultiplier();
+		$this->DamagePerClick = $Data['damage_multiplier_fire'] * $this->GetDamagePerClickMultiplier();
+		$this->Dps = $this->GetBaseDps() * $this->GetDamageMultiplierDps();
 	}
 
 	private function GetTuningData( $Key = null )

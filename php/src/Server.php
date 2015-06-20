@@ -5,7 +5,7 @@ use SteamDB\CTowerAttack\Game as Game;
 
 class Server
 {
-	const TICK_RATE = 100 / 1000;
+	const TICK_RATE = 0.1; // 100 / 1000
 
 	public $SaneServer;
 	private $Shutdown;
@@ -132,9 +132,9 @@ class Server
 
 				if( $Tick >= $this->LastSecond )
 				{
+					$SecondsPassed = isset( $this->LastSecond ) ? floor( $Tick + 1.0 - $this->LastSecond ) : false;
 					$this->LastSecond = $Tick + 1.0; // constant rate, does not change
-
-					$this->Tick( $Tick, true );
+					$this->Tick( $Tick, $SecondsPassed );
 				}
 				else
 				{
@@ -159,9 +159,9 @@ class Server
 		l( 'Sockets closed' );
 	}
 
-	private function Tick( $Tick, $Second )
+	private function Tick( $Tick, $SecondsPassed )
 	{
-		l( 'Ticking... is second: ' . ( $Second ? 'true' : 'false' ) );
+		l( 'Ticking... is second: ' . ( $SecondsPassed >= 1 ? 'true' : 'false' ) );
 
 		if( $this->Shutdown > 0 )
 		{
@@ -195,7 +195,7 @@ class Server
 			}
 			unset( $this->Queue[ $Key ] );
 		}
-		$this->Game->Update();
+		$this->Game->Update( $SecondsPassed );
 	}
 
 	public static function LoadTuningData()

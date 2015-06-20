@@ -5,7 +5,7 @@ use SteamDB\CTowerAttack\Player as Player;
 
 class Game
 {
-	const START_LIMIT = 3; // Start game with 3 players
+	const START_LIMIT = 1; // Start game with 1 players
 	/*
 	optional uint32 level = 1;
 	repeated Lane lanes = 2;
@@ -306,12 +306,20 @@ class Game
 		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
 
-	public function Update()
+	public function Update( $SecondsPassed )
 	{
-		// Give Players money (TEMPLORARY)
-		foreach( $this->Game->Players as $Player )
+		$DoDPSDamage = $SecondsPassed !== false && $SecondsPassed > 0;
+		foreach( $this->Players as $Player )
 		{
+			// Give Players money (TEMPLORARY)
 			$Player->IncreaseGold(50000);
+
+			if ( $DoDPSDamage )
+			{
+				// Deal DPS damage to current target
+				// TODO: deal with this logic when player is inactive..
+				$this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ]->DamageTaken += $Player->GetTechTree()->GetDPS();
+			}
 		}
 
 		// Loop through lanes and deal damage etc

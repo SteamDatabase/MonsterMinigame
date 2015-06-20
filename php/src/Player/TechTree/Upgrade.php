@@ -74,6 +74,11 @@ class Upgrade
 		return $this->GetTuningData( 'name' );
 	}
 
+	public function GetInitialValue()
+	{
+		return $this->GetTuningData( 'initial_value' );
+	}
+
 	public function GetMultiplier()
 	{
 		return $this->GetTuningData( 'multiplier' );

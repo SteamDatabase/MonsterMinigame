@@ -138,6 +138,11 @@ class Base
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
 			}
+			else if( $Upgrade->GetUpgradeId() === 1 ) // Auto-fire Cannon
+			{
+				$this->getTechTree()->BaseDps = $Upgrade->GetInitialValue();
+				$this->getTechTree()->Dps = $this->getTechTree()->BaseDps;
+			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();
 	}
