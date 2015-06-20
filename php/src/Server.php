@@ -5,11 +5,13 @@ use SteamDB\CTowerAttack\Game as Game;
 
 class Server
 {
+	const TICK_RATE = 100 / 1000;
+
 	public $SaneServer;
-	public $TickRate;
 	private $Shutdown;
 	private $Running;
 	private $LastTick;
+	private $LastSecond;
 	private $Socket;
 	private $Game;
 	private $Queue = array();
@@ -32,12 +34,12 @@ class Server
 	public function Listen( )
 	{
 		$this->Running = true;
-		
+
 		while( $this->Running )
 		{
 			$Message = socket_accept( $this->Socket );
 
-			$DebugTime = microtime( true ); 
+			$DebugTime = microtime( true );
 
 			$Data = socket_read( $Message, 2048 );
 			$Data = json_decode( $Data, TRUE );
@@ -46,7 +48,7 @@ class Server
 			{
 				socket_shutdown( $Message, 2 );
 				socket_close( $Message );
-				
+
 				// Require all data sent to the server to be a JSON object and contain the "method" key, ignore everything else.
 			    continue;
 			}
@@ -55,11 +57,11 @@ class Server
 
 			// Handle the request, this could be moved elsewhere...
 			$Response = null;
-			switch ( $Data[ 'method' ] ) 
+			switch ( $Data[ 'method' ] )
 			{
 				case 'ChatMessage':
 					$Response = true;
-					
+
 					$this->Game->Chat[] =
 					[
 						'time' => time(),
@@ -72,7 +74,7 @@ class Server
 					[
 						'game_data' => $this->Game->ToArray()
 					];
-					
+
 					if( $Data[ 'include_stats' ] )
 					{
 						$Response[ 'stats' ] = $this->Game->GetStats();
@@ -80,7 +82,7 @@ class Server
 					break;
 				case 'GetPlayerData':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
-					if( $Player !== null ) 
+					if( $Player !== null )
 					{
 						$Response = array(
 							'player_data' => $Player->ToArray(),
@@ -91,14 +93,14 @@ class Server
 				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
-					if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
+					if( $Data[ 'method' ] == 'ChooseUpgrade' )
 					{
 						$QueueData = $Data[ 'upgrades' ];
 						$Response = array(
 							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
 					}
-					else if( $Data[ 'method' ] == 'UseAbilities' ) 
+					else if( $Data[ 'method' ] == 'UseAbilities' )
 					{
 						$QueueData = $Data[ 'requested_abilities' ];
 						$Response = array(
@@ -126,15 +128,24 @@ class Server
 
 			if( $Tick >= $this->LastTick )
 			{
-				$this->LastTick = $Tick + $this->TickRate;
+				$this->LastTick = $Tick + self::TICK_RATE;
 
-				$this->Tick( $Tick );
+				if( $Tick >= $this->LastSecond )
+				{
+					$this->LastSecond = $Tick + 1.0; // constant rate, does not change
+
+					$this->Tick( $Tick, true );
+				}
+				else
+				{
+					$this->Tick( $Tick, false );
+				}
 			}
-			
+
 			$DebugTime = microtime( true ) - $DebugTime;
-			
+
 			l( 'Spent ' . $DebugTime . ' seconds handling sockets and ticks' );
-			
+
 			if( $DebugTime > $this->Game->HighestTick )
 			{
 				$this->Game->HighestTick = $DebugTime;
@@ -144,13 +155,13 @@ class Server
 
 		socket_shutdown( $this->Socket, 2 );
 		socket_close( $this->Socket );
-		
+
 		l( 'Sockets closed' );
 	}
 
-	private function Tick( $Tick )
+	private function Tick( $Tick, $Second )
 	{
-		l( 'Ticking...' );
+		l( 'Ticking... is second: ' . ( $Second ? 'true' : 'false' ) );
 
 		if( $this->Shutdown > 0 )
 		{
@@ -166,7 +177,7 @@ class Server
 			pcntl_signal_dispatch();
 		}
 
-		// Give Players money (TEMPLORARY)
+		// TODO: Give Players money (TEMPLORARY)
 		foreach( $this->Game->Players as $Player )
 		{
 			$Player->IncreaseGold(50000);
@@ -175,14 +186,14 @@ class Server
 		foreach( $this->Queue as $Key => $QueueItem )
 		{
 			$Player = $this->Game->GetPlayer( $QueueItem[ 'AccountId' ] );
-			if( $Player !== null ) 
+			if( $Player !== null )
 			{
-				if( $QueueItem[ 'Method' ] == 'ChooseUpgrade' ) 
+				if( $QueueItem[ 'Method' ] == 'ChooseUpgrade' )
 				{
 					$Player->HandleUpgrade( $this->Game, $QueueItem[ 'Data' ] );
 					$this->Game->UpdatePlayer( $Player );
-				} 
-				else if( $QueueItem[ 'Method' ] == 'UseAbilities' ) 
+				}
+				else if( $QueueItem[ 'Method' ] == 'UseAbilities' )
 				{
 					$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
 					$this->Game->UpdatePlayer( $Player );
@@ -219,7 +230,7 @@ class Server
 		$this->Shutdown = microtime( true );
 
 		$this->Game->SetStatus( \EMiniGameStatus::Ended );
-		
+
 		l( 'Waiting ' . Player\Base::ACTIVE_PERIOD . ' seconds until shutdown' );
 	}
 }

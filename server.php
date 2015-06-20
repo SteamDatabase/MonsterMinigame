@@ -26,6 +26,5 @@ if( function_exists( 'pcntl_signal' ) )
 	pcntl_signal( SIGTERM, 'SignalHandler' );
 	pcntl_signal( SIGINT, 'SignalHandler' );
 }
-
-$Server->TickRate = 100 / 1000;
+ 
 $Server->Listen();

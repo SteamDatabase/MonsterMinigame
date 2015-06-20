@@ -237,7 +237,11 @@ CUI.prototype.Tick = function()
 	switch ( game.m_rgGameData.status )
 	{
 		case 1:
-			this.m_dialogWaitingForPlayers.show();
+			if( this.m_dialogWaitingForPlayers )
+			{
+				this.m_dialogWaitingForPlayers.show();
+			}
+
 			var numPlayers = 0;
 			if ( game.m_rgStats )
 			{
