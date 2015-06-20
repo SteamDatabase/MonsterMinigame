@@ -4,6 +4,7 @@ namespace SteamDB\CTowerAttack\Player;
 class Base
 {
 	const MAX_CLICKS = 20;
+	const ACTIVE_PERIOD = 300; // 5 minutes
 	
 	/*
 	optional double hp = 1;
@@ -17,6 +18,7 @@ class Base
 	repeated Loot loot = 9;
 	*/
 
+	public $LastSeen;
 	private $AccountId;
 	private $Hp;
 	private $CurrentLane;
@@ -31,6 +33,7 @@ class Base
 
 	public function __construct( $AccountId )
 	{
+		$this->LastSeen = time();
 		$this->AccountId = $AccountId;
 		$this->Hp = $this->GetTuningData( 'hp' );
 		$this->CurrentLane = 1;
@@ -42,6 +45,11 @@ class Base
 		$this->CritDamage = 0; // TODO
 		$this->Loot = array(); // TODO
 		$this->TechTree = new TechTree\Base;
+	}
+
+	public function IsActive()
+	{
+		return time() < $this->LastSeen + ACTIVE_PERIOD;
 	}
 
 	public function ToArray()

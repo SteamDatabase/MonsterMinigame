@@ -101,7 +101,7 @@ class Game
 			'num_abilities_activated' => 0,
 			'num_players_reaching_milestone_level' => 0,
 			'num_ability_items_activated' => 0,
-			'num_active_players' => 0,
+			'num_active_players' => count( $this->GetActivePlayers() ), # TODO: replace this with an increasing/decreasing variable
 			'time_simulating' => $this->TimeSimulating,
 			'time_saving' => 0,
 			'time_highest_tick' => $this->HighestTick
@@ -235,6 +235,22 @@ class Game
 		return $this->UniverseState;
 	}
 
+	public function GetActivePlayers()
+	{
+		$ActivePlayers = array();
+
+		// So dirty to loop through this...
+		foreach( $this->Players as $Player )
+		{
+			if ($Player->IsActive())
+			{
+				$ActivePlayers[] = $Player;
+			}
+		}
+
+		return $ActivePlayers;
+	}
+
 	public function GetPlayers()
 	{
 		return $this->Players;
@@ -255,6 +271,7 @@ class Game
 
 	public function UpdatePlayer( $Player )
 	{
+		$Player->LastSeen = time();
 		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
 }
