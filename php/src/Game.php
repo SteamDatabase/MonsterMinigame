@@ -184,25 +184,25 @@ class Game
 				}
 			}
 			# TODO: Add Minibosses and treasure mobs
+			
+			$ElementalArray = array(
+				\ETowerAttackElement::Fire,
+				\ETowerAttackElement::Water,
+				\ETowerAttackElement::Air,
+				\ETowerAttackElement::Earth
+			);
+
+			$this->Lanes[] = new Lane(
+				$Enemies,
+				0, //dps
+				0, //gold dropped
+				$ActivePlayerAbilities,
+				$PlayerHpBuckets,
+				$ElementalArray[ array_rand( $ElementalArray ) ], //element
+				0, //decrease cooldown
+				0 //gold per click
+			);
 		}
-
-		$ElementalArray = array(
-			\ETowerAttackElement::Fire,
-			\ETowerAttackElement::Water,
-			\ETowerAttackElement::Air,
-			\ETowerAttackElement::Earth
-		);
-
-		$this->Lanes[] = new Lane(
-			$Enemies,
-			0, //dps
-			0, //gold dropped
-			$ActivePlayerAbilities,
-			$PlayerHpBuckets,
-			$ElementalArray[ array_rand( $ElementalArray ) ], //element
-			0, //decrease cooldown
-			0 //gold per click
-		);
 	}
 
 	public function GetLane($LaneId)
