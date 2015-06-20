@@ -141,11 +141,14 @@ class Server
 			
 			l( 'Spent ' . $DebugTime . ' seconds handling sockets and ticks' );
 			
-			$this->Games[ $Game->GetGameId() ]->TimeSimulating += $DebugTime;
-			
-			if( $DebugTime > $this->Games[ $Game->GetGameId() ]->HighestTick )
+			// Game is not defined if method is unknown
+			if( $Game !== null ) 
 			{
-				$this->Games[ $Game->GetGameId() ]->HighestTick = $DebugTime;
+				if( $DebugTime > $this->Games[ $Game->GetGameId() ]->HighestTick )
+				{
+					$this->Games[ $Game->GetGameId() ]->HighestTick = $DebugTime;
+				}
+				$this->Games[ $Game->GetGameId() ]->TimeSimulating += $DebugTime;
 			}
 		}
 	}
