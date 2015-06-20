@@ -59,7 +59,7 @@ a {
 
 body.flat_page.game {
 	background-color: #4f463d;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/background_top_gradient.png');
+	background-image: url('/assets/minigame/towerattack/background_top_gradient.png');
 	background-repeat: repeat-x;
 	background-position: 0 100px;
 }
@@ -86,7 +86,7 @@ body.flat_page.game.chromeless {
 
 	pointer-events: none !important;
 
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/game_frame_tv.png?v=2');
+	background: url('/assets/minigame/towerattack/game_frame_tv.png');
 	background-repeat: no-repeat;
 }
 .scanlines {
@@ -101,7 +101,7 @@ body.flat_page.game.chromeless {
 
 	pointer-events: none !important;
 
-	background: url('http://cdn.akamai.steamstatic.com/steamcommunity/public/assets/minigame/towerattack/scanlines.png');
+	background: url('/assets/minigame/towerattack/scanlines.png');
 	background-repeat: no-repeat;
 }
 
@@ -194,7 +194,7 @@ body.flat_page.game.chromeless {
 	height: 45px;
 	width: 15px;
 	margin: 0 0 0 -5px;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/scroll_handle.png');
+	background: url('/assets/minigame/towerattack/scroll_handle.png');
 	background-repeat: no-repeat;
 	position: absolute;
 	box-shadow: 2px 2px 0px #000;
@@ -225,7 +225,7 @@ body.flat_page.game.chromeless {
 
 #elements .element_cost .cost {
 	color: #e1b21e;
-	background-image: url('http://cdn.steamcommunity.com//economy/emoticon/:coinz:');
+	background-image: url('/assets/minigame/towerattack/emoticons/coinz.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 14px 14px;
@@ -255,7 +255,7 @@ body.flat_page.game.chromeless {
 	color: #fff;
 }
 .element_upgrade .element_upgrade_btn {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/element_upgrade_default.png?v=1');
+	background: url('/assets/minigame/towerattack/element_upgrade_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	width: 53px;
@@ -266,13 +266,13 @@ body.flat_page.game.chromeless {
 }
 .element_upgrade.cantafford .element_upgrade_btn,
 .element_upgrade.cantafford .element_upgrade_btn:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/element_upgrade_default.png?v=1');
+	background: url('/assets/minigame/towerattack/element_upgrade_default.png');
 	background-repeat: no-repeat;
 	background-position: -106px 0px;
 	cursor: default;
 }
 .element_upgrade .element_upgrade_btn:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/element_upgrade_default.png?v=1');
+	background: url('/assets/minigame/towerattack/element_upgrade_default.png');
 	background-repeat: no-repeat;
 	background-position: -53px 0px;
 }
@@ -295,7 +295,7 @@ body.flat_page.game.chromeless {
 	box-shadow: 4px 4px 0px rgba( 0, 0, 0, 0.6);
 }
 .spend_badge_ponts_ctn {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/badge_points_bg.png');
+	background: url('/assets/minigame/towerattack/badge_points_bg.png');
 	background-repeat: no-repeat;
 	font-size: 8px;
 	padding: 20px;
@@ -321,7 +321,7 @@ body.flat_page.game.chromeless {
 {
 	margin-bottom: 10px;
 	color: #407898;
-	background-image: url('http://cdn.steamcommunity.com//economy/emoticon/:sheriffsbadge:');
+	background-image: url('/assets/minigame/towerattack/emoticons/sheriffsbadge.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 13px 13px;
@@ -382,7 +382,7 @@ body.flat_page.game.chromeless {
 	color: #fff;
 	display: block;
 	line-height: 12px;
-	background-image: url('http://cdn.steamcommunity.com//economy/emoticon/:sheriffsbadge:');
+	background-image: url('/assets/minigame/towerattack/emoticons/sheriffsbadge.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 13px 13px;
@@ -480,7 +480,7 @@ body.flat_page.game.chromeless {
 }
 #player_dead_dialog .player_dead_ctn {
 	border: 1px solid #252525;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/dead_bg.png');
+	background: url('/assets/minigame/towerattack/dead_bg.png');
 	background-repeat: no-repeat;
 }
 #player_dead_dialog .title_dead {
@@ -651,14 +651,14 @@ body.flat_page.game.chromeless {
 
 #abilitiescontainer > div {
 	display: inline-block;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/ability_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	margin: 3px;
 	padding: 5px;
 }
 #abilitiescontainer > div:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/ability_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: -46px 0px;
 }
@@ -669,12 +669,12 @@ body.flat_page.game.chromeless {
 }
 
 #abilitiescontainer > div.active {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/ability_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: -92px 0px;
 }
 #abilitiescontainer > div.active:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/ability_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: -92px 0px;
 }
@@ -713,43 +713,43 @@ body.flat_page.game.chromeless {
 	margin-bottom: 14px;
 }
 #col_right .lanes.desert {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_desert.png');
+	background: url('/assets/minigame/towerattack/panel_right_desert.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.city_day {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_city.png');
+	background: url('/assets/minigame/towerattack/panel_right_city.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.city_destroyed {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_cityr.png');
+	background: url('/assets/minigame/towerattack/panel_right_cityr.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.ocean_floor {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_ocean.png');
+	background: url('/assets/minigame/towerattack/panel_right_ocean.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.city_night {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_night.png');
+	background: url('/assets/minigame/towerattack/panel_right_night.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.space {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_space.png');
+	background: url('/assets/minigame/towerattack/panel_right_space.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.stadium {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_stadium.png');
+	background: url('/assets/minigame/towerattack/panel_right_stadium.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.volcano {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_volcano.png');
+	background: url('/assets/minigame/towerattack/panel_right_volcano.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.island {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_island.png');
+	background: url('/assets/minigame/towerattack/panel_right_island.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.snow {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/panel_right_snow.png');
+	background: url('/assets/minigame/towerattack/panel_right_snow.png');
 	background-repeat: no-repeat;
 }
 
@@ -860,7 +860,7 @@ body.flat_page.game.chromeless {
 }
 
 .lane {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/lane_default.png?v=1');
+	background: url('/assets/minigame/towerattack/lane_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	display: inline-block;
@@ -875,7 +875,7 @@ body.flat_page.game.chromeless {
 	}
 
 .lane:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/lane_default.png?v=1');
+	background: url('/assets/minigame/towerattack/lane_default.png');
 	background-repeat: no-repeat;
 	background-position: -91px 0px;
 }
@@ -889,7 +889,7 @@ body.flat_page.game.chromeless {
 	width: 102px;
 	padding-right: 8px;
 	height: 73px;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/lane_active.png');
+	background: url('/assets/minigame/towerattack/lane_active.png');
 	background-repeat: no-repeat;
 	border: 0px;
 	color: #fff;
@@ -1005,12 +1005,12 @@ body.flat_page.game.chromeless {
 	margin: 3px 0;
 	width: 254px;
 	min-height: 42px;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/upgrade_ctn_bg.png?v=1');
+	background: url('/assets/minigame/towerattack/upgrade_ctn_bg.png');
 	background-repeat: no-repeat;
 }
 .upgrade.purchase {
 	min-height: 28px;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/purchase_ctn_bg.png?v=1');
+	background: url('/assets/minigame/towerattack/purchase_ctn_bg.png');
 	background-repeat: no-repeat;
 }
 .upgrade.purchase img {
@@ -1021,7 +1021,7 @@ body.flat_page.game.chromeless {
 }
 
 .upgrade .link {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/upgrade_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/upgrade_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	color: #ee7aff;
@@ -1037,24 +1037,24 @@ body.flat_page.game.chromeless {
 }
 
 .upgrade.purchase .link {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/purchase_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/purchase_btn_default.png');
 	background-repeat: no-repeat;
 	height: 16px;
 }
 .upgrade .link:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/upgrade_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/upgrade_btn_default.png');
 	background-position: -107px 0px;
 	color: #fff;
 }
 .upgrade.purchase .link:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/purchase_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/purchase_btn_default.png');
 	background-position: -107px 0px;
 	color: #fff;
 }
 .cantafford .upgrade .link,
 .cantafford .upgrade .link:hover {
 	box-shadow: none;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/upgrade_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/upgrade_btn_default.png');
 	background-position: -214px 0px;
 	color: #aaa;
 	cursor: default;
@@ -1062,7 +1062,7 @@ body.flat_page.game.chromeless {
 .cantafford .upgrade.purchase .link,
 .cantafford .upgrade.purchase .link:hover {
 	box-shadow: none;
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/purchase_btn_default.png?v=1');
+	background: url('/assets/minigame/towerattack/purchase_btn_default.png');
 	background-position: -214px 0px;
 	color: #aaa;
 	cursor: default;
@@ -1070,7 +1070,7 @@ body.flat_page.game.chromeless {
 
 .upgrade .cost {
 	color: #e1b21e;
-	background-image: url('http://cdn.steamcommunity.com//economy/emoticon/:coinz:');
+	background-image: url('/assets/minigame/towerattack/emoticons/coinz.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 14px 14px;
@@ -1177,7 +1177,7 @@ body.flat_page.game.chromeless {
 	margin-right: 10px;
 	height: 42px;
 	width: 42px;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/active_ability_ctn.png');
+	background-image: url('/assets/minigame/towerattack/active_ability_ctn.png');
 	background-repeat: no-repeat;
 }
 .activeinlanetemplate .icon {
@@ -1324,7 +1324,7 @@ body.flat_page.game.chromeless {
 	width: 1280px;
 	height: 72px;
 
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/game_controls.png');
+	background: url('/assets/minigame/towerattack/game_controls.png');
 	background-repeat: no-repeat;
 
 	margin: 0px auto;
@@ -1343,7 +1343,7 @@ body.flat_page.game.chromeless {
 	height: 23px;
 }
 .game_options .leave_game_btn {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/leave_game_btn.png');
+	background: url('/assets/minigame/towerattack/leave_game_btn.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	height: 56px;
@@ -1354,13 +1354,13 @@ body.flat_page.game.chromeless {
 	cursor: pointer;
 }
 .game_options .leave_game_btn:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/leave_game_btn.png');
+	background: url('/assets/minigame/towerattack/leave_game_btn.png');
 	background-repeat: no-repeat;
 	background-position: -206px 0px;
 	color: #fff;
 }
 .game_options .toggle_music_btn {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/toggle_sfx_btn.png?v=1');
+	background: url('/assets/minigame/towerattack/toggle_sfx_btn.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	width: 150px;
@@ -1369,7 +1369,7 @@ body.flat_page.game.chromeless {
 	cursor: pointer;
 }
 .game_options .toggle_sfx_btn {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/toggle_sfx_btn.png?v=1');
+	background: url('/assets/minigame/towerattack/toggle_sfx_btn.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	width: 150px;
@@ -1379,7 +1379,7 @@ body.flat_page.game.chromeless {
 }
 .game_options .toggle_music_btn:hover,
 .game_options .toggle_sfx_btn:hover {
-	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/toggle_sfx_btn.png?v=1');
+	background: url('/assets/minigame/towerattack/toggle_sfx_btn.png');
 	background-repeat: no-repeat;
 	background-position: -150px 0px;
 	color: #fff;
@@ -1441,17 +1441,17 @@ body.flat_page.game.chromeless {
 
 
 .icon_fire, .element_1 {
-	background-image: url('http://cdn.steamcommunity.com/economy/emoticon/:shelterwildfire:');
+	background-image: url('/assets/minigame/towerattack/emoticons/shelterwildfire.png');
 }
 
 .icon_water, .element_2 {
-	background-image: url('http://cdn.steamcommunity.com/economy/emoticon/:waterrune:');
+	background-image: url('/assets/minigame/towerattack/emoticons/waterrune.png');
 }
 
 .icon_air, .element_3 {
-	background-image: url('http://cdn.steamcommunity.com/economy/emoticon/:Wisp:');
+	background-image: url('/assets/minigame/towerattack/emoticons/Wisp.png');
 }
 
 .icon_earth, .element_4 {
-	background-image: url('http://cdn.steamcommunity.com/economy/emoticon/:FateTree:');
+	background-image: url('/assets/minigame/towerattack/emoticons/FateTree.png');
 }

@@ -124,7 +124,7 @@ body {
 }
 .section_yours {
 	background-color: #4f463d;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/stats_bg.png');
+	background-image: url('/assets/minigame/towerattack/stats_bg.png');
 	background-repeat: repeat-x;
 	width: 600px;
 	height: 267px;
@@ -243,7 +243,7 @@ body {
 	}
 	.your_stats .stat_ctn .summer_sale_badge {
 		position: relative;
-		background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/badge_bg.png');
+		background-image: url('/assets/minigame/towerattack/badge_bg.png');
 		background-repeat: no-repeat;
 		/*border: 1px solid #212121;
 		border-radius: 3px;
@@ -305,7 +305,7 @@ body {
 
 .section_today {
 	background-color: #4f463d;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/stats_bg.png');
+	background-image: url('/assets/minigame/towerattack/stats_bg.png');
 	background-repeat: no-repeat;
 	width: 260px;
 	height: 240px;
@@ -380,7 +380,7 @@ body {
 .section_how_it_works {
 	width: 948px;
 	height: 687px;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/how_it_works_bg.png?v=3');
+	background-image: url('/assets/minigame/towerattack/how_it_works_bg.png');
 	background-repeat: no-repeat;
 	margin: 0px auto;
 }
@@ -495,7 +495,7 @@ body {
 {
 	width: 948px;
 	min-height: 657px;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/milestones_bg.png');
+	background-image: url('/assets/minigame/towerattack/milestones_bg.png');
 	background-repeat: no-repeat;
 	margin: 0px auto;
 	background-color: #1e1a19;
@@ -704,7 +704,7 @@ body {
 {
 	width: 948px;
 	min-height: 257px;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/deals_bg.png');
+	background-image: url('/assets/minigame/towerattack/deals_bg.png');
 	background-repeat: no-repeat;
 	margin: 0px auto;
 	background-color: #1e1a19;
@@ -806,7 +806,7 @@ body {
 {
 	width: 948px;
 	min-height: 657px;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/faq_bg.jpg?v=1');
+	background-image: url('/assets/minigame/towerattack/faq_bg.jpg');
 	background-repeat: no-repeat;
 	margin: 0px auto;
 	background-color: #2a2624;
@@ -947,7 +947,7 @@ body {
 {
 	width: 948px;
 	min-height: 657px;
-	background-image: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/credits_bg.png');
+	background-image: url('/assets/minigame/towerattack/credits_bg.png');
 	background-repeat: no-repeat;
 	margin: 0px auto;
 	background-color: #303c44;
