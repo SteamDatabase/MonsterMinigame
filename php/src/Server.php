@@ -211,12 +211,51 @@ class Server
 
 	public function UpdateGame()
 	{
-		/*foreach( $Game->GetLanes() as $Lane ) {
-			foreach( $Lane->GetEnemies() as $Enemy ) {
-				if ($Enemey->GetHp() <= 0) {}
+		$DeadLanes = 0;
+		foreach( $this->Game->Lanes as $Lane )
+		{
+			$DeadEnemies = 0;
+			foreach( $Lane->Enemies as $Enemy )
+			{
+				if( $Enemy->IsDead() )
+				{
+					$DeadEnemies++;
+				}
+				else
+				{
+					$Enemy->DecreaseHp( $Enemy->DamageTaken );
+					$Enemy->DamageTaken = 0;
+					if( !$Enemy->IsDead() )
+					{
+						switch( $Enemy->GetType() ) 
+						{
+							case \ETowerAttackEnemyType::Tower:
+								$this->Game->NumTowersKilled++;
+								break;
+							case \ETowerAttackEnemyType::Mob:
+								$this->Game->NumMobsKilled++;
+								break;
+							case \ETowerAttackEnemyType::Boss:
+								$this->Game->NumBossesKilled++;
+								break;
+							case \ETowerAttackEnemyType::MiniBoss:
+								$this->Game->NumMiniBossesKilled++;
+								break;
+							case \ETowerAttackEnemyType::TreasureMob:
+								$this->Game->NumTreasureMobsKilled++;
+								break;
+						}
+						$DeadEnemies++;
+						$Lane->GiveGoldToPlayers( $this->Game, $Enemy->GetGold() );
+					}
+				}
 			}
-		}*/
-		// TODO: do something or something?
+			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
+		}
+		if( $DeadLanes === 3 ) 
+		{
+			$Game->GenerateNewLevel();
+		}
 	}
 
 	public function Shutdown()

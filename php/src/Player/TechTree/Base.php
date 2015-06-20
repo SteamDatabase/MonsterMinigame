@@ -237,8 +237,6 @@ class Base
 					$Data[ 'damage_multiplier_dps' ] += $Value; // TODO: initial_value?
 					break;
 				case \ETowerAttackUpgradeType::ClickDamage:
-					var_dump($Upgrade);
-					var_dump($Value);
 					$Data[ 'damage_per_click_multiplier' ] += $Value;
 					break;
 				case \ETowerAttackUpgradeType::DamageMultiplier_Fire:

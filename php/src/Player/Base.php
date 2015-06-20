@@ -85,55 +85,9 @@ class Base
 					}
 					
 					$Game->NumClicks += $NumClicks;
-					
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
-					$Enemy->DecreaseHp( $Damage );
-					# TODO: check if gold has already been rewareded for killing this enemy
-					if( $Enemy->IsDead() ) 
-					{
-						switch( $Enemy->GetType() ) 
-						{
-							case \ETowerAttackEnemyType::Tower:
-								$Game->NumTowersKilled++;
-								break;
-							case \ETowerAttackEnemyType::Mob:
-								$Game->NumMobsKilled++;
-								break;
-							case \ETowerAttackEnemyType::Boss:
-								$Game->NumBossesKilled++;
-								break;
-							case \ETowerAttackEnemyType::MiniBoss:
-								$Game->NumMiniBossesKilled++;
-								break;
-							case \ETowerAttackEnemyType::TreasureMob:
-								$Game->NumTreasureMobsKilled++;
-								break;
-						}
-						$Lane->GiveGoldToPlayers( $Game, $Enemy->GetGold() );
-					}
-					$DeadLanes = 0;
-					foreach( $Game->GetLanes() as $Lane ) 
-					{
-						$Enemies = $Lane->GetEnemies();
-						$DeadEnemies = 0;
-						foreach( $Enemies as $Enemy )
-						{
-							if( $Enemy->IsDead() ) 
-							{
-								$DeadEnemies++;
-							}
-						}
-						if( $DeadEnemies === count( $Enemies ) ) 
-						{
-							$DeadLanes++;
-						}
-					}
-					if( $DeadLanes === 3 ) 
-					{
-						$Game->GenerateNewLevel();
-					}
+					$Enemy->DamageTaken += $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					break;
 				case \ETowerAttackAbility::ChangeLane:
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
