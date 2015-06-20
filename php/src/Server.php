@@ -5,7 +5,10 @@ use SteamDB\CTowerAttack\Game as Game;
 
 class Server
 {
+	public $SaneServer;
 	public $TickRate;
+	private $Shutdown;
+	private $Running;
 	private $LastTick;
 	private $Socket;
 	private $Game;
@@ -27,7 +30,9 @@ class Server
 
 	public function Listen( )
 	{
-		while( true )
+		$this->Running = true;
+		
+		while( $this->Running )
 		{
 			$Message = socket_accept( $this->Socket );
 
@@ -127,7 +132,7 @@ class Server
 			{
 				$this->LastTick = $Tick + $this->TickRate;
 
-				$this->Tick();
+				$this->Tick( $Tick );
 			}
 			
 			$DebugTime = microtime( true ) - $DebugTime;
@@ -140,11 +145,30 @@ class Server
 			}
 			$this->Game->TimeSimulating += $DebugTime;
 		}
+
+		socket_shutdown( $this->Socket, 2 );
+		socket_close( $this->Socket );
+		
+		l( 'Sockets closed' );
 	}
 
-	private function Tick()
+	private function Tick( $Tick )
 	{
 		l( 'Ticking...' );
+
+		if( $this->Shutdown > 0 )
+		{
+			if( $Tick - $this->Shutdown > \Player\Base::ACTIVE_PERIOD )
+			{
+				l( 'Good bye' );
+
+				$this->Running = false;
+			}
+		}
+		else if( $this->SaneServer )
+		{
+			pcntl_signal_dispatch();
+		}
 
 		// Give Players money (TEMPLORARY)
 		foreach( $this->Game->Players as $Player )
@@ -177,5 +201,19 @@ class Server
 			}
 		}*/
 		// TODO: do something or something?
+	}
+
+	public function Shutdown()
+	{
+		if( $this->Shutdown > 0 )
+		{
+			return;
+		}
+
+		$this->Shutdown = microtime( true );
+
+		$this->Game->SetStatus( \EMiniGameStatus::Ended );
+		
+		l( 'Waiting ' . \Player\Base::ACTIVE_PERIOD . ' seconds until shutdown' );
 	}
 }
