@@ -17,8 +17,7 @@ class Game
 	*/
 
 	private $AbilityQueue;
-	private $Players = array();
-	private $GameId;
+	public $Players = array();
 	private $Level = 0;
 	private $Lanes = array();
 	public $Chat = [];
@@ -50,15 +49,14 @@ class Game
 		return $this->LastMobId;
 	}
 
-	public function __construct($GameId)
+	public function __construct()
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
-		$this->GameId = $GameId;
 		$this->SetLevel( 0 );
 		$this->GenerateNewLanes();
 		$this->SetStatus( \EMiniGameStatus::Running );
 		$this->TimestampGameStart = time();
-		l( 'Created game #' . $this->GetGameId() );
+		l( 'Created new game' );
 	}
 
 	private function CreatePlayer( $AccountId )
@@ -73,7 +71,7 @@ class Game
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
 		// Remove status? $this->SetStatus( \EMiniGameStatus::Running );
-		l( 'Game #' . $this->GetGameId() . ' moved to level #' . $this->GetLevel() );
+		l( 'Game moved to level #' . $this->GetLevel() );
 	}
 
 	public function ToArray()
@@ -108,11 +106,6 @@ class Game
 			'time_saving' => 0,
 			'time_highest_tick' => $this->HighestTick
 		);
-	}
-
-	public function GetGameId()
-	{
-		return $this->GameId;
 	}
 
 	public function GetLevel()
@@ -252,7 +245,7 @@ class Game
 		//TODO: remove this
 		if( !array_key_exists( $AccountId, $this->Players ) )
 		{
-			l( 'Creating new player ' . $AccountId . ' in Game ID #' . $this->GetGameId() );
+			l( 'Creating new player ' . $AccountId );
 			$this->CreatePlayer( $AccountId );
 		}
 

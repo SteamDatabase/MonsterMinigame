@@ -8,7 +8,6 @@ class Server
 	public $TickRate;
 	private $LastTick;
 	private $Socket;
-	private $LastGameId = 0;
 	private $Game;
 	protected static $TuningData = array();
 
@@ -23,7 +22,7 @@ class Server
 
 		self::LoadTuningData();
 
-		$this->Game = new Game( $this->LastGameId + 1 );
+		$this->Game = new Game();
 	}
 
 	public function Listen( )
@@ -170,13 +169,13 @@ class Server
 		return $this->Game;
 	}
 
-	public function UpdateGame( $Game )
+	public function UpdateGame()
 	{
 		/*foreach( $Game->GetLanes() as $Lane ) {
 			foreach( $Lane->GetEnemies() as $Enemy ) {
 				if ($Enemey->GetHp() <= 0) {}
 			}
 		}*/
-		$this->Game = $Game;
+		// TODO: do something or something?
 	}
 }
