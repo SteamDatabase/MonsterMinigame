@@ -72,7 +72,7 @@ class Base
 	{
 		foreach( $RequestedAbilities as $RequestedAbility ) 
 		{
-			if( isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ) 
+			if( isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] ) 
 				&& $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > time()
 			) {
 				// Rate limit
@@ -97,7 +97,7 @@ class Base
 						$NumClicks = 1;
 					}
 					
-					$Damage += $NumClicks * $this->GetTechTree()->GetDamagePerClick();
+					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Game->NumClicks += $NumClicks;
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage;
