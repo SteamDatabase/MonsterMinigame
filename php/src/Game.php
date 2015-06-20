@@ -36,6 +36,7 @@ class Game
 	public $NumBossesKilled = 0;
 	public $NumTreasuresKilled = 0;
 	public $TimeSimulating = 0.0;
+	public $HighestTick = 0.0;
 
 	private function GetLastMobId()
 	{
@@ -102,7 +103,8 @@ class Game
 			'num_ability_items_activated' => 0,
 			'num_active_players' => 0,
 			'time_simulating' => $this->TimeSimulating,
-			'time_saving' => 0
+			'time_saving' => 0,
+			'time_highest_tick' => $this->HighestTick
 		);
 	}
 

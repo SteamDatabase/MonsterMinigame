@@ -441,7 +441,7 @@ CUI.prototype.UpdateStats = function()
 				container.append( row );
 				bNeedsResort = true;
 			}
-			$J( elem ).text( FormatNumberForDisplay( value, 5 ) );
+			$J( elem ).text( value );
 		} );
 
 		if ( bNeedsResort )
@@ -1354,5 +1354,3 @@ var g_rgUnits = [
 	{magnitude: Math.pow(10,63), unit: '*'},
 	{magnitude: Math.pow(10,65), unit: '?!'}
 ];
-
-
