@@ -225,7 +225,7 @@ class Server
 				{
 					$Enemy->DecreaseHp( $Enemy->DamageTaken );
 					$Enemy->DamageTaken = 0;
-					if( !$Enemy->IsDead() )
+					if( $Enemy->IsDead() )
 					{
 						switch( $Enemy->GetType() ) 
 						{
@@ -254,7 +254,7 @@ class Server
 		}
 		if( $DeadLanes === 3 ) 
 		{
-			$Game->GenerateNewLevel();
+			$this->Game->GenerateNewLevel();
 		}
 	}
 
