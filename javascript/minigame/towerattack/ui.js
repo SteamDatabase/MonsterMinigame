@@ -249,7 +249,12 @@ CUI.prototype.Tick = function()
 			break;
 
 		case 2:
-			this.m_dialogWaitingForPlayers.hide();
+			if( this.m_dialogWaitingForPlayers )
+			{
+				this.m_dialogWaitingForPlayers.hide();
+				this.m_dialogWaitingForPlayers = null;
+			}
+
 			this.UpdateLevelAndTimes();
 			this.UpdateAbilities();
 			this.UpdateLootNotification();
@@ -258,7 +263,12 @@ CUI.prototype.Tick = function()
 			break;
 
 		case 3:
-			this.m_dialogWaitingForPlayers.hide();
+			if( this.m_dialogWaitingForPlayers )
+			{
+				this.m_dialogWaitingForPlayers.hide();
+				this.m_dialogWaitingForPlayers = null;
+			}
+
 			if ( !this.m_gameOverDialog )
 			{
 				this.m_gameOverDialog = ShowAlertDialog( 'Game Over', 'This game is over. Click OK to continue.' );
@@ -278,36 +288,42 @@ CUI.prototype.Tick = function()
 
 CUI.prototype.UpdateLevelAndTimes = function()
 {
-	var game = this.m_Game;
-	this.m_eleInfoLevel[0].textContent = game.m_rgGameData.level + 1 ;
-
-	if( window.DEBUG_bUseServerTime )
+	var game = this.m_Game, formatted = game.m_rgGameData.level + 1;
+	
+	if( this.m_eleInfoLevel[0].textContent !== formatted )
 	{
-		this.m_eleInfoGameTime[0].textContent = FormatDeltaTimeString( game.m_rgGameData.timestamp - game.m_rgGameData.timestamp_game_start ) ;
-		this.m_eleInfoLevelTime[0].textContent =  FormatDeltaTimeString( game.m_rgGameData.timestamp - game.m_rgGameData.timestamp_level_start ) ;
-	} else{
-		this.m_eleInfoGameTime[0].textContent = FormatDeltaTimeString( game.m_nSimulatedTime - game.m_rgGameData.timestamp_game_start ) ;
-		this.m_eleInfoLevelTime[0].textContent =  FormatDeltaTimeString( game.m_nSimulatedTime - game.m_rgGameData.timestamp_level_start ) ;
+		this.m_eleInfoLevel[0].textContent = formatted;
 	}
 
+	formatted = FormatDeltaTimeString( game.m_nSimulatedTime - game.m_rgGameData.timestamp_game_start );
+
+	if( this.m_eleInfoGameTime[0].textContent !== formatted )
+	{
+		this.m_eleInfoGameTime[0].textContent = formatted;
+	}
+
+	formatted = FormatDeltaTimeString( game.m_nSimulatedTime - game.m_rgGameData.timestamp_level_start ); 
+
+	if( this.m_eleInfoLevelTime[0].textContent !== formatted )
+	{
+		this.m_eleInfoLevelTime[0].textContent = formatted;
+	}
 }
 
 CUI.prototype.UpdateSpendBadgePointsDialog = function()
 {
-	if ( !this.m_spendBadgePointsDialog )
-	{
-		this.m_spendBadgePointsDialog = $J( "#spend_badge_points_dialog" );
-	}
 	if ( !this.m_Game.m_rgPlayerTechTree || !this.m_Game.m_rgPlayerTechTree.badge_points || this.m_Game.m_rgGameData.status != 2 )
 	{
-		this.m_spendBadgePointsDialog.hide();
+		if( this.m_spendBadgePointsDialog )
+		{
+			this.m_spendBadgePointsDialog.hide();
+			this.m_spendBadgePointsDialog = null;
+		}
+
 		return;
 	}
 
-	if ( !this.m_spendBadgePointsDialog.is(":visible") )
-	{
-		this.m_spendBadgePointsDialog.show();
-	}
+	this.m_spendBadgePointsDialog = $J( "#spend_badge_points_dialog" ).show();
 
 	// update
 	$J( "#num_badge_points", this.m_spendBadgePointsDialog ).text( FormatNumberForDisplay( this.m_Game.m_rgPlayerTechTree.badge_points ) );
@@ -441,7 +457,12 @@ CUI.prototype.UpdateStats = function()
 				container.append( row );
 				bNeedsResort = true;
 			}
-			$J( elem ).text( value );
+			elem = $J( elem );
+			
+			if( elem.text() !== value )
+			{
+				elem.text( value );
+			}
 		} );
 
 		if ( bNeedsResort )
@@ -577,15 +598,24 @@ CUI.prototype.UpdateLanes = function()
 
 	// Update health histogram
 	if( instance.m_rgGameData && instance.m_rgPlayerData )
-	for( var i=0; i < 10; i++ )
 	{
-		var nHeight = 100 * ( instance.m_rgGameData.lanes[ instance.m_rgPlayerData.current_lane ].player_hp_buckets[i] / instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].player_hpbuckets_max );
+		for( var i=0; i < 10; i++ )
+		{
+			var nHeight = 100 * ( instance.m_rgGameData.lanes[ instance.m_rgPlayerData.current_lane ].player_hp_buckets[i] / instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].player_hpbuckets_max );
+			nHeight = nHeight.toFixed() + '%';
 
-		this.m_rgElementCache['teamhealth_' + i][0].style.height = nHeight.toFixed() + "%";
+			if( this.m_rgElementCache['teamhealth_' + i][0].style.height !== nHeight )
+			{
+				this.m_rgElementCache['teamhealth_' + i][0].style.height = nHeight;
+			}
+		}
 	}
 
 	// Update players in my lane
-	this.m_rgElementCache['players_in_lane'].text( instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].players );
+	if( this.m_rgElementCache['players_in_lane'].text() !== instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].players )
+	{
+		this.m_rgElementCache['players_in_lane'].text( instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].players );
+	}
 
 	// @optimize
 	if ( instance.m_rgGameData && instance.m_rgGameData.lanes )
@@ -725,11 +755,18 @@ CUI.prototype.UpdateUpgrades = function()
 
 		var nLevel = this.m_Game.GetUpgradeLevel(i);
 
-		$J('.cost', ele).text( FormatNumberForDisplay( nCost, 5 ) );
+		var costEl = $J('.cost', ele), formatted = FormatNumberForDisplay( nCost, 5 );
+
+		if( costEl.text() !== formatted )
+		{
+			costEl.text( formatted );
+		}
+
 		$J('.link', ele).data( 'cost', nCost );
 
 		// hide purchased abilities
-		if (upgrades[i].type == '8') {
+		if (upgrades[i].type == '8')
+		{
 			if (!this.m_Game.bHaveAbility(upgrades[i].ability)) {
 				ele.show();
 			}
@@ -738,8 +775,14 @@ CUI.prototype.UpdateUpgrades = function()
 			}
 			$J('.level', ele).hide();
 		}
-		else {
-			$J('.level', ele).text(nLevel);
+		else
+		{
+			costEl = $J('.level', ele);
+
+			if( costEl.text() !== nLevel )
+			{
+				costEl.text(nLevel);
+			}
 
 			switch( i )
 			{
