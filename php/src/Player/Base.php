@@ -147,6 +147,21 @@ class Base
 		$this->GetTechTree()->RecalulateUpgrades();
 	}
 
+	public function GetRespawnTime()
+	{
+		return $this->GetTuningData( 'respawn_time' );
+	}
+
+	public function GetMinDeadTime()
+	{
+		return $this->GetTuningData( 'min_dead_time' );
+	}
+
+	public function GetGoldMultiplierWhileDead()
+	{
+		return $this->GetTuningData( 'gold_multiplier_while_dead' );
+	}
+
 	public function IsDead()
 	{
 		return $this->GetHp() <= 0;
