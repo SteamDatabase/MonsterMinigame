@@ -18,7 +18,7 @@ class Base
 	repeated Loot loot = 9;
 	*/
 
-	public $LastSeen;
+	public $LastActive;
 	private $AccountId;
 	private $Hp;
 	private $CurrentLane;
@@ -33,7 +33,7 @@ class Base
 
 	public function __construct( $AccountId )
 	{
-		$this->LastSeen = time();
+		$this->LastActive = time();
 		$this->AccountId = $AccountId;
 		$this->Hp = $this->GetTuningData( 'hp' );
 		$this->CurrentLane = 1;
@@ -49,7 +49,7 @@ class Base
 
 	public function IsActive()
 	{
-		return time() < $this->LastSeen + self::ACTIVE_PERIOD;
+		return time() < $this->LastActive + self::ACTIVE_PERIOD;
 	}
 
 	public function ToArray()

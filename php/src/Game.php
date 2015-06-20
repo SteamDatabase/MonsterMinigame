@@ -271,7 +271,7 @@ class Game
 
 	public function UpdatePlayer( $Player )
 	{
-		$Player->LastSeen = time();
+		$Player->LastActive = time();
 		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
 }
