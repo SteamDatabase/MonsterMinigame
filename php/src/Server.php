@@ -9,7 +9,7 @@ class Server
 	private $LastTick;
 	private $Socket;
 	private $LastGameId = 0;
-	private $Games;
+	private $Game;
 	protected static $TuningData = array();
 
 	public function __construct( $Port )
@@ -23,8 +23,7 @@ class Server
 
 		self::LoadTuningData();
 
-		$Game = new Game($this->LastGameId + 1);
-		$this->Games[$Game->GetGameId()] = $Game;
+		$this->Game = new Game( $this->LastGameId + 1 );
 	}
 
 	public function Listen( )
@@ -54,46 +53,34 @@ class Server
 			switch ( $Data[ 'method' ] ) 
 			{
 				case 'ChatMessage':
-					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					if( $Game !== null ) 
-					{
-						$Response = true;
-						
-						$Game->Chat[] =
-						[
-							'time' => time(),
-							'actor' => $Data[ 'steamid' ],
-							'message' => $Data[ 'message' ]
-						];
-					}
+					$Response = true;
+					
+					$this->Game->Chat[] =
+					[
+						'time' => time(),
+						'actor' => $Data[ 'steamid' ],
+						'message' => $Data[ 'message' ]
+					];
 					break;
 				case 'GetGameData':
-					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					if( $Game !== null ) 
+					$Response =
+					[
+						'game_data' => $this->Game->ToArray()
+					];
+					
+					if( $Data[ 'include_stats' ] )
 					{
-						$Response =
-						[
-							'game_data' => $Game->ToArray()
-						];
-						
-						if( $Data[ 'include_stats' ] )
-						{
-							$Response[ 'stats' ] = $Game->GetStats();
-						}
+						$Response[ 'stats' ] = $this->Game->GetStats();
 					}
 					break;
 				case 'GetPlayerData':
-					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					if( $Game !== null ) 
+					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
+					if( $Player !== null ) 
 					{
-						$Player = $Game->GetPlayer( $Data[ 'steamid' ] );
-						if( $Player !== null ) 
-						{
-							$Response = array(
-								'player_data' => $Player->ToArray(),
-								'tech_tree' => $Player->GetTechTree()->ToArray()
-							);
-						}
+						$Response = array(
+							'player_data' => $Player->ToArray(),
+							'tech_tree' => $Player->GetTechTree()->ToArray()
+						);
 					}
 					break;
 				case 'UseBadgePoints':
@@ -101,30 +88,26 @@ class Server
 				case 'UseAbilities':
 					// TODO: use ticks/queue instead
 					$SteamId = $Data[ 'access_token' ];
-					$Game = $this->GetGame( $Data[ 'gameid' ] );
-					if( $Game !== null ) 
+					$Player = $this->Game->GetPlayer( $SteamId );
+					if( $Player !== null ) 
 					{
-						$Player = $Game->GetPlayer( $SteamId );
-						if( $Player !== null ) 
+						if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
 						{
-							if( $Data[ 'method' ] == 'ChooseUpgrade' ) 
-							{
-								$Player->HandleUpgrade( $Game, $Data[ 'upgrades' ] );
-								$Game->UpdatePlayer( $Player );
-								$this->UpdateGame( $Game );
-								$Response = array(
-									'tech_tree' => $Player->GetTechTree()->ToArray()
-								);
-							} 
-							else if( $Data[ 'method' ] == 'UseAbilities' ) 
-							{
-								$Player->HandleAbilityUsage( $Game, $Data[ 'requested_abilities' ] );
-								$Game->UpdatePlayer( $Player );
-								$this->UpdateGame( $Game );
-								$Response = array(
-									'player_data' => $Player->ToArray()
-								);
-							}
+							$Player->HandleUpgrade( $this->Game, $Data[ 'upgrades' ] );
+							$this->Game->UpdatePlayer( $Player );
+							$this->UpdateGame();
+							$Response = array(
+								'tech_tree' => $Player->GetTechTree()->ToArray()
+							);
+						} 
+						else if( $Data[ 'method' ] == 'UseAbilities' ) 
+						{
+							$Player->HandleAbilityUsage( $this->Game, $Data[ 'requested_abilities' ] );
+							$this->Game->UpdatePlayer( $Player );
+							$this->UpdateGame();
+							$Response = array(
+								'player_data' => $Player->ToArray()
+							);
 						}
 					}
 					break;
@@ -152,15 +135,11 @@ class Server
 			
 			l( 'Spent ' . $DebugTime . ' seconds handling sockets and ticks' );
 			
-			// Game is not defined if method is unknown
-			if( $Game !== null ) 
+			if( $DebugTime > $this->Game->HighestTick )
 			{
-				if( $DebugTime > $this->Games[ $Game->GetGameId() ]->HighestTick )
-				{
-					$this->Games[ $Game->GetGameId() ]->HighestTick = $DebugTime;
-				}
-				$this->Games[ $Game->GetGameId() ]->TimeSimulating += $DebugTime;
+				$this->Game->HighestTick = $DebugTime;
 			}
+			$this->Game->TimeSimulating += $DebugTime;
 		}
 	}
 
@@ -169,12 +148,9 @@ class Server
 		l( 'Ticking...' );
 
 		// Give Players money (TEMPLORARY)
-		foreach($this->GetGames() as $Game)
+		foreach( $this->Game->Players as $Player )
 		{
-			foreach($Game->GetPlayers() as $Player)
-			{
-				$Player->IncreaseGold(50000);
-			}
+			$Player->IncreaseGold(50000);
 		}
 	}
 
@@ -189,15 +165,9 @@ class Server
 		return $key !== null ? self::$TuningData[$key] : self::$TuningData;
 	}
 
-	public function GetGames()
+	public function GetGame()
 	{
-		return $this->Games;
-	}
-
-	public function GetGame( $GameId )
-	{
-		//TODO: return array_key_exists( $GameId, $this->Games ) ? $this->Games[$GameId] : null;
-		return $this->Games[1];
+		return $this->Game;
 	}
 
 	public function UpdateGame( $Game )
@@ -207,6 +177,6 @@ class Server
 				if ($Enemey->GetHp() <= 0) {}
 			}
 		}*/
-		$this->Games[ $Game->GetGameId() ] = $Game;
+		$this->Game = $Game;
 	}
 }
