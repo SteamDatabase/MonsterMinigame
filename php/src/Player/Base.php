@@ -21,14 +21,14 @@ class Base
 	public $LastActive;
 	private $AccountId;
 	private $Hp;
-	private $CurrentLane;
-	private $Target;
-	private $TimeDied;
-	private $Gold;
-	private $ActiveAbilitiesBitfield;
-	private $ActiveAbilities = array();
-	private $CritDamage;
-	private $Loot;
+	private $CurrentLane = 1;
+	private $Target = 0;
+	private $TimeDied = 0;
+	private $Gold = 10;
+	private $ActiveAbilitiesBitfield = 0;
+	private $ActiveAbilities = [];
+	private $CritDamage = 0;
+	private $Loot = [];
 	private $TechTree;
 
 	public function __construct( $AccountId )
@@ -36,15 +36,10 @@ class Base
 		$this->LastActive = time();
 		$this->AccountId = $AccountId;
 		$this->Hp = $this->GetTuningData( 'hp' );
-		$this->CurrentLane = 1;
-		$this->Target = 0;
-		$this->TimeDied = 0;
-		$this->Gold = 1000; // TODO: Start gold?
-		$this->ActiveAbilitiesBitfield = 0;
-		$this->ActiveAbilities = array();
-		$this->CritDamage = 0; // TODO
-		$this->Loot = array(); // TODO
 		$this->TechTree = new TechTree\Base;
+
+		// TODO
+		$this->AddAbilityItem( \ETowerAttackAbility::Item_SkipLevels, 1 );
 	}
 
 	public function IsActive()
@@ -60,6 +55,7 @@ class Base
 			'target' => (int) $this->GetTarget(),
 			'time_died' => (int) $this->GetTimeDied(),
 			'gold' => (double) $this->GetGold(),
+			'active_abilities' => [],
 			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
 			'crit_damage' => (double) $this->GetCritDamage()
 		);
@@ -101,6 +97,11 @@ class Base
 					break;
 				case \ETowerAttackAbility::ChangeTarget:
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
+					break;
+				case \ETowerAttackAbility::Item_SkipLevels:
+					// TODO: debugging
+					l( 'Skipping level' );
+					$Game->GenerateNewLevel();
 					break;
 				default:
 					// Handle unknown ability?
@@ -196,6 +197,23 @@ class Base
 		$this->Gold -= $Amount;
 	}
 
+	public function AddAbility( $Ability )
+	{
+		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
+	}
+
+	public function RemoveAbility( $Ability )
+	{
+		$this->ActiveAbilitiesBitfield &= ~( 1 << $Ability );
+	}
+
+	public function AddAbilityItem( $Ability, $Quantity )
+	{
+		$this->AddAbility( $Ability );
+		
+		$this->GetTechTree()->AddAbilityItem( $Ability, $Quantity );
+	}
+
 	public function GetActiveAbilitiesBitfield()
 	{
 		return $this->ActiveAbilitiesBitfield;
@@ -230,4 +248,3 @@ class Base
 		return $TuningData[ $Key ];
 	}
 }
-?>

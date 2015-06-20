@@ -170,9 +170,21 @@ class Base
 		return $this->BadgePoints;
 	}
 
+	public function AddAbilityItem( $AbilityItem, $Quantity )
+	{
+		$this->AbilityItems[] = new AbilityItem( $AbilityItem, $Quantity );
+	}
+
 	public function GetAbilityItems()
 	{
-		return $this->AbilityItems;
+		$Items = [];
+		
+		foreach( $this->AbilityItems as $AbilityItem )
+		{
+			$Items[] = $AbilityItem->ToArray();
+		}
+		
+		return $Items;
 	}
 
 	public function GetBossLootDropPercentage()
@@ -290,4 +302,3 @@ class Base
 		return $TuningData[ $Key ];
 	}
 }
-?>

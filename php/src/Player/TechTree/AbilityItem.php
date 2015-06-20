@@ -26,5 +26,12 @@ class AbilityItem
 	{
 		return $this->Quantity;
 	}
+
+	public function ToArray()
+	{
+		return [
+			'ability' => $this->Ability,
+			'quantity' => $this->Quantity
+		];
+	}
 }
-?>
