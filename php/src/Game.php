@@ -328,15 +328,18 @@ class Game
 		{
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
-			for( $i = 0; $i < $EnemyCount; $i++ )
+			foreach( $Lane->Enemies as $Enemy )
 			{
-				$Enemy = $Lane->Enemies[ $i ];
 				if( $Enemy->IsDead() )
 				{
 					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
 					{
 						// Find next enemy to deal the rest of the damage to
-						$Lane->Enemies[ $i + 1]->DecreaseHp( $Enemy->GetHpDifference() );
+						$NextEnemy = $Lane->GetAliveEnemy();
+						if( $NextEnemy !== null )
+						{
+							$NextEnemy->DamageTaken += $Enemy->GetHpDifference();
+						}
 					}
 					$DeadEnemies++;
 				}
@@ -347,7 +350,11 @@ class Game
 					if( $Enemy->GetHpDifference() > 0 && $i !== $EnemyCount )
 					{
 						// Find next enemy to deal the rest of the damage to
-						$Lane->Enemies[ $i + 1]->DecreaseHp( $Enemy->GetHpDifference() );
+						$NextEnemy = $Lane->GetAliveEnemy();
+						if( $NextEnemy !== null )
+						{
+							$NextEnemy->DamageTaken += $Enemy->GetHpDifference();
+						}
 					}
 					if( $Enemy->IsDead() )
 					{

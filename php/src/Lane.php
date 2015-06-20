@@ -130,5 +130,17 @@ class Lane
 			$Game->GetPlayer( $AccountId )->increaseGold( $Amount );
 		}
 	}
+
+	public function GetAliveEnemy()
+	{
+		foreach( $this->Enemies as $Enemy )
+		{
+			if( !$Enemy->isDead() )
+			{
+				return $Enemy;
+			}
+		}
+		return null;
+	}
 }
 ?>
