@@ -1,4 +1,9 @@
-// <style>
+@font-face {
+	font-family: 'Press Start 2P';
+	src: url('/assets/PressStart2P-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
 
 html {
 	height: 100%;
@@ -32,7 +37,7 @@ a {
 	padding-top: 10px;
 	width: 1280px;
 
-	font-family: 'Motiva Sans Thin', Arial, Helvetica, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	color: #2a2624;
 }
@@ -74,8 +79,6 @@ body.flat_page.game.chromeless {
 	height: 720px;
 	pointer-events: none;
 	overflow: hidden;
-
-	//opacity: 0.3;
 }
 .tv_ui {
 	position: absolute;
@@ -120,14 +123,6 @@ body.flat_page.game.chromeless {
 	margin-bottom: 2px;
 	height: 14px;
 }
-#activeinlanecontainer .title_active:lang(ja), /* Japanese */
-#activeinlanecontainer .title_active:lang(zh-cn), /* Simplified Chinese */
-#activeinlanecontainer .title_active:lang(zh-tw), /* Traditional Chinese */
-#activeinlanecontainer .title_active:lang(ko), /* Korean */
-#activeinlanecontainer .title_active:lang(th) /* Thai */
-	{
-	font-size: 12px;
-}
 
 #activitylog {
 	font-size: 8px;
@@ -144,16 +139,6 @@ body.flat_page.game.chromeless {
 	margin-top: 16px;
 	margin-left: 4px;
 }
-#upgrades:lang(ja), /* Japanese */
-#upgrades:lang(zh-cn), /* Simplified Chinese */
-#upgrades:lang(zh-tw), /* Traditional Chinese */
-#upgrades:lang(ko), /* Korean */
-#upgrades:lang(th) /* Thai */
-{
-	font-size: 12px;
-}
-
-
 
 #upgrades .title_upgrates {
 	font-size: 14px;
@@ -241,14 +226,6 @@ body.flat_page.game.chromeless {
 	margin-bottom: 16px;
 	margin-left: 9px;
 }
-#elements .element_cost:lang(ja), /* Japanese */
-#elements .element_cost:lang(zh-cn), /* Simplified Chinese */
-#elements .element_cost:lang(zh-tw), /* Traditional Chinese */
-#elements .element_cost:lang(ko), /* Korean */
-#elements .element_cost:lang(th) /* Thai */
-	{
-	font-size: 12px;
-}
 
 #elements .element_cost .cost {
 	color: #e1b21e;
@@ -329,14 +306,6 @@ body.flat_page.game.chromeless {
 	text-align: left;
 	border: 1px solid #000;
 	}
-	.spend_badge_ponts_ctn:lang(ja), /* Japanese */
-	.spend_badge_ponts_ctn:lang(zh-cn), /* Simplified Chinese */
-	.spend_badge_ponts_ctn:lang(zh-tw), /* Traditional Chinese */
-	.spend_badge_ponts_ctn:lang(ko), /* Korean */
-	.spend_badge_ponts_ctn:lang(th) /* Thai */
-		{
-		font-size: 12px;
-	}
 
 #spend_badge_points_dialog .welcome_back
 {
@@ -350,14 +319,6 @@ body.flat_page.game.chromeless {
 	padding-bottom: 10px;
 	line-height: 12px;
 	color: #68645c;
-	}
-	#spend_badge_points_dialog .desc:lang(ja), /* Japanese */
-	#spend_badge_points_dialog .desc:lang(zh-cn), /* Simplified Chinese */
-	#spend_badge_points_dialog .desc:lang(zh-tw), /* Traditional Chinese */
-	#spend_badge_points_dialog .desc:lang(ko), /* Korean */
-	#spend_badge_points_dialog .desc:lang(th) /* Thai */
-		{
-		line-height: 15px;
 	}
 
 #spend_badge_points_dialog .badge_points
@@ -431,14 +392,6 @@ body.flat_page.game.chromeless {
 	background-size: 13px 13px;
 	padding-left: 16px;
 }
-	#spend_badge_points_dialog .purchase_ability_item .cost:lang(ja), /* Japanese */
-	#spend_badge_points_dialog .purchase_ability_item .cost:lang(zh-cn), /* Simplified Chinese */
-	#spend_badge_points_dialog .purchase_ability_item .cost:lang(zh-tw), /* Traditional Chinese */
-	#spend_badge_points_dialog .purchase_ability_item .cost:lang(ko), /* Korean */
-	#spend_badge_points_dialog .purchase_ability_item .cost:lang(th) /* Thai */
-		{
-		line-height: 18px;
-	}
 
 .purchase_ability_item .sub_item
 {
@@ -558,36 +511,10 @@ body.flat_page.game.chromeless {
 	margin-top: 30px;
 	color: #333;
 	}
-	#player_dead_dialog .title_dead_sub:lang(ja), /* Japanese */
-	#player_dead_dialog .title_dead_sub:lang(zh-cn), /* Simplified Chinese */
-	#player_dead_dialog .title_dead_sub:lang(zh-tw), /* Traditional Chinese */
-	#player_dead_dialog .title_dead_sub:lang(ko), /* Korean */
-	#player_dead_dialog .title_dead_sub:lang(th) /* Thai */
-	{
-		font-size: 12px;
-		line-height: 17px;
-	}
+
 #player_dead_dialog .title_dead_sub a {
 	text-decoration: underline;
 	color: #fff;
-}
-#player_dead_dialog .wishlist_games {
-	padding: 10px;
-}
-#player_dead_dialog .wishlist_games .gameLogo {
-	float: left;
-	margin-left: 5px;
-	margiin-right: 5px;
-	width: auto;
-	height: auto;
-}
-#player_dead_dialog .wishlist_games .gameLogo img {
-	width: 171px;
-	height: 64px;
-}
-#player_dead_dialog .wishlist_games .gameLogo .discountedPriceBlock {
-	padding-top: 10px;
-	font-size: 8px;
 }
 #player_dead_dialog .automatically_respawn {
 	margin-top: 3px;
@@ -595,15 +522,7 @@ body.flat_page.game.chromeless {
 	font-size: 8px;
 	line-height: 12px;
 	}
-	#player_dead_dialog .automatically_respawn:lang(ja), /* Japanese */
-	#player_dead_dialog .automatically_respawn:lang(zh-cn), /* Simplified Chinese */
-	#player_dead_dialog .automatically_respawn:lang(zh-tw), /* Traditional Chinese */
-	#player_dead_dialog .automatically_respawn:lang(ko), /* Korean */
-	#player_dead_dialog .automatically_respawn:lang(th) /* Thai */
-	{
-		font-size: 12px;
-		line-height: 17px;
-	}
+
 .btn_respawn {
 	background-color: #d5d6d8;
 	font-family: 'Press Start 2P', arial, sans-serif;
@@ -616,15 +535,7 @@ body.flat_page.game.chromeless {
 	box-shadow: 2px 2px 0px #000;
 	line-height: 16px;
 	}
-	.btn_respawn:lang(ja), /* Japanese */
-	.btn_respawn:lang(zh-cn), /* Simplified Chinese */
-	.btn_respawn:lang(zh-tw), /* Traditional Chinese */
-	.btn_respawn:lang(ko), /* Korean */
-	.btn_respawn:lang(th) /* Thai */
-	{
-	font-size: 12px;
-	line-height: 17px;
-}
+
 .btn_respawn:hover {
 	background-color: #fff;
 	color: #000;
@@ -692,15 +603,6 @@ body.flat_page.game.chromeless {
 	text-align: left;
 	line-height: 16px;
 	}
-	#level_container .game_time:lang(ja), /* Japanese */
-	#level_container .game_time:lang(zh-cn), /* Simplified Chinese */
-	#level_container .game_time:lang(zh-tw), /* Traditional Chinese */
-	#level_container .game_time:lang(ko), /* Korean */
-	#level_container .game_time:lang(th) /* Thai */
-		{
-		font-size: 12px;
-		line-height: 19px;
-	}
 
 #level_container .level_time {
 	font-size: 8px;
@@ -714,15 +616,7 @@ body.flat_page.game.chromeless {
 	text-align: left;
 	line-height: 16px;
 	}
-	#level_container .level_time:lang(ja), /* Japanese */
-	#level_container .level_time:lang(zh-cn), /* Simplified Chinese */
-	#level_container .level_time:lang(zh-tw), /* Traditional Chinese */
-	#level_container .level_time:lang(ko), /* Korean */
-	#level_container .level_time:lang(th) /* Thai */
-			{
-		font-size: 12px;
-		line-height: 19px;
-	}
+
 #level_container .level_container2 {
 
 	text-align: center;
@@ -983,14 +877,7 @@ body.flat_page.game.chromeless {
 	vertical-align: top;
 	margin-top: -1px;
 	}
-	.lane:lang(ja), /* Japanese */
-	.lane:lang(zh-cn), /* Simplified Chinese */
-	.lane:lang(zh-tw), /* Traditional Chinese */
-	.lane:lang(ko), /* Korean */
-	.lane:lang(th) /* Thai */
-	{
-		font-size: 12px;
-	}
+
 .lane:hover {
 	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/lane_default.png?v=1');
 	background-repeat: no-repeat;
@@ -1032,25 +919,6 @@ body.flat_page.game.chromeless {
 	font-size: 8px;
 	color: #aaa;
 	}
-	.title_teamdps:lang(ja), /* Japanese */
-	.title_teamdps:lang(zh-cn), /* Simplified Chinese */
-	.title_teamdps:lang(zh-tw), /* Traditional Chinese */
-	.title_teamdps:lang(ko), /* Korean */
-	.title_teamdps:lang(th) /* Thai */
-		{
-		font-size: 12px;
-		line-height: 17px;
-	}
-	.title_teamhealth:lang(ja), /* Japanese */
-	.title_teamhealth:lang(zh-cn), /* Simplified Chinese */
-	.title_teamhealth:lang(zh-tw), /* Traditional Chinese */
-	.title_teamhealth:lang(ko), /* Korean */
-	.title_teamhealth:lang(th) /* Thai */
-		{
-		font-size: 12px;
-		line-height: 17px;
-	}
-
 
 .teamdpscontainer {
 	display: inline-block;
@@ -1171,15 +1039,6 @@ body.flat_page.game.chromeless {
 	float: right;
 	margin-right: 1px;
 }
-.upgrade .link .upgrade_text:lang(ja), /* Japanese */
-.upgrade .link .upgrade_text:lang(zh-cn), /* Simplified Chinese */
-.upgrade .link .upgrade_text:lang(zh-tw), /* Traditional Chinese */
-.upgrade .link .upgrade_text:lang(ko), /* Korean */
-.upgrade .link .upgrade_text:lang(th) /* Thai */
-	{
-	font-size: 12px;
-	line-height: 10px;
-}
 
 .upgrade.purchase .link {
 	background: url('http://steamcommunity-a.akamaihd.net/public/images/promo/towerattack/purchase_btn_default.png?v=1');
@@ -1220,10 +1079,6 @@ body.flat_page.game.chromeless {
 	background-position: left;
 	background-size: 14px 14px;
 	padding-left: 16px;
-}
-.upgrade .cost:lang(ja) /* Japanese */
-	{
-	font-size: 10px;
 }
 
 
@@ -1294,32 +1149,6 @@ body.flat_page.game.chromeless {
 	user-select: none;
 
 }
-.ta_tooltip:lang(ja), /* Japanese */
-.ta_tooltip:lang(zh-cn), /* Simplified Chinese */
-.ta_tooltip:lang(zh-tw), /* Traditional Chinese */
-.ta_tooltip:lang(ko), /* Korean */
-.ta_tooltip:lang(th) /* Thai */
-	{
-	font-size: 12px;
-	line-height: 14px;
-}
-
-/*
-.ta_tooltip:after {
-	top: 100%;
-	left: 16px;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(225, 196, 138, 0);
-	border-top-color: #e1c48a;
-	border-width: 10px;
-	margin-left: -10px;
-}
-*/
 
 #activeinlanecontainer {
 	height: 68px;
@@ -1374,26 +1203,10 @@ body.flat_page.game.chromeless {
 	margin: 7px 0;
 	width: 260px;
 }
-.activitytemplate:lang(ja), /* Japanese */
-.activitytemplate:lang(zh-cn), /* Simplified Chinese */
-.activitytemplate:lang(zh-tw), /* Traditional Chinese */
-.activitytemplate:lang(ko), /* Korean */
-.activitytemplate:lang(th) /* Thai */
-	{
-	font-size: 10px;
-}
+
 .activitytemplate .ability {
 	display: block;
 }
-.activitytemplate .ability:lang(ja), /* Japanese */
-.activitytemplate .ability:lang(zh-cn), /* Simplified Chinese */
-.activitytemplate .ability:lang(zh-tw), /* Traditional Chinese */
-.activitytemplate .ability:lang(ko), /* Korean */
-.activitytemplate .ability:lang(th) /* Thai */
-	{
-	font-size: 12px;
-}
-
 
 .activitytemplate .name {
 	color: #ffffff;

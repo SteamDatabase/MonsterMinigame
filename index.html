@@ -22,8 +22,6 @@
 	<script type="text/javascript" src="/javascript/minigame/towerattack/ui.js?v=oJIS22CYjGIR&amp;l=english"></script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack/easing.js?v=oJIS22CYjGIR&amp;l=english"></script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack/enemies.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	
-	<script src="//ajax.googleapis.com/ajax/libs/webfont/1.5.10/webfont.js"></script>
 	<script>
 		g_sessionID = 'g_sessionID';
 		g_steamID = Math.floor(Math.random() * 10000000000);
@@ -46,13 +44,9 @@
 			} );
 		}
 
-		$J( document ).ready(function() {
-			WebFont.load({
-				google: {
-					families: ['Press Start 2P']
-				},
-				active: Boot
-			});
+		$J(window).bind('load', function()
+		{
+			Boot();
 
 			//setInterval( function() { CheckTuningDataVersion(); }, 1000 * 60 * 30 );
 
