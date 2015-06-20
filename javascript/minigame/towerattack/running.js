@@ -120,13 +120,11 @@ window.CSceneGame = function()
 		instance.ClearNewPlayer();
 	};
 
-	g_Server.Connect( function() {
-		g_Server.m_nGameID = instance.m_Manager.gameid;
-		instance.m_rgTuningData = instance.m_Manager.rgTuningData;
-		instance.m_rgTuningData.upgrades = V_ToArray( instance.m_Manager.rgTuningData.upgrades );
-		instance.m_bHaveTuningData = true;
-		instance.m_bRunning = true;
-	} );
+	g_Server.m_nGameID = instance.m_Manager.gameid;
+	instance.m_rgTuningData = instance.m_Manager.rgTuningData;
+	instance.m_rgTuningData.upgrades = V_ToArray( instance.m_Manager.rgTuningData.upgrades );
+	instance.m_bHaveTuningData = true;
+	instance.m_bRunning = true;
 
 	// Setup scene
 	//this.m_spriteBG = new PIXI.Sprite( g_rgTextureCache.bg_1.texture );
@@ -168,16 +166,7 @@ window.CSceneGame = function()
 		{
 			textarea.val( '' );
 			
-			$J.ajax({
-				url: g_Server.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'ChatMessage', true ),
-				method: 'POST',
-				data: {
-					gameid: g_Server.m_nGameID,
-					steamid: g_steamID,
-					message: message
-				},
-				dataType: 'json'
-			});
+			g_Server.ChatMessage( message );
 		}
 		
 		return false;

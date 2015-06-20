@@ -1,43 +1,20 @@
 // <script>
 "use strict";
 
-var g_bHalt = false;
 var g_IncludeGameStats = false;
 
 window.CServerInterface = function( )
 {
-	this.m_strSteamID = false;
 
-	this.m_nLastTick = false;
-	this.m_bRequestUpdates = false;
-
-	var instance = this;
-
-	this.m_WebAPI = false;//new CWebAPI( rgResult.webapi_host, rgResult.webapi_host_secure, rgResult.token );
 }
 
-CServerInterface.prototype.Connect = function( callback )
+CServerInterface.prototype.BuildURL = function( strInterface, strMethod, bSecure, strVersion )
 {
-	var instance = this;
+	if ( !strVersion )
+		strVersion = 'v0001';
 
-	$J.ajax({
-		url: '/gettoken',
-		dataType: 'json'
-	}).success(function(rgResult){
-		if( rgResult.success == 1)
-		{
-			// todo hacks
-			rgResult.token = g_steamID;
-			rgResult.steamid = g_steamID;
-			
-			instance.m_strSteamID = rgResult.steamid;
-			instance.m_strWebAPIHost = rgResult.webapi_host;
-			instance.m_WebAPI = new CWebAPI( rgResult.webapi_host, rgResult.webapi_host_secure, rgResult.token );
-			callback(rgResult);
-		}
-	});
+	return '/api/' + strInterface + '/' + strMethod + '/' + strVersion + '/';
 }
-
 
 CServerInterface.prototype.GetGameTuningData = function( callback )
 {
@@ -54,7 +31,6 @@ CServerInterface.prototype.GetGameTuningData = function( callback )
 		{
 			console.log("FAILED");
 			console.log(err);
-			g_bHalt = true;
 		});
 
 }
@@ -70,7 +46,7 @@ CServerInterface.prototype.GetGameData = function( callback, error, bIncludeStat
 	var instance = this;
 
 	$J.ajax({
-		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'GetGameData', false ),
+		url: this.BuildURL( 'ITowerAttackMiniGameService', 'GetGameData', false ),
 		data: rgParams,
 		dataType: 'json'
 	}).success(callback)
@@ -89,7 +65,7 @@ CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTe
 	var instance = this;
 
 	$J.ajax({
-		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'GetPlayerData', false ),
+		url: this.BuildURL( 'ITowerAttackMiniGameService', 'GetPlayerData', false ),
 		data: rgParams,
 		dataType: 'json'
 	}).success(callback)
@@ -108,7 +84,7 @@ CServerInterface.prototype.UseAbilities = function( callback, failed, rgParams )
 	};
 
 	$J.ajax({
-		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'UseAbilities', true ),
+		url: this.BuildURL( 'ITowerAttackMiniGameService', 'UseAbilities', true ),
 		method: 'POST',
 		data: rgRequest,
 		dataType: 'json'
@@ -138,7 +114,7 @@ CServerInterface.prototype.ChooseUpgrades = function( callback, upgrades )
 	};
 
 	$J.ajax({
-		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'ChooseUpgrade', true ),
+		url: this.BuildURL( 'ITowerAttackMiniGameService', 'ChooseUpgrade', true ),
 		method: 'POST',
 		data: rgRequest,
 		dataType: 'json'
@@ -168,7 +144,7 @@ CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 	};
 
 	$J.ajax({
-		url: this.m_WebAPI.BuildURL( 'ITowerAttackMiniGameService', 'UseBadgePoints', true ),
+		url: this.BuildURL( 'ITowerAttackMiniGameService', 'UseBadgePoints', true ),
 		method: 'POST',
 		data: rgRequest,
 		dataType: 'json'
@@ -183,5 +159,19 @@ CServerInterface.prototype.UseBadgePoints = function( callback, abilityItems )
 	{
 		console.log("FAILED");
 		console.log(err);
+	});
+}
+
+CServerInterface.prototype.ChatMessage = function( message )
+{
+	$J.ajax({
+		url: g_Server.BuildURL( 'ITowerAttackMiniGameService', 'ChatMessage', true ),
+		method: 'POST',
+		data: {
+			gameid: this.m_nGameID,
+			steamid: g_steamID,
+			message: message
+		},
+		dataType: 'json'
 	});
 }
