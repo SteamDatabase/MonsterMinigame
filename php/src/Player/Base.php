@@ -169,6 +169,7 @@ class Base
 
 	public function HandleUpgrade( $Game, $Upgrades )
 	{
+		$HpUpgrade = false;
 		foreach( $Upgrades as $UpgradeId ) {
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
 			if(
@@ -195,17 +196,21 @@ class Base
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
 			}
-			else if( $Upgrade->GetUpgradeId() === 1 ) // Auto-fire Cannon
+			else if( $Upgrade->GetUpgradeId() === 1 ) // TODO: enums please Auto-fire Cannon
 			{
 				$this->getTechTree()->BaseDps = $Upgrade->GetInitialValue();
 				$this->getTechTree()->Dps = $this->getTechTree()->BaseDps;
 			}
-			else if( $Upgrade->GetUpgradeId() === 1 ) // Auto-fire Cannon
+			else if( $Upgrade->GetType() === Enums\EUpgradeType::HitPoints )
 			{
-				$this->Hp = $this->getTechTree()->MaxHp; // TODO: Might have to set this after recalculating upgrades?
+				$HpUpgrade = true;
 			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();
+		if( $HpUpgrade )
+		{
+			$this->Hp = $this->getTechTree()->GetMaxHp();
+		}
 	}
 
 	public static function GetRespawnTime()
