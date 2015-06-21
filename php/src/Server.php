@@ -161,7 +161,7 @@ class Server
 
 	private function Tick( $Tick, $SecondsPassed )
 	{
-		l( 'Ticking... is second: ' . ( $SecondsPassed >= 1 ? 'true' : 'false' ) );
+		l( 'Ticking... seconds passed: ' . $SecondsPassed );
 
 		if( $this->Shutdown > 0 )
 		{
@@ -200,8 +200,15 @@ class Server
 
 	public static function LoadTuningData()
 	{
-		$file = file_get_contents( FILES_DIR . 'tuningData.json' );
+		$file = file_get_contents( __DIR__ . '/../files/tuningData.json' );
 		self::$TuningData = json_decode( $file, true );
+		
+		if( empty( $file ) )
+		{
+			l( 'Failed to load tuning data' );
+
+			die;
+		}
 	}
 
 	public static function GetTuningData( $key = null )
