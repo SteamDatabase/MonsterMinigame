@@ -273,15 +273,22 @@ CUI.prototype.Tick = function()
 				this.m_dialogWaitingForPlayers = null;
 			}
 
-			if ( !this.m_gameOverDialog )
+			if( !this.m_gameOverDialog )
 			{
-				this.m_gameOverDialog = ShowAlertDialog( 'Game Over', 'This game is over. Click OK to continue.' );
-				/*this.m_gameOverDialog.done(
-					function() {
-						top.location.href = '/';
-					}
-				);*/
+				this.m_gameOverDialog = true;
+				g_Minigame.CurrentScene().m_containerEnemies.interactive = false;
+				g_Minigame.CurrentScene().m_spriteBackground.interactive = false;
+
+				var playerDeadDialog = this.m_dialogPlayerDied;
+				if( playerDeadDialog.m_bVisible )
+				{
+					playerDeadDialog.m_bVisible = false;
+					playerDeadDialog.hide();
+				}
+
+				$J('#game_over_dialog').show();
 			}
+
 			this.UpdateLevelAndTimes();
 			break;
 	}

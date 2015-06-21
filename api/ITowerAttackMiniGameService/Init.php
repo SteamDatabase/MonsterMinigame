@@ -39,11 +39,14 @@ function Handle( $Method, $Data = [] )
 		echo $Buffer;
 		
 		socket_shutdown( $Socket, 0 );
-	}
-	else
-	{
-		http_response_code( 500 );
+		socket_close( $Socket );
+		
+		return true;
 	}
 	
+	http_response_code( 500 );
+	
 	socket_close( $Socket );
+	
+	return false;
 }

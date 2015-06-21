@@ -465,6 +465,11 @@ body.flat_page.game.chromeless {
 	background-color: #21b7f4;
 }
 
+#game_over_dialog .player_dead_ctn {
+	height: 100px;
+}
+
+#game_over_dialog,
 #player_dead_dialog {
 	position: absolute;
 	top: 182px;
@@ -478,17 +483,20 @@ body.flat_page.game.chromeless {
 	padding: 0px;
 	z-index: 9;
 }
+#game_over_dialog .player_dead_ctn,
 #player_dead_dialog .player_dead_ctn {
 	border: 1px solid #252525;
 	background: url('/assets/minigame/towerattack/dead_bg.png');
 	background-repeat: no-repeat;
 }
+#game_over_dialog .title_dead,
 #player_dead_dialog .title_dead {
 	font-size: 16px;
 	color: #252525;
 	margin-top: 14px;
 	margin-bottom: 23px;
 }
+#game_over_dialog .title_dead_break,
 #player_dead_dialog .title_dead_break {
 	margin-top: 4px;
 	line-height: 16px;
@@ -506,8 +514,7 @@ body.flat_page.game.chromeless {
 	margin-right: 45px;
 	margin-top: 30px;
 	color: #333;
-	}
-
+}
 #player_dead_dialog .title_dead_sub a {
 	text-decoration: underline;
 	color: #fff;
@@ -517,7 +524,7 @@ body.flat_page.game.chromeless {
 	margin-bottom: 20px;
 	font-size: 8px;
 	line-height: 12px;
-	}
+}
 
 .btn_respawn {
 	background-color: #d5d6d8;
