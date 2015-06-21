@@ -806,53 +806,53 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 
 	if( this.m_rgPlayerData )
 	{
-		var rgAbilityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].ability_log;
-		if( rgAbilityLog )
+		var rgActivityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].ability_log;
+		if( rgActivityLog )
 		{
 			var instance = this;
 			
-			for( var i=0; i<rgAbilityLog.length; i++ )
+			for( var i=0; i<rgActivityLog.length; i++ )
 			{
-				if( rgAbilityLog[i].time <= instance.m_nLastAbilitySeen )
+				if( rgActivityLog[i].time <= instance.m_nLastAbilitySeen )
 					continue;
 
 				this.m_rgActionLog.push({
 					'icon': false,
 					'type': 'ability',
-					'actor_name': rgAbilityLog[i].actor,
-					'message': rgAbilityLog[i].message,
-					'time': rgAbilityLog[i].time
+					'actor_name': rgActivityLog[i].actor,
+					'message': rgActivityLog[i].message,
+					'time': rgActivityLog[i].time
 				});
 
 				if( this.m_rgActionLog.length > 50 )
 					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
 
-				if( rgAbilityLog[i].time > nHighestTime )
+				if( rgActivityLog[i].time > nHighestTime )
 					nHighestTime = nTimestampStart;
 			}
 		}
 		
 		// chat
-		rgAbilityLog = this.m_rgGameData.chat;
-		if( rgAbilityLog )
+		rgActivityLog = this.m_rgGameData.chat;
+		if( rgActivityLog )
 		{
-			for( var i=0; i<rgAbilityLog.length; i++ )
+			for( var i=0; i<rgActivityLog.length; i++ )
 			{
-				if( rgAbilityLog[i].time <= instance.m_nLastAbilitySeen )
+				if( rgActivityLog[i].time <= instance.m_nLastAbilitySeen )
 					continue;
 
 				this.m_rgActionLog.push({
 					'icon': false,
 					'type': 'chat',
-					'actor_name': rgAbilityLog[i].actor,
-					'message': rgAbilityLog[i].message,
-					'time': rgAbilityLog[i].time
+					'actor_name': rgActivityLog[i].actor,
+					'message': rgActivityLog[i].message,
+					'time': rgActivityLog[i].time
 				});
 
 				if( this.m_rgActionLog.length > 50 )
 					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
 
-				if( rgAbilityLog[i].time > nHighestTime )
+				if( rgActivityLog[i].time > nHighestTime )
 					nHighestTime = nTimestampStart;
 			}
 		}
