@@ -80,21 +80,7 @@ class Enemy
 
 	public function GetTypeName()
 	{
-		switch( $this->Type ) 
-		{
-			case Enums\EEnemyType::Tower:
-				return 'Tower';
-			case Enums\EEnemyType::Mob:
-				return 'Mob';
-			case Enums\EEnemyType::Boss:
-				return 'Boss';
-			case Enums\EEnemyType::MiniBoss:
-				return 'MiniBoss';
-			case Enums\EEnemyType::TreasureMob:
-				return 'Treasure_Mob';
-			case Enums\EEnemyType::Max:
-				return 'Max';
-		}
+		return self::GetEnemyTypeName( $this->GetType() );
 	}
 
 	public function GetHp()
@@ -149,67 +135,81 @@ class Enemy
 
 	public function GetTuningHp()
 	{
-		return $this->GetTuningData( 'hp' );
+		return $this->GetEnemyTuningData( 'hp' );
 	}
 
 	public function GetTuningDps()
 	{
-		return $this->GetTuningData( 'dps' );
+		return $this->GetEnemyTuningData( 'dps' );
 	}
 
 	public function GetTuninGold()
 	{
-		return $this->GetTuningData( 'gold' );
+		return $this->GetEnemyTuningData( 'gold' );
 	}
 
 	public function GetHpMultiplier()
 	{
-		return $this->GetTuningData( 'hp_multiplier' );
+		return $this->GetEnemyTuningData( 'hp_multiplier' );
 	}
 
 	public function GetHpMultiplierVariance()
 	{
-		return $this->GetTuningData( 'hp_multiplier_variance' );
+		return $this->GetEnemyTuningData( 'hp_multiplier_variance' );
 	}
 
 	public function GetHpExponent()
 	{
-		return $this->GetTuningData( 'hp_exponent' );
+		return $this->GetEnemyTuningData( 'hp_exponent' );
 	}
 
 	public function GetDpsMultiplier()
 	{
-		return $this->GetTuningData( 'dps_multiplier' );
+		return $this->GetEnemyTuningData( 'dps_multiplier' );
 	}
 
 	public function GetDpsExponent()
 	{
-		return $this->GetTuningData( 'dps_exponent' );
+		return $this->GetEnemyTuningData( 'dps_exponent' );
 	}
 
 	public function GetLifetime()
 	{
-		return $this->GetTuningData( 'lifetime' );
+		return $this->GetEnemyTuningData( 'lifetime' );
 	}
 
 	public function getChance()
 	{
-		return $this->GetTuningData( 'chance' );
+		return $this->GetEnemyTuningData( 'chance' );
 	}
 
 	public function GetGoldMultiplier()
 	{
-		return $this->GetTuningData( 'gold_multiplier' );
+		return $this->GetEnemyTuningData( 'gold_multiplier' );
 	}
 
 	public function GetGoldExponent()
 	{
-		return $this->GetTuningData( 'gold_exponent' );
+		return $this->GetEnemyTuningData( 'gold_exponent' );
 	}
 
-	private function GetTuningData( $Key = null )
+	private function GetEnemyTuningData( $Key = null )
 	{
-		$TypeName = strtolower( $this->GetTypeName() );
+		return self::GetTuningData( $this->GetTypeName(), $Key );
+	}
+	public static function SpawnTreasureMob()
+	{
+		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' );
+		$RandPercent = rand( 1, 100 );
+		return $RandPercent < $SpawnChance;
+	}
+
+	public static function GetTuningData( $TypeName = null, $Key = null )
+	{
+		if( $TypeName !== null)
+		{
+			$TypeName = strtolower( $TypeName );
+		}
 		$TuningData = Server::GetTuningData( $TypeName );
 		if( $Key === null ) 
 		{
@@ -221,4 +221,24 @@ class Enemy
 		}
 		return $TuningData[ $Key ];
 	}
+
+	public static function GetEnemyTypeName( $Type )
+	{
+		switch( $Type ) 
+		{
+			case Enums\EEnemyType::Tower:
+				return 'Tower';
+			case Enums\EEnemyType::Mob:
+				return 'Mob';
+			case Enums\EEnemyType::Boss:
+				return 'Boss';
+			case Enums\EEnemyType::MiniBoss:
+				return 'MiniBoss';
+			case Enums\EEnemyType::TreasureMob:
+				return 'Treasure_Mob';
+			case Enums\EEnemyType::Max:
+				return 'Max';
+		}
+	}
+
 }

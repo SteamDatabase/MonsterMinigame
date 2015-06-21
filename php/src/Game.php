@@ -136,6 +136,7 @@ class Game
 	public function GenerateNewLanes()
 	{
 		$this->Lanes = array();
+		$HasTreasureMob = false;
 
 		if( $this->IsBossLevel() )
 		{
@@ -213,11 +214,25 @@ class Game
 
 				for( $a = 0; 3 > $a; $a++ ) 
 				{
-					$Enemies[] = new Enemy(
-						$this->GetNextMobId(),
-						Enums\EEnemyType::Mob,
-						$this->GetLevel()
-					);
+					if( !$HasTreasureMob && Enemy::SpawnTreasureMob() )
+					{
+						// Spawn Treasure mob
+						$Enemies[] = new Enemy(
+							$this->GetNextMobId(),
+							Enums\EEnemyType::TreasureMob,
+							$this->GetLevel()
+						);
+						$HasTreasureMob = true;
+					}
+					else
+					{
+						// Spawn normal mob
+						$Enemies[] = new Enemy(
+							$this->GetNextMobId(),
+							Enums\EEnemyType::Mob,
+							$this->GetLevel()
+						);
+					}
 				}
 			}
 			# TODO: Add Minibosses and treasure mobs
