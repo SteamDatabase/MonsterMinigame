@@ -137,6 +137,10 @@ class Game
 	{
 		$this->Lanes = array();
 
+		if( $this->IsBossLevel() )
+		{
+			$BossLaneId = rand( 0, 2 );
+		}
 		// Create 3 lanes
 		for( $i = 0; 3 > $i; $i++ ) 
 		{
@@ -178,7 +182,7 @@ class Game
 			if( $this->IsBossLevel() )
 			{
 				// Boss
-				if( $i === Enums\ELane::Center )
+				if( $i === $BossLaneId )
 				{
 					$Enemies[] = new Enemy(
 						$this->GetNextMobId(),
