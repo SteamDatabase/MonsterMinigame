@@ -24,13 +24,13 @@ class Base
 	public $LaneDamageBuffer = [];
 	public $AbilityLastUsed = [];
 	public $Stats;
+	public $CritDamage;
 	private $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
 	private $Gold = 10;
 	private $ActiveAbilitiesBitfield = 0;
 	private $ActiveAbilities = [];
-	private $CritDamage = 0;
 	private $Loot = [];
 	private $TechTree;
 
@@ -67,7 +67,7 @@ class Base
 			'active_abilities' => [],
 			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
 			'crit_damage' => (double) $this->GetCritDamage(),
-			'stats' => $this->Stats
+			'stats' => $this->Stats->ToArray()
 		);
 	}
 
@@ -88,7 +88,6 @@ class Base
 					{
 						continue;
 					}
-					# TODO: Add numclicks/enemies killed per player?
 					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
 					
 					if( $NumClicks > self::MAX_CLICKS )
@@ -100,11 +99,17 @@ class Base
 						$NumClicks = 1;
 					}
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
+					if( $this->IsCriticalHit() )
+					{
+						$Damage *= $this->GetTechTree()->GetDamageMultiplierCrit();
+						$this->CritDamage = $Damage;
+						$this->Stats->CritDamageDealt += $Damage;
+					}
 					$this->Stats->NumClicks += $NumClicks;
 					$this->Stats->ClickDamageDealt += $Damage;
 					$Game->NumClicks += $NumClicks;
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
-					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage;
+					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage; # TODO: this logic isn't correct.. it shouldn't buffer the whole lane, FIX!
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Enemy->DamageTaken += $Damage * $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );
 					break;
@@ -334,6 +339,13 @@ class Base
 	public function GetCritDamage()
 	{
 		return $this->CritDamage;
+	}
+
+	public function IsCriticalHit()
+	{
+		$CritPercentage = $this->GetTechTree()->GetCritPercentage();
+		$RandPercent = rand( 1, 100 );
+		return $RandPercent < $CritPercentage;
 	}
 
 	public function GetLoot()
