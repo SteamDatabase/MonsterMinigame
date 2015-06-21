@@ -464,9 +464,14 @@ CSceneGame.prototype.HandleUpdatePlayerData = function( instance, rgResult )
 		instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
 
 		if( rgResult.response.tech_tree.upgrades )
+		{
 			instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
+			instance.m_rgPlayerTechTree.upgrades = null;
+		}
 		else
+		{
 			instance.m_rgPlayerUpgrades = [];
+		}
 
 		instance.ApplyClientOverrides('upgrades');
 	}
@@ -1225,17 +1230,21 @@ CSceneGame.prototype.SendChooseUpgradesRequest = function()
 		var instance = this;
 
 		g_Server.ChooseUpgrades(
-			function(rgResult){
+			function(rgResult)
+			{
 				if( rgResult.response.tech_tree )
 				{
 					instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
 					if( rgResult.response.tech_tree.upgrades )
 					{
 						instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
+						instance.m_rgPlayerTechTree.upgrades = null;
 						instance.ApplyClientOverrides('upgrades');
 					}
 					else
+					{
 						instance.m_rgPlayerUpgrades = [];
+					}
 				}
 
 				instance.m_bUpgradesBusy = false;
@@ -1255,24 +1264,28 @@ CSceneGame.prototype.SendSpendBadgePointsRequest = function()
 
 		var instance = this;
 
-		 g_Server.UseBadgePoints(
-			 function(rgResult){
-				 if( rgResult.response.tech_tree )
-				 {
-					 instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
-					 if( rgResult.response.tech_tree.upgrades )
-					 {
-					 	instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
+		g_Server.UseBadgePoints(
+			function(rgResult)
+			{
+				if( rgResult.response.tech_tree )
+				{
+					instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
+					if( rgResult.response.tech_tree.upgrades )
+					{
+						instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
+						instance.m_rgPlayerTechTree.upgrades = null;
 						instance.ApplyClientOverrides('upgrades');
-					 }
-					 else
-					 	instance.m_rgPlayerUpgrades = [];
-				 }
-				 instance.m_bUpgradesBusy = false;
-				 instance.OnReceiveUpdate();
-			 },
-			 abilityItems
-		 );
+					}
+					else
+					{
+						instance.m_rgPlayerUpgrades = [];
+					}
+				}
+				instance.m_bUpgradesBusy = false;
+				instance.OnReceiveUpdate();
+			},
+			abilityItems
+		);
 	}
 }
 
