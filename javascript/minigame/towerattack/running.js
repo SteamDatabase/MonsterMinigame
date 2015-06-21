@@ -809,11 +809,9 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 		var rgActivityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].ability_log;
 		if( rgActivityLog )
 		{
-			var instance = this;
-			
 			for( var i=0; i<rgActivityLog.length; i++ )
 			{
-				if( rgActivityLog[i].time <= instance.m_nLastAbilitySeen )
+				if( rgActivityLog[i].time <= this.m_nLastAbilitySeen )
 					continue;
 
 				this.m_rgActionLog.push({
@@ -828,7 +826,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
 
 				if( rgActivityLog[i].time > nHighestTime )
-					nHighestTime = nTimestampStart;
+					nHighestTime = rgActivityLog[i].time;
 			}
 		}
 		
@@ -838,7 +836,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 		{
 			for( var i=0; i<rgActivityLog.length; i++ )
 			{
-				if( rgActivityLog[i].time <= instance.m_nLastAbilitySeen )
+				if( rgActivityLog[i].time <= this.m_nLastAbilitySeen )
 					continue;
 
 				this.m_rgActionLog.push({
@@ -853,7 +851,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
 
 				if( rgActivityLog[i].time > nHighestTime )
-					nHighestTime = nTimestampStart;
+					nHighestTime = rgActivityLog[i].time;
 			}
 		}
 	}
