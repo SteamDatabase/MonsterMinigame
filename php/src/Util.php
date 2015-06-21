@@ -5,26 +5,18 @@ class Util
 {
 	public static function PredictValue( $Exponent, $Coefficient, $Base, $FloorIt = false )
 	{
+		$Value = self::CalcExponentialTuningValve(
+			$Exponent,
+			$Coefficient,
+			$Base
+		);
+		
 		if( $FloorIt )
 		{
-			return self::FloorToMultipleOf(
-				10,
-				self::CalcExponentialTuningValve(
-					$Exponent,
-					$Coefficient,
-					$Base
-				)
-			);
+			$Value = self::FloorToMultipleOf( 10, $Value );
 		}
-		else
-		{
-			return self::CalcExponentialTuningValve(
-				$Exponent,
-				$Coefficient,
-				$Base
-			);
-			
-		}
+		
+		return $Value;
 	}
 
 	public static function FloorToMultipleOf( $MultipleOf, $Number )

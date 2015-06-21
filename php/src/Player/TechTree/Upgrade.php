@@ -159,8 +159,8 @@ class Upgrade
 		return Util::PredictValue(
 			$Level !== null ? $Level : $this->GetLevel(),
 			$this->GetCost(),
-			$this->GetCostExponentialBase()
+			$this->GetCostExponentialBase(),
+			true
 		);
-
 	}
 }
