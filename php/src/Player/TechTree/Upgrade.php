@@ -1,6 +1,9 @@
 <?php
 namespace SteamDB\CTowerAttack\Player\TechTree;
 
+use SteamDB\CTowerAttack\Server;
+use SteamDB\CTowerAttack\Util;
+
 class Upgrade
 {
 	/*

@@ -1,6 +1,9 @@
 <?php
 namespace SteamDB\CTowerAttack\Player;
 
+use SteamDB\CTowerAttack\Enums;
+use SteamDB\CTowerAttack\Server;
+
 class Base
 {
 	const MAX_CLICKS = 20;
