@@ -28,6 +28,6 @@
 	
 	Handle( INPUT_POST, [
 		'method' => 'UseBadgePoints',
-		'access_token' => $_POST[ 'access_token' ],
+		'steamid' => $_POST[ 'access_token' ], // TODO
 		'ability_items' => $Abilities
 	] );

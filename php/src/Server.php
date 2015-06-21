@@ -13,11 +13,14 @@ class Server
 	private $LastSecond;
 	private $Socket;
 	private $Game;
-	private $Queue = array();
+	private $Queue;
 	protected static $TuningData = array();
 
 	public function __construct( $Port )
 	{
+		$this->Queue = new \SplQueue();
+		$this->Queue->setIteratorMode( \SplDoublyLinkedList::IT_MODE_DELETE );
+
 		$this->Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 
 		socket_bind( $this->Socket, 'localhost', $Port);
@@ -67,6 +70,7 @@ class Server
 						'actor' => $Data[ 'steamid' ],
 						'message' => $Data[ 'message' ]
 					];
+
 					break;
 				case 'GetGameData':
 					$Response =
@@ -79,11 +83,11 @@ class Server
 					{
 						$Response[ 'stats' ] = $this->Game->GetStats();
 					}
-					
+
 					break;
 				case 'GetPlayerData':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
-					
+
 					if( $Player !== null )
 					{
 						$Response = array(
@@ -91,18 +95,18 @@ class Server
 							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
 					}
-					
+
 					break;
 				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
-					$Player = $this->Game->GetPlayer( $Data[ 'access_token' ] );
-					
+					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
+
 					if( $Player === null )
 					{
 						break;
 					}
-					
+
 					if( $Data[ 'method' ] == 'ChooseUpgrade' )
 					{
 						$QueueData = $Data[ 'upgrades' ];
@@ -117,11 +121,13 @@ class Server
 							'player_data' => $Player->ToArray()
 						);
 					}
-					$this->Queue[] = array(
-						'AccountId' => $Data[ 'access_token' ],
+
+					$this->Queue->enqueue( [
+						'Player' => $Player,
 						'Method' => $Data[ 'method' ],
 						'Data' => $QueueData
-					);
+					] );
+
 					break;
 				default:
 					// TODO: handle unknown methods
@@ -143,7 +149,9 @@ class Server
 				if( $Tick >= $this->LastSecond )
 				{
 					$SecondsPassed = isset( $this->LastSecond ) ? floor( $Tick + 1.0 - $this->LastSecond ) : false;
+
 					$this->LastSecond = $Tick + 1.0; // constant rate, does not change
+
 					$this->Tick( $Tick, $SecondsPassed );
 				}
 				else
@@ -160,6 +168,7 @@ class Server
 			{
 				$this->Game->HighestTick = $DebugTime;
 			}
+
 			$this->Game->TimeSimulating += $DebugTime;
 		}
 
@@ -187,32 +196,31 @@ class Server
 			pcntl_signal_dispatch();
 		}
 
-		foreach( $this->Queue as $Key => $QueueItem )
+		foreach( $this->Queue as $QueueItem )
 		{
-			$Player = $this->Game->GetPlayer( $QueueItem[ 'AccountId' ] );
-			if( $Player !== null )
+			$Player = $QueueItem[ 'Player' ];
+
+			if( $QueueItem[ 'Method' ] == 'ChooseUpgrade' )
 			{
-				if( $QueueItem[ 'Method' ] == 'ChooseUpgrade' )
-				{
-					$Player->HandleUpgrade( $this->Game, $QueueItem[ 'Data' ] );
-					$this->Game->UpdatePlayer( $Player );
-				}
-				else if( $QueueItem[ 'Method' ] == 'UseAbilities' )
-				{
-					$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
-					$this->Game->UpdatePlayer( $Player );
-				}
+				$Player->HandleUpgrade( $this->Game, $QueueItem[ 'Data' ] );
+				$this->Game->UpdatePlayer( $Player );
 			}
-			unset( $this->Queue[ $Key ] );
+			else if( $QueueItem[ 'Method' ] == 'UseAbilities' )
+			{
+				$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
+				$this->Game->UpdatePlayer( $Player );
+			}
 		}
+
 		$this->Game->Update( $SecondsPassed );
 	}
 
 	public static function LoadTuningData()
 	{
 		$file = file_get_contents( __DIR__ . '/../files/tuningData.json' );
+
 		self::$TuningData = json_decode( $file, true );
-		
+
 		if( empty( $file ) )
 		{
 			l( 'Failed to load tuning data' );

@@ -28,6 +28,6 @@
 	
 	Handle( INPUT_POST, [
 		'method' => 'UseAbilities',
-		'access_token' => $_POST[ 'access_token' ],
+		'steamid' => $_POST[ 'access_token' ], // TODO
 		'requested_abilities' => $Abilities
 	] );
