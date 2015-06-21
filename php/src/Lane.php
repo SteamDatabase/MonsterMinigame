@@ -17,6 +17,7 @@ class Lane
 	public $Players = array();
 	public $Enemies;
 	public $Dps;
+	public $ActivityLog = [];
 	private $GoldDropped;
 	private $ActivePlayerAbilities;
 
@@ -25,6 +26,7 @@ class Lane
 		$Dps,
 		$GoldDropped,
 		array $ActivePlayerAbilities,
+		array $ActivityLog,
 		array $PlayerHpBuckets,
 		$Element,
 		$ActivePlayerAbilityDecreaseCooldowns,
@@ -34,6 +36,7 @@ class Lane
 		$this->Dps = $Dps;
 		$this->GoldDropped = $GoldDropped;
 		$this->ActivePlayerAbilities = $ActivePlayerAbilities;
+		$this->ActivityLog = $ActivityLog;
 		$this->PlayerHpBuckets = $PlayerHpBuckets;
 		$this->Element = $Element;
 		$this->ActivePlayerAbilityDecreaseCooldowns = $ActivePlayerAbilityDecreaseCooldowns;
@@ -47,6 +50,7 @@ class Lane
 			'dps' => (double) $this->GetDps(),
 			'gold_dropped' => (double) $this->GetGoldDropped(),
 			'active_player_abilities' => $this->GetActivePlayerAbilities(),
+			'activity_log' => $this->ActivityLog,
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
 			'active_player_ability_decrease_cooldowns' => (double) $this->GetActivePlayerAbilityDecreaseCooldowns(),

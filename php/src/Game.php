@@ -138,16 +138,6 @@ class Game
 	public function GenerateNewLanes()
 	{
 		$this->Lanes = array();
-		$ActivePlayerAbilities =
-		[
-			[
-				'accountid_caster' => 0, 
-				'caster' => 'Test User',
-				'ability' => rand( \ETowerAttackAbility::Item_Resurrection, \ETowerAttackAbility::Item_ReflectDamage ),
-				'timestamp_done' => time() + 1,
-				'multiplier' => 1.0,
-			]
-		];
 
 		if( $this->IsBossLevel() )
 		{
@@ -158,13 +148,38 @@ class Game
 		for( $i = 0; 3 > $i; $i++ ) 
 		{
 			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+			$ActivePlayerAbilities = [];
+			$ActivityLog = [];
 			foreach( $this->Players as $Player )
 			{
 				if( $Player->GetCurrentLane() === $i )
 				{
-					$PlayerHpBuckets[ $Player->GetHpLevel ]++;
+					$PlayerHpBuckets[ $Player->GetHpLevel() ]++;
+					foreach( $Player->GetActiveAbilities() as $ActiveAbility )
+					{
+						if ( !isset( $ActivePlayerAbilities[ $ActiveAbility->GetAbility() ] ) )
+						{
+							$ActivePlayerAbilities[ $ActiveAbility->GetAbility() ] = [
+								'ability' => $ActiveAbility->GetAbility(),
+								'quantity' => 1
+							];
+						}
+						else
+						{
+							$ActivePlayerAbilities[ $ActiveAbility->GetAbility() ][ 'quantity' ]++;
+						}
+					}
+					# TODO: Delete debugging
+					$RandomAbilityId = rand( \ETowerAttackAbility::Item_Resurrection, \ETowerAttackAbility::Item_ReflectDamage );
+					$ActivePlayerAbilities[ $RandomAbilityId ] = [
+						'ability' => $RandomAbilityId,
+						'quantity' => rand( 1, 5 )
+					];
+					// TODO: Remove active abilties after their time runs out 
 				}
 			}
+
+			$ActivePlayerAbilities = array_values($ActivePlayerAbilities); // This is really stupid, we should just do ActiveAbilityId: Quantity...
 
 			$Enemies = array();
 			if( $this->IsBossLevel() )
@@ -211,6 +226,7 @@ class Game
 				0, //dps
 				0, //gold dropped
 				$ActivePlayerAbilities,
+				$ActivityLog,
 				$PlayerHpBuckets,
 				$ElementalArray[ array_rand( $ElementalArray ) ], //element
 				0, //decrease cooldown

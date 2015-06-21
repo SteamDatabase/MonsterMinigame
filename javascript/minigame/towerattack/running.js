@@ -806,54 +806,53 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 
 	if( this.m_rgPlayerData )
 	{
-		var rgAbilities = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].active_player_abilities;
-		if( rgAbilities )
+		var rgAbilityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].ability_log;
+		if( rgAbilityLog )
 		{
 			var instance = this;
 			
-			for( var i=0; i<rgAbilities.length; i++ )
+			for( var i=0; i<rgAbilityLog.length; i++ )
 			{
-				var nTimestampStart = rgAbilities[i].timestamp_done -  instance.m_rgTuningData.abilities[ rgAbilities[i].ability ].duration;
-				if( nTimestampStart <= instance.m_nLastAbilitySeen )
-					continue;
-
-				instance.m_rgActionLog.push({
-					'icon': false,
-					'type': 'ability',
-					'ability': rgAbilities[i].ability,
-					'actor_name': rgAbilities[i].caster,
-					'time': nTimestampStart
-				});
-
-				if( instance.m_rgActionLog.length > 50 )
-					instance.m_rgActionLog.splice(0,instance.m_rgActionLog.length - 50);
-
-				if( nTimestampStart > nHighestTime )
-					nHighestTime = nTimestampStart;
-			}
-		}
-		
-		// chat
-		rgAbilities = this.m_rgGameData.chat;
-		if( rgAbilities )
-		{
-			for( var i=0; i<rgAbilities.length; i++ )
-			{
-				if( rgAbilities[i].time <= instance.m_nLastAbilitySeen )
+				if( rgAbilityLog[i].time <= instance.m_nLastAbilitySeen )
 					continue;
 
 				this.m_rgActionLog.push({
 					'icon': false,
-					'type': 'chat',
-					'actor_name': rgAbilities[i].actor,
-					'message': rgAbilities[i].message,
-					'time': rgAbilities[i].time
+					'type': 'ability',
+					'actor_name': rgAbilityLog[i].actor,
+					'message': rgAbilityLog[i].message,
+					'time': rgAbilityLog[i].time
 				});
 
 				if( this.m_rgActionLog.length > 50 )
 					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
 
-				if( rgAbilities[i].time > nHighestTime )
+				if( rgAbilityLog[i].time > nHighestTime )
+					nHighestTime = nTimestampStart;
+			}
+		}
+		
+		// chat
+		rgAbilityLog = this.m_rgGameData.chat;
+		if( rgAbilityLog )
+		{
+			for( var i=0; i<rgAbilityLog.length; i++ )
+			{
+				if( rgAbilityLog[i].time <= instance.m_nLastAbilitySeen )
+					continue;
+
+				this.m_rgActionLog.push({
+					'icon': false,
+					'type': 'chat',
+					'actor_name': rgAbilityLog[i].actor,
+					'message': rgAbilityLog[i].message,
+					'time': rgAbilityLog[i].time
+				});
+
+				if( this.m_rgActionLog.length > 50 )
+					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
+
+				if( rgAbilityLog[i].time > nHighestTime )
 					nHighestTime = nTimestampStart;
 			}
 		}
@@ -999,11 +998,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 		var rgAbilities = this.m_rgGameData.lanes[i].active_player_abilities;
 		if( rgAbilities )
 		{
-			for( j=0; j<rgAbilities.length; j++ )
-			{
-				this.m_rgLaneData[i].abilities[rgAbilities[j].ability] = this.m_rgLaneData[i].abilities[rgAbilities[j].ability] + 1 || 1;
-
-			}
+			this.m_rgLaneData[i].abilities[rgAbilities.ability] = rgAbilities.quantity || 1;
 		}
 
 	}
