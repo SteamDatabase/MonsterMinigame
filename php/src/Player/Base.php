@@ -79,8 +79,18 @@ class Base
 	{
 		foreach( $RequestedAbilities as $RequestedAbility ) 
 		{
-			if( isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] ) 
-				&& $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > time()
+			if( 
+				( 
+					isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] ) 
+					&& 
+					$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > time() 
+				)
+				||
+				(
+					$this->IsDead() 
+					&& 
+					$RequestedAbility[ 'ability' ] !== Enums\EAbility::Respawn
+				)
 			) {
 				// Rate limit
 				continue;
@@ -88,10 +98,6 @@ class Base
 			switch( $RequestedAbility[ 'ability' ] ) 
 			{
 				case Enums\EAbility::Attack:
-					if( $this->IsDead() )
-					{
-						continue;
-					}
 					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
 					
 					if( $NumClicks > self::MAX_CLICKS )
@@ -119,10 +125,6 @@ class Base
 					$Enemy->DamageTaken += $Damage;
 					break;
 				case Enums\EAbility::ChangeLane:
-					if( $this->IsDead() )
-					{
-						continue;
-					}
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Lane->RemovePlayer( $this );
 					$this->SetLane( $RequestedAbility[ 'new_lane' ] );
@@ -136,26 +138,14 @@ class Base
 					}
 					break;
 				case Enums\EAbility::ChangeTarget:
-					if( $this->IsDead() )
-					{
-						continue;
-					}
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
 				case Enums\EAbility::Item_SkipLevels:
-					if( $this->IsDead() )
-					{
-						continue;
-					}
 					// TODO: debugging
 					l( 'Skipping level' );
 					$Game->GenerateNewLevel();
 					break;
 				case Enums\EAbility::Item_GoldPerClick:
-					if( $this->IsDead() )
-					{
-						continue;
-					}
 					// TODO: debugging
 					$this->IncreaseGold( 100000000 );
 					break;
@@ -245,8 +235,7 @@ class Base
 
 	public function GetHp()
 	{
-		# TODO: move into a variable instead of calculating this every single time..
-		return $this->Hp * $this->GetTechTree()->GetHpMultiplier();
+		return $this->Hp;
 	}
 
 	public function GetHpPercentage()

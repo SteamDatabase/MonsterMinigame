@@ -456,7 +456,7 @@ class Game
 					$PlayersInLane[] = $Player;
 					if( $SecondPassed && !$Player->IsDead() )
 					{
-						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed;
+						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed * 25; # TODO: Remove debugging, this kills the player faster!
 						$PlayerHp = $Player->Hp - $EnemyDamage;
 						if( $PlayerHp > 0 )
 						{
