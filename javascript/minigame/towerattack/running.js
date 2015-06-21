@@ -1574,11 +1574,11 @@ CSceneGame.prototype.TryChangeTarget = function( nNewTarget )
 
 CSceneGame.prototype.ChangeLevel = function( strSceneName )
 {
-	var bIsBossLevel = this.m_rgGameData.level != 0 && (1+this.m_rgGameData.level) % 10 == 0;
+	var bIsBossLevel = this.m_rgGameData.level != 0 && this.m_rgGameData.level % 10 == 0;
 
 	if( bIsBossLevel )
 	{
-		if( (1+this.m_rgGameData.level) % 100 == 0 )
+		if( this.m_rgGameData.level % 100 == 0 )
 			g_AudioManager.CrossfadeTrack('music_bossB');
 		else
 			g_AudioManager.CrossfadeTrack('music_boss');
