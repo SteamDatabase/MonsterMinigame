@@ -283,7 +283,7 @@ class Base
 		$this->BossLootDropPercentage = $Data['boss_loot_drop_percentage'];
 		$this->DamageMultiplierDps = $Data['damage_multiplier_dps'];
 		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
-		$this->DamagePerClick = $Data['damage_multiplier_fire'] * $this->GetDamagePerClickMultiplier();
+		$this->DamagePerClick = $Data['damage_per_click'] * $this->GetDamagePerClickMultiplier();
 		$this->Dps = $this->GetBaseDps() * $this->GetDamageMultiplierDps();
 		$this->MaxHp = $this->GetTuningData( 'hp' ) * $this->GetHpMultiplier();
 	}
