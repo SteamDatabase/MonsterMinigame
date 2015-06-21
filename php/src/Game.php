@@ -137,11 +137,6 @@ class Game
 	{
 		$this->Lanes = array();
 
-		if( $this->IsBossLevel() )
-		{
-			$BossLaneId = rand( 0, 2 );
-		}
-
 		// Create 3 lanes
 		for( $i = 0; 3 > $i; $i++ ) 
 		{
@@ -183,13 +178,24 @@ class Game
 			if( $this->IsBossLevel() )
 			{
 				// Boss
-				if( $BossLaneId === $i )
+				if( $i === Enums\ELane::Center )
 				{
 					$Enemies[] = new Enemy(
 						$this->GetNextMobId(),
-						Enums\EEnemyType::Boss, // 2
+						Enums\EEnemyType::Boss,
 						$this->GetLevel()
 					);
+				}
+				else
+				{
+					for( $a = 0; 3 > $a; $a++ ) 
+					{
+						$Enemies[] = new Enemy(
+							$this->GetNextMobId(),
+							Enums\EEnemyType::MiniBoss,
+							$this->GetLevel()
+						);
+					}
 				}
 			}
 			else
@@ -197,7 +203,7 @@ class Game
 				// Standard Tower (Spawner) + 3 Mobs per lane
 				$Enemies[] = new Enemy(
 					$this->GetNextMobId(),
-					Enums\EEnemyType::Tower, // 0
+					Enums\EEnemyType::Tower,
 					$this->GetLevel()
 				);
 
@@ -205,7 +211,7 @@ class Game
 				{
 					$Enemies[] = new Enemy(
 						$this->GetNextMobId(),
-						Enums\EEnemyType::Mob, // 1
+						Enums\EEnemyType::Mob,
 						$this->GetLevel()
 					);
 				}
