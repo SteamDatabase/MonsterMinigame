@@ -357,21 +357,25 @@ class Game
 			// Give Players money (TEMPLORARY)
 			$Player->IncreaseGold(50000);
 
-			if( $SecondPassed && !$Player->IsDead())
+			if( $SecondPassed && !$Player->IsDead() )
 			{
 				// Deal DPS damage to current target
-				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ];
-				$DealtDpsDamage = $Player->GetTechTree()->GetDps() 
-								* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() ) 
-								* $SecondsPassed;
-				$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
-				$Enemy->DamageTaken += $DealtDpsDamage;
-				foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
+				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->GetEnemy( $Player->GetTarget() );
+				
+				if( $Enemy !== null )
 				{
-					$LaneDps[ $LaneId ] += $LaneDamage / $SecondPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
-					$Player->LaneDamageBuffer[ $LaneId ] = 0;
+					$DealtDpsDamage = $Player->GetTechTree()->GetDps() 
+									* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() ) 
+									* $SecondsPassed;
+					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
+					$Enemy->DamageTaken += $DealtDpsDamage;
+					foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
+					{
+						$LaneDps[ $LaneId ] += $LaneDamage / $SecondPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
+						$Player->LaneDamageBuffer[ $LaneId ] = 0;
+					}
+					$LaneDps[ $Player->GetCurrentLane() ] += $Player->GetTechTree()->GetDps() * $SecondsPassed;
 				}
-				$LaneDps[ $Player->GetCurrentLane() ] += ($Player->GetTechTree()->GetDps() * $SecondsPassed);
 			}
 
 			if( $Player->IsDead() && $Player->CanRespawn( true ) )

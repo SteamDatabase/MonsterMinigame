@@ -60,6 +60,11 @@ class Lane
 
 	public function GetEnemy( $Key )
 	{
+		if( !isset( $this->Enemies[ $Key ] ) )
+		{
+			return null;
+		}
+		
 		return $this->Enemies[ $Key ];
 	}
 
