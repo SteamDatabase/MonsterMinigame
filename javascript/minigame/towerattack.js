@@ -105,10 +105,10 @@ var g_rgSkeletonCache = {
 };
 
 var g_rgIconMap = {
-	"ability_1": 									{ icon: '/assets/minigame/towerattack/stickybomb.png'  },
-	"ability_2": 								{ icon: '/assets/minigame/towerattack/medkit.png' },
-	"ability_3": 								{ icon: '/assets/minigame/towerattack/medkit.png' },
-	"ability_4": 							{ icon: '/assets/minigame/towerattack/medkit.png' },
+	"ability_1": 									{ icon: '/assets/minigame/towerattack/ability_template_ph.png' },
+	"ability_2": 								{ icon: '/assets/minigame/towerattack/ability_template_ph.png' },
+	"ability_3": 								{ icon: '/assets/minigame/towerattack/ability_template_ph.png' },
+	"ability_4": 							{ icon: '/assets/minigame/towerattack/ability_template_ph.png' },
 	"ability_5": 					{ icon: '/assets/minigame/towerattack/emoticons/happycyto.png' },
 	"ability_6": 			{ icon: '/assets/minigame/towerattack/emoticons/lucky.png' },
 	"ability_7": 							{ icon: '/assets/minigame/towerattack/emoticons/lunahealthpotion.png' },

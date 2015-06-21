@@ -19,7 +19,6 @@ CMinigameManager.prototype.Initialize = function(ele)
 	//this.Renderer.roundPixels = true;
 
 	ele.appendChild( this.Renderer.view );
-	$J(ele).css({ width: k_ScreenWidth + 'px', margin: '0 auto', position: 'relative'  });
 
 	PIXI.ticker.shared.add(function()
 	{

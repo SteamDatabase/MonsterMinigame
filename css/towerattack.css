@@ -11,12 +11,16 @@ html {
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
-	background-color: #000000;
 	text-align: left;
 	color: #8F98A0;
 	font-size: 14px;
 	margin:0;
 	padding:0;
+	
+	background-color: #4f463d;
+	background-image: url('/assets/minigame/towerattack/background_top_gradient.png');
+	background-repeat: repeat-x;
+	background-position: 0 0;
 }
 
 a {
@@ -49,22 +53,15 @@ a {
 	position: relative;
 	box-shadow: 0 0 9px #000;
 	height: 720px;
+	width: 1280px;
+	margin: 0px auto;
+	position: relative;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-}
-
-body.flat_page.game {
-	background-color: #4f463d;
-	background-image: url('/assets/minigame/towerattack/background_top_gradient.png');
-	background-repeat: repeat-x;
-	background-position: 0 100px;
-}
-body.flat_page.game.chromeless {
-	background-position: 0 0;
 }
 
 #uicontainer {
