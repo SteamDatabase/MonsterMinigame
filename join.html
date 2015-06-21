@@ -4,14 +4,16 @@
 	<meta charset="UTF-8" />
 	<title>Steam Community :: Monster Summer Sale</title>
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-	<link href='//fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic' rel='stylesheet' type='text/css'>
+	<link href="/css/towerattack.css?v=UYpREnpPsNO9" rel="stylesheet" type="text/css" >
 	<link href="/css/towerattack_listgames.css?v=UYpREnpPsNO9" rel="stylesheet" type="text/css" >
 	<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js?v=.isFTSRckeNhC"></script>
-	<script type="text/javascript" src="/javascript/shared_global.js?v=eDIuTMT_fnXg&amp;l=english"></script>
 	<script type="text/javascript">$J = jQuery.noConflict();</script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack/ui.js?v=nnRz0Z8fWVNm&amp;l=english"></script>
 
 	<script>
+		g_sessionID = "";
+		g_steamID = "1";
+		
 		$J( function() {
 			$J( "#player_stat_highest_level").text( FormatNumberForDisplay( '10061040' ) );
 			$J( "#player_stat_most_gold").text( FormatNumberForDisplay( '2806530424180614.5' ) );
@@ -117,17 +119,7 @@
 	<body class="flat_page "  lang="en">
 		<!-- header bar, contains info browsing user if logged in -->
 
-		<div id="modalBG" style="display: none"></div><script type="text/javascript">
-		g_sessionID = "";
-		g_steamID = "76561197990586091";
-		$J( InitMiniprofileHovers );
-		$J( InitEmoticonHovers );
-
-		$J( function() {
-			window.BindCommunityTooltip = function( $Selector ) { $Selector.v_tooltip( {'tooltipClass': 'community_tooltip', 'dataName': 'communityTooltip' } ); };
-			BindCommunityTooltip( $J('[data-community-tooltip]') );
-		})
-	</script>
+		<div id="modalBG" style="display: none"></div>
 	<div class="page_background" style="background-image: url('/assets/minigame/towerattack/promo_bg/08_volcano_page_background.jpg');">
 
 		<div class="section_overview">
