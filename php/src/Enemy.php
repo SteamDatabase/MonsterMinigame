@@ -119,7 +119,7 @@ class Enemy
 
 	public function GetHpDifference()
 	{
-		return $this->DamageTaken - $this->Hp;
+		return $this->Hp > 0 ? $this->DamageTaken - $this->Hp : $this->Hp * -1;
 	}
 
 	public function GetMaxHp()

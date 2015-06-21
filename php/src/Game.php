@@ -436,6 +436,7 @@ class Game
 								$this->NumTreasureMobsKilled++;
 								break;
 						}
+						$Enemy->SetHp( 0 );
 						$DeadEnemies++;
 						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() );
 					}
@@ -456,7 +457,7 @@ class Game
 					$PlayersInLane[] = $Player;
 					if( $SecondPassed && !$Player->IsDead() )
 					{
-						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed * 25; # TODO: Remove debugging, this kills the player faster!
+						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed;
 						$PlayerHp = $Player->Hp - $EnemyDamage;
 						if( $PlayerHp > 0 )
 						{
