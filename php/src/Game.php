@@ -51,7 +51,6 @@ class Game
 	public function __construct()
 	{
 		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGamEnums\EStatus::WaitingForPlayers );
-		$this->GenerateNewLanes();
 		$this->SetStatus( Enums\EStatus::WaitingForPlayers );
 		$this->TimestampGameStart = time();
 		$this->TimestampLevelStart = time();
@@ -65,6 +64,7 @@ class Game
 		);
 		if( count( $this->Players ) == self::START_LIMIT )
 		{
+			$this->GenerateNewLanes();
 			$this->SetStatus( Enums\EStatus::Running );
 		}
 	}
@@ -293,6 +293,11 @@ class Game
 		$this->Status = $Status;
 	}
 
+	public function IsRunning()
+	{
+		return $this->Status == Enums\EStatus::Running;
+	}
+
 	public function GetEvents()
 	{
 		return $this->Events;
@@ -369,8 +374,12 @@ class Game
 
 	public function Update( $SecondsPassed )
 	{
-		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
+		if( !$this->IsRunning() )
+		{
+			return;
+		}
 
+		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
 		$LaneDps = [
 			0 => 0,
 			1 => 0,
