@@ -354,9 +354,6 @@ class Game
 
 		foreach( $this->Players as $Player )
 		{
-			// Give Players money (TEMPLORARY)
-			$Player->IncreaseGold(50000);
-
 			if( $SecondPassed && !$Player->IsDead() )
 			{
 				// Deal DPS damage to current target

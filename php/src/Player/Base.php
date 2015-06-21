@@ -51,6 +51,7 @@ class Base
 		];
 
 		// TODO
+		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 1 );
 		$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
 	}
 
@@ -149,6 +150,14 @@ class Base
 					// TODO: debugging
 					l( 'Skipping level' );
 					$Game->GenerateNewLevel();
+					break;
+				case Enums\EAbility::Item_GoldPerClick:
+					if( $this->IsDead() )
+					{
+						continue;
+					}
+					// TODO: debugging
+					$this->IncreaseGold( 100000000 );
 					break;
 				default:
 					// Handle unknown ability?
