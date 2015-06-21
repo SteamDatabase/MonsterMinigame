@@ -131,7 +131,9 @@ class Lane
 	{
 		foreach( $this->Players as $AccountId => $Set ) 
 		{
-			$Game->GetPlayer( $AccountId )->increaseGold( $Amount );
+			$Player = $Game->GetPlayer( $AccountId );
+			$Player->increaseGold( $Amount );
+			$Player->Stats->GoldRecieved += $Amount;
 		}
 	}
 

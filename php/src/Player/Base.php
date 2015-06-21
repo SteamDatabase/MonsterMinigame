@@ -23,6 +23,7 @@ class Base
 	public $TimeDied = 0;
 	public $LaneDamageBuffer = [];
 	public $AbilityLastUsed = [];
+	public $Stats;
 	private $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
@@ -38,6 +39,7 @@ class Base
 		$this->LastActive = time();
 		$this->AccountId = $AccountId;
 		$this->Hp = self::GetTuningData( 'hp' );
+		$this->Stats = new Stats;
 		$this->TechTree = new TechTree\Base;
 		$this->LaneDamageBuffer = [
 			0 => 0,
@@ -64,7 +66,8 @@ class Base
 			'gold' => (double) $this->GetGold(),
 			'active_abilities' => [],
 			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
-			'crit_damage' => (double) $this->GetCritDamage()
+			'crit_damage' => (double) $this->GetCritDamage(),
+			'stats' => $this->Stats
 		);
 	}
 
@@ -96,8 +99,9 @@ class Base
 					{
 						$NumClicks = 1;
 					}
-					
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
+					$this->Stats->NumClicks += $NumClicks;
+					$this->Stats->DamageDealt += $Damage;
 					$Game->NumClicks += $NumClicks;
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage;
@@ -280,6 +284,7 @@ class Base
 	{
 		$this->TimeDied = time();
 		$this->Hp = 0;
+		$this->Stats->TimesDied++;
 	}
 
 	public function GetGold()
@@ -290,11 +295,13 @@ class Base
 	public function IncreaseGold( $Amount )
 	{
 		$this->Gold += $Amount;
+		$this->Stats->GoldRecieved += $Amount;
 	}
 
 	public function DecreaseGold( $Amount )
 	{
 		$this->Gold -= $Amount;
+		$this->Stats->GoldUsed += $Amount;
 	}
 
 	public function AddAbility( $Ability )
