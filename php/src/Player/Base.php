@@ -101,12 +101,12 @@ class Base
 					}
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$this->Stats->NumClicks += $NumClicks;
-					$this->Stats->DamageDealt += $Damage;
+					$this->Stats->ClickDamageDealt += $Damage;
 					$Game->NumClicks += $NumClicks;
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage;
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					$Enemy->DamageTaken += $Damage;
+					$Enemy->DamageTaken += $Damage * $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );
 					break;
 				case \ETowerAttackAbility::ChangeLane:
 					if( $this->IsDead() )

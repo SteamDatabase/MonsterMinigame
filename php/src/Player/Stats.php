@@ -6,7 +6,8 @@ class Stats
 	public $GoldRecieved = 0;
 	public $GoldUsed = 0;
 	public $NumClicks = 0;
-	public $DamageDealt = 0;
+	public $ClickDamageDealt = 0;
+	public $DpsDamageDealt = 0;
 	public $DamageTaken = 0;
 	public $TimesDied = 0;
 
@@ -16,7 +17,8 @@ class Stats
 			'gold_recieved' => (double) $this->GoldRecieved,
 			'gold_used' => (double) $this->GoldUsed,
 			'num_clicks' => (int) $this->NumClicks,
-			'damage_dealt' => (double) $this->DamageDealt,
+			'click_damage_dealt' => (double) $this->ClickDamageDealt,
+			'dps_damage_dealt' => (double) $this->DpsDamageDealt,
 			'damage_taken' =>(double) $this->DamageTaken,
 			'times_died' => (double) $this->TimesDied
 		];

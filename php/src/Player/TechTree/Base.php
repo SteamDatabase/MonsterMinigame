@@ -93,11 +93,26 @@ class Base
 	public function GetElementalUpgrades()
 	{
 		return array(
-			3 => $this->GetUpgrade( 3 ), // Fire
-			4 => $this->GetUpgrade( 4 ), // Water
-			5 => $this->GetUpgrade( 5 ), // Air
-			6 => $this->GetUpgrade( 6 ) // Earth
+			\ETowerAttackUpgradeType::DamageMultiplier_Fire => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Fire ),
+			\ETowerAttackUpgradeType::DamageMultiplier_Water => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Water ),
+			\ETowerAttackUpgradeType::DamageMultiplier_Air => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Air ),
+			\ETowerAttackUpgradeType::DamageMultiplier_Earth => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Earth )
 		);
+	}
+
+	public static function GetUpgradeTypeOfElement( $ElementId )
+	{
+		switch( $ElementId )
+		{
+			case \ETowerAttackElement::Fire:
+				return \ETowerAttackUpgradeType::DamageMultiplier_Fire;
+			case \ETowerAttackElement::Water:
+				return \ETowerAttackUpgradeType::DamageMultiplier_Water;
+			case \ETowerAttackElement::Air:
+				return \ETowerAttackUpgradeType::DamageMultiplier_Air;
+			case \ETowerAttackElement::Earth:
+				return \ETowerAttackUpgradeType::DamageMultiplier_Earth;
+		}
 	}
 
 	public function GetUpgrade( $UpgradeId )
@@ -117,6 +132,34 @@ class Base
 			$Upgrades[] = $Upgrade->ToArray();
 		}
 		return $Upgrades;
+	}
+
+	public function GetExtraDamageMultipliers( $UpgradeType, $IsElement = true )
+	{
+		if( $IsElement )
+		{
+			$UpgradeType = self::GetUpgradeTypeOfElement( $UpgradeType );
+		}
+		$DamageMultiplier = 0;
+		switch( $UpgradeType )
+		{
+			case \ETowerAttackUpgradeType::DamageMultiplier_Fire:
+				$DamageMultiplier += $this->DamageMultiplierFire;
+				break;
+			case \ETowerAttackUpgradeType::DamageMultiplier_Water:
+				$DamageMultiplier += $this->DamageMultiplierWater;
+				break;
+			case \ETowerAttackUpgradeType::DamageMultiplier_Air:
+				$DamageMultiplier += $this->DamageMultiplierAir;
+				break;
+			case \ETowerAttackUpgradeType::DamageMultiplier_Earth:
+				$DamageMultiplier += $this->DamageMultiplierEarth;
+				break;
+			case \ETowerAttackUpgradeType::DamageMultiplier_Crit:
+				$DamageMultiplier += $this->DamageMultiplierCrit;
+				break;
+		}
+		return $DamageMultiplier !== 0 ? $DamageMultiplier : 1;
 	}
 
 	public function GetDamagePerClick()

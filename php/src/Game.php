@@ -363,7 +363,11 @@ class Game
 			{
 				// Deal DPS damage to current target
 				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->Enemies[ $Player->GetTarget() ];
-				$Enemy->DamageTaken += $Player->GetTechTree()->GetDps() * $SecondsPassed;
+				$DealtDpsDamage = $Player->GetTechTree()->GetDps() 
+								* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() ) 
+								* $SecondsPassed;
+				$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
+				$Enemy->DamageTaken += $DealtDpsDamage;
 				foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
 				{
 					$LaneDps[ $LaneId ] += $LaneDamage / $SecondPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
@@ -453,7 +457,7 @@ class Game
 					$PlayersInLane[] = $Player;
 					if( $SecondPassed && !$Player->IsDead() )
 					{
-						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed * 15; # Debugging, player dies faster, TODO: DELETE!
+						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed;
 						$PlayerHp = $Player->Hp - $EnemyDamage;
 						if( $PlayerHp > 0 )
 						{

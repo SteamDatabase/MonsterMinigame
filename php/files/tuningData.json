@@ -329,6 +329,7 @@
         },
         "3": {
             "name": "+Damage to Fire Monsters",
+            "element": 2,
             "multiplier": "1.5",
             "type": 3,
             "cost": 50,
@@ -337,6 +338,7 @@
         },
         "4": {
             "name": "+Damage to Water Monsters",
+            "element": 2,
             "multiplier": "1.5",
             "type": 4,
             "cost": 50,
@@ -345,6 +347,7 @@
         },
         "5": {
             "name": "+Damage to Air Monsters",
+            "element": 3,
             "multiplier": "1.5",
             "type": 5,
             "cost": 50,
@@ -353,6 +356,7 @@
         },
         "6": {
             "name": "+Damage to Earth Monsters",
+            "element": 4,
             "multiplier": "1.5",
             "type": 6,
             "cost": 50,

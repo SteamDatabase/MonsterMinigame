@@ -69,6 +69,11 @@ class Upgrade
 		return $this->GetUpgradeId() >= 3 && $this->GetUpgradeId() <= 6;
 	}
 
+	public function GetElement()
+	{
+		return $this->GetTuningData( 'element' );
+	}
+
 	public function GetName()
 	{
 		return $this->GetTuningData( 'name' );
