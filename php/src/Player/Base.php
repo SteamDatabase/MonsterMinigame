@@ -99,6 +99,8 @@ class Base
 						$NumClicks = 1;
 					}
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
+					$Lane = $Game->GetLane( $this->GetCurrentLane() );
+					$Damage *= $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );
 					if( $this->IsCriticalHit() )
 					{
 						$Damage *= $this->GetTechTree()->GetDamageMultiplierCrit();
@@ -108,10 +110,9 @@ class Base
 					$this->Stats->NumClicks += $NumClicks;
 					$this->Stats->ClickDamageDealt += $Damage;
 					$Game->NumClicks += $NumClicks;
-					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage; # TODO: this logic isn't correct.. it shouldn't buffer the whole lane, FIX!
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					$Enemy->DamageTaken += $Damage * $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );
+					$Enemy->DamageTaken += $Damage;
 					break;
 				case \ETowerAttackAbility::ChangeLane:
 					if( $this->IsDead() )
