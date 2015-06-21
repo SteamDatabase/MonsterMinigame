@@ -239,6 +239,7 @@ class Base
 
 	public function GetHpLevel()
 	{
+		// TODO: fix if percentage is below 0 or above 100
 		$HpLevel = floor($this->GetHpPercentage() / 10) - 1;
 		return $HpLevel <= 0 ? 0 : $HpLevel;
 	}
