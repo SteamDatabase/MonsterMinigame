@@ -706,6 +706,7 @@ CUI.prototype.UpdateUpgrades = function()
 	for( var i=0; i< upgrades.length; i++ )
 	{
 		var upgrade = upgrades[i];
+		var ele = this.m_rgElementCache['upgr_'+i]; //$J('#upgr_' + i)[0];
 
 		if ( upgrade.required_upgrade != undefined )
 		{
@@ -713,11 +714,15 @@ CUI.prototype.UpdateUpgrades = function()
 			var parentUpgradeLevel = this.m_Game.GetUpgradeLevel(upgrade.required_upgrade);
 			if ( requiredUpgradeLevel > parentUpgradeLevel )
 			{
+				if( ele )
+				{
+					ele.remove();
+					this.m_rgElementCache['upgr_'+i] = null;
+				}
+
 				continue;
 			}
 		}
-
-		var ele = this.m_rgElementCache['upgr_'+i]; //$J('#upgr_' + i)[0];
 
 		var nCost = this.m_Game.GetUpgradeCost(i);
 
