@@ -1,33 +1,7 @@
 <?php
+namespace SteamDB\CTowerAttack\Enums;
 
-class EMiniGameStatus
-{
-	const Invalid = 0;
-	const WaitingForPlayers = 1;
-	const Running = 2;
-	const Ended = 3;
-}
-
-class ETowerAttackEnemyType
-{
-	const Tower = 0; // Spawner
-	const Mob = 1; // Creep
-	const Boss = 2;
-	const MiniBoss = 3;
-	const TreasureMob = 4;
-	const Max = 5;
-}
-
-class ETowerAttackElement
-{
-	const Invalid = 0;
-	const Fire = 1;
-	const Water = 2;
-	const Air = 3;
-	const Earth = 4;
-}
-
-class ETowerAttackAbility
+class EAbility
 {
 	const Invalid = 0;
 	const Attack = 1;
@@ -67,19 +41,4 @@ class ETowerAttackAbility
 	const Item_End = 27;
 
 	const MaxAbilities = 28;
-}
-
-class ETowerAttackUpgradeType
-{
-	const HitPoints = 0;
-	const DPS = 1;
-	const ClickDamage = 2;
-	const DamageMultiplier_Fire = 3;
-	const DamageMultiplier_Water = 4;
-	const DamageMultiplier_Air = 5;
-	const DamageMultiplier_Earth = 6;
-	const DamageMultiplier_Crit = 7;
-	const PurchaseAbility = 8;
-	const BossLootDropPercentage = 9;
-	const MaxTypes = 10;
 }

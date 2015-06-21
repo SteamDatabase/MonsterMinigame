@@ -1,8 +1,6 @@
 <?php
 namespace SteamDB\CTowerAttack;
 
-use SteamDB\CTowerAttack\Player as Player;
-
 class Game
 {
 	const START_LIMIT = 1; // Start game with 1 players
@@ -10,7 +8,7 @@ class Game
 	optional uint32 level = 1;
 	repeated Lane lanes = 2;
 	optional uint32 timestamp = 3;
-	optional EMiniGameStatus status = 4;
+	optional EMiniGamEnums\EStatus status = 4;
 	repeated Event events = 5;
 	optional uint32 timestamp_game_start = 6;
 	optional uint32 timestamp_level_start = 7;
@@ -52,9 +50,9 @@ class Game
 
 	public function __construct()
 	{
-		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGameStatus::WaitingForPlayers );
+		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGamEnums\EStatus::WaitingForPlayers );
 		$this->GenerateNewLanes();
-		$this->SetStatus( \EMiniGameStatus::WaitingForPlayers );
+		$this->SetStatus( Enums\EStatus::WaitingForPlayers );
 		$this->TimestampGameStart = time();
 		$this->TimestampLevelStart = time();
 		l( 'Created new game' );
@@ -67,7 +65,7 @@ class Game
 		);
 		if( count( $this->Players ) == self::START_LIMIT )
 		{
-			$this->SetStatus( \EMiniGameStatus::Running );
+			$this->SetStatus( Enums\EStatus::Running );
 		}
 	}
 
@@ -75,7 +73,7 @@ class Game
 	{
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
-		// Remove status? $this->SetStatus( \EMiniGameStatus::Running );
+		// Remove status? $this->SetStatus( Enums\EStatus::Running );
 		l( 'Game moved to level #' . $this->GetLevel() );
 	}
 
@@ -170,7 +168,7 @@ class Game
 						}
 					}
 					# TODO: Delete debugging
-					$RandomAbilityId = rand( \ETowerAttackAbility::Item_Resurrection, \ETowerAttackAbility::Item_ReflectDamage );
+					$RandomAbilityId = rand( Enums\EAbility::Item_Resurrection, Enums\EAbility::Item_ReflectDamage );
 					$ActivePlayerAbilities[ $RandomAbilityId ] = [
 						'ability' => $RandomAbilityId,
 						'quantity' => rand( 1, 5 )
@@ -189,7 +187,7 @@ class Game
 				{
 					$Enemies[] = new Enemy(
 						$this->GetNextMobId(),
-						\ETowerAttackEnemyType::Boss, // 2
+						Enums\EEnemyType::Boss, // 2
 						$this->GetLevel()
 					);
 				}
@@ -199,7 +197,7 @@ class Game
 				// Standard Tower (Spawner) + 3 Mobs per lane
 				$Enemies[] = new Enemy(
 					$this->GetNextMobId(),
-					\ETowerAttackEnemyType::Tower, // 0
+					Enums\EEnemyType::Tower, // 0
 					$this->GetLevel()
 				);
 
@@ -207,7 +205,7 @@ class Game
 				{
 					$Enemies[] = new Enemy(
 						$this->GetNextMobId(),
-						\ETowerAttackEnemyType::Mob, // 1
+						Enums\EEnemyType::Mob, // 1
 						$this->GetLevel()
 					);
 				}
@@ -215,10 +213,10 @@ class Game
 			# TODO: Add Minibosses and treasure mobs
 
 			$ElementalArray = array(
-				\ETowerAttackElement::Fire,
-				\ETowerAttackElement::Water,
-				\ETowerAttackElement::Air,
-				\ETowerAttackElement::Earth
+				Enums\EElement::Fire,
+				Enums\EElement::Water,
+				Enums\EElement::Air,
+				Enums\EElement::Earth
 			);
 
 			$this->Lanes[] = new Lane(
@@ -421,19 +419,19 @@ class Game
 					{
 						switch( $Enemy->GetType() ) 
 						{
-							case \ETowerAttackEnemyType::Tower:
+							case Enums\EEnemyType::Tower:
 								$this->NumTowersKilled++;
 								break;
-							case \ETowerAttackEnemyType::Mob:
+							case Enums\EEnemyType::Mob:
 								$this->NumMobsKilled++;
 								break;
-							case \ETowerAttackEnemyType::Boss:
+							case Enums\EEnemyType::Boss:
 								$this->NumBossesKilled++;
 								break;
-							case \ETowerAttackEnemyType::MiniBoss:
+							case Enums\EEnemyType::MiniBoss:
 								$this->NumMiniBossesKilled++;
 								break;
-							case \ETowerAttackEnemyType::TreasureMob:
+							case Enums\EEnemyType::TreasureMob:
 								$this->NumTreasureMobsKilled++;
 								break;
 						}

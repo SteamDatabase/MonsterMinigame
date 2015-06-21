@@ -1,8 +1,6 @@
 <?php
 namespace SteamDB\CTowerAttack;
 
-use SteamDB\CTowerAttack\Game as Game;
-
 class Server
 {
 	const TICK_RATE = 0.1; // 100 / 1000
@@ -230,7 +228,7 @@ class Server
 
 		$this->Shutdown = microtime( true );
 
-		$this->Game->SetStatus( \EMiniGameStatus::Ended );
+		$this->Game->SetStatus( Enums\EStatus::Ended );
 
 		l( 'Waiting ' . Player\Base::ACTIVE_PERIOD . ' seconds until shutdown' );
 	}

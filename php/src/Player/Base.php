@@ -48,7 +48,7 @@ class Base
 		];
 
 		// TODO
-		$this->AddAbilityItem( \ETowerAttackAbility::Item_SkipLevels, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
 	}
 
 	public function IsActive()
@@ -83,7 +83,7 @@ class Base
 			}
 			switch( $RequestedAbility[ 'ability' ] ) 
 			{
-				case \ETowerAttackAbility::Attack:
+				case Enums\EAbility::Attack:
 					if( $this->IsDead() )
 					{
 						continue;
@@ -114,7 +114,7 @@ class Base
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Enemy->DamageTaken += $Damage;
 					break;
-				case \ETowerAttackAbility::ChangeLane:
+				case Enums\EAbility::ChangeLane:
 					if( $this->IsDead() )
 					{
 						continue;
@@ -125,20 +125,20 @@ class Base
 					$NewLane = $Game->GetLane( $this->GetCurrentLane() );
 					$NewLane->AddPlayer( $this );
 					break;
-				case \ETowerAttackAbility::Respawn:
+				case Enums\EAbility::Respawn:
 					if( $this->IsDead() && $this->CanRespawn() )
 					{
 						$this->Respawn();
 					}
 					break;
-				case \ETowerAttackAbility::ChangeTarget:
+				case Enums\EAbility::ChangeTarget:
 					if( $this->IsDead() )
 					{
 						continue;
 					}
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
-				case \ETowerAttackAbility::Item_SkipLevels:
+				case Enums\EAbility::Item_SkipLevels:
 					if( $this->IsDead() )
 					{
 						continue;
@@ -357,7 +357,7 @@ class Base
 
 	public static function GetTuningData( $Key = null )
 	{
-		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
+		$TuningData = Server::GetTuningData( 'player' );
 		if( $Key === null ) 
 		{
 			return $TuningData;

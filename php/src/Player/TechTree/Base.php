@@ -44,7 +44,7 @@ class Base
 
 	public function __construct() {
 		$this->Upgrades = array();
-		foreach( \SteamDB\CTowerAttack\Server::GetTuningData( 'upgrades' ) as $UpgradeId => $Upgrade) {
+		foreach( Server::GetTuningData( 'upgrades' ) as $UpgradeId => $Upgrade) {
 			$this->Upgrades[] = new Upgrade( $UpgradeId, 0, $Upgrade[ 'cost' ] );
 		}
 		$this->DamagePerClick = $this->GetTuningData( 'damage_per_click' );
@@ -93,10 +93,10 @@ class Base
 	public function GetElementalUpgrades()
 	{
 		return array(
-			\ETowerAttackUpgradeType::DamageMultiplier_Fire => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Fire ),
-			\ETowerAttackUpgradeType::DamageMultiplier_Water => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Water ),
-			\ETowerAttackUpgradeType::DamageMultiplier_Air => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Air ),
-			\ETowerAttackUpgradeType::DamageMultiplier_Earth => $this->GetUpgrade( \ETowerAttackUpgradeType::DamageMultiplier_Earth )
+			Enums\EUpgradeType::DamageMultiplier_Fire => $this->GetUpgrade( Enums\EUpgradeType::DamageMultiplier_Fire ),
+			Enums\EUpgradeType::DamageMultiplier_Water => $this->GetUpgrade( Enums\EUpgradeType::DamageMultiplier_Water ),
+			Enums\EUpgradeType::DamageMultiplier_Air => $this->GetUpgrade( Enums\EUpgradeType::DamageMultiplier_Air ),
+			Enums\EUpgradeType::DamageMultiplier_Earth => $this->GetUpgrade( Enums\EUpgradeType::DamageMultiplier_Earth )
 		);
 	}
 
@@ -104,14 +104,14 @@ class Base
 	{
 		switch( $ElementId )
 		{
-			case \ETowerAttackElement::Fire:
-				return \ETowerAttackUpgradeType::DamageMultiplier_Fire;
-			case \ETowerAttackElement::Water:
-				return \ETowerAttackUpgradeType::DamageMultiplier_Water;
-			case \ETowerAttackElement::Air:
-				return \ETowerAttackUpgradeType::DamageMultiplier_Air;
-			case \ETowerAttackElement::Earth:
-				return \ETowerAttackUpgradeType::DamageMultiplier_Earth;
+			case Enums\EElement::Fire:
+				return Enums\EUpgradeType::DamageMultiplier_Fire;
+			case Enums\EElement::Water:
+				return Enums\EUpgradeType::DamageMultiplier_Water;
+			case Enums\EElement::Air:
+				return Enums\EUpgradeType::DamageMultiplier_Air;
+			case Enums\EElement::Earth:
+				return Enums\EUpgradeType::DamageMultiplier_Earth;
 		}
 	}
 
@@ -143,19 +143,19 @@ class Base
 		$DamageMultiplier = 0;
 		switch( $UpgradeType )
 		{
-			case \ETowerAttackUpgradeType::DamageMultiplier_Fire:
+			case Enums\EUpgradeType::DamageMultiplier_Fire:
 				$DamageMultiplier += $this->DamageMultiplierFire;
 				break;
-			case \ETowerAttackUpgradeType::DamageMultiplier_Water:
+			case Enums\EUpgradeType::DamageMultiplier_Water:
 				$DamageMultiplier += $this->DamageMultiplierWater;
 				break;
-			case \ETowerAttackUpgradeType::DamageMultiplier_Air:
+			case Enums\EUpgradeType::DamageMultiplier_Air:
 				$DamageMultiplier += $this->DamageMultiplierAir;
 				break;
-			case \ETowerAttackUpgradeType::DamageMultiplier_Earth:
+			case Enums\EUpgradeType::DamageMultiplier_Earth:
 				$DamageMultiplier += $this->DamageMultiplierEarth;
 				break;
-			case \ETowerAttackUpgradeType::DamageMultiplier_Crit:
+			case Enums\EUpgradeType::DamageMultiplier_Crit:
 				$DamageMultiplier += $this->DamageMultiplierCrit;
 				break;
 		}
@@ -284,34 +284,34 @@ class Base
 			}
 			switch( $Upgrade->GetType() ) 
 			{
-				case \ETowerAttackUpgradeType::HitPoints:
+				case Enums\EUpgradeType::HitPoints:
 					$Data[ 'hp_multiplier' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::DPS:
+				case Enums\EUpgradeType::DPS:
 					$Data[ 'damage_multiplier_dps' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::ClickDamage:
+				case Enums\EUpgradeType::ClickDamage:
 					$Data[ 'damage_per_click_multiplier' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::DamageMultiplier_Fire:
+				case Enums\EUpgradeType::DamageMultiplier_Fire:
 					$Data[ 'damage_multiplier_fire' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::DamageMultiplier_Water:
+				case Enums\EUpgradeType::DamageMultiplier_Water:
 					$Data[ 'damage_multiplier_water' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::DamageMultiplier_Air:
+				case Enums\EUpgradeType::DamageMultiplier_Air:
 					$Data[ 'damage_multiplier_air' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::DamageMultiplier_Earth:
+				case Enums\EUpgradeType::DamageMultiplier_Earth:
 					$Data[ 'damage_multiplier_earth' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::DamageMultiplier_Crit:
+				case Enums\EUpgradeType::DamageMultiplier_Crit:
 					$Data[ 'damage_multiplier_crit' ] += $Value;
 					break;
-				case \ETowerAttackUpgradeType::PurchaseAbility:
+				case Enums\EUpgradeType::PurchaseAbility:
 					# TODO: ?
 					break;
-				case \ETowerAttackUpgradeType::BossLootDropPercentage:
+				case Enums\EUpgradeType::BossLootDropPercentage:
 					$Data[ 'boss_loot_drop_percentage' ] += $Value; // TODO: Not percentage but multiplier?
 					break;
 			}
@@ -333,7 +333,7 @@ class Base
 
 	private function GetTuningData( $Key = null )
 	{
-		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( 'player' );
+		$TuningData = Server::GetTuningData( 'player' );
 		if( $Key === null ) 
 		{
 			return $TuningData;

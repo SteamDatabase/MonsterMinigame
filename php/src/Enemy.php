@@ -28,21 +28,21 @@ class Enemy
 		// TODO: Check if health works
 		// TODO: Tower and MiniBoss respawns, see GetRespawnTime()
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
-		if( $this->GetType() === \ETowerAttackEnemyType::Mob ) 
+		if( $this->GetType() === Enums\EEnemyType::Mob ) 
 		{
 			$Variance = $this->GetHpMultiplierVariance();
-			$LowestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
-			$HighestHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
+			$LowestHp = Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
+			$HighestHp = Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
 			$this->MaxHp = rand( $LowestHp, $HighestHp );
 		} 
 		else 
 		{
-			$this->MaxHp = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
+			$this->MaxHp = Util::PredictValue( $Level, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
 		}
 		$this->Hp = $this->MaxHp;
-		$this->Dps = floor( \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() ));
+		$this->Dps = floor( Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() ));
 		$this->Timer = null; // TODO: deal with this
-		$this->Gold = \SteamDB\CTowerAttack\Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent(), true );
+		$this->Gold = Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent(), true );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
@@ -82,17 +82,17 @@ class Enemy
 	{
 		switch( $this->Type ) 
 		{
-			case \ETowerAttackEnemyType::Tower:
+			case Enums\EEnemyType::Tower:
 				return 'Tower';
-			case \ETowerAttackEnemyType::Mob:
+			case Enums\EEnemyType::Mob:
 				return 'Mob';
-			case \ETowerAttackEnemyType::Boss:
+			case Enums\EEnemyType::Boss:
 				return 'Boss';
-			case \ETowerAttackEnemyType::MiniBoss:
+			case Enums\EEnemyType::MiniBoss:
 				return 'MiniBoss';
-			case \ETowerAttackEnemyType::TreasureMob:
+			case Enums\EEnemyType::TreasureMob:
 				return 'Treasure_Mob';
-			case \ETowerAttackEnemyType::Max:
+			case Enums\EEnemyType::Max:
 				return 'Max';
 		}
 	}
@@ -210,7 +210,7 @@ class Enemy
 	private function GetTuningData( $Key = null )
 	{
 		$TypeName = strtolower( $this->GetTypeName() );
-		$TuningData = \SteamDB\CTowerAttack\Server::GetTuningData( $TypeName );
+		$TuningData = Server::GetTuningData( $TypeName );
 		if( $Key === null ) 
 		{
 			return $TuningData;

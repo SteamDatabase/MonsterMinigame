@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/api/ITowerAttackMiniGameService/Enums.php';
-
 function SignalHandler( $Signal )
 {
 	l( 'Caught signal ' . $Signal );
