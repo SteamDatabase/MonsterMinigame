@@ -77,9 +77,11 @@ class Server
 					{
 						$Response[ 'stats' ] = $this->Game->GetStats();
 					}
+					
 					break;
 				case 'GetPlayerData':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
+					
 					if( $Player !== null )
 					{
 						$Response = array(
@@ -87,10 +89,18 @@ class Server
 							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
 					}
+					
 					break;
 				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
+					$Player = $this->Game->GetPlayer( $Data[ 'access_token' ] );
+					
+					if( $Player === null )
+					{
+						break;
+					}
+					
 					if( $Data[ 'method' ] == 'ChooseUpgrade' )
 					{
 						$QueueData = $Data[ 'upgrades' ];
@@ -225,6 +235,9 @@ class Server
 		{
 			return;
 		}
+
+		// kill it straight away for now
+		$this->Running = false;
 
 		$this->Shutdown = microtime( true );
 
