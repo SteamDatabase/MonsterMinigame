@@ -153,6 +153,19 @@ class Lane
 		return null;
 	}
 
+	public function GetDeadEnemies( $EnemyType = null )
+	{
+		$GetDeadEnemies = [];
+		foreach( $this->Enemies as $Enemy )
+		{
+			if( $Enemy->isDead() && ( $EnemyType !== null ? $EnemyType === $Enemy->GetType() : true ) )
+			{
+				$GetDeadEnemies[] = $Enemy;
+			}
+		}
+		return $GetDeadEnemies;
+	}
+
 	public function UpdateHpBuckets( $Players )
 	{
 		$this->PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);

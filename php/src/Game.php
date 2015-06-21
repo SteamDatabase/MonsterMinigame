@@ -480,6 +480,43 @@ class Game
 					}
 				}
 				$Enemy->DamageTaken = 0;
+
+				if( $Enemy->HasTimer() && $Enemy->IsTimerEnabled() && $Enemy->HasTimerRanOut( $SecondsPassed ) )
+				{
+					switch( $Enemy->GetType() ) 
+					{
+						case Enums\EEnemyType::Tower:
+							if( $Enemy->IsDead() )
+							{
+								continue;
+							}
+							// Revive dead mobs in the lane if the tower timer ran out
+							foreach( $Lane->GetDeadEnemies( Enums\EEnemyType::Mob ) as $DeadEnemy )
+							{
+								$DeadEnemy->ResetHp();
+							}
+							break;
+						case Enums\EEnemyType::MiniBoss:
+							if( !$Enemy->IsDead() )
+							{
+								continue;
+							}
+							// Revive dead miniboss if he's dead and the timer ran out
+							$Enemy->ResetHp();
+							break;
+						case Enums\EEnemyType::TreasureMob:
+							if( $Enemy->IsDead() )
+							{
+								continue;
+							}
+							// Kill the treasure mob and set gold to 0 if the timer (lifetime) ran out
+							$Enemy->SetHp( 0 );
+							$Enemy->SetGold( 0 );
+							$Enemy->DisableTimer();
+							break;
+					}
+					$Enemy->ResetTimer();
+				}
 			}
 			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
 			// Deal damage to players in lane

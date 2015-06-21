@@ -18,6 +18,7 @@ class Enemy
 	private $MaxHp;
 	private $Dps;
 	private $Timer;
+	private $TimerDisabled = false;
 	private $Gold;
 	public $DamageTaken = 0;
 
@@ -39,9 +40,11 @@ class Enemy
 		{
 			$this->MaxHp = Util::PredictValue( $Level, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
 		}
+
+		// Deal with respawn/alive timer
+		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
 		$this->Dps = floor( Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() ));
-		$this->Timer = null; // TODO: deal with this
 		$this->Gold = Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent(), true );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
@@ -56,7 +59,7 @@ class Enemy
 			'dps' => (double) $this->GetDps(),
 			'gold' => (double) $this->GetGold()
 		);
-		if( $this->GetTimer() !== null ) 
+		if( $this->HasTimer() ) 
 		{
 			$ReturnArray[ 'timer' ] = $this->GetTimer();
 		}
@@ -103,6 +106,11 @@ class Enemy
 		$this->Hp = $Hp;
 	}
 
+	public function ResetHp()
+	{
+		$this->Hp = $this->GetMaxHp();
+	}
+
 	public function GetHpDifference()
 	{
 		return $this->Hp > 0 ? $this->DamageTaken - $this->Hp : $this->Hp * -1;
@@ -123,14 +131,74 @@ class Enemy
 		return $this->Timer;
 	}
 
+	public function SetTimer( $Seconds )
+	{
+		$this->Timer = 0;
+	}
+
+	public function ResetTimer()
+	{
+		switch( $this->Type ) 
+		{
+			case Enums\EEnemyType::Tower:
+			case Enums\EEnemyType::MiniBoss:
+				$this->Timer = $this->GetRespawnTime();
+				break;
+			case Enums\EEnemyType::TreasureMob:
+				$this->Timer = $this->GetLifetime();
+				break;
+		}
+	}
+
+	public function HasTimer()
+	{
+		return $this->Timer !== null;
+	}
+
+	public function IsTimerEnabled()
+	{
+		return $this->TimerDisabled === false;
+	}
+
+	public function IsTimerDisabled()
+	{
+		return $this->TimerDisabled === true;
+	}
+
+	public function HasTimerRanOut( $Seconds = 0 )
+	{
+		if( $this->TimerDisabled )
+		{
+			return false;
+		}
+		$Seconds = $Seconds === false ? 0 : $Seconds;
+		$this->DecreaseTimer( $Seconds );
+		return $this->Timer <= 0;
+	}
+
+	public function DecreaseTimer( $Seconds )
+	{
+		$this->Timer -= $Seconds;
+	}
+
+	public function DisableTimer()
+	{
+		$this->TimerDisabled = true;
+	}
+
 	public function GetGold()
 	{
 		return $this->Gold;
 	}
 
+	public function SetGold( $Amount )
+	{
+		$this->Gold = $Amount;
+	}
+
 	public function GetRespawnTime()
 	{
-		return $this->GetRespawnTime( 'respawn_time' );
+		return $this->GetEnemyTuningData( 'respawn_time' );
 	}
 
 	public function GetTuningHp()
