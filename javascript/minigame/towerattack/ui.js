@@ -716,6 +716,7 @@ CUI.prototype.UpdateUpgrades = function()
 			{
 				if( ele )
 				{
+					$J('.link', ele).v_tooltip('hide');
 					ele.remove();
 					this.m_rgElementCache['upgr_'+i] = null;
 				}
