@@ -88,12 +88,19 @@ class Server
 				case 'GetPlayerData':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
 
-					if( $Player !== null )
+					if( $Player === null )
 					{
-						$Response = array(
-							'player_data' => $Player->ToArray(),
-							'tech_tree' => $Player->GetTechTree()->ToArray()
-						);
+						break;
+					}
+
+					$Response =
+					[
+						'player_data' => $Player->ToArray(),
+					];
+
+					if( $Data[ 'include_tech_tree' ] )
+					{
+						$Response[ 'tech_tree' ] = $Player->GetTechTree()->ToArray();
 					}
 
 					break;

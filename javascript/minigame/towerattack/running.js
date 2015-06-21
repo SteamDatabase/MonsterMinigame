@@ -223,96 +223,26 @@ CSceneGame.prototype.Tick = function()
 			this.m_bWaitingForResponse = true;
 			if( rgRequest.length > 0 )
 			{
-				g_Server.UseAbilities(function(rgResult)
-				{
-					if( rgResult.response.player_data )
+				g_Server.UseAbilities(
+					function( rgResult )
 					{
-						instance.m_rgPlayerData = rgResult.response.player_data;
-						instance.ApplyClientOverrides('player_data');
-						instance.ApplyClientOverrides('ability');
-						instance.ApplyClientOverrides('upgrades');
-					}
-
-					instance.m_bWaitingForResponse = false;
-					if( rgResult.response.tech_tree )
+						instance.HandleUpdatePlayerData( instance, rgResult );
+					},
+					function()
 					{
-						instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
-						if( rgResult.response.tech_tree.upgrades )
-							instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
-						else
-							instance.m_rgPlayerUpgrades = [];
-					}
-					instance.OnReceiveUpdate();
-				},
-				function(){
-					instance.m_bWaitingForResponse = false;
-				}
-				, rgRequest );
+						instance.m_bWaitingForResponse = false;
+					},
+					rgRequest
+				);
 
 				if( instance.m_bNeedTechTree )
 				{
-					g_Server.GetPlayerData(function(rgResult){
-						if( rgResult.response.player_data )
-						{
-							instance.m_rgPlayerData = rgResult.response.player_data;
-							instance.ApplyClientOverrides('player_data');
-							instance.ApplyClientOverrides('ability');
-							instance.ApplyClientOverrides('upgrades');
-						}
-						if( rgResult.response.tech_tree )
-						{
-							instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
-							if( rgResult.response.tech_tree.upgrades )
-								instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
-							else
-								instance.m_rgPlayerUpgrades = [];
-						}
-						instance.m_bWaitingForResponse = false;
-						//instance.OnReceiveUpdate();
-						instance.OnServerTick();
-					},
-					function( err )
-					{
-						console.log("Network error");
-						console.log(err);
-						instance.m_bWaitingForResponse = false;
-					},
-					this.m_bNeedTechTree);
+					this.UpdatePlayerData();
 				}
-
 			}
 			else
 			{
-				g_Server.GetPlayerData(
-					function(rgResult){
-						if( rgResult.response.player_data )
-						{
-							instance.m_rgPlayerData = rgResult.response.player_data;
-							instance.ApplyClientOverrides('player_data');
-							instance.ApplyClientOverrides('ability');
-							instance.ApplyClientOverrides('upgrades');
-						}
-						if( rgResult.response.tech_tree )
-						{
-							instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
-							if( rgResult.response.tech_tree.upgrades )
-								instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
-							else
-								instance.m_rgPlayerUpgrades = [];
-						}
-						instance.m_bWaitingForResponse = false;
-						instance.OnReceiveUpdate();
-						instance.OnServerTick();
-					},
-					function( err )
-					{
-						console.log("Network error");
-						console.log(err);
-						instance.m_bWaitingForResponse = false;
-					},
-					this.m_bNeedTechTree
-				);
-				instance.m_bNeedTechTree = false;
+				this.UpdatePlayerData();
 			}
 
 			this.SendChooseUpgradesRequest();
@@ -497,6 +427,52 @@ CSceneGame.prototype.Tick = function()
 	}
 
 
+}
+
+CSceneGame.prototype.UpdatePlayerData = function( )
+{
+	var instance = this;
+	
+	g_Server.GetPlayerData(
+		function( rgResult )
+		{
+			instance.HandleUpdatePlayerData( instance, rgResult );
+		},
+		function( err )
+		{
+			console.log("Network error");
+			console.log(err);
+			instance.m_bWaitingForResponse = false;
+		},
+		instance.m_bNeedTechTree
+	);
+
+	instance.m_bNeedTechTree = false;
+}
+
+CSceneGame.prototype.HandleUpdatePlayerData = function( instance, rgResult )
+{
+	if( rgResult.response.player_data )
+	{
+		instance.m_rgPlayerData = rgResult.response.player_data;
+		instance.ApplyClientOverrides('player_data');
+		instance.ApplyClientOverrides('ability');
+	}
+
+	if( rgResult.response.tech_tree )
+	{
+		instance.m_rgPlayerTechTree = rgResult.response.tech_tree;
+
+		if( rgResult.response.tech_tree.upgrades )
+			instance.m_rgPlayerUpgrades = V_ToArray( rgResult.response.tech_tree.upgrades );
+		else
+			instance.m_rgPlayerUpgrades = [];
+
+		instance.ApplyClientOverrides('upgrades');
+	}
+
+	instance.m_bWaitingForResponse = false;
+	instance.OnReceiveUpdate();
 }
 
 CSceneGame.prototype.ClientOverride = function( strOverrideTarget, strOverrideKey, strOverrideValue, strOverrideValueB, nOverrideCycles )
@@ -743,12 +719,6 @@ CSceneGame.prototype.OnSimulatedServerTick = function()
 
 	this.m_nSimulatedTime++;
 }
-
-CSceneGame.prototype.OnServerTick = function()
-{
-
-}
-
 
 CSceneGame.prototype.GetCurrentEnemyData = function()
 {
