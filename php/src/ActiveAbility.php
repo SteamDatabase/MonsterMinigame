@@ -42,4 +42,3 @@ class ActiveAbility
 		return $this->Multiplier;
 	}
 }
-?>

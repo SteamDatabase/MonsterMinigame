@@ -222,4 +222,3 @@ class Enemy
 		return $TuningData[ $Key ];
 	}
 }
-?>

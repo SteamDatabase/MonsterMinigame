@@ -37,4 +37,3 @@ class Util
 		return $Coefficient * pow( $Base, $Exponent );
 	}
 }
-?>
