@@ -332,6 +332,9 @@ CSceneGame.prototype.Tick = function()
 					if( rgResult.response.stats )
 						instance.m_rgStats = rgResult.response.stats;
 
+					if( rgResult.response.version )
+						$J('#game_version').text(rgResult.response.version);
+
 					instance.OnGameDataUpdate();
 
 				},

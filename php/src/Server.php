@@ -3,6 +3,7 @@ namespace SteamDB\CTowerAttack;
 
 class Server
 {
+	const VERSION = 'Beta v0.5';
 	const TICK_RATE = 0.1; // 100 / 1000
 
 	public $SaneServer;
@@ -70,7 +71,8 @@ class Server
 				case 'GetGameData':
 					$Response =
 					[
-						'game_data' => $this->Game->ToArray()
+						'version' => self::VERSION,
+						'game_data' => $this->Game->ToArray(),
 					];
 
 					if( $Data[ 'include_stats' ] )
