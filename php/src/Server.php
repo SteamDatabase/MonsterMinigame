@@ -194,7 +194,7 @@ class Server
 
 		if( $this->Shutdown > 0 )
 		{
-			if( $Tick - $this->Shutdown > Player\Base::ACTIVE_PERIOD )
+			if( $Tick - $this->Shutdown > Player\Player::ACTIVE_PERIOD )
 			{
 				l( 'Good bye' );
 
@@ -263,6 +263,6 @@ class Server
 
 		$this->Game->SetStatus( Enums\EStatus::Ended );
 
-		l( 'Waiting ' . Player\Base::ACTIVE_PERIOD . ' seconds until shutdown' );
+		l( 'Waiting ' . Player\Player::ACTIVE_PERIOD . ' seconds until shutdown' );
 	}
 }

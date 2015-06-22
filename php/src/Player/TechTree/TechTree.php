@@ -4,7 +4,7 @@ namespace SteamDB\CTowerAttack\Player\TechTree;
 use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
 
-class Base
+class TechTree
 {
 	/*
 	repeated Upgrade upgrades = 1;

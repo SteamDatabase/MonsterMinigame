@@ -5,7 +5,7 @@ use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
 use SteamDB\CTowerAttack\Game;
 
-class Base
+class Player
 {
 	const MAX_CLICKS = 20;
 	const ACTIVE_PERIOD = 120; // seconds
@@ -44,7 +44,7 @@ class Base
 		$this->AccountId = $AccountId;
 		$this->Hp = self::GetTuningData( 'hp' );
 		$this->Stats = new Stats;
-		$this->TechTree = new TechTree\Base;
+		$this->TechTree = new TechTree\TechTree;
 		$this->LaneDamageBuffer = [
 			0 => 0,
 			1 => 0,

@@ -1,6 +1,8 @@
 <?php
 namespace SteamDB\CTowerAttack;
 
+use SteamDB\CTowerAttack\Player;
+
 class Game
 {
 	const START_LIMIT = 1; // Start game with 1 players
@@ -61,7 +63,7 @@ class Game
 	{
 		l( 'Creating new player ' . $AccountId );
 
-		$Player = new Player\Base(
+		$Player = new Player\Player(
 			$AccountId
 		);
 
