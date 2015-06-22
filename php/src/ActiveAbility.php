@@ -22,6 +22,16 @@ class ActiveAbility
 		$this->Multiplier = $Multiplier;
 	}
 
+	public function ToArray()
+	{
+		return [
+			'accountid_caster' => $this->AccountIdCaster,
+			'ability' => $this->Ability,
+			'timestamp_done' => $this->TimestampDone,
+			'multiplier' => $this->Multiplier
+		];
+	}
+
 	public function GetAccountIdCaster()
 	{
 		return $this->AccountIdCaster;

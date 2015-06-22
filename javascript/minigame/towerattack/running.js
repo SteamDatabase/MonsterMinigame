@@ -974,9 +974,11 @@ CSceneGame.prototype.UpdateEnemies = function()
 		var rgAbilities = this.m_rgGameData.lanes[i].active_player_abilities;
 		if( rgAbilities )
 		{
-			this.m_rgLaneData[i].abilities[rgAbilities.ability] = rgAbilities.quantity || 1;
+			for( var a=0; a<rgAbilities.length; a++ )
+			{
+				this.m_rgLaneData[i].abilities[rgAbilities[a].ability] = rgAbilities[a].quantity || 1;
+			}
 		}
-
 	}
 
 	// Remove any enemies we still have with invalid IDs

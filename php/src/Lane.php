@@ -49,7 +49,7 @@ class Lane
 			'enemies' => $this->GetEnemiesArray(),
 			'dps' => (double) $this->GetDps(),
 			'gold_dropped' => (double) $this->GetGoldDropped(),
-			'active_player_abilities' => $this->GetActivePlayerAbilities(),
+			'active_player_abilities' => array_values( $this->GetActivePlayerAbilities() ),
 			'activity_log' => $this->ActivityLog,
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
@@ -95,6 +95,31 @@ class Lane
 	public function GetActivePlayerAbilities()
 	{
 		return $this->ActivePlayerAbilities;
+	}
+
+	public function AddActivePlayerAbility( $Ability )
+	{
+		if ( !isset( $this->ActivePlayerAbilities[ $Ability ] ) )
+		{
+			$this->ActivePlayerAbilities[ $Ability ] = [
+				'ability' => $Ability,
+				'quantity' => 1
+			];
+		}
+		else
+		{
+			$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ]++;
+		}
+		#$this->ActivityLog[] = $ActiveAbility->ToArray(); TODO
+	}
+
+	public function RemoveActivePlayerAbility( $Ability )
+	{
+		$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ] -= 1;
+		if( $this->ActivePlayerAbilities[ $Ability ][ 'quantity' ] <= 0 )
+		{
+			unset( $this->ActivePlayerAbilities[ $Ability ] );
+		}
 	}
 
 	public function GetPlayerHpBuckets()

@@ -84,7 +84,7 @@ class Base
 			'hp_multiplier' => (double) $this->GetHpMultiplier(),
 			'crit_percentage' => (double) $this->GetCritPercentage(),
 			'badge_points' => (double) $this->GetBadgePoints(),
-			'ability_items' => $this->GetAbilityItems(),
+			'ability_items' => $this->GetAbilityItemsToArray(),
 			'boss_loot_drop_percentage' => (double) $this->GetBossLootDropPercentage(),
 			'damage_multiplier_dps' => (double) $this->GetDamageMultiplierDps(),
 			'damage_per_click_multiplier' => (double) $this->GetDamagePerClickMultiplier(),
@@ -215,21 +215,48 @@ class Base
 		return $this->BadgePoints;
 	}
 
-	public function AddAbilityItem( $AbilityItem, $Quantity )
+	public function AddAbilityItem( $Ability, $Quantity = 1 )
 	{
-		$this->AbilityItems[] = new AbilityItem( $AbilityItem, $Quantity );
+		if ( !isset( $this->Ability[ $Ability ] ) )
+		{
+			$this->AbilityItems[ $Ability ] = [
+				'ability' => $Ability,
+				'quantity' => 1
+			];
+		}
+		else
+		{
+			$this->AbilityItems[ $Ability ][ 'quantity' ]++;
+		}
+	}
+
+	public function RemoveAbilityItem( $Ability, $Quantity = 1 )
+	{
+		$this->AbilityItems[ $Ability ][ 'quantity' ] -= $Quantity;
+		if( $this->AbilityItems[ $Ability ][ 'quantity' ] <= 0 )
+		{
+			unset( $this->AbilityItems[ $Ability ] );
+		}
+	}
+
+	public function GetAbilityQuantity( $Ability )
+	{
+		return $this->AbilityItems[ $Ability ][ 'quantity' ];
+	}
+
+	public function GetAbilityItem( $Ability )
+	{
+		return $this->AbilityItems[ $Ability ];
 	}
 
 	public function GetAbilityItems()
 	{
-		$Items = [];
-		
-		foreach( $this->AbilityItems as $AbilityItem )
-		{
-			$Items[] = $AbilityItem->ToArray();
-		}
-		
-		return $Items;
+		return $this->AbilityItems;
+	}
+
+	public function GetAbilityItemsToArray()
+	{
+		return array_values( $this->AbilityItems );
 	}
 
 	public function GetBossLootDropPercentage()

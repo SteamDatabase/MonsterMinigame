@@ -147,7 +147,7 @@ class Game
 		{
 			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			$ActivePlayerAbilities = [];
-			$ActivityLog = [];
+			$ActivityLog = []; # TODO: Get previous log?
 			foreach( $this->Players as $Player )
 			{
 				if( $Player->GetCurrentLane() === $i )
@@ -176,9 +176,7 @@ class Game
 					// TODO: Remove active abilties after their time runs out 
 				}
 			}
-
-			$ActivePlayerAbilities = array_values($ActivePlayerAbilities); // This is really stupid, we should just do ActiveAbilityId: Quantity...
-
+			
 			$Enemies = array();
 			if( $this->IsBossLevel() )
 			{
@@ -388,6 +386,8 @@ class Game
 
 		foreach( $this->Players as $Player )
 		{
+			$Player->CheckActiveAbilities( $this );
+
 			if( $SecondPassed && !$Player->IsDead() )
 			{
 				// Deal DPS damage to current target

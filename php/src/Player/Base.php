@@ -3,6 +3,7 @@ namespace SteamDB\CTowerAttack\Player;
 
 use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
+use SteamDB\CTowerAttack\Game;
 
 class Base
 {
@@ -68,7 +69,7 @@ class Base
 			'target' => (int) $this->GetTarget(),
 			'time_died' => (int) $this->GetTimeDied(),
 			'gold' => (double) $this->GetGold(),
-			'active_abilities' => [],
+			'active_abilities' => $this->GetActiveAbilitiesToArray(),
 			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
 			'crit_damage' => (double) $this->GetCritDamage(),
 			'stats' => $this->Stats->ToArray()
@@ -141,8 +142,11 @@ class Base
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
 				case Enums\EAbility::Item_SkipLevels:
+					// TODO: stackable? check if player has ability? etc
 					// TODO: debugging
 					l( 'Skipping level' );
+					$this->UseAbility( $RequestedAbility[ 'ability' ] );
+					$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $RequestedAbility[ 'ability' ] );
 					$Game->GenerateNewLevel();
 					break;
 				case Enums\EAbility::Item_GoldPerClick:
@@ -342,6 +346,46 @@ class Base
 	public function GetActiveAbilities()
 	{
 		return $this->ActiveAbilities;
+	}
+
+	public function GetActiveAbilitiesToArray()
+	{
+		$ActiveAbilities = [];
+		foreach( $this->ActiveAbilities as $ActiveAbility )
+		{
+			$ActiveAbilities[] = $ActiveAbility->ToArray();
+		}
+		return $ActiveAbilities;
+	}
+
+	public function AddActiveAbility( $Ability )
+	{
+		$this->ActiveAbilities[] = new ActiveAbility( $Ability );
+	}
+
+	public function RemoveActiveAbility( $Ability )
+	{
+		unset( $this->ActiveAbilities[ $Ability ] );
+	}
+
+	public function UseAbility( $Ability )
+	{
+		$this->AddActiveAbility( $Ability );
+		$this->GetTechTree()->RemoveAbilityItem( $Ability );
+	}
+
+	public function CheckActiveAbilities( Game $Game )
+	{
+		foreach( $this->ActiveAbilities as $Key => $ActiveAbility )
+		{
+			if( $ActiveAbility->isDone() ) 
+			{
+				// TODO: Remove whatever effects the ability had
+				// TODO: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
+				$Game->GetLane( $this->GetCurrentLane() )->RemoveActivePlayerAbility( $ActiveAbility->GetAbility() );
+				$this->RemoveActiveAbility( $Key );
+			}
+		}
 	}
 
 	public function GetCritDamage()

@@ -265,6 +265,7 @@ class Enemy
 	{
 		return self::GetTuningData( $this->GetTypeName(), $Key );
 	}
+	
 	public static function SpawnTreasureMob()
 	{
 		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' );
