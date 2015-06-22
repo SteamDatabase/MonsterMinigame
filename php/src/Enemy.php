@@ -270,16 +270,14 @@ class Enemy
 	{
 		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' );
 		$RandPercent = rand( 1, 100 );
+
 		return $RandPercent < $SpawnChance;
 	}
 
 	public static function GetTuningData( $TypeName = null, $Key = null )
 	{
-		if( $TypeName !== null)
-		{
-			$TypeName = strtolower( $TypeName );
-		}
 		$TuningData = Server::GetTuningData( $TypeName );
+
 		if( $Key === null ) 
 		{
 			return $TuningData;
@@ -288,6 +286,7 @@ class Enemy
 		{
 			return null;
 		}
+
 		return $TuningData[ $Key ];
 	}
 
@@ -296,17 +295,15 @@ class Enemy
 		switch( $Type ) 
 		{
 			case Enums\EEnemyType::Tower:
-				return 'Tower';
+				return 'tower';
 			case Enums\EEnemyType::Mob:
-				return 'Mob';
+				return 'mob';
 			case Enums\EEnemyType::Boss:
-				return 'Boss';
+				return 'boss';
 			case Enums\EEnemyType::MiniBoss:
-				return 'MiniBoss';
+				return 'miniboss';
 			case Enums\EEnemyType::TreasureMob:
-				return 'Treasure_Mob';
-			case Enums\EEnemyType::Max:
-				return 'Max';
+				return 'treasure_mob';
 		}
 	}
 
