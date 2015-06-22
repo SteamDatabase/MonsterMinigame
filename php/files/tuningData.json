@@ -1,4 +1,5 @@
 {
+    "minimum_players": 1,
     "universe_level": 100000000,
     "version": 1434662461,
     "player": {

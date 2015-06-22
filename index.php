@@ -149,7 +149,7 @@
 						<div class="num_players_waiting_bar">
 							<div></div>
 						</div>
-						<span id="num_players_waiting"></span> / <span>1,000</span>
+						<span id="num_players_waiting"></span> / <span id="num_players_minimum"></span>
 					</div>
 				</div>
 			</div>

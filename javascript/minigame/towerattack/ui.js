@@ -247,9 +247,11 @@ CUI.prototype.Tick = function()
 			{
 				numPlayers = game.m_rgStats.num_players;
 			}
-			var pct = (100* ( numPlayers / 15 ) ).toFixed( 2 ) + '%' ;
+			var minPlayers = game.m_rgTuningData.minimum_players;
+			var pct = ( 100 * ( numPlayers / minPlayers ) ).toFixed( 2 ) + '%';
 			$J( "div.num_players_waiting_bar > div", this.m_dialogWaitingForPlayers )[0].style.width = pct;
-			$J( "#num_players_waiting", this.m_dialogWaitingForPlayers )[0].textContent = numPlayers ;
+			$J( "#num_players_waiting", this.m_dialogWaitingForPlayers )[0].textContent = numPlayers;
+			$J( "#num_players_minimum", this.m_dialogWaitingForPlayers )[0].textContent = minPlayers;
 			break;
 
 		case 2:

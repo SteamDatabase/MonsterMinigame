@@ -1,11 +1,11 @@
 <?php
 namespace SteamDB\CTowerAttack;
 
+use SteamDB\CTowerAttack\Server;
 use SteamDB\CTowerAttack\Player;
 
 class Game
 {
-	const START_LIMIT = 1; // Start game with 1 players
 	/*
 	optional uint32 level = 1;
 	repeated Lane lanes = 2;
@@ -69,7 +69,7 @@ class Game
 
 		$this->Players[ $AccountId ] = $Player;
 
-		if( count( $this->Players ) == self::START_LIMIT )
+		if( $this->Status === Enums\EStatus::WaitingForPlayers && count( $this->Players ) === Server::GetTuningData( 'minimum_players' ) )
 		{
 			$this->GenerateNewLanes();
 			$this->SetStatus( Enums\EStatus::Running );
