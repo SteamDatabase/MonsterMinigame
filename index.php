@@ -21,6 +21,12 @@
 		<a href="http://store.steampowered.com/">Summer Sale</a> &gt; <a href="http://steamcommunity.com/minigame/">Summer Game Info</a> &gt; Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
 	</div>
 
+	<style>.disclaimer { text-align: center; padding-top: 17px; box-sizing: border-box; } .disclaimer p { margin: 0; color: #DDD; }</style>
+	<div class="game_options disclaimer">
+		<p>This minigame is using assets by Valve without permission <i>(we did reach out)</i>, play at your own risk. Backend server has been mostly written by SteamDB top men, including <a href="https://github.com/Contex">Contex</a> and <a href="https://xpaw.me">xPaw</a>.</p>
+		<p>Server might or might not be open-sourced in the future. We don't know if we will make this game public due to asset reuse.</p>
+	</div>
+
 	<div id="gamecontainer">
 		<div id="uicontainer">
 			<div class="tv_ui"></div>
