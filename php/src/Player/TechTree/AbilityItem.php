@@ -37,63 +37,27 @@ class AbilityItem
 		return $this->Quantity;
 	}
 
-
-	public function GetName()
-	{
-		return $this->GetAbilityTuningData( 'name' );
-	}
-
-	public function GetType()
-	{
-		return $this->GetAbilityTuningData( 'type' );
-	}
-
-	public function GetMultiplier()
-	{
-		return $this->GetAbilityTuningData( 'multiplier' );
-	}
-
-	public function GetBadgePointsCost()
-	{
-		return $this->GetAbilityTuningData( 'badge_points_cost' );
-	}
-
-	public function IsInstant()
-	{
-		return $this->GetAbilityTuningData( 'instant' ) === 1;
-	}
-
-	public function GetDuration()
-	{
-		return $this->GetAbilityTuningData( 'duration' );
-	}
-
-	public function GetCooldown()
-	{
-		return $this->GetAbilityTuningData( 'cooldown' );
-	}
-
-	public function GetDescription()
-	{
-		return $this->GetAbilityTuningData( 'desc' );
-	}
-
 	private function GetAbilityTuningData( $Key = null )
 	{
 		return self::GetTuningData( $this->Ability, $Key );
 	}
 
-	public static function GetNameOfAbility( $Ability )
+	public static function GetName( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'name' );
 	}
 
-	public static function GetTypeOfAbility( $Ability )
+	public static function GetType( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'type' );
 	}
 
-	public static function GetMultiplierOfAbility( $Ability )
+	public static function GetMaxNumClicks( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'max_num_clicks' );
+	}
+
+	public static function GetMultiplier( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'multiplier' );
 	}
@@ -103,22 +67,22 @@ class AbilityItem
 		return self::GetTuningData( $Ability, 'instant' ) === 1;
 	}
 
-	public static function GetBadgePointCostOfAbility( $Ability )
+	public static function GetBadgePointCost( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'badge_points_cost' );
 	}
 
-	public static function GetDurationOfAbility( $Ability )
+	public static function GetDuration( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'duration' );
 	}
 
-	public static function GetCooldownOfAbility( $Ability )
+	public static function GetCooldown( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'cooldown' );
 	}
 
-	public static function GetDescriptionOfAbility( $Ability )
+	public static function GetDescription( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'desc' );
 	}
@@ -130,7 +94,7 @@ class AbilityItem
 		{
 			return $TuningData[ $Ability ];
 		} 
-		else if( !array_key_exists( $Key, $TuningData[ $Ability ] ) ) 
+		else if( !isset( $TuningData[ $Ability ][ $Key ] ) ) 
 		{
 			return null;
 		}

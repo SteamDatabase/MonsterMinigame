@@ -116,7 +116,7 @@ class Player
 			}
 			else
 			{
-				$AbilityMultiplier = AbilityItem::GetGetMultiplierOfAbility( $RequestedAbility[ 'ability' ] );
+				$AbilityMultiplier = AbilityItem::GetMultiplier( $RequestedAbility[ 'ability' ] );
 				$Lane = $Game->GetLane( $this->GetCurrentLane() );
 			}
 
