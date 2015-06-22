@@ -26,14 +26,13 @@ class Enemy
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
-		// TODO: Tower and MiniBoss respawns, see GetRespawnTime()
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
 		// TODO: Figure out if valve floored the value or just rounded
 		if( $this->GetType() === Enums\EEnemyType::Mob ) 
 		{
-			$Variance = $this->GetHpMultiplierVariance();
-			$LowestHp  = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp() - $Variance, $Level * $this->GetHpMultiplier() );
-			$HighestHp = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp() + $Variance, $Level * $this->GetHpMultiplier() );
+			$MultiplierVariance = $this->GetHpMultiplierVariance();
+			$LowestHp  = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp(), $Level * ( $this->GetHpMultiplier() - $MultiplierVariance ) );
+			$HighestHp = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp(), $Level * ( $this->GetHpMultiplier() + $MultiplierVariance ) );
 			$this->MaxHp = floor( rand( $LowestHp, $HighestHp ) );
 		} 
 		else 
