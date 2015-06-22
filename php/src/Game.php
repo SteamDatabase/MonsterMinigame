@@ -369,7 +369,7 @@ class Game
 		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
 
-	public function Update( $SecondsPassed )
+	public function Update( $SecondsPassed = false )
 	{
 		if( !$this->IsRunning() )
 		{

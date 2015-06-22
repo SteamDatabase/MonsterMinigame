@@ -110,6 +110,7 @@ class Server
 				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
+					$QueueData = null;
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
 
 					if( $Player === null )
@@ -118,8 +119,10 @@ class Server
 					}
 
 					if( $Data[ 'method' ] == 'ChooseUpgrade' )
-					{
-						$QueueData = $Data[ 'upgrades' ];
+					{;
+						$Player->HandleUpgrade( $this->Game, $Data[ 'upgrades' ] );
+						$this->Game->UpdatePlayer( $Player );
+						$this->Game->Update();
 						$Response = array(
 							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
@@ -132,11 +135,14 @@ class Server
 						);
 					}
 
-					$this->Queue->enqueue( [
-						'Player' => $Player,
-						'Method' => $Data[ 'method' ],
-						'Data' => $QueueData
-					] );
+					if( $QueueData !== null )
+					{
+						$this->Queue->enqueue( [
+							'Player' => $Player,
+							'Method' => $Data[ 'method' ],
+							'Data' => $QueueData
+						] );
+					}
 
 					break;
 				default:
@@ -210,12 +216,7 @@ class Server
 		{
 			$Player = $QueueItem[ 'Player' ];
 
-			if( $QueueItem[ 'Method' ] == 'ChooseUpgrade' )
-			{
-				$Player->HandleUpgrade( $this->Game, $QueueItem[ 'Data' ] );
-				$this->Game->UpdatePlayer( $Player );
-			}
-			else if( $QueueItem[ 'Method' ] == 'UseAbilities' )
+			if( $QueueItem[ 'Method' ] == 'UseAbilities' )
 			{
 				$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
 				$this->Game->UpdatePlayer( $Player );
