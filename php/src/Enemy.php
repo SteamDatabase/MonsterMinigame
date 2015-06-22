@@ -26,24 +26,24 @@ class Enemy
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
-		// TODO: Check if health works
 		// TODO: Tower and MiniBoss respawns, see GetRespawnTime()
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
 		if( $this->GetType() === Enums\EEnemyType::Mob ) 
 		{
 			$Variance = $this->GetHpMultiplierVariance();
-			$LowestHp = Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() - $Variance), $this->GetHpExponent() );
-			$HighestHp = Util::PredictValue( $Level, $this->GetTuningHp() * ( $this->GetHpMultiplier() + $Variance), $this->GetHpExponent() );
+			$LowestHp = Util::PredictValue( $Level * $this->GetHpMultiplier(), $this->GetTuningHp() - $Variance, $this->GetHpExponent() );
+			$HighestHp = Util::PredictValue( $Level * $this->GetHpMultiplier(), $this->GetTuningHp() + $Variance, $this->GetHpExponent() );
 			$this->MaxHp = rand( $LowestHp, $HighestHp );
 		} 
 		else 
 		{
-			$this->MaxHp = Util::PredictValue( $Level, $this->GetTuningHp() * $this->GetHpMultiplier(), $this->GetHpExponent() );
+			$this->MaxHp = Util::PredictValue( $Level * $this->GetHpMultiplier(), $this->GetTuningHp(), $this->GetHpExponent() );
 		}
 
 		// Deal with respawn/alive timer
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
+		// TODO: test if multiplier needs to be on level
 		$this->Dps = floor( Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() ));
 		$this->Gold = Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent(), true );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
