@@ -151,6 +151,8 @@ class Player
 					break;
 				case Enums\EAbility::Item_GoldPerClick:
 					// TODO: debugging
+					$this->UseAbility( $RequestedAbility[ 'ability' ] );
+					$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $RequestedAbility[ 'ability' ] );
 					$this->IncreaseGold( 100000000 );
 					break;
 				default:

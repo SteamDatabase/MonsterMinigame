@@ -115,8 +115,12 @@ class Lane
 
 	public function RemoveActivePlayerAbility( $Ability )
 	{
-		$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ] -= 1;
-		if( $this->ActivePlayerAbilities[ $Ability ][ 'quantity' ] <= 0 )
+		if( !isset( $this->ActivePlayerAbilities[ $Ability ] ) )
+		{
+			return;
+		}
+
+		if( --$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ] <= 0 )
 		{
 			unset( $this->ActivePlayerAbilities[ $Ability ] );
 		}

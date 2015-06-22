@@ -176,13 +176,6 @@ class Game
 							$ActivePlayerAbilities[ $ActiveAbility->GetAbility() ][ 'quantity' ]++;
 						}
 					}
-					# TODO: Delete debugging
-					$RandomAbilityId = rand( Enums\EAbility::Item_Resurrection, Enums\EAbility::Item_ReflectDamage );
-					$ActivePlayerAbilities[ $RandomAbilityId ] = [
-						'ability' => $RandomAbilityId,
-						'quantity' => rand( 1, 5 )
-					];
-					// TODO: Remove active abilties after their time runs out
 				}
 			}
 
