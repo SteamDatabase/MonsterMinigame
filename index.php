@@ -368,6 +368,7 @@
 		g_DebugMode = true;
 		g_DebugUpdateStats = g_DebugMode;
 		g_IncludeGameStats = g_DebugMode;
+		$J('#game_version').text( g_TuningData['game_version'] );
 
 		function CheckTuningDataVersion()
 		{

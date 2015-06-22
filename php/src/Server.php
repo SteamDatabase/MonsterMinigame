@@ -28,7 +28,7 @@ class Server
 
 		self::LoadTuningData();
 
-		$this->TickRate = self::GetTuningData( 'tick_rate' )
+		$this->TickRate = self::GetTuningData( 'tick_rate' );
 		$this->Game = new Game;
 	}
 
@@ -75,8 +75,7 @@ class Server
 				case 'GetGameData':
 					$Response =
 					[
-						'version' => self::GetTuningData( 'version_string' ),
-						'game_data' => $this->Game->ToArray(),
+						'game_data' => $this->Game->ToArray()
 					];
 
 					if( $Data[ 'include_stats' ] )
