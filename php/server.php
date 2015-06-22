@@ -13,7 +13,7 @@ function l( $String )
     echo '[' . date( DATE_RSS ) . '] ' . $String . PHP_EOL;
 }
 
-foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( __DIR__ . '/php/src/' ) ) as $File )
+foreach( new RecursiveIteratorIterator( new RecursiveDirectoryIterator( __DIR__ . '/src/' ) ) as $File )
 {
 	if( pathinfo( $File, PATHINFO_EXTENSION ) !== 'php' )
 	{
