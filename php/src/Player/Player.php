@@ -31,6 +31,7 @@ class Player
 	public $AbilityLastUsed = [];
 	public $Stats;
 	public $CritDamage;
+	private $PlayerName;
 	private $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
@@ -40,10 +41,11 @@ class Player
 	private $Loot = [];
 	private $TechTree;
 
-	public function __construct( $AccountId )
+	public function __construct( $AccountId, $PlayerName )
 	{
 		$this->LastActive = time();
 		$this->AccountId = $AccountId;
+		$this->PlayerName = $PlayerName;
 		$this->Hp = self::GetTuningData( 'hp' );
 		$this->Stats = new Stats;
 		$this->TechTree = new TechTree\TechTree;

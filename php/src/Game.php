@@ -62,13 +62,11 @@ class Game
 		l( 'Created new game' );
 	}
 
-	public function CreatePlayer( $AccountId )
+	public function CreatePlayer( $AccountId, $Name )
 	{
-		l( 'Creating new player ' . $AccountId );
+		l( 'Creating new player ' . $AccountId . ' - ' . $Name );
 
-		$Player = new Player\Player(
-			$AccountId
-		);
+		$Player = new Player\Player($AccountId, $Name);
 
 		$this->Players[ $AccountId ] = $Player;
 

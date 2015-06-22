@@ -203,7 +203,7 @@
 			<div class="player_ctn">
 				<div class="player">
 					<div id="avatar_container">
-						<img src="/assets/minigame/towerattack/ph_avatar.jpg" alt="You!">
+						<img src="<?php echo $_SESSION[ 'Avatar' ]; ?>" alt="You!">
 					</div>
 					<div id="info_block">
 						<div id="info_hp"></div>

@@ -90,7 +90,7 @@ class Server
 					if( $Player === null )
 					{
 						// TODO: for now
-						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ] );
+						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ], $Data[ 'player_name' ] );
 						//break;
 					}
 
@@ -113,7 +113,7 @@ class Server
 
 					if( $Player === null )
 					{
-						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ] );
+						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ], '[wtf]' );
 					}
 
 					if( $Data[ 'method' ] == 'ChooseUpgrade' )

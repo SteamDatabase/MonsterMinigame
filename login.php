@@ -19,8 +19,36 @@
 			die;
 		}
 		
+		$Key = trim( file_get_contents( __DIR__ . '/php/files/apikey.txt' ) );
+		
+		$c = cURL_Init( );
+		
+		cURL_SetOpt_Array( $c, Array(
+			CURLOPT_USERAGENT      => 'Steam Database Party OpenID Login',
+			CURLOPT_ENCODING       => 'gzip',
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_URL            => 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?format=json&key=' . $Key . '&steamids=' . $CommunityID,
+			CURLOPT_CONNECTTIMEOUT => 5,
+			CURLOPT_TIMEOUT        => 5
+		) );
+		
+		$Response = cURL_Exec( $c );
+		$Response = JSON_Decode( $Response, true );
+		
+		cURL_Close( $c );
+		
+		if( Empty( $Response ) || !isset( $Response[ 'response' ][ 'players' ][ 0 ] ) )
+		{
+			echo 'WebAPI failed.';
+			
+			die;
+		}
+		
+		$Response = $Response[ 'response' ][ 'players' ][ 0 ];
+		
 		$_SESSION[ 'SteamID' ] = $CommunityID;
-		//$_SESSION[ 'Avatar' ] = $Info[ 'Avatar' ];
+		$_SESSION[ 'Name' ] = $Response[ 'personaname' ];
+		$_SESSION[ 'Avatar' ] = $Response[ 'avatar' ];
 		
 		header( 'Location: /' );
 	}
