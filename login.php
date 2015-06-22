@@ -14,7 +14,7 @@
 		
 		if( $CommunityID === false )
 		{
-			echo $ErrorMessage === false ? 'Something went horribly wrong, please try again later.' : 'OpenID error: <b>' . Safe( $ErrorMessage ) . '</b>';
+			echo $ErrorMessage === false ? 'Something went horribly wrong, please try again later.' : 'OpenID error: <b>' . htmlentities( $ErrorMessage ) . '</b>';
 			
 			die;
 		}
