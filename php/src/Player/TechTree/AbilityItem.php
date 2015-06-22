@@ -1,6 +1,7 @@
 <?php
 namespace SteamDB\CTowerAttack\Player\TechTree;
 
+use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
 
 class AbilityItem
@@ -103,5 +104,113 @@ class AbilityItem
 			return null;
 		}
 		return $TuningData[ $AbilityId ][ $Key ];
+	}
+
+	public static function HandleAbility( $Lane, $Player, $Ability, $Deactivate = false )
+	{
+		switch( $Ability->GetAbility() )
+		{
+			case Enums\EAbility::Support_IncreaseDamage:
+				if($Deactivate)
+				{
+					$Lane->DecreaseDamageMultiplier( $AbilityMultiplier );
+				}
+				else
+				{
+					$Lane->IncreaseDamageMultiplier( $AbilityMultiplier );
+				}
+				break;
+			case Enums\EAbility::Support_IncreaseCritPercentage:
+				if($Deactivate)
+				{
+					$Lane->DecreaseCritClickDamageMultiplier( $AbilityMultiplier );
+				}
+				else
+				{
+					$Lane->IncreaseCritClickDamageMultiplier( $AbilityMultiplier );
+				}
+				break;
+			case Enums\EAbility::Support_Heal:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Support_IncreaseGoldDropped:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Support_DecreaseCooldowns:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Offensive_HighDamageOneTarget:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Offensive_DamageAllTargets:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Offensive_DOTAllTargets:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_Resurrection:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_KillTower:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_KillMob:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_MaxElementalDamage:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_GoldPerClick:
+				// TODO: Add ability logic
+				if( $Deactivate )
+				{
+
+				}
+				else
+				{
+					$Player->IncreaseGold( 100000000 );
+				}
+				break;
+			case Enums\EAbility::Item_IncreaseCritPercentagePermanently:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_IncreaseHPPermanently:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_GoldForDamage:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_Invulnerability:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_GiveGold:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_StealHealth:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_ReflectDamage:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_GiveRandomItem:
+				// TODO: Add ability logic
+				break;
+			case Enums\EAbility::Item_SkipLevels:
+				// TODO: Add ability logic
+				// TODO: stackable? check if player has ability? etc
+				// TODO: debugging
+				if( $Deactivate )
+				{
+				}
+				else
+				{
+					l( 'Skipping level' );
+					$Game->GenerateNewLevel();
+				}
+				break;
+			case Enums\EAbility::Item_ClearCooldowns:
+				// TODO: Add ability logic
+			break;
+		}
 	}
 }

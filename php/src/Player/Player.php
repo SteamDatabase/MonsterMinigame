@@ -110,18 +110,12 @@ class Player
 
 			if( in_array( AbilityItem::GetType( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes ) )
 			{
-				if( $this->UseAbility( $Game, $RequestedAbility[ 'ability' ] ) === false )
-				{
-					// Ability usage failed, ignore and continue.
-					continue;
-				}
-				else
-				{
-					// Ability executed succesfully!
-					$AbilityMultiplier = AbilityItem::GetMultiplier( $RequestedAbility[ 'ability' ] );
-					$Lane = $Game->GetLane( $this->GetCurrentLane() );
-				}
+				$this->UseAbility( $Game, $RequestedAbility[ 'ability' ] );
+				continue;
 			}
+
+			# Handle rest of the abilities below
+			// TODO: @Contex: move this to AbilityItem as well?
 
 			switch( $RequestedAbility[ 'ability' ] ) 
 			{
@@ -167,81 +161,6 @@ class Player
 					break;
 				case Enums\EAbility::ChangeTarget:
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
-					break;
-				case Enums\EAbility::Support_IncreaseDamage:
-					// TODO: Remove the effects of the ability after it has ran out
-					$Lane->IncreaseDamageMultiplier( $AbilityMultiplier );
-					break;
-				case Enums\EAbility::Support_IncreaseCritPercentage:
-					// TODO: Remove the effects of the ability after it has ran out
-					$Lane->IncreaseCritClickDamageMultiplier( $AbilityMultiplier );
-					break;
-				case Enums\EAbility::Support_Heal:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Support_IncreaseGoldDropped:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Support_DecreaseCooldowns:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Offensive_HighDamageOneTarget:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Offensive_DamageAllTargets:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Offensive_DOTAllTargets:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_Resurrection:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_KillTower:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_KillMob:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_MaxElementalDamage:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_GoldPerClick:
-					// TODO: debugging
-					$this->IncreaseGold( 100000000 );
-					break;
-				case Enums\EAbility::Item_IncreaseCritPercentagePermanently:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_IncreaseHPPermanently:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_GoldForDamage:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_Invulnerability:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_GiveGold:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_StealHealth:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_ReflectDamage:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_GiveRandomItem:
-					// TODO: Add ability logic
-					break;
-				case Enums\EAbility::Item_SkipLevels:
-					// TODO: stackable? check if player has ability? etc
-					// TODO: debugging
-					l( 'Skipping level' );
-					$Game->GenerateNewLevel();
-					break;
-				case Enums\EAbility::Item_ClearCooldowns:
-					// TODO: Add ability logic
 					break;
 				default:
 					// Handle unknown ability?
@@ -474,11 +393,16 @@ class Player
 			return false;
 		}
 
+		// Ability executed succesfully!
 		$ActiveAbility = $this->AddActiveAbility( $Ability );
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
-		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility );
+		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility ); # TODO @Contex: Move this to HandleAbility?
 
-		return true;
+		AbilityItem::HandleAbility( 
+			$Game->GetLane( $this->GetCurrentLane() ), 
+			$this,
+			$ActiveAbility
+		);
 	}
 
 	public function CheckActiveAbilities( Game $Game )
@@ -487,6 +411,12 @@ class Player
 		{
 			if( $ActiveAbility->IsCooledDown() )
 			{
+				AbilityItem::HandleAbility( 
+					$Game->GetLane( $this->GetCurrentLane() ), 
+					$this,
+					$ActiveAbility,
+					true
+				);
 				$this->RemoveActiveAbility( $Key );
 			}
 		}

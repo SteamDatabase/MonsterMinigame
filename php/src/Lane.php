@@ -1,6 +1,8 @@
 <?php
 namespace SteamDB\CTowerAttack;
 
+use \SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
+
 class Lane
 {
 	/*
@@ -51,7 +53,7 @@ class Lane
 			'enemies' => $this->GetEnemiesArray(),
 			'dps' => (double) $this->GetDps(),
 			'gold_dropped' => (double) $this->GetGoldDropped(),
-			'active_player_abilities' => array_values( $this->GetActivePlayerAbilitiesAsArray() ),
+			'active_player_abilities' => $this->GetActivePlayerAbilitiesAsArray(),
 			'activity_log' => $this->ActivityLog,
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
@@ -104,18 +106,19 @@ class Lane
 		$ActivePlayerAbilities = [];
 		foreach( $this->ActivePlayerAbilities as $ActivePlayerAbility )
 		{
-			if ( !isset( $this->ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ] ) )
+			if ( !isset( $ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ] ) )
 			{
-				$this->ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ] = [
+				$ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ] = [
 					'ability' => $ActivePlayerAbility->GetAbility(),
 					'quantity' => 1
 				];
 			}
 			else
 			{
-				$this->ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ][ 'quantity' ]++;
+				$ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ][ 'quantity' ]++;
 			}
 		}
+		return array_values( $ActivePlayerAbilities );
 	}
 
 	public function AddActivePlayerAbility( $ActiveAbility )
@@ -132,6 +135,7 @@ class Lane
 			{
 				// TODO: @Contex: Remove whatever effects the ability had
 				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
+				AbilityItem::HandleAbility( $this, null, $ActiveAbility, true );
 				unset( $this->ActivePlayerAbilities[ $Key ] );
 			}
 		}
