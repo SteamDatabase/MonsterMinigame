@@ -56,8 +56,36 @@ class Player
 		];
 
 		// TODO
-		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 3 );
+		#$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 3 );
 		#$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
+
+		// support abilities
+		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseDamage, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Support_Heal, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseGoldDropped, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Support_DecreaseCooldowns, 1 );
+
+		// offensive abilities
+		$this->AddAbilityItem( Enums\EAbility::Offensive_HighDamageOneTarget, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Offensive_DamageAllTargets, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Offensive_DOTAllTargets, 1 );
+
+		// item
+		$this->AddAbilityItem( Enums\EAbility::Item_Resurrection, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_KillTower, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_KillMob, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_MaxElementalDamage, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseCritPercentagePermanently, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseHPPermanently, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_GoldForDamage, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_Invulnerability, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_GiveGold, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_StealHealth, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_ReflectDamage, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_GiveRandomItem, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_ClearCooldowns, 1 );
 	}
 
 	public function IsActive()
@@ -340,6 +368,11 @@ class Player
 		$this->Stats->GoldUsed += $Amount;
 	}
 
+	public function IsInvulnerable()
+	{
+		return $this->HasActiveAbility( Enums\EAbility::Item_Invulnerability );
+	}
+
 	public function AddAbility( $Ability )
 	{
 		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
@@ -381,7 +414,7 @@ class Player
 	{
 		$ActiveAbility = new ActiveAbility( $Ability );
 
-		$this->ActiveAbilities[] = $ActiveAbility;
+		$this->ActiveAbilities[ $Ability ] = $ActiveAbility;
 
 		return $ActiveAbility;
 	}
@@ -389,6 +422,16 @@ class Player
 	public function RemoveActiveAbility( $Ability )
 	{
 		unset( $this->ActiveAbilities[ $Ability ] );
+	}
+
+	public function HasActiveAbility( $AbilityId )
+	{
+		return isset( $this->ActiveAbilities[ $AbilityId ] );
+	}
+
+	public function GetActiveAbility( $AbilityId )
+	{
+		return $this->ActiveAbilities[ $AbilityId ];
 	}
 
 	public function UseAbility( $Game, $Ability )

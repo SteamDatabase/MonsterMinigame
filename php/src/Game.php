@@ -514,6 +514,10 @@ class Game
 				if( $Player->GetCurrentLane() === $LaneId )
 				{
 					$PlayersInLane[] = $Player;
+					if( $Player->IsInvulnerable() )
+					{
+						continue;
+					}
 					if( $SecondPassed && !$Player->IsDead() )
 					{
 						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed;
