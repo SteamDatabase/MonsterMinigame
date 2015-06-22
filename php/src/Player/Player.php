@@ -56,7 +56,7 @@ class Player
 		];
 
 		// TODO
-		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 3 );
 		#$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
 	}
 
