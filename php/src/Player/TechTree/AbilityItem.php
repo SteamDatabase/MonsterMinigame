@@ -108,6 +108,8 @@ class AbilityItem
 
 	public static function HandleAbility( $Lane, $Player, $Ability, $Deactivate = false )
 	{
+		$AbilityMultiplier = self::GetMultiplier( $Ability->GetAbility() );
+
 		switch( $Ability->GetAbility() )
 		{
 			case Enums\EAbility::Support_IncreaseDamage:
@@ -123,11 +125,11 @@ class AbilityItem
 			case Enums\EAbility::Support_IncreaseCritPercentage:
 				if($Deactivate)
 				{
-					$Lane->DecreaseCritClickDamageMultiplier( $AbilityMultiplier );
+					$Lane->DecreaseCritClickDamageAddition( $AbilityMultiplier );
 				}
 				else
 				{
-					$Lane->IncreaseCritClickDamageMultiplier( $AbilityMultiplier );
+					$Lane->IncreaseCritClickDamageAddition( $AbilityMultiplier );
 				}
 				break;
 			case Enums\EAbility::Support_Heal:

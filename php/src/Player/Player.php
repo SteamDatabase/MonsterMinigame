@@ -132,8 +132,13 @@ class Player
 					}
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
+
+					// Abilities
+					$Damage *= $Lane->GetDamageMultiplier();
+
+					// Elementals
 					$Damage *= $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );
-					if( $this->IsCriticalHit() )
+					if( $this->IsCriticalHit( $Lane ) )
 					{
 						$Damage *= $this->GetTechTree()->GetDamageMultiplierCrit();
 						$this->CritDamage = $Damage;
@@ -179,7 +184,7 @@ class Player
 			if(
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
 			||  ( $Upgrade->IsLevelOneUpgrade() && $Upgrade->GetLevel() >= 1) // One level upgrades
-			||  ( Upgrade::HasRequiredUpgrade( $UpgradeId ) && $this->GetTechTree()->GetUpgrade( $Upgrade->GetRequiredUpgrade() )->GetLevel() < Upgrade::GetRequiredLevel( $UpgradeId ) ) // Does not have the required upgrade & level
+			||  ( Upgrade::HasRequiredUpgrade( $UpgradeId ) && $this->GetTechTree()->GetUpgrade( Upgrade::GetRequiredUpgrade( $UpgradeId ) )->GetLevel() < Upgrade::GetRequiredLevel( $UpgradeId ) ) // Does not have the required upgrade & level
 			) 
 			{
 				continue;
@@ -427,9 +432,10 @@ class Player
 		return $this->CritDamage;
 	}
 
-	public function IsCriticalHit()
+	public function IsCriticalHit( $Lane )
 	{
 		$CritPercentage = $this->GetTechTree()->GetCritPercentage();
+		$CritPercentage += $Lane->GetCritClickDamageAddition();
 		$RandPercent = rand( 1, 100 );
 		return $RandPercent < $CritPercentage;
 	}

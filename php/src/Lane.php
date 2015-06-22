@@ -23,7 +23,7 @@ class Lane
 	private $GoldDropped;
 	private $ActivePlayerAbilities;
 	private $DamageMultiplier = 0;
-	private $CritClickDamageMultiplier = 0;
+	private $CritClickDamageAddition = 0;
 
 	public function __construct(
 		array $Enemies,
@@ -239,23 +239,23 @@ class Lane
 		$this->DamageMultiplier -= $Amount;
 	}
 
-	public function GetCritClickDamageMultiplier()
+	public function GetCritClickDamageAddition()
 	{
-		return $this->CritClickDamage !== 0 ? $this->CritClickDamage : 1;
+		return $this->CritClickDamageAddition !== 0 ? $this->CritClickDamageAddition : 0;
 	}
 
-	public function SetCritClickDamage( $CritClickDamage )
+	public function SetCritClickDamageAddition( $CritClickDamageAddition )
 	{
-		$this->CritClickDamage = $CritClickDamage;
+		$this->CritClickDamageAddition = $CritClickDamageAddition;
 	}
 
-	public function IncreaseCritClickDamage( $Amount )
+	public function IncreaseCritClickDamageAddition( $Amount )
 	{
-		$this->CritClickDamage += $Amount;
+		$this->CritClickDamageAddition += $Amount;
 	}
 
-	public function DecreaseCritClickDamage( $Amount )
+	public function DecreaseCritClickDamageAddition( $Amount )
 	{
-		$this->CritClickDamage -= $Amount;
+		$this->CritClickDamageAddition -= $Amount;
 	}
 }

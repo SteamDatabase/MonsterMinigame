@@ -383,6 +383,7 @@ class Game
 				{
 					$DealtDpsDamage = $Player->GetTechTree()->GetDps()
 									* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() )
+									* $this->Lanes[ $Player->GetCurrentLane() ]->GetDamageMultiplier()
 									* $SecondsPassed;
 					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
 					$Enemy->DamageTaken += $DealtDpsDamage;
