@@ -25,9 +25,9 @@ class ActiveAbility
 	public function ToArray()
 	{
 		return [
+			'actor' => 'TODO: add name here',
 			'ability' => $this->Ability,
-			'timestamp_done' => $this->TimestampDone,
-			'timestamp_cooldown' => $this->TimestampCooldown
+			'time' => $this->TimestampDone,
 		];
 	}
 

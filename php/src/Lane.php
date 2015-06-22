@@ -99,7 +99,7 @@ class Lane
 		return $this->ActivePlayerAbilities;
 	}
 
-	public function AddActivePlayerAbility( $Ability )
+	public function AddActivePlayerAbility( $ActiveAbility, $Ability )
 	{
 		if ( !isset( $this->ActivePlayerAbilities[ $Ability ] ) )
 		{
@@ -112,7 +112,8 @@ class Lane
 		{
 			$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ]++;
 		}
-		#$this->ActivityLog[] = $ActiveAbility->ToArray(); TODO
+
+		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}
 
 	public function RemoveActivePlayerAbility( $Ability )

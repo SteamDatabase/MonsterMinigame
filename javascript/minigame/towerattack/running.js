@@ -792,8 +792,8 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 				this.m_rgActionLog.push({
 					'icon': false,
 					'type': 'ability',
+					'ability': rgActivityLog[i].ability,
 					'actor_name': rgActivityLog[i].actor,
-					'message': rgActivityLog[i].message,
 					'time': rgActivityLog[i].time
 				});
 

@@ -453,7 +453,11 @@ class Player
 
 	public function AddActiveAbility( $Ability )
 	{
-		$this->ActiveAbilities[] = new ActiveAbility( $Ability );
+		$ActiveAbility = new ActiveAbility( $Ability );
+
+		$this->ActiveAbilities[] = $ActiveAbility;
+
+		return $ActiveAbility;
 	}
 
 	public function RemoveActiveAbility( $Ability )
@@ -463,14 +467,15 @@ class Player
 
 	public function UseAbility( $Game, $Ability )
 	{
-		$Ability = $this->GetTechTree()->HasAbilityItem( $Ability );
 		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )
 		{
 			return false;
 		}
-		$this->AddActiveAbility( $Ability );
+
+		$ActiveAbility = $this->AddActiveAbility( $Ability );
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
-		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $Ability );
+		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility, $Ability );
+
 		return true;
 	}
 
