@@ -245,6 +245,7 @@ class Game
 			);
 
 			$this->Lanes[] = new Lane(
+				$i,
 				$Enemies,
 				0, //dps
 				0, //gold dropped
@@ -407,7 +408,7 @@ class Game
 		$DeadLanes = 0;
 		foreach( $this->Lanes as $LaneId => $Lane )
 		{
-			$Lane->CheckActivePlayerAbilities();
+			$Lane->CheckActivePlayerAbilities( $this );
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
 			$EnemyDpsDamage = 0;

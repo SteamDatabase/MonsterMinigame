@@ -446,7 +446,8 @@ class Player
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
 		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility ); # TODO @Contex: Move this to HandleAbility?
 
-		AbilityItem::HandleAbility( 
+		AbilityItem::HandleAbility(
+			$Game,
 			$Game->GetLane( $this->GetCurrentLane() ), 
 			$this,
 			$ActiveAbility
@@ -460,6 +461,7 @@ class Player
 			if( $ActiveAbility->IsCooledDown() )
 			{
 				AbilityItem::HandleAbility( 
+					$Game,
 					$Game->GetLane( $this->GetCurrentLane() ), 
 					$this,
 					$ActiveAbility,

@@ -106,14 +106,14 @@ class AbilityItem
 		return $TuningData[ $AbilityId ][ $Key ];
 	}
 
-	public static function HandleAbility( $Lane, $Player, $Ability, $Deactivate = false )
+	public static function HandleAbility( $Game, $Lane, $Player, $Ability, $Deactivate = false )
 	{
 		$AbilityMultiplier = self::GetMultiplier( $Ability->GetAbility() );
 
 		switch( $Ability->GetAbility() )
 		{
 			case Enums\EAbility::Support_IncreaseDamage:
-				if($Deactivate)
+				if( $Deactivate )
 				{
 					$Lane->DecreaseDamageMultiplier( $AbilityMultiplier );
 				}
@@ -123,7 +123,7 @@ class AbilityItem
 				}
 				break;
 			case Enums\EAbility::Support_IncreaseCritPercentage:
-				if($Deactivate)
+				if( $Deactivate )
 				{
 					$Lane->DecreaseCritClickDamageAddition( $AbilityMultiplier );
 				}
@@ -151,7 +151,17 @@ class AbilityItem
 				// TODO: Add ability logic
 				break;
 			case Enums\EAbility::Item_Resurrection:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
+					foreach( $PlayersInLane as $PlayerInLane )
+					{
+						if( $PlayerInLane->IsDead() )
+						{
+							$PlayerInLane->Respawn();
+						}
+					}
+				}
 				break;
 			case Enums\EAbility::Item_KillTower:
 				// TODO: Add ability logic

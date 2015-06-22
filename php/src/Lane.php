@@ -24,8 +24,10 @@ class Lane
 	private $ActivePlayerAbilities;
 	private $DamageMultiplier = 0;
 	private $CritClickDamageAddition = 0;
+	private $LaneId;
 
 	public function __construct(
+		$LaneId,
 		array $Enemies,
 		$Dps,
 		$GoldDropped,
@@ -36,6 +38,7 @@ class Lane
 		$ActivePlayerAbilityDecreaseCooldowns,
 		$ActivePlayerAbilityGoldPerClick
 	) {
+		$this->LaneId = $LaneId;
 		$this->Enemies = $Enemies;
 		$this->Dps = $Dps;
 		$this->GoldDropped = $GoldDropped;
@@ -60,6 +63,11 @@ class Lane
 			'active_player_ability_decrease_cooldowns' => (double) $this->GetActivePlayerAbilityDecreaseCooldowns(),
 			'active_player_ability_gold_per_click' => (double) $this->GetActivePlayerAbilityGoldPerClick()
 		);
+	}
+
+	public function GetLaneId()
+	{
+		return $this->LaneId;
 	}
 
 	public function GetEnemy( $Key )
@@ -127,7 +135,7 @@ class Lane
 		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}
 
-	public function CheckActivePlayerAbilities()
+	public function CheckActivePlayerAbilities( $Game )
 	{
 		foreach( $this->ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
@@ -135,7 +143,7 @@ class Lane
 			{
 				// TODO: @Contex: Remove whatever effects the ability had
 				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
-				AbilityItem::HandleAbility( $this, null, $ActiveAbility, true );
+				AbilityItem::HandleAbility( $Game, $this, null, $ActiveAbility, true );
 				unset( $this->ActivePlayerAbilities[ $Key ] );
 			}
 		}
