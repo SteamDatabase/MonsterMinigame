@@ -28,24 +28,25 @@ class Enemy
 		$this->Type = $Type;
 		// TODO: Tower and MiniBoss respawns, see GetRespawnTime()
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
+		// TODO: Figure out if valve floored the value or just rounded
 		if( $this->GetType() === Enums\EEnemyType::Mob ) 
 		{
 			$Variance = $this->GetHpMultiplierVariance();
-			$LowestHp = Util::PredictValue( $Level * $this->GetHpMultiplier(), $this->GetTuningHp() - $Variance, $this->GetHpExponent() );
-			$HighestHp = Util::PredictValue( $Level * $this->GetHpMultiplier(), $this->GetTuningHp() + $Variance, $this->GetHpExponent() );
-			$this->MaxHp = rand( $LowestHp, $HighestHp );
+			$LowestHp  = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp() - $Variance, $Level * $this->GetHpMultiplier() );
+			$HighestHp = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp() + $Variance, $Level * $this->GetHpMultiplier() );
+			$this->MaxHp = floor( rand( $LowestHp, $HighestHp ) );
 		} 
 		else 
 		{
-			$this->MaxHp = Util::PredictValue( $Level * $this->GetHpMultiplier(), $this->GetTuningHp(), $this->GetHpExponent() );
+			$this->MaxHp = floor( Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp(), $Level * $this->GetHpMultiplier() ) );
 		}
 
 		// Deal with respawn/alive timer
+		// TODO: dps is wrong and does not match valve's data
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
-		// TODO: test if multiplier needs to be on level
-		$this->Dps = floor( Util::PredictValue( $Level, $this->GetTuningDps() * $this->GetDpsMultiplier(), $this->GetDpsExponent() ));
-		$this->Gold = Util::PredictValue( $Level, $this->GetTuninGold() * $this->GetGoldMultiplier(), $this->GetGoldExponent(), true );
+		$this->Dps = floor( Util::PredictValue( $this->GetDpsExponent(), $this->GetTuningDps(), $Level * $this->GetDpsMultiplier() ) );
+		$this->Gold = floor( Util::PredictValue( $this->GetGoldExponent(), $this->GetTuninGold(), $Level * $this->GetGoldMultiplier() ) );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 

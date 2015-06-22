@@ -82,6 +82,7 @@
         "hp_multiplier": "1.2",
         "hp_exponent": "1.5",
         "dps_exponent": "1.2",
+        "dps_multiplier": 1,
         "lifetime": 10,
         "chance": "0.01",
         "gold_multiplier": "1.7",
