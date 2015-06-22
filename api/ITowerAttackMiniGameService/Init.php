@@ -6,11 +6,24 @@ function Handle( $Method, $Data = [] )
 {
 	// Require all API calls to have proper gameid
 	$GameID = (int)filter_input( $Method, 'gameid', FILTER_SANITIZE_NUMBER_INT );
-
+	
 	if( $GameID < 1 )
 	{
 		http_response_code( 400 );
 		die;
+	}
+	
+	if( $Method === INPUT_POST )
+	{
+		session_start();
+		
+		$Token = $_POST[ 'access_token' ];
+		
+		if( !isset( $_SESSION[ 'SteamID' ] ) || $_SESSION[ 'SteamID' ] !== $_POST[ 'access_token' ] )
+		{
+			http_response_code( 401 );
+			die;
+		}
 	}
 	
 	$Data[ 'gameid' ] = $GameID;
