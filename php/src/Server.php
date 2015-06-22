@@ -3,7 +3,7 @@ namespace SteamDB\CTowerAttack;
 
 class Server
 {
-	const VERSION = 'Beta v0.5';
+	const VERSION = 'Alpha v0.7';
 	const TICK_RATE = 0.1; // 100 / 1000
 
 	public $SaneServer;
