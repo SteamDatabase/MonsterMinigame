@@ -27,7 +27,7 @@ class Game
 	private $TimestampLevelStart;
 	private $UniverseState;
 	private $LastMobId = 0;
-	
+
 	public $NumClicks = 0;
 	public $NumMobsKilled = 0;
 	public $NumTowersKilled = 0;
@@ -57,16 +57,23 @@ class Game
 		l( 'Created new game' );
 	}
 
-	private function CreatePlayer( $AccountId )
+	public function CreatePlayer( $AccountId )
 	{
-		$this->Players[ $AccountId ] = new Player\Base(
-			$AccountId //steam id/account id, remember to cast (string)
+		l( 'Creating new player ' . $AccountId );
+
+		$Player = new Player\Base(
+			$AccountId
 		);
+
+		$this->Players[ $AccountId ] = $Player;
+
 		if( count( $this->Players ) == self::START_LIMIT )
 		{
 			$this->GenerateNewLanes();
 			$this->SetStatus( Enums\EStatus::Running );
 		}
+
+		return $Player;
 	}
 
 	public function GenerateNewLevel()
@@ -143,7 +150,7 @@ class Game
 			$BossLaneId = rand( 0, 2 );
 		}
 		// Create 3 lanes
-		for( $i = 0; 3 > $i; $i++ ) 
+		for( $i = 0; 3 > $i; $i++ )
 		{
 			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			$ActivePlayerAbilities = [];
@@ -173,10 +180,10 @@ class Game
 						'ability' => $RandomAbilityId,
 						'quantity' => rand( 1, 5 )
 					];
-					// TODO: Remove active abilties after their time runs out 
+					// TODO: Remove active abilties after their time runs out
 				}
 			}
-			
+
 			$Enemies = array();
 			if( $this->IsBossLevel() )
 			{
@@ -191,7 +198,7 @@ class Game
 				}
 				else
 				{
-					for( $a = 0; 3 > $a; $a++ ) 
+					for( $a = 0; 3 > $a; $a++ )
 					{
 						$Enemies[] = new Enemy(
 							$this->GetNextMobId(),
@@ -210,7 +217,7 @@ class Game
 					$this->GetLevel()
 				);
 
-				for( $a = 0; 3 > $a; $a++ ) 
+				for( $a = 0; 3 > $a; $a++ )
 				{
 					if( !$HasTreasureMob && Enemy::SpawnTreasureMob() )
 					{
@@ -339,14 +346,11 @@ class Game
 
 	public function GetPlayer( $AccountId )
 	{
-		//TODO: remove this
-		if( !array_key_exists( $AccountId, $this->Players ) )
+		if( !isset( $this->Players[ $AccountId ] ) )
 		{
-			l( 'Creating new player ' . $AccountId );
-			$this->CreatePlayer( $AccountId );
+			return null;
 		}
 
-		//TODO: return array_key_exists( $AccountId, $this->Players ) ? $this->Players[$AccountId] : null;
 		return $this->Players[ $AccountId ];
 	}
 
@@ -392,11 +396,11 @@ class Game
 			{
 				// Deal DPS damage to current target
 				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->GetEnemy( $Player->GetTarget() );
-				
+
 				if( $Enemy !== null )
 				{
-					$DealtDpsDamage = $Player->GetTechTree()->GetDps() 
-									* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() ) 
+					$DealtDpsDamage = $Player->GetTechTree()->GetDps()
+									* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() )
 									* $SecondsPassed;
 					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
 					$Enemy->DamageTaken += $DealtDpsDamage;
@@ -452,7 +456,7 @@ class Game
 					}
 					if( $Enemy->IsDead() )
 					{
-						switch( $Enemy->GetType() ) 
+						switch( $Enemy->GetType() )
 						{
 							case Enums\EEnemyType::Tower:
 								$this->NumTowersKilled++;
@@ -483,7 +487,7 @@ class Game
 
 				if( $Enemy->HasTimer() && $Enemy->IsTimerEnabled() && $Enemy->HasTimerRanOut( $SecondsPassed ) )
 				{
-					switch( $Enemy->GetType() ) 
+					switch( $Enemy->GetType() )
 					{
 						case Enums\EEnemyType::Tower:
 							if( $Enemy->IsDead() )
@@ -547,7 +551,7 @@ class Game
 			$Lane->Dps = $LaneDps[ $LaneId ];
 			$Lane->UpdateHpBuckets( $PlayersInLane );
 		}
-		if( $DeadLanes === 3 ) 
+		if( $DeadLanes === 3 )
 		{
 			$this->GenerateNewLevel();
 		}

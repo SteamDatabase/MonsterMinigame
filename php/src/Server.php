@@ -58,7 +58,8 @@ class Server
 			l( $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
-			$Response = null;
+			$Response = [];
+
 			switch ( $Data[ 'method' ] )
 			{
 				case 'ChatMessage':
@@ -90,7 +91,9 @@ class Server
 
 					if( $Player === null )
 					{
-						break;
+						// TODO: for now
+						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ] );
+						//break;
 					}
 
 					$Response =
@@ -111,7 +114,7 @@ class Server
 
 					if( $Player === null )
 					{
-						break;
+						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ] );
 					}
 
 					if( $Data[ 'method' ] == 'ChooseUpgrade' )
