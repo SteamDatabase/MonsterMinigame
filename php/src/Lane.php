@@ -51,7 +51,7 @@ class Lane
 			'enemies' => $this->GetEnemiesArray(),
 			'dps' => (double) $this->GetDps(),
 			'gold_dropped' => (double) $this->GetGoldDropped(),
-			'active_player_abilities' => array_values( $this->GetActivePlayerAbilities() ),
+			'active_player_abilities' => array_values( $this->GetActivePlayerAbilitiesAsArray() ),
 			'activity_log' => $this->ActivityLog,
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
@@ -99,33 +99,41 @@ class Lane
 		return $this->ActivePlayerAbilities;
 	}
 
-	public function AddActivePlayerAbility( $ActiveAbility, $Ability )
+	public function GetActivePlayerAbilitiesAsArray()
 	{
-		if ( !isset( $this->ActivePlayerAbilities[ $Ability ] ) )
+		$ActivePlayerAbilities = [];
+		foreach( $this->ActivePlayerAbilities as $ActivePlayerAbility )
 		{
-			$this->ActivePlayerAbilities[ $Ability ] = [
-				'ability' => $Ability,
-				'quantity' => 1
-			];
+			if ( !isset( $this->ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ] ) )
+			{
+				$this->ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ] = [
+					'ability' => $ActivePlayerAbility->GetAbility(),
+					'quantity' => 1
+				];
+			}
+			else
+			{
+				$this->ActivePlayerAbilities[ $ActivePlayerAbility->GetAbility() ][ 'quantity' ]++;
+			}
 		}
-		else
-		{
-			$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ]++;
-		}
+	}
 
+	public function AddActivePlayerAbility( $ActiveAbility )
+	{
+		$this->ActivePlayerAbilities[] = $ActiveAbility;
 		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}
 
-	public function RemoveActivePlayerAbility( $Ability )
+	public function CheckActivePlayerAbilities()
 	{
-		if( !isset( $this->ActivePlayerAbilities[ $Ability ] ) )
+		foreach( $this->ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
-			return;
-		}
-
-		if( --$this->ActivePlayerAbilities[ $Ability ][ 'quantity' ] <= 0 )
-		{
-			unset( $this->ActivePlayerAbilities[ $Ability ] );
+			if( $ActiveAbility->isDone() ) 
+			{
+				// TODO: @Contex: Remove whatever effects the ability had
+				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
+				unset( $this->ActivePlayerAbilities[ $Key ] );
+			}
 		}
 	}
 

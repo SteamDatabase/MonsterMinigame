@@ -157,7 +157,7 @@ class Game
 		for( $i = 0; 3 > $i; $i++ )
 		{
 			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			$ActivePlayerAbilities = [];
+			$ActivePlayerAbilities = []; # TODO: @Contex: Get previous active player abilities?
 			$ActivityLog = []; # TODO: Get previous log?
 			foreach( $this->Players as $Player )
 			{
@@ -408,6 +408,7 @@ class Game
 		$DeadLanes = 0;
 		foreach( $this->Lanes as $LaneId => $Lane )
 		{
+			$Lane->CheckActivePlayerAbilities();
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
 			$EnemyDpsDamage = 0;

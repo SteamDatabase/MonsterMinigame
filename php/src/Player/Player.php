@@ -474,7 +474,7 @@ class Player
 
 		$ActiveAbility = $this->AddActiveAbility( $Ability );
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
-		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility, $Ability );
+		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility );
 
 		return true;
 	}
@@ -483,13 +483,6 @@ class Player
 	{
 		foreach( $this->ActiveAbilities as $Key => $ActiveAbility )
 		{
-			if( $ActiveAbility->isDone() ) 
-			{
-				// TODO: Remove whatever effects the ability had
-				// TODO: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
-				$Game->GetLane( $this->GetCurrentLane() )->RemoveActivePlayerAbility( $ActiveAbility->GetAbility() );
-			}
-			
 			if( $ActiveAbility->IsCooledDown() )
 			{
 				$this->RemoveActiveAbility( $Key );
