@@ -18,8 +18,8 @@ class ActiveAbility
 	public function __construct( $Ability )
 	{
 		$this->Ability = $Ability;
-		$this->TimestampDone = time() + $this->GetDuration();
-		$this->TimestampCooldown = time() + $this->GetCooldown();
+		$this->TimestampDone = time() + AbilityItem::GetDuration( $Ability );
+		$this->TimestampCooldown = time() + AbilityItem::GetCooldown( $Ability );
 	}
 
 	public function ToArray()

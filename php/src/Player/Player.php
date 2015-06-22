@@ -106,7 +106,7 @@ class Player
 			];
 
 			if( 
-				in_array( AbilityItem::GetTypeOfAbility( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes )
+				in_array( AbilityItem::GetType( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes )
 				&& 
 				$this->UseAbility( $Game, $RequestedAbility[ 'ability' ] ) === false 
 			)
