@@ -13,10 +13,18 @@ class AbilityItem
 	private $Ability;
 	private $Quantity;
 
-	public function __construct( $Ability, $Quantity )
+	public function __construct( $Ability, $Quantity = 1 )
 	{
 		$this->Ability = $Ability;
 		$this->Quantity = $Quantity;
+	}
+
+	public function ToArray()
+	{
+		return [
+			'ability' => $this->Ability,
+			'quantity' => $this->Quantity
+		];
 	}
 
 	public function GetAbility()
@@ -29,12 +37,45 @@ class AbilityItem
 		return $this->Quantity;
 	}
 
-	public function ToArray()
+
+	public function GetName()
 	{
-		return [
-			'ability' => $this->Ability,
-			'quantity' => $this->Quantity
-		];
+		return $this->GetAbilityTuningData( 'name' );
+	}
+
+	public function GetType()
+	{
+		return $this->GetAbilityTuningData( 'type' );
+	}
+
+	public function GetMultiplier()
+	{
+		return $this->GetAbilityTuningData( 'multiplier' );
+	}
+
+	public function GetBadgePointsCost()
+	{
+		return $this->GetAbilityTuningData( 'badge_points_cost' );
+	}
+
+	public function IsInstant()
+	{
+		return $this->GetAbilityTuningData( 'instant' ) === 1;
+	}
+
+	public function GetDuration()
+	{
+		return $this->GetAbilityTuningData( 'duration' );
+	}
+
+	public function GetCooldown()
+	{
+		return $this->GetAbilityTuningData( 'cooldown' );
+	}
+
+	public function GetDescription()
+	{
+		return $this->GetAbilityTuningData( 'desc' );
 	}
 
 	private function GetAbilityTuningData( $Key = null )
@@ -42,9 +83,44 @@ class AbilityItem
 		return self::GetTuningData( $this->Ability, $Key );
 	}
 
+	public static function GetNameOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'name' );
+	}
+
 	public static function GetTypeOfAbility( $Ability )
 	{
 		return self::GetTuningData( $Ability, 'type' );
+	}
+
+	public static function GetMultiplierOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'multiplier' );
+	}
+
+	public static function IsAbilityInstant( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'instant' ) === 1;
+	}
+
+	public static function GetBadgePointCostOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'badge_points_cost' );
+	}
+
+	public static function GetDurationOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'duration' );
+	}
+
+	public static function GetCooldownOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'cooldown' );
+	}
+
+	public static function GetDescriptionOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'desc' );
 	}
 
 	public static function GetTuningData( $Ability, $Key = null )

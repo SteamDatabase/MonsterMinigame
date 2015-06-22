@@ -114,6 +114,11 @@ class Player
 				// Type is incorrect and ability usage failed, ignore and continue.
 				continue;
 			}
+			else
+			{
+				$AbilityMultiplier = AbilityItem::GetGetMultiplierOfAbility( $RequestedAbility[ 'ability' ] );
+				$Lane = $Game->GetLane( $this->GetCurrentLane() );
+			}
 
 			switch( $RequestedAbility[ 'ability' ] ) 
 			{
@@ -161,10 +166,12 @@ class Player
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
 				case Enums\EAbility::Support_IncreaseDamage:
-					// TODO: Add ability logic
+					// TODO: Remove the effects of the ability after it has ran out
+					$Lane->IncreaseDamageMultiplier( $AbilityMultiplier );
 					break;
 				case Enums\EAbility::Support_IncreaseCritPercentage:
-					// TODO: Add ability logic
+					// TODO: Remove the effects of the ability after it has ran out
+					$Lane->IncreaseCritClickDamageMultiplier( $AbilityMultiplier );
 					break;
 				case Enums\EAbility::Support_Heal:
 					// TODO: Add ability logic

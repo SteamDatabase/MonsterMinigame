@@ -20,6 +20,8 @@ class Lane
 	public $ActivityLog = [];
 	private $GoldDropped;
 	private $ActivePlayerAbilities;
+	private $DamageMultiplier = 0;
+	private $CritClickDamageMultiplier = 0;
 
 	public function __construct(
 		array $Enemies,
@@ -202,5 +204,45 @@ class Lane
 		{
 			$this->PlayerHpBuckets[ $Player->GetHpLevel() ]++;
 		}
+	}
+
+	public function GetDamageMultiplier()
+	{
+		return $this->DamageMultiplier !== 0 ? $this->DamageMultiplier : 1;
+	}
+
+	public function SetDamageMultiplier( $DamageMultiplier )
+	{
+		$this->DamageMultiplier = $DamageMultiplier;
+	}
+
+	public function IncreaseDamageMultiplier( $Amount )
+	{
+		$this->DamageMultiplier += $Amount;
+	}
+
+	public function DecreaseDamageMultiplier( $Amount )
+	{
+		$this->DamageMultiplier -= $Amount;
+	}
+
+	public function GetCritClickDamageMultiplier()
+	{
+		return $this->CritClickDamage !== 0 ? $this->CritClickDamage : 1;
+	}
+
+	public function SetCritClickDamage( $CritClickDamage )
+	{
+		$this->CritClickDamage = $CritClickDamage;
+	}
+
+	public function IncreaseCritClickDamage( $Amount )
+	{
+		$this->CritClickDamage += $Amount;
+	}
+
+	public function DecreaseCritClickDamage( $Amount )
+	{
+		$this->CritClickDamage -= $Amount;
 	}
 }
