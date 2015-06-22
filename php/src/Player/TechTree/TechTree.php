@@ -92,6 +92,8 @@ class TechTree
 		);
 	}
 
+	// TODO: @Contex: Do we really need to create a new class? Why not just return the upgrade Ids.
+	// TODO: @Contex: Also, shouldn't we use EUpgrade instead of EUpgradeType (even though they all have their own type)
 	public function GetElementalUpgrades()
 	{
 		return array(
@@ -100,6 +102,21 @@ class TechTree
 			Enums\EUpgradeType::DamageMultiplier_Air => $this->GetUpgrade( Enums\EUpgradeType::DamageMultiplier_Air ),
 			Enums\EUpgradeType::DamageMultiplier_Earth => $this->GetUpgrade( Enums\EUpgradeType::DamageMultiplier_Earth )
 		);
+	}
+
+	// TODO: @Contex: Do we really need to create a new class? Why not just return the upgrade Ids.
+	public function GetAbilityUpgrades()
+	{
+		return [
+			Enums\EUpgrade::PurchaseAbility_Medics => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_Medics ),
+			Enums\EUpgrade::PurchaseAbility_MooraleBooster => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_MooraleBooster ),
+			Enums\EUpgrade::PurchaseAbility_GoodLuckCharms => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_GoodLuckCharms ),
+			Enums\EUpgrade::PurchaseAbility_MetalDetector => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_MetalDetector ),
+			Enums\EUpgrade::PurchaseAbility_DecreaseCooldowns => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_DecreaseCooldowns ),
+			Enums\EUpgrade::PurchaseAbility_TacticalNuke => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_TacticalNuke ),
+			Enums\EUpgrade::PurchaseAbility_ClusterBomb => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_ClusterBomb ),
+			Enums\EUpgrade::PurchaseAbility_BossLoot => $this->GetUpgrade( Enums\EUpgrade::PurchaseAbility_BossLoot )
+		];
 	}
 
 	public static function GetUpgradeTypeOfElement( $ElementId )
@@ -120,6 +137,18 @@ class TechTree
 	public function GetUpgrade( $UpgradeId )
 	{
 		return $this->Upgrades[ $UpgradeId ];
+	}
+
+	public function GetUpgradeByAbility( $AbilityId )
+	{
+		foreach( $this->Upgrades as $Upgrade )
+		{
+			if( Upgrade::GetAbility( $Upgrade->GetUpgradeId() ) === $AbilityId )
+			{
+				return $Upgrade;
+			}
+		}
+		return null;
 	}
 
 	public function GetUpgrades()
@@ -226,48 +255,63 @@ class TechTree
 		return $this->BadgePoints;
 	}
 
-	public function AddAbilityItem( $Ability, $Quantity = 1 )
+	public function AddAbilityItem( $AbilityId, $Quantity = 1 )
 	{
 		if( $Quantity === -1 )
 		{
-			$this->UnlockAbility( $Ability );
+			$this->UnlockAbility( $AbilityId );
 			return;
 		}
-		if ( !isset( $this->Ability[ $Ability ] ) )
+		if ( !isset( $this->AbilityId[ $AbilityId ] ) )
 		{
-			$this->AbilityItems[ $Ability ] = [
-				'ability' => $Ability,
+			$this->AbilityItems[ $AbilityId ] = [
+				'ability' => $AbilityId,
 				'quantity' => 1
 			];
 		}
 		else
 		{
-			$this->AbilityItems[ $Ability ][ 'quantity' ]++;
+			$this->AbilityItems[ $AbilityId ][ 'quantity' ]++;
 		}
 	}
 
-	public function RemoveAbilityItem( $Ability, $Quantity = 1 )
+	public function RemoveAbilityItem( $AbilityId, $Quantity = 1 )
 	{
-		$this->AbilityItems[ $Ability ][ 'quantity' ] -= $Quantity;
-		if( $this->AbilityItems[ $Ability ][ 'quantity' ] <= 0 )
+		if( isset( $this->AbilityItems[ $AbilityId ] ) )
 		{
-			unset( $this->AbilityItems[ $Ability ] );
+			$this->AbilityItems[ $AbilityId ][ 'quantity' ] -= $Quantity;
+			if( $this->AbilityItems[ $AbilityId ][ 'quantity' ] <= 0 )
+			{
+				unset( $this->AbilityItems[ $AbilityId ] );
+			}
 		}
 	}
 
-	public function HasAbilityItem( $Ability )
+	public function HasAbilityItem( $AbilityId )
 	{
-		return isset( $this->AbilityItems[ $Ability ] ) && $this->AbilityItems[ $Ability ][ 'quantity' ] > 0;
+		if( isset( $this->AbilityItems[ $AbilityId ] ) )
+		{
+			return $this->AbilityItems[ $AbilityId ][ 'quantity' ] > 0;
+		}
+		else
+		{
+			$Upgrade = $this->GetUpgradeByAbility( $AbilityId );
+			if( $Upgrade !== null ) 
+			{
+				return $Upgrade->GetLevel() > 0;
+			}
+		}
+		return false;
 	}
 
-	public function GetAbilityQuantity( $Ability )
+	public function GetAbilityQuantity( $AbilityId )
 	{
-		return $this->AbilityItems[ $Ability ][ 'quantity' ];
+		return $this->AbilityItems[ $AbilityId ][ 'quantity' ];
 	}
 
-	public function GetAbilityItem( $Ability )
+	public function GetAbilityItem( $AbilityId )
 	{
-		return $this->AbilityItems[ $Ability ];
+		return $this->AbilityItems[ $AbilityId ];
 	}
 
 	public function GetAbilityItems()
@@ -310,14 +354,14 @@ class TechTree
 		return $this->Dps;
 	}
 
-	public function UnlockAbility( $Ability )
+	public function UnlockAbility( $AbilityId )
 	{
-		$this->UnlockedAbilitiesBitfield |= ( 1 << $Ability );
+		$this->UnlockedAbilitiesBitfield |= ( 1 << $AbilityId );
 	}
 
-	public function LockAbility( $Ability )
+	public function LockAbility( $AbilityId )
 	{
-		$this->UnlockedAbilitiesBitfield &= ~( 1 << $Ability );
+		$this->UnlockedAbilitiesBitfield &= ~( 1 << $AbilityId );
 	}
 
 	public function RecalulateUpgrades()
@@ -338,12 +382,12 @@ class TechTree
 
 		foreach( $this->GetUpgrades() as $Upgrade ) 
 		{
-			$Value = $Upgrade->GetMultiplier() * $Upgrade->GetLevel();
+			$Value = Upgrade::GetMultiplier( $Upgrade->GetUpgradeId() ) * $Upgrade->GetLevel();
 			if( $Value === 0 ) 
 			{
 				continue;
 			}
-			switch( $Upgrade->GetType() ) 
+			switch( Upgrade::GetType( $Upgrade->GetUpgradeId() ) ) 
 			{
 				case Enums\EUpgradeType::HitPoints:
 					$Data[ 'hp_multiplier' ] += $Value;

@@ -4,6 +4,7 @@ namespace SteamDB\CTowerAttack\Player;
 use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
 use SteamDB\CTowerAttack\Game;
+use SteamDB\CTowerAttack\Player\TechTree\Upgrade;
 use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class Player
@@ -105,19 +106,19 @@ class Player
 				Enums\EAbilityType::Item
 			];
 
-			if( 
-				in_array( AbilityItem::GetType( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes )
-				&& 
-				$this->UseAbility( $Game, $RequestedAbility[ 'ability' ] ) === false 
-			)
+			if( in_array( AbilityItem::GetType( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes ) )
 			{
-				// Type is incorrect and ability usage failed, ignore and continue.
-				continue;
-			}
-			else
-			{
-				$AbilityMultiplier = AbilityItem::GetMultiplier( $RequestedAbility[ 'ability' ] );
-				$Lane = $Game->GetLane( $this->GetCurrentLane() );
+				if( $this->UseAbility( $Game, $RequestedAbility[ 'ability' ] ) === false )
+				{
+					// Ability usage failed, ignore and continue.
+					continue;
+				}
+				else
+				{
+					// Ability executed succesfully!
+					$AbilityMultiplier = AbilityItem::GetMultiplier( $RequestedAbility[ 'ability' ] );
+					$Lane = $Game->GetLane( $this->GetCurrentLane() );
+				}
 			}
 
 			switch( $RequestedAbility[ 'ability' ] ) 
@@ -257,7 +258,7 @@ class Player
 			if(
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
 			||  ( $Upgrade->IsLevelOneUpgrade() && $Upgrade->GetLevel() >= 1) // One level upgrades
-			||  ( $Upgrade->HasRequiredUpgrade() && $this->GetTechTree()->GetUpgrade($Upgrade->GetRequiredUpgrade())->GetLevel() < $Upgrade->GetRequiredLevel()) // Does not have the required upgrade & level
+			||  ( Upgrade::HasRequiredUpgrade( $UpgradeId ) && $this->GetTechTree()->GetUpgrade( $Upgrade->GetRequiredUpgrade() )->GetLevel() < Upgrade::GetRequiredLevel( $UpgradeId ) ) // Does not have the required upgrade & level
 			) 
 			{
 				continue;
@@ -278,18 +279,18 @@ class Player
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
 			}
-			else if( $Upgrade->GetUpgradeId() === Enums\EUpgrade::DPS_AutoFireCanon )
+			else if( $UpgradeId === Enums\EUpgrade::DPS_AutoFireCanon )
 			{
 				$this->getTechTree()->BaseDps = $Upgrade->GetInitialValue();
 				$this->getTechTree()->Dps = $this->getTechTree()->BaseDps;
 			}
-			else if( $Upgrade->GetType() === Enums\EUpgradeType::HitPoints )
+			else if( Upgrade::GetType( $UpgradeId ) === Enums\EUpgradeType::HitPoints )
 			{
 				$HpUpgrade = true;
 			}
-			else if( $Upgrade->GetType() === Enums\EUpgradeType::PurchaseAbility )
+			else if( Upgrade::GetType( $UpgradeId ) === Enums\EUpgradeType::PurchaseAbility )
 			{
-				$this->GetTechTree()->AddAbilityItem( $Upgrade->GetAbility(), -1 );
+				$this->GetTechTree()->AddAbilityItem( Upgrade::GetAbility( $UpgradeId ), -1 );
 			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();
@@ -462,6 +463,7 @@ class Player
 
 	public function UseAbility( $Game, $Ability )
 	{
+		$Ability = $this->GetTechTree()->HasAbilityItem( $Ability );
 		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )
 		{
 			return false;

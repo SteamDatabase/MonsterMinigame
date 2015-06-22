@@ -42,62 +42,66 @@ class AbilityItem
 		return self::GetTuningData( $this->Ability, $Key );
 	}
 
-	public static function GetName( $Ability )
+	public static function GetName( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'name' );
+		return self::GetTuningData( $AbilityId, 'name' );
 	}
 
-	public static function GetType( $Ability )
+	public static function GetType( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'type' );
+		return self::GetTuningData( $AbilityId, 'type' );
 	}
 
-	public static function GetMaxNumClicks( $Ability )
+	public static function GetMaxNumClicks( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'max_num_clicks' );
+		return self::GetTuningData( $AbilityId, 'max_num_clicks' );
 	}
 
-	public static function GetMultiplier( $Ability )
+	public static function GetMultiplier( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'multiplier' );
+		return self::GetTuningData( $AbilityId, 'multiplier' );
 	}
 
-	public static function IsAbilityInstant( $Ability )
+	public static function IsAbilityInstant( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'instant' ) === 1;
+		return self::GetTuningData( $AbilityId, 'instant' ) === 1;
 	}
 
-	public static function GetBadgePointCost( $Ability )
+	public static function GetBadgePointCost( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'badge_points_cost' );
+		return self::GetTuningData( $AbilityId, 'badge_points_cost' );
 	}
 
-	public static function GetDuration( $Ability )
+	public static function GetDuration( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'duration' );
+		return self::GetTuningData( $AbilityId, 'duration' );
 	}
 
-	public static function GetCooldown( $Ability )
+	public static function GetCooldown( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'cooldown' );
+		return self::GetTuningData( $AbilityId, 'cooldown' );
 	}
 
-	public static function GetDescription( $Ability )
+	public static function GetDescription( $AbilityId )
 	{
-		return self::GetTuningData( $Ability, 'desc' );
+		return self::GetTuningData( $AbilityId, 'desc' );
 	}
 
-	public static function GetTuningData( $Ability, $Key = null )
+	public static function GetTuningData( $AbilityId = null, $Key = null )
 	{
 		$TuningData = Server::GetTuningData( 'abilities' );
-		if( $Key === null ) 
+		if( $AbilityId === null ) 
 		{
-			return $TuningData[ $Ability ];
+			return $TuningData;
 		} 
-		else if( !isset( $TuningData[ $Ability ][ $Key ] ) ) 
+		else if( $Key === null ) 
+		{
+			return $TuningData[ $AbilityId ];
+		} 
+		else if( !isset( $TuningData[ $AbilityId ][ $Key ] ) ) 
 		{
 			return null;
 		}
-		return $TuningData[ $Ability ][ $Key ];
+		return $TuningData[ $AbilityId ][ $Key ];
 	}
 }

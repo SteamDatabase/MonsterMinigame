@@ -62,109 +62,114 @@ class Upgrade
 		$this->SetCostForNextLevel( $this->GetPredictedCost( $NextLevel ) );
 	}
 
+	# TODO: @Contex: This doesn't really work as an ability item can have these id's
 	public function IsLevelOneUpgrade()
 	{
-		return $this->GetUpgradeId() >= 11 && $this->GetUpgradeId() <= 18;
+		return $this->GetUpgradeId() >= 11 && $this->GetUpgradeId() <= 19;
 	}
 
+	# TODO: @Contex: This doesn't really work as an ability item can have these id's
 	public function IsElementalUpgrade()
 	{
 		return $this->GetUpgradeId() >= 3 && $this->GetUpgradeId() <= 6;
 	}
 
-	public function GetElement()
+	# TODO: @Contex: This doesn't really work as an ability item can have these id's
+	public function IsAbilityUpgrade()
 	{
-		return $this->GetTuningData( 'element' );
+		return $this->GetUpgradeId() >= 11 && $this->GetUpgradeId() <= 19;
 	}
 
-	public function GetName()
+	public static function GetElement( $UpgradeId )
 	{
-		return $this->GetTuningData( 'name' );
+		return self::GetTuningData( $UpgradeId, 'element' );
 	}
 
-	public function GetInitialValue()
+	public static function GetName( $UpgradeId )
 	{
-		return $this->GetTuningData( 'initial_value' );
+		return self::GetTuningData( $UpgradeId, 'name' );
 	}
 
-	public function GetMultiplier()
+	public static  function GetInitialValue( $UpgradeId )
 	{
-		return $this->GetTuningData( 'multiplier' );
+		return self::GetTuningData( $UpgradeId, 'initial_value' );
 	}
 
-	public function GetType()
+	public static  function GetMultiplier( $UpgradeId )
 	{
-		/*
-		const HitPoints = 0;
-		const DPS = 1;
-		const ClickDamage = 2;
-		const DamageMultiplier_Fire = 3;
-		const DamageMultiplier_Water = 4;
-		const DamageMultiplier_Air = 5;
-		const DamageMultiplier_Earth = 6;
-		const DamageMultiplier_Crit = 7;
-		const PurchaseAbility = 8;
-		const BossLootDropPercentage = 9;
-		const MaxTypes = 10;
-		*/
-		return $this->GetTuningData( 'type' );
+		return self::GetTuningData( $UpgradeId, 'multiplier' );
 	}
 
-	public function GetCost()
+	public static function GetType( $UpgradeId )
 	{
-		return $this->GetTuningData( 'cost' );
+		return self::GetTuningData( $UpgradeId, 'type' );
 	}
 
-	public function GetCostExponentialBase()
+	public static function GetCost( $UpgradeId )
 	{
-		return $this->GetTuningData( 'cost_exponential_base' );
+		return self::GetTuningData( $UpgradeId, 'cost' );
 	}
 
-	public function HasRequiredUpgrade()
+	public static function GetCostExponentialBase( $UpgradeId )
 	{
-		return $this->GetTuningData( 'required_upgrade' ) !== null;
+		return self::GetTuningData( $UpgradeId, 'cost_exponential_base' );
 	}
 
-	public function GetRequiredUpgrade()
+	public static function HasRequiredUpgrade( $UpgradeId )
 	{
-		return $this->GetTuningData( 'required_upgrade' );
+		return self::GetTuningData( $UpgradeId, 'required_upgrade' ) !== null;
 	}
 
-	public function GetRequiredLevel()
+	public static function GetRequiredUpgrade( $UpgradeId )
 	{
-		return $this->GetTuningData( 'required_level' );
+		return self::GetTuningData( $UpgradeId, 'required_upgrade' );
 	}
 
-	public function GetAbility()
+	public static function GetRequiredLevel( $UpgradeId )
 	{
-		return $this->GetTuningData( 'ability' );
+		return self::GetTuningData( $UpgradeId, 'required_level' );
 	}
 
-	public function GetDescription()
+	public static function GetAbility( $UpgradeId )
 	{
-		return $this->GetTuningData( 'desc' );
+		return self::GetTuningData( $UpgradeId, 'ability' );
 	}
 
-	private function GetTuningData( $Key = null )
+	public static function GetDescription( $UpgradeId )
 	{
-		$Upgrades = Server::GetTuningData( 'upgrades' );
-		if( $Key === null ) 
+		return self::GetTuningData( $UpgradeId, 'desc' );
+	}
+
+	public static function GetTuningData( $UpgradeId, $Key = null )
+	{
+		$TuningData = Server::GetTuningData( 'upgrades' );
+		if( $UpgradeId === null ) 
 		{
-			return $Upgrades[ $this->GetUpgradeId() ];
+			return $TuningData;
 		} 
-		else if( !array_key_exists( $Key, $Upgrades[ $this->GetUpgradeId() ] ) ) 
+		else if( $Key === null ) 
+		{
+			return $TuningData[ $UpgradeId ];
+		} 
+		else if( !isset( $TuningData[ $UpgradeId ][ $Key ] ) ) 
 		{
 			return null;
 		}
-		return $Upgrades[ $this->GetUpgradeId() ][ $Key ];
+		return $TuningData[ $UpgradeId ][ $Key ];
+	}
+
+
+	private function GetUpgradeTuningData( $Key = null )
+	{
+		return self::GetTuningData( $this->UpgradeId, $Key );
 	}
 
 	private function GetPredictedCost($Level = null)
 	{
 		return Util::PredictValue(
 			$Level !== null ? $Level : $this->GetLevel(),
-			$this->GetCost(),
-			$this->GetCostExponentialBase(),
+			self::GetCost( $this->GetUpgradeId() ),
+			self::GetCostExponentialBase( $this->GetUpgradeId() ),
 			true
 		);
 	}
