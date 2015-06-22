@@ -3,9 +3,6 @@ namespace SteamDB\CTowerAttack;
 
 class Server
 {
-	const VERSION = 'Alpha v0.7';
-	const TICK_RATE = 0.1; // 100 / 1000
-
 	public $SaneServer;
 	private $Shutdown;
 	private $Running;
@@ -14,6 +11,7 @@ class Server
 	private $Socket;
 	private $Game;
 	private $Queue;
+	protected $TickRate;
 	protected static $TuningData = array();
 
 	public function __construct( $Port )
@@ -30,7 +28,8 @@ class Server
 
 		self::LoadTuningData();
 
-		$this->Game = new Game();
+		$this->TickRate = self::GetTuningData( 'tick_rate' )
+		$this->Game = new Game;
 	}
 
 	public function Listen( )
@@ -76,7 +75,7 @@ class Server
 				case 'GetGameData':
 					$Response =
 					[
-						'version' => self::VERSION,
+						'version' => self::GetTuningData( 'version_string' ),
 						'game_data' => $this->Game->ToArray(),
 					];
 
@@ -160,7 +159,7 @@ class Server
 
 			if( $Tick >= $this->LastTick )
 			{
-				$this->LastTick = $Tick + self::TICK_RATE;
+				$this->LastTick = $Tick + $this->TickRate;
 
 				if( $Tick >= $this->LastSecond )
 				{
