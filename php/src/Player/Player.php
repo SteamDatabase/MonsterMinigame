@@ -192,7 +192,7 @@ class Player
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
 			}
-			else if( $Upgrade->GetUpgradeId() === 1 ) // TODO: enums please Auto-fire Cannon
+			else if( $Upgrade->GetUpgradeId() === Enums\EUpgrade::DPS_AutoFireCanon )
 			{
 				$this->getTechTree()->BaseDps = $Upgrade->GetInitialValue();
 				$this->getTechTree()->Dps = $this->getTechTree()->BaseDps;
