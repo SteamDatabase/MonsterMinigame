@@ -58,53 +58,56 @@ class ActiveAbility
 
 	public function GetType()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'type' );
+		return $this->GetAbilityTuningData( 'type' );
 	}
 
 	public function GetName()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'name' );
+		return $this->GetAbilityTuningData( 'name' );
 	}
 
 	public function GetMaxNumClicks()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'max_num_clicks' );
+		return $this->GetAbilityTuningData( 'max_num_clicks' );
 	}
 
 	public function GetMultiplier()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'multiplier' );
+		return $this->GetAbilityTuningData( 'multiplier' );
 	}
 
 	public function GetCost()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'cost' );
+		return $this->GetAbilityTuningData( 'cost' );
 	}
 
 	public function GetDuration()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'duration' );
+		return $this->GetAbilityTuningData( 'duration' );
 	}
 
 	public function GetCooldown()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'cooldown' );
+		return $this->GetAbilityTuningData( 'cooldown' );
 	}
 
 	public function GetDescription()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'desc' );
+		return $this->GetAbilityTuningData( 'desc' );
 	}
 
 	public function IsInstant()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'instant' ) === 1;
+		return $this->GetAbilityTuningData( 'instant' ) === 1;
 	}
 
 	public function GetBadgePointCost()
 	{
-		return AbilityItem::GetAbilityTuningData( $this->Ability, 'badge_points_cost' );
+		return $this->GetAbilityTuningData( 'badge_points_cost' );
 	}
 
-
+	private function GetAbilityTuningData( $Key = null )
+	{
+		return AbilityItem::GetTuningData( $this->Ability, $Key );
+	}
 }
