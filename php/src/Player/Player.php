@@ -4,6 +4,7 @@ namespace SteamDB\CTowerAttack\Player;
 use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
 use SteamDB\CTowerAttack\Game;
+use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class Player
 {
@@ -96,6 +97,24 @@ class Player
 				// Rate limit
 				continue;
 			}
+
+			$AllowedAbilityTypes =
+			[
+				Enums\EAbilityType::Support,
+				Enums\EAbilityType::Offensive,
+				Enums\EAbilityType::Item
+			];
+
+			if( 
+				in_array( AbilityItem::GetTypeOfAbility( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes )
+				&& 
+				$this->UseAbility( $Game, $RequestedAbility[ 'ability' ] ) === false 
+			)
+			{
+				// Type is incorrect and ability usage failed, ignore and continue.
+				continue;
+			}
+
 			switch( $RequestedAbility[ 'ability' ] ) 
 			{
 				case Enums\EAbility::Attack:
@@ -141,24 +160,84 @@ class Player
 				case Enums\EAbility::ChangeTarget:
 					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
 					break;
+				case Enums\EAbility::Support_IncreaseDamage:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Support_IncreaseCritPercentage:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Support_Heal:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Support_IncreaseGoldDropped:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Support_DecreaseCooldowns:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Offensive_HighDamageOneTarget:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Offensive_DamageAllTargets:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Offensive_DOTAllTargets:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_Resurrection:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_KillTower:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_KillMob:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_MaxElementalDamage:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_GoldPerClick:
+					// TODO: debugging
+					$this->IncreaseGold( 100000000 );
+					break;
+				case Enums\EAbility::Item_IncreaseCritPercentagePermanently:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_IncreaseHPPermanently:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_GoldForDamage:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_Invulnerability:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_GiveGold:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_StealHealth:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_ReflectDamage:
+					// TODO: Add ability logic
+					break;
+				case Enums\EAbility::Item_GiveRandomItem:
+					// TODO: Add ability logic
+					break;
 				case Enums\EAbility::Item_SkipLevels:
 					// TODO: stackable? check if player has ability? etc
 					// TODO: debugging
 					l( 'Skipping level' );
-					$this->UseAbility( $RequestedAbility[ 'ability' ] );
-					$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $RequestedAbility[ 'ability' ] );
 					$Game->GenerateNewLevel();
 					break;
-				case Enums\EAbility::Item_GoldPerClick:
-					// TODO: debugging
-					$this->UseAbility( $RequestedAbility[ 'ability' ] );
-					$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $RequestedAbility[ 'ability' ] );
-					$this->IncreaseGold( 100000000 );
+				case Enums\EAbility::Item_ClearCooldowns:
+					// TODO: Add ability logic
 					break;
 				default:
 					// Handle unknown ability?
 					break;
 			}
+
 			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = time();
 		}
 	}
@@ -374,10 +453,16 @@ class Player
 		unset( $this->ActiveAbilities[ $Ability ] );
 	}
 
-	public function UseAbility( $Ability )
+	public function UseAbility( $Game, $Ability )
 	{
+		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )
+		{
+			return false;
+		}
 		$this->AddActiveAbility( $Ability );
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
+		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $Ability );
+		return true;
 	}
 
 	public function CheckActiveAbilities( Game $Game )

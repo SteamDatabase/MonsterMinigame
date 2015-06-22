@@ -255,6 +255,11 @@ class TechTree
 		}
 	}
 
+	public function HasAbilityItem( $Ability )
+	{
+		return isset( $this->AbilityItems[ $Ability ] ) && $this->AbilityItems[ $Ability ][ 'quantity' ] > 0;
+	}
+
 	public function GetAbilityQuantity( $Ability )
 	{
 		return $this->AbilityItems[ $Ability ][ 'quantity' ];
