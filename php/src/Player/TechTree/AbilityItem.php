@@ -1,6 +1,8 @@
 <?php
 namespace SteamDB\CTowerAttack\Player\TechTree;
 
+use SteamDB\CTowerAttack\Server;
+
 class AbilityItem
 {
 	/*
@@ -33,5 +35,29 @@ class AbilityItem
 			'ability' => $this->Ability,
 			'quantity' => $this->Quantity
 		];
+	}
+
+	private function GetAbilityTuningData( $Key = null )
+	{
+		return self::GetTuningData( $this->Ability, $Key );
+	}
+
+	public static function GetTypeOfAbility( $Ability )
+	{
+		return self::GetTuningData( $Ability, 'type' );
+	}
+
+	public static function GetTuningData( $Ability, $Key = null )
+	{
+		$TuningData = Server::GetTuningData( 'abilities' );
+		if( $Key === null ) 
+		{
+			return $TuningData[ $Ability ];
+		} 
+		else if( !array_key_exists( $Key, $TuningData[ $Ability ] ) ) 
+		{
+			return null;
+		}
+		return $TuningData[ $Ability ][ $Key ];
 	}
 }

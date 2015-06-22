@@ -2,7 +2,7 @@
 namespace SteamDB\CTowerAttack\Player;
 
 use SteamDB\CTowerAttack\Enums;
-use SteamDB\CTowerAttack\Server;
+use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class ActiveAbility
 {
@@ -56,67 +56,55 @@ class ActiveAbility
 		return $this->TimestampCooldown <= time();
 	}
 
+	public function GetType()
+	{
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'type' );
+	}
+
 	public function GetName()
 	{
-		return $this->GetAbilityTuningData( 'name' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'name' );
 	}
 
 	public function GetMaxNumClicks()
 	{
-		return $this->GetAbilityTuningData( 'max_num_clicks' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'max_num_clicks' );
 	}
 
 	public function GetMultiplier()
 	{
-		return $this->GetAbilityTuningData( 'multiplier' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'multiplier' );
 	}
 
 	public function GetCost()
 	{
-		return $this->GetAbilityTuningData( 'cost' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'cost' );
 	}
 
 	public function GetDuration()
 	{
-		return $this->GetAbilityTuningData( 'duration' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'duration' );
 	}
 
 	public function GetCooldown()
 	{
-		return $this->GetAbilityTuningData( 'cooldown' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'cooldown' );
 	}
 
 	public function GetDescription()
 	{
-		return $this->GetAbilityTuningData( 'desc' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'desc' );
 	}
 
 	public function IsInstant()
 	{
-		return $this->GetAbilityTuningData( 'instant' ) === 1;
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'instant' ) === 1;
 	}
 
 	public function GetBadgePointCost()
 	{
-		return $this->GetAbilityTuningData( 'badge_points_cost' );
+		return AbilityItem::GetAbilityTuningData( $this->Ability, 'badge_points_cost' );
 	}
 
-	private function GetAbilityTuningData( $Key = null )
-	{
-		return self::GetTuningData( $this->Ability, $Key );
-	}
 
-	public static function GetTuningData( $Ability, $Key = null )
-	{
-		$TuningData = Server::GetTuningData( 'abilities' );
-		if( $Key === null ) 
-		{
-			return $TuningData[ $Ability ];
-		} 
-		else if( !array_key_exists( $Key, $TuningData[ $Ability ] ) ) 
-		{
-			return null;
-		}
-		return $TuningData[ $Ability ][ $Key ];
-	}
 }
