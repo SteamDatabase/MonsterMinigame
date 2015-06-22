@@ -12,12 +12,14 @@ class ActiveAbility
 	optional uint32 timestamp_cooldown = 3;
 	*/
 	private $Ability;
+	private $Time;
 	private $TimestampDone;
 	private $TimestampCooldown;
 
 	public function __construct( $Ability )
 	{
 		$this->Ability = $Ability;
+		$this->Time = time();
 		$this->TimestampDone = time() + AbilityItem::GetDuration( $Ability );
 		$this->TimestampCooldown = time() + AbilityItem::GetCooldown( $Ability );
 	}
@@ -27,7 +29,9 @@ class ActiveAbility
 		return [
 			'actor' => 'TODO: add name here',
 			'ability' => $this->Ability,
-			'time' => $this->TimestampDone,
+			'time' => $this->Time,
+			'timestamp_done' => $this->TimestampDone,
+			'timestamp_cooldown' => $this->TimestampCooldown
 		];
 	}
 
