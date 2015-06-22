@@ -135,6 +135,11 @@ class Upgrade
 		return $this->GetTuningData( 'required_level' );
 	}
 
+	public function GetAbility()
+	{
+		return $this->GetTuningData( 'ability' );
+	}
+
 	public function GetDescription()
 	{
 		return $this->GetTuningData( 'desc' );

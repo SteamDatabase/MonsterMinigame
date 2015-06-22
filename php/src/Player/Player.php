@@ -201,6 +201,10 @@ class Player
 			{
 				$HpUpgrade = true;
 			}
+			else if( $Upgrade->GetType() === Enums\EUpgradeType::PurchaseAbility )
+			{
+				$this->GetTechTree()->AddAbilityItem( $Upgrade->GetAbility(), -1 );
+			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();
 		if( $HpUpgrade )

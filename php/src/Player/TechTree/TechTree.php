@@ -57,7 +57,6 @@ class TechTree
 		$this->DamageMultiplierEarth = $this->GetTuningData( 'damage_multiplier_earth' );
 		$this->DamageMultiplierCrit = $this->GetTuningData( 'damage_multiplier_crit' );
 		$this->UnlockedAbilitiesBitfield = 0;
-		$this->HpMultiplier = 1;
 		$this->CritPercentage = $this->GetTuningData( 'crit_percentage' );
 		// TODO: Give 0.1 badgepoints per previous level (start_condition_minigame_badge)
 		// TODO: Give badgepoints for badge (1 & 10 points)
@@ -133,6 +132,18 @@ class TechTree
 		$Upgrades = array();
 		foreach( $this->GetUpgrades() as $Upgrade ) {
 			$Upgrades[] = $Upgrade->ToArray();
+		}
+		return $Upgrades;
+	}
+
+	public function GetUpgradesByType( $UpgradeType , $MinimumLevel = null )
+	{
+		$Upgrades = array();
+		foreach( $this->GetUpgrades() as $Upgrade ) {
+			if( $Upgrade->GetType() === $UpgradeType && ( $MinimumLevel !== null ? $Upgrade->GetLevel() >= $MinimumLevel : true ) )
+			{
+				$Upgrades[] = $Upgrade->ToArray();
+			}
 		}
 		return $Upgrades;
 	}
@@ -217,6 +228,11 @@ class TechTree
 
 	public function AddAbilityItem( $Ability, $Quantity = 1 )
 	{
+		if( $Quantity === -1 )
+		{
+			$this->UnlockAbility( $Ability );
+			return;
+		}
 		if ( !isset( $this->Ability[ $Ability ] ) )
 		{
 			$this->AbilityItems[ $Ability ] = [
@@ -287,6 +303,16 @@ class TechTree
 	public function GetDps()
 	{
 		return $this->Dps;
+	}
+
+	public function UnlockAbility( $Ability )
+	{
+		$this->UnlockedAbilitiesBitfield |= ( 1 << $Ability );
+	}
+
+	public function LockAbility( $Ability )
+	{
+		$this->UnlockedAbilitiesBitfield &= ~( 1 << $Ability );
 	}
 
 	public function RecalulateUpgrades()
