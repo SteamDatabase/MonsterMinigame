@@ -784,7 +784,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 
 	if( this.m_rgPlayerData )
 	{
-		var rgActivityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].ability_log;
+		var rgActivityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].activity_log;
 		if( rgActivityLog )
 		{
 			for( var i=0; i<rgActivityLog.length; i++ )

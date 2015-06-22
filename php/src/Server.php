@@ -55,7 +55,7 @@ class Server
 			    continue;
 			}
 
-			l( $Data[ 'method' ] );
+			l( ( isset( $Data[ 'steamid' ] ) ? ( $Data[ 'steamid' ] . ' - ' ) : '' ) . $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
 			$Response = [];

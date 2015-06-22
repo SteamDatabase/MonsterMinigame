@@ -20,6 +20,7 @@ class Game
 	private $AbilityQueue;
 	public $Players = array();
 	private $Level = 1;
+	public $Time;
 	public $Lanes = array();
 	public $Chat = [];
 	//private $Timestamp; - Use function instead?
@@ -52,10 +53,12 @@ class Game
 
 	public function __construct()
 	{
-		//TODO: Add waiting logic and set proper status $this->SetStatus( EMiniGamEnums\EStatus::WaitingForPlayers );
+		$this->Time = time();
+		$this->TimestampGameStart = $this->Time;
+		$this->TimestampLevelStart = $this->Time;
 		$this->SetStatus( Enums\EStatus::WaitingForPlayers );
-		$this->TimestampGameStart = time();
-		$this->TimestampLevelStart = time();
+		$this->GenerateNewLanes();
+
 		l( 'Created new game' );
 	}
 
@@ -71,7 +74,6 @@ class Game
 
 		if( $this->Status === Enums\EStatus::WaitingForPlayers && count( $this->Players ) === Server::GetTuningData( 'minimum_players' ) )
 		{
-			$this->GenerateNewLanes();
 			$this->SetStatus( Enums\EStatus::Running );
 		}
 
@@ -92,10 +94,10 @@ class Game
 			'chat' => $this->Chat,
 			'level' => (int) $this->GetLevel(),
 			'lanes' => $this->GetLanesArray(),
-			'timestamp' => (int) $this->GetTimestamp(),
+			'timestamp' => $this->Time,
 			'status' => $this->GetStatus(),
-			'timestamp_game_start' => (int) $this->GetTimestampGameStart(),
-			'timestamp_level_start' => (int) $this->GetTimestampLevelStart()
+			'timestamp_game_start' => $this->TimestampGameStart,
+			'timestamp_level_start' => $this->TimestampLevelStart
 		);
 	}
 
@@ -128,13 +130,13 @@ class Game
 	public function SetLevel( $Level )
 	{
 		$this->Level = $Level;
-		$this->TimestampLevelStart = time();
+		$this->TimestampLevelStart = $this->Time;
 	}
 
 	public function IncreaseLevel()
 	{
 		$this->Level++;
-		$this->TimestampLevelStart = time();
+		$this->TimestampLevelStart = $this->Time;
 	}
 
 	public function IsBossLevel()
@@ -278,11 +280,6 @@ class Game
 		return $LaneArray;
 	}
 
-	public function GetTimestamp()
-	{
-		return time();
-	}
-
 	public function GetStatus()
 	{
 		return $this->Status;
@@ -301,16 +298,6 @@ class Game
 	public function GetEvents()
 	{
 		return $this->Events;
-	}
-
-	public function GetTimestampGameStart()
-	{
-		return $this->TimestampGameStart;
-	}
-
-	public function GetTimestampLevelStart()
-	{
-		return $this->TimestampLevelStart;
 	}
 
 	public function GetUniverseState()
@@ -365,12 +352,14 @@ class Game
 
 	public function UpdatePlayer( $Player )
 	{
-		$Player->LastActive = time();
+		$Player->LastActive = $this->Time;
 		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
 
 	public function Update( $SecondsPassed = false )
 	{
+		$this->Time = time();
+
 		if( !$this->IsRunning() )
 		{
 			return;
