@@ -113,24 +113,10 @@ class AbilityItem
 		switch( $Ability->GetAbility() )
 		{
 			case Enums\EAbility::Support_IncreaseDamage:
-				if( $Deactivate )
-				{
-					$Lane->DecreaseDamageMultiplier( $AbilityMultiplier );
-				}
-				else
-				{
-					$Lane->IncreaseDamageMultiplier( $AbilityMultiplier );
-				}
+				# Delete?
 				break;
 			case Enums\EAbility::Support_IncreaseCritPercentage:
-				if( $Deactivate )
-				{
-					$Lane->DecreaseCritClickDamageAddition( $AbilityMultiplier );
-				}
-				else
-				{
-					$Lane->IncreaseCritClickDamageAddition( $AbilityMultiplier );
-				}
+				# Delete?
 				break;
 			case Enums\EAbility::Support_Heal:
 				// TODO: Add ability logic

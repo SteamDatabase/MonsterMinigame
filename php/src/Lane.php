@@ -1,6 +1,7 @@
 <?php
 namespace SteamDB\CTowerAttack;
 
+use SteamDB\CTowerAttack\Enums;
 use \SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class Lane
@@ -22,8 +23,6 @@ class Lane
 	public $ActivityLog = [];
 	private $GoldDropped;
 	private $ActivePlayerAbilities;
-	private $DamageMultiplier = 0;
-	private $CritClickDamageAddition = 0;
 	private $LaneId;
 
 	public function __construct(
@@ -229,41 +228,26 @@ class Lane
 
 	public function GetDamageMultiplier()
 	{
-		return $this->DamageMultiplier !== 0 ? $this->DamageMultiplier : 1;
-	}
-
-	public function SetDamageMultiplier( $DamageMultiplier )
-	{
-		$this->DamageMultiplier = $DamageMultiplier;
-	}
-
-	public function IncreaseDamageMultiplier( $Amount )
-	{
-		$this->DamageMultiplier += $Amount;
-	}
-
-	public function DecreaseDamageMultiplier( $Amount )
-	{
-		$this->DamageMultiplier -= $Amount;
+		$DamageMultiplier = $this->GetActivePlayerAbilityMultipler( $this-Enums\EAbility::Support_IncreaseDamage );
+		return $DamageMultiplier !== 0 ? $DamageMultiplier : ;
 	}
 
 	public function GetCritClickDamageAddition()
 	{
-		return $this->CritClickDamageAddition !== 0 ? $this->CritClickDamageAddition : 0;
+		$ClickDamageAddition = $this->GetActivePlayerAbilityMultipler( $this-Enums\EAbility::Support_IncreaseCritPercentage );
+		return $ClickDamageAddition !== 0 ? $ClickDamageAddition : 0;
 	}
 
-	public function SetCritClickDamageAddition( $CritClickDamageAddition )
+	private function GetActivePlayerAbilityMultipler( $AbilityId )
 	{
-		$this->CritClickDamageAddition = $CritClickDamageAddition;
-	}
-
-	public function IncreaseCritClickDamageAddition( $Amount )
-	{
-		$this->CritClickDamageAddition += $Amount;
-	}
-
-	public function DecreaseCritClickDamageAddition( $Amount )
-	{
-		$this->CritClickDamageAddition -= $Amount;
+		$Multiplier = 0;
+		foreach( $this->ActivePlayerAbilities as $ActivePlayerAbility )
+		{
+			if( $ActivePlayerAbility->GetAbility() === $AbilityId )
+			{
+				$Multiplier += AbilityItem::GetMultiplier( $ActivePlayerAbility->GetAbility() );
+			}
+		}
+		return $Multiplier;
 	}
 }
