@@ -169,7 +169,7 @@ CServerInterface.prototype.ChatMessage = function( message )
 		method: 'POST',
 		data: {
 			gameid: this.m_nGameID,
-			steamid: g_steamID,
+			access_token: g_steamID,
 			message: message
 		},
 		dataType: 'json'
