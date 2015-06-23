@@ -6,18 +6,15 @@ use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class ActiveAbility
 {
-	/*
-	optional uint32 ability = 1;
-	optional uint32 timestamp_done = 2;
-	optional uint32 timestamp_cooldown = 3;
-	*/
+	private $Actor;
 	private $Ability;
 	private $Time;
 	private $TimestampDone;
 	private $TimestampCooldown;
 
-	public function __construct( $Ability )
+	public function __construct( $Ability, $Actor )
 	{
+		$this->Actor = $Actor;
 		$this->Ability = $Ability;
 		$this->Time = time();
 		$this->TimestampDone = time() + AbilityItem::GetDuration( $Ability );
@@ -27,11 +24,9 @@ class ActiveAbility
 	public function ToArray()
 	{
 		return [
-			'actor' => 'TODO: add name here',
+			'actor' => $this->Actor,
 			'ability' => $this->Ability,
 			'time' => $this->Time,
-			'timestamp_done' => $this->TimestampDone,
-			'timestamp_cooldown' => $this->TimestampCooldown
 		];
 	}
 

@@ -62,12 +62,19 @@ class Server
 			switch ( $Data[ 'method' ] )
 			{
 				case 'ChatMessage':
+					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
+
+					if( $Player === null )
+					{
+						break;
+					}
+
 					$Response = true;
 
 					$this->Game->Chat[] =
 					[
 						'time' => time(),
-						'actor' => $Data[ 'steamid' ],
+						'actor' => $Player->PlayerName,
 						'message' => $Data[ 'message' ]
 					];
 

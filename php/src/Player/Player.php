@@ -31,8 +31,8 @@ class Player
 	public $AbilityLastUsed = [];
 	public $Stats;
 	public $CritDamage;
-	private $PlayerName;
-	private $AccountId;
+	public $PlayerName;
+	public $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
 	private $Gold = 10;
@@ -412,7 +412,7 @@ class Player
 
 	public function AddActiveAbility( $Ability )
 	{
-		$ActiveAbility = new ActiveAbility( $Ability );
+		$ActiveAbility = new ActiveAbility( $Ability, $this->PlayerName );
 
 		$this->ActiveAbilities[ $Ability ] = $ActiveAbility;
 

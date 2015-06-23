@@ -7,6 +7,8 @@
 	
 	require __DIR__ . '/../../Init.php';
 	
+	session_start();
+	
 	Handle( INPUT_GET, [
 		'method' => 'GetPlayerData',
 		'steamid' => filter_input( INPUT_GET, 'steamid' ),
