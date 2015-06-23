@@ -28,25 +28,62 @@ class Enemy
 		$this->Type = $Type;
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
 		// TODO: Figure out if valve floored the value or just rounded
-		if( $this->GetType() === Enums\EEnemyType::Mob ) 
-		{
-			$MultiplierVariance = $this->GetHpMultiplierVariance();
-			$LowestHp  = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp(), $Level * ( $this->GetHpMultiplier() - $MultiplierVariance ) );
-			$HighestHp = Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp(), $Level * ( $this->GetHpMultiplier() + $MultiplierVariance ) );
-			$this->MaxHp = floor( rand( $LowestHp, $HighestHp ) );
-		} 
-		else 
-		{
-			$this->MaxHp = floor( Util::PredictValue( $this->GetHpExponent(), $this->GetTuningHp(), $Level * $this->GetHpMultiplier() ) );
-		}
-
+		$this->MaxHp = self::GetHpAtLevel( $Type, $Level );
 		// Deal with respawn/alive timer
 		// TODO: dps is wrong and does not match valve's data
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
-		$this->Dps = floor( Util::PredictValue( $this->GetDpsExponent(), $this->GetTuningDps(), $Level * $this->GetDpsMultiplier() ) );
-		$this->Gold = floor( Util::PredictValue( $this->GetGoldExponent(), $this->GetTuninGold(), $Level * $this->GetGoldMultiplier() ) );
+		$this->Dps = self::GetDpsAtLevel( $Type, $Level );
+		$this->Gold = self::GetGoldAtLevel( $Type, $Level );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
+	}
+
+	public static function GetHpAtLevel( $Type, $Level )
+	{
+		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
+		if( $Type === Enums\EEnemyType::Mob ) 
+		{
+			$MultiplierVariance = $TuningData[ 'hp_multiplier_variance' ];
+			$LowestHp  = Util::PredictValue(
+				$TuningData[ 'hp_exponent' ], 
+				$TuningData[ 'hp' ], 
+				$Level * ( $TuningData[ 'hp_multiplier' ] - $MultiplierVariance ) 
+			);
+			$HighestHp  = Util::PredictValue(
+				$TuningData[ 'hp_exponent' ], 
+				$TuningData[ 'hp' ], 
+				$Level * ( $TuningData[ 'hp_multiplier' ] + $MultiplierVariance ) 
+			);
+			return floor( rand( $LowestHp, $HighestHp ) );
+		} 
+		else 
+		{
+			return floor( Util::PredictValue(
+				$TuningData[ 'hp_exponent' ], 
+				$TuningData[ 'hp' ], 
+				$Level * $TuningData[ 'hp_multiplier' ]
+			) );
+		}
+	}
+
+	public static function GetDpsAtLevel( $Type, $Level )
+	{
+		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
+		return floor( Util::PredictValue(
+			$TuningData[ 'dps_exponent' ], 
+			$TuningData[ 'dps' ], 
+			$Level * $TuningData[ 'dps_multiplier' ]
+		) );
+	}
+
+	public static function GetGoldAtLevel( $Type, $Level )
+	{
+		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
+		return floor( Util::PredictValue(
+			$TuningData[ 'gold_exponent' ], 
+			$TuningData[ 'gold' ], 
+			$Level * $TuningData[ 'gold_multiplier' ]
+		) );
 	}
 
 	public function ToArray()
