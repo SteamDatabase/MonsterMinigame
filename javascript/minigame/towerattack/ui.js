@@ -860,8 +860,6 @@ CUI.prototype.UpdateUpgrades = function()
 			}
 		}
 
-		//console.log(nCombinedElementalLevels);
-
 		var upgrade = this.m_Game.m_rgTuningData.upgrades[4];
 
 		var nElementalCost = FloorToMultipleOf( 10, CalcExponentialTuningValve( nCombinedElementalLevels, upgrade.cost, upgrade.cost_exponential_base ) );
@@ -874,19 +872,21 @@ CUI.prototype.UpdateUpgrades = function()
 			var elem = $J( this.m_rgElementCache['upgr_'+idx] );
 
 			$J('.link', elem).data( 'cost', nElementalCost );
+
+			if( nElementalCost > this.m_Game.m_rgPlayerData.gold )
+				$J(elem).addClass('cantafford');
+			else
+				$J(elem).removeClass('cantafford');
 		}
-
 	}
+	else
+	{
+		var upgrade = this.m_Game.m_rgTuningData.upgrades[4];
+		var nElementalCost = FloorToMultipleOf( 10, CalcExponentialTuningValve( 0, upgrade.cost, upgrade.cost_exponential_base ) );
 
-
-		/*if( this.m_Game.bHaveUpgrade( i ) )
-			$J('.link', ele).addClass('disabled');
-		else
-			$J('.link', ele).removeClass('disabled');*/
-
-
+		$J('#element_cost')[0].textContent = FormatNumberForDisplay( nElementalCost, 5 );
+	}
 }
-
 
 CUI.prototype.UpdateLootNotification = function()
 {
