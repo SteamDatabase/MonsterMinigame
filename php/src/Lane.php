@@ -228,13 +228,13 @@ class Lane
 
 	public function GetDamageMultiplier()
 	{
-		$DamageMultiplier = $this->GetActivePlayerAbilityMultipler( $this-Enums\EAbility::Support_IncreaseDamage );
-		return $DamageMultiplier !== 0 ? $DamageMultiplier : ;
+		$DamageMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseDamage );
+		return $DamageMultiplier !== 0 ? $DamageMultiplier : 1;
 	}
 
 	public function GetCritClickDamageAddition()
 	{
-		$ClickDamageAddition = $this->GetActivePlayerAbilityMultipler( $this-Enums\EAbility::Support_IncreaseCritPercentage );
+		$ClickDamageAddition = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseCritPercentage );
 		return $ClickDamageAddition !== 0 ? $ClickDamageAddition : 0;
 	}
 

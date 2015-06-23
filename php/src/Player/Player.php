@@ -235,7 +235,7 @@ class Player
 			}
 			else if( $UpgradeId === Enums\EUpgrade::DPS_AutoFireCanon )
 			{
-				$this->getTechTree()->BaseDps = $Upgrade->GetInitialValue();
+				$this->getTechTree()->BaseDps = Upgrade::GetInitialValue( $UpgradeId );
 				$this->getTechTree()->Dps = $this->getTechTree()->BaseDps;
 			}
 			else if( Upgrade::GetType( $UpgradeId ) === Enums\EUpgradeType::HitPoints )
