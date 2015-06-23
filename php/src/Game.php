@@ -114,9 +114,8 @@ class Game
 			'num_players_reaching_milestone_level' => 0,
 			'num_ability_items_activated' => 0,
 			'num_active_players' => count( $this->GetActivePlayers() ), # TODO: replace this with an increasing/decreasing variable
-			'time_simulating' => $this->TimeSimulating,
-			'time_saving' => 0,
-			'time_highest_tick' => $this->HighestTick
+			'time_total_ticks' => number_format( $this->TimeSimulating, 7 ),
+			'time_slowest_tick' => number_format( $this->HighestTick, 7 ),
 		);
 	}
 

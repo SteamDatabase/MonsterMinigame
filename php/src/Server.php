@@ -183,7 +183,7 @@ class Server
 
 			$DebugTime = microtime( true ) - $DebugTime;
 
-			l( 'Spent ' . $DebugTime . ' seconds handling sockets and ticks' );
+			l( 'Spent ' . number_format( $DebugTime, 7 ) . ' seconds handling sockets and ticks' );
 
 			if( $DebugTime > $this->Game->HighestTick )
 			{
