@@ -252,6 +252,10 @@ CUI.prototype.Tick = function()
 			$J( "div.num_players_waiting_bar > div", this.m_dialogWaitingForPlayers )[0].style.width = pct;
 			$J( "#num_players_waiting", this.m_dialogWaitingForPlayers )[0].textContent = numPlayers;
 			$J( "#num_players_minimum", this.m_dialogWaitingForPlayers )[0].textContent = minPlayers;
+
+			// We need this here to update chat
+			this.UpdateLog( game.m_rgActionLog );
+
 			break;
 
 		case 2:

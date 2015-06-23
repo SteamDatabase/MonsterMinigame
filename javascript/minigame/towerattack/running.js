@@ -172,9 +172,11 @@ window.CSceneGame = function()
 		return false;
 	}).on('keydown', function(ev)
 	{
-		if( ev.ctrlKey && ( ev.keyCode == 10 || ev.keyCode == 13 ) )
+		if( ev.keyCode == 10 || ev.keyCode == 13 )
 		{
 			$J( this ).submit();
+			
+			return false;
 		}
 	});
 }
