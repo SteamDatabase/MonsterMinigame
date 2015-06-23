@@ -802,7 +802,7 @@ CUI.prototype.UpdateUpgrades = function()
 		{
 			costEl = $J('.level', ele);
 
-			if( costEl.text() != nLevel )
+			if( costEl.text() !== '' + nLevel )
 			{
 				costEl.text(nLevel);
 			}
