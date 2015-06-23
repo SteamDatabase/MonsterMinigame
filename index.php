@@ -350,9 +350,9 @@
 	<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="/javascript/tooltip.js"></script>
 	<script type="text/javascript">$J = jQuery.noConflict();</script>
-	<script type="text/javascript" src="/javascript/pixi-3.0.2.js"></script>
-	<script type="text/javascript" src="/javascript/pixi-spine-3.0.2.js"></script>
-	<script type="text/javascript" src="/javascript/pixi-particles-3.0.2.js"></script>
+	<script type="text/javascript" src="/javascript/pixi.min.js"></script>
+	<script type="text/javascript" src="/javascript/pixi-spine.min.js"></script>
+	<script type="text/javascript" src="/javascript/pixi-particles.min.js"></script>
 	<script type="text/javascript" src="/javascript/minigame/minigame.js?v=0-6JLp6pJyHl&amp;l=english"></script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack.js?v=oJIS22CYjGIR&amp;l=english"></script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack/running.js?v=oJIS22CYjGIR&amp;l=english"></script>
