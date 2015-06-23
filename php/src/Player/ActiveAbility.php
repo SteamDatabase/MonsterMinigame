@@ -27,6 +27,8 @@ class ActiveAbility
 			'actor' => $this->Actor,
 			'ability' => $this->Ability,
 			'time' => $this->Time,
+			'timestamp_done' => $this->TimestampDone,
+			'timestamp_cooldown' => $this->TimestampCooldown
 		];
 	}
 
