@@ -740,7 +740,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 		var instance = this;
 
 		$J.ajax({
-			url: '/javascript/minigame/towerattack/endgame.js?v=' + g_CacheKey,
+			url: '/javascript/minigame/towerattack/endgame.js',
 			dataType: "script",
 			cache: true
 		}).done(

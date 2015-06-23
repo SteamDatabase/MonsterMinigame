@@ -128,7 +128,7 @@ function GO ()
 	FixNames();
 
 	// New music!
-	g_rgSoundCache.musicB = {urlv: '/assets/minigame/towerattack/sfx/backgroundtrack2.ogg?v='+g_CacheKey, urlm: '/assets/minigame/towerattack/sfx/backgroundtrack2.mp3?v='+g_CacheKey };
+	g_rgSoundCache.musicB = {urlv: '/assets/minigame/towerattack/sfx/backgroundtrack2.ogg', urlm: '/assets/minigame/towerattack/sfx/backgroundtrack2.mp3' };
 
 	var formatTester = new Audio();
 	var strAudioFormat = false;

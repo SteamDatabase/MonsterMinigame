@@ -349,7 +349,7 @@
 
 	<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="/javascript/tooltip.js"></script>
-	<script type="text/javascript">$J = jQuery.noConflict();g_CacheKey = "01023cbf5f5c00ac11b4dabfc087fdda";</script>
+	<script type="text/javascript">$J = jQuery.noConflict();</script>
 	<script type="text/javascript" src="/javascript/pixi-3.0.2.js"></script>
 	<script type="text/javascript" src="/javascript/pixi-spine-3.0.2.js"></script>
 	<script type="text/javascript" src="/javascript/pixi-particles-3.0.2.js"></script>
