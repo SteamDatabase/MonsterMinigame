@@ -128,7 +128,7 @@ class Lane
 		return array_values( $ActivePlayerAbilities );
 	}
 
-	public function AddActivePlayerAbility( $ActiveAbility )
+	public function AddActivePlayerAbility( \SteamDB\CTowerAttack\Player\ActiveAbility $ActiveAbility )
 	{
 		$this->ActivePlayerAbilities[] = $ActiveAbility;
 		$this->ActivityLog[] = $ActiveAbility->ToArray();

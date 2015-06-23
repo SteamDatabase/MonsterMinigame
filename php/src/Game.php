@@ -157,6 +157,7 @@ class Game
 			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 			$ActivePlayerAbilities = []; # TODO: @Contex: Get previous active player abilities?
 			$ActivityLog = []; # TODO: Get previous log?
+			/* TODO: @Contex: Delete this? Grab previous abilities from prev lane.
 			foreach( $this->Players as $Player )
 			{
 				if( $Player->GetCurrentLane() === $i )
@@ -178,6 +179,7 @@ class Game
 					}
 				}
 			}
+			*/
 
 			$Enemies = array();
 			if( $this->IsBossLevel() )
