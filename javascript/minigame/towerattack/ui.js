@@ -787,15 +787,32 @@ CUI.prototype.UpdateUpgrades = function()
 
 		$J('.link', ele).data( 'cost', nCost );
 
+		if( nCost > this.m_Game.m_rgPlayerData.gold )
+		{
+			$J(ele).addClass('cantafford');
+		}
+		else
+		{
+			$J(ele).removeClass('cantafford');
+		}
+
 		// hide purchased abilities
 		if (upgrades[i].type == '8')
 		{
-			if (!this.m_Game.bHaveAbility(upgrades[i].ability)) {
-				ele.show();
-			}
-			else {
+			if( this.m_Game.bHaveAbility( upgrades[i].ability ) )
+			{
 				ele.hide();
 			}
+			// Disable pending abilities
+			else if( nLevel > 0 )
+			{
+				$J(ele).addClass('cantafford');
+			}
+			else
+			{
+				ele.show();
+			}
+
 			$J('.level', ele).hide();
 		}
 		else
@@ -817,12 +834,6 @@ CUI.prototype.UpdateUpgrades = function()
 					break;
 			}
 		}
-
-		if( nCost > this.m_Game.m_rgPlayerData.gold )
-			$J(ele).addClass('cantafford');
-		else
-			$J(ele).removeClass('cantafford');
-
 	}
 
 	if ( bNeedToResort )

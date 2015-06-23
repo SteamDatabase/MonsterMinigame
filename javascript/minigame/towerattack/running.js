@@ -1133,11 +1133,16 @@ CSceneGame.prototype.GetUpgradeCost = function( nUpgradeID )
 			{
 				var upgrade = this.GetUpgradeTuningData( nUpgradeID );
 
-				var nPredictedCost = FloorToMultipleOf( 10, CalcExponentialTuningValve( this.m_rgPlayerUpgrades[i].level, upgrade.cost, upgrade.cost_exponential_base ) );
+				// Don't predict higher price for abilities that can be purchased
+				var level = upgrade.type === 8 ? 0 : this.m_rgPlayerUpgrades[i].level;
+
+				var nPredictedCost = FloorToMultipleOf( 10, CalcExponentialTuningValve( level, upgrade.cost, upgrade.cost_exponential_base ) );
+
 				return nPredictedCost;
 			}
 		}
 	}
+
 	return 0;
 }
 
