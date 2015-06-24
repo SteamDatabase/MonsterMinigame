@@ -178,6 +178,12 @@ class Player
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage; # TODO: this logic isn't correct.. it shouldn't buffer the whole lane, FIX!
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
 					$Enemy->DamageTaken += $Damage;
+					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
+					if( $GoldMultiplier > 0 ) 
+					{
+						# TODO: Include metal detector (increases gold dropped by enemies)
+						$this->IncreaseGold( $Lane->GetGoldPerClickMultiplier() * $NumClicks * $Enemy->GetGold() );
+					}
 					break;
 				case Enums\EAbility::ChangeLane:
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );

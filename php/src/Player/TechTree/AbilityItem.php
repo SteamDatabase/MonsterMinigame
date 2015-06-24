@@ -112,12 +112,6 @@ class AbilityItem
 
 		switch( $Ability->GetAbility() )
 		{
-			case Enums\EAbility::Support_IncreaseDamage:
-				# Delete?
-				break;
-			case Enums\EAbility::Support_IncreaseCritPercentage:
-				# Delete?
-				break;
 			case Enums\EAbility::Support_Heal:
 				// TODO: Add ability logic
 				break;
@@ -159,12 +153,8 @@ class AbilityItem
 				// TODO: Add ability logic
 				break;
 			case Enums\EAbility::Item_GoldPerClick:
-				// TODO: Add ability logic
-				if( $Deactivate )
-				{
-
-				}
-				else
+				// TODO: DELETE WHOLE CASE
+				if( !$Deactivate )
 				{
 					$Player->IncreaseGold( 100000000 );
 				}
@@ -209,6 +199,11 @@ class AbilityItem
 			case Enums\EAbility::Item_ClearCooldowns:
 				// TODO: Add ability logic
 			break;
+			default:
+			case Enums\EAbility::Support_IncreaseDamage:
+			case Enums\EAbility::Support_IncreaseCritPercentage:
+				# Delete?
+				break;
 		}
 	}
 }

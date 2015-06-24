@@ -60,7 +60,7 @@ class Lane
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
 			'active_player_ability_decrease_cooldowns' => (double) $this->GetActivePlayerAbilityDecreaseCooldowns(),
-			'active_player_ability_gold_per_click' => (double) $this->GetActivePlayerAbilityGoldPerClick()
+			'active_player_ability_gold_per_click' => (double) $this->GetGoldPerClickMultiplier() #TODO: GetActivePlayerAbilityGoldPerClick()
 		);
 	}
 
@@ -234,8 +234,13 @@ class Lane
 
 	public function GetCritClickDamageAddition()
 	{
-		$ClickDamageAddition = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseCritPercentage );
-		return $ClickDamageAddition !== 0 ? $ClickDamageAddition : 0;
+		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseCritPercentage );
+	}
+
+	public function GetGoldPerClickMultiplier()
+	{
+		$GoldMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_GoldPerClick );
+		return $GoldMultiplier !== 0 ? 1 + $GoldMultiplier : 0;
 	}
 
 	private function GetActivePlayerAbilityMultipler( $AbilityId )
