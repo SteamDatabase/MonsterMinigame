@@ -34,10 +34,13 @@
         "dps": "1.25",
         "gold": 100,
         "hp_multiplier": "1.2",
+        "hp_extra": 0,
         "hp_exponent": "1.5",
         "dps_multiplier": 1,
+        "dps_extra": 0,
         "dps_exponent": "1.2",
         "gold_multiplier": "1.6",
+        "gold_extra": 0,
         "gold_exponent": "1.1"
     },
     "mob": {
@@ -46,10 +49,15 @@
         "gold": 30,
         "hp_multiplier": "1.2",
         "hp_multiplier_variance": "0.2",
+        "hp_extra": 50,
         "hp_exponent": "1.5",
+        "hp_exponent_variance": "0.02",
         "dps_multiplier": 1,
+        "dps_extra": 1,
         "dps_exponent": "1.2",
+        "dps_exponent_variance": "0.1",
         "gold_multiplier": "1.2",
+        "gold_extra": 40,
         "gold_exponent": "1.02"
     },
     "miniboss": {
@@ -58,10 +66,13 @@
         "dps": "1.25",
         "gold": 100,
         "hp_multiplier": "1.2",
+        "hp_extra": 0,
         "hp_exponent": "1.5",
         "dps_multiplier": 1,
+        "dps_extra": 0,
         "dps_exponent": "1.2",
         "gold_multiplier": "1.7",
+        "gold_extra": 0,
         "gold_exponent": "1.1"
     },
     "boss": {
@@ -69,10 +80,13 @@
         "dps": 3,
         "gold": 500,
         "hp_multiplier": "1.5",
+        "hp_extra": 0,
         "hp_exponent": 3,
         "dps_multiplier": 1,
+        "dps_extra": 0,
         "dps_exponent": "1.2",
         "gold_multiplier": "1.9",
+        "gold_extra": 0,
         "gold_exponent": "1.25"
     },
     "treasure_mob": {
@@ -80,12 +94,15 @@
         "dps": 1,
         "gold": 200,
         "hp_multiplier": "1.2",
+        "hp_extra": 0,
         "hp_exponent": "1.5",
         "dps_exponent": "1.2",
         "dps_multiplier": 1,
+        "dps_extra": 0,
         "lifetime": 10,
         "chance": "0.01",
         "gold_multiplier": "1.7",
+        "gold_extra": 0,
         "gold_exponent": "1.1"
     },
     "abilities": {

@@ -247,6 +247,9 @@ class Server
 
 	public static function GetTuningData( $key = null )
 	{
+		if ( empty( self::$TuningData ) ) {
+			self::LoadTuningData();
+		}
 		return $key !== null ? self::$TuningData[$key] : self::$TuningData;
 	}
 
