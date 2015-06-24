@@ -198,16 +198,24 @@ class AbilityItem
 			case Enums\EAbility::Item_GoldForDamage:
 				if( !$Deactivate )
 				{
-					$Player->DecreaseGold( $Player->GetGold() * 0.1 ); # 10%
+					$Player->DecreaseGold( $Player->GetGold() * self::GetMultiplier( Enums\EAbility::Item_GoldForDamage ) ); # 10%
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
-					$Percentage = ( 0.01 + ( lcg_value() * ( abs( 0.1 - 0.01 ) ) ) ); # 1% - 10%
+					$Percentage = 
+					( 
+						self::GetMultiplier( Enums\EAbility::Item_GoldForDamage ) 
+						+ ( lcg_value() * ( abs( self::GetMultiplier( Enums\EAbility::Item_GoldForDamage ) - 0.01 ) ) ) 
+					); # 1% - 10%
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
 					$Player->Stats->AbilityDamageDealt += $Damage;
 					$Enemy->DamageTaken += $Damage;
 				}
 				break;
 			case Enums\EAbility::Item_GiveGold:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Player->IncreaseGold( self::GetMultiplier( Enums\EAbility::Item_GiveGold ) );
+					$Lane->AddActivePlayerAbility( new ActiveAbility( Enums\EAbility::Support_IncreaseGoldDropped, $Player->PlayerName ) );
+				}
 				break;
 			case Enums\EAbility::Item_GiveRandomItem:
 				if( !$Deactivate )
