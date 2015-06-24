@@ -387,6 +387,10 @@ class Game
 									* $Player->GetTechTree()->GetExtraDamageMultipliers( $this->Lanes[ $Player->GetCurrentLane() ]->GetElement() )
 									* $this->Lanes[ $Player->GetCurrentLane() ]->GetDamageMultiplier()
 									* $SecondsPassed;
+					if( $this->Lanes[ $Player->GetCurrentLane() ]->HasActivePlayerAbilityMaxElementalDamage() )
+					{
+						$DealtDpsDamage *= $Player->GetTechTree()->GetHighestElementalMultiplier();
+					}
 					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
 					$Enemy->DamageTaken += $DealtDpsDamage;
 					foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )

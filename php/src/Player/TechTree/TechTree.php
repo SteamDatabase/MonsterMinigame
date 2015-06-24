@@ -104,6 +104,16 @@ class TechTree
 		);
 	}
 
+	public function GetHighestElementalMultiplier()
+	{
+		return max(
+			$this->DamageMultiplierFire,
+			$this->DamageMultiplierWater,
+			$this->DamageMultiplierAir,
+			$this->DamageMultiplierEarth
+		);
+	}
+
 	// TODO: @Contex: Do we really need to create a new class? Why not just return the upgrade Ids.
 	public function GetAbilityUpgrades()
 	{

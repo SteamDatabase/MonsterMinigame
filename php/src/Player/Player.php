@@ -163,6 +163,10 @@ class Player
 
 					// Abilities
 					$Damage *= $Lane->GetDamageMultiplier();
+					if( $Lane->HasActivePlayerAbilityMaxElementalDamage() )
+					{
+						$Damage *= $this->GetTechTree()->GetHighestElementalMultiplier();
+					}
 
 					// Elementals
 					$Damage *= $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );

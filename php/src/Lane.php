@@ -310,6 +310,11 @@ class Lane
 		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_DecreaseCooldowns ) > 0;
 	}
 
+	public function HasActivePlayerAbilityMaxElementalDamage()
+	{
+		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_MaxElementalDamage ) > 0;
+	}
+
 	private function GetActivePlayerAbilityMultipler( $AbilityId )
 	{
 		# TODO: @Contex: Create an additional array that can cache the result? Instead of looping every single time...
