@@ -169,10 +169,33 @@ class AbilityItem
 				}
 				break;
 			case Enums\EAbility::Item_KillTower:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+					if( $Enemy->GetType() === Enums\EEnemyType::Tower )
+					{
+						$Enemy->SetHp( 1 );
+					}
+				}
 				break;
 			case Enums\EAbility::Item_KillMob:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+					if( $Enemy->GetType() === Enums\EEnemyType::Mob )
+					{
+						$Enemy->SetHp( 1 );
+					}
+					else if( $Enemy->GetType() === Enums\EEnemyType::MiniBoss )
+					{
+						$MaxPercentage = self::GetMultiplier( Enums\EAbility::Item_KillMob );
+						$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
+						$Damage = $Enemy->GetMaxHp() * $Percentage;
+						$Player->Stats->AbilityDamageDealt += $Damage;
+						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+					}
+				}
+				break;
 				break;
 			case Enums\EAbility::Item_MaxElementalDamage:
 				// TODO: Add ability logic
@@ -203,16 +226,13 @@ class AbilityItem
 			case Enums\EAbility::Item_GoldForDamage:
 				if( !$Deactivate )
 				{
-					$Player->DecreaseGold( $Player->GetGold() * self::GetMultiplier( Enums\EAbility::Item_GoldForDamage ) ); # 10%
+					$MaxPercentage = self::GetMultiplier( Enums\EAbility::Item_GoldForDamage );
+					$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 10%
+					$Player->DecreaseGold( $Player->GetGold() * $MaxPercentage ); # 10%
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
-					$Percentage = 
-					( 
-						self::GetMultiplier( Enums\EAbility::Item_GoldForDamage ) 
-						+ ( lcg_value() * ( abs( self::GetMultiplier( Enums\EAbility::Item_GoldForDamage ) - 0.01 ) ) ) 
-					); # 1% - 10%
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
 					$Player->Stats->AbilityDamageDealt += $Damage;
-					$Enemy->DamageTaken += $Damage;
+					$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
 				}
 				break;
 			case Enums\EAbility::Item_GiveGold:

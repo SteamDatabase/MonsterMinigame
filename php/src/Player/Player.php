@@ -454,6 +454,22 @@ class Player
 		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )
 		{
 			return false;
+		} 
+		else if ( $Ability === Enums\EAbility::Item_KillTower ) # TODO: Move this to HandleAbility?
+		{
+			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
+			if( $Enemy->GetType() !== Enums\EEnemyType::Tower )
+			{
+				return false;
+			}
+		}
+		else if ( $Ability === Enums\EAbility::Item_KillMob ) # TODO: Move this to HandleAbility?
+		{
+			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
+			if( $Enemy->GetType() !== Enums\EEnemyType::Mob && $Enemy->GetType() !== Enums\EEnemyType::MiniBoss )
+			{
+				return false;
+			}
 		}
 
 		// Ability executed succesfully!
