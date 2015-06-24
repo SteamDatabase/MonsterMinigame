@@ -51,6 +51,7 @@ class Enemy
 		} 
 		else 
 		{
+			$Level += 1; # @Contex: wtf Volvo, why?
 			return self::GetValueAtLevel( 'hp', $Type, $Level );
 		}
 	}
@@ -80,7 +81,7 @@ class Enemy
 
 	public static function GetGoldAtLevel( $Type, $Level )
 	{
-		$Level += 1;
+		$Level += 1; # @Contex: wtf Volvo, why?
 		return self::GetValueAtLevel( 'gold', $Type, $Level );
 	}
 
