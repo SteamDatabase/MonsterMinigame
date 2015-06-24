@@ -41,29 +41,16 @@ class Enemy
 	public static function GetHpAtLevel( $Type, $Level )
 	{
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
-		if( $Type === Enums\EEnemyType::Mob ) 
+		if( $Type === Enums\EEnemyType::MiniBoss ) 
 		{
-			$MultiplierVariance = $TuningData[ 'hp_multiplier_variance' ];
-
-			/*$NormalHp = Util::PredictValue(
-				$TuningData[ 'hp_exponent' ] + ( $TuningData[ 'hp_exponent_variance' ] * 2.5 ),
-				$TuningData[ 'hp' ], 
-				$Level * $TuningData[ 'hp_multiplier' ]
-			);*/
-
 			$LowestHp = Util::PredictValue(
-				$TuningData[ 'hp_exponent' ] - $TuningData[ 'hp_exponent_variance' ], 
+				$TuningData[ 'hp_exponent' ], 
 				$TuningData[ 'hp' ], 
 				$Level * $TuningData[ 'hp_multiplier' ]
 			);
-
-			$HighestHp = Util::PredictValue(
-				$TuningData[ 'hp_exponent' ] + ( $TuningData[ 'hp_exponent_variance' ] * 7 ), 
-				$TuningData[ 'hp' ], 
-				$Level * $TuningData[ 'hp_multiplier' ]
-			);
-
-			$HpArray = [ $LowestHp, $HighestHp ];
+			$MiddleHp = $LowestHp * 1.84; # TODO: move to tuningData.json?
+			$HighestHp = $LowestHp * 2.83; # TODO: move to tuningData.json?
+			$HpArray = [ $LowestHp, $MiddleHp, $HighestHp ];
 			return floor( $HpArray[ array_rand( $HpArray ) ] );
 		} 
 		else 
@@ -85,7 +72,7 @@ class Enemy
 			$NormalDps = Util::PredictValue(
 				$TuningData[ 'dps_exponent' ] - $TuningData[ 'dps_exponent_variance' ], 
 				$TuningData[ 'dps' ], 
-				$Level * ( $TuningData[ 'dps_multiplier' ] ) 
+				$Level * $TuningData[ 'dps_multiplier' ]
 			) + $TuningData[ 'dps_extra' ];
 			$LowestDps = Util::PredictValue(
 				$TuningData[ 'dps_exponent' ] - ( $TuningData[ 'dps_exponent_variance' ] * 2 ), 
