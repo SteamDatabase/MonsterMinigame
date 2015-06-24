@@ -223,7 +223,7 @@ class AbilityItem
 					else if( $Enemy->GetType() === Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
 					{
 						$MaxPercentage = $AbilityMultiplier;
-						$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
+						$Percentage = $MaxPercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
 						$Damage = $Enemy->GetMaxHp() * $Percentage;
 						$Player->Stats->AbilityDamageDealt += $Damage;
 						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
@@ -277,7 +277,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$MaxPercentage = $AbilityMultiplier;
-					$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 10%
+					$Percentage = $MaxPercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 10%
 					$Player->DecreaseGold( $Player->GetGold() * $MaxPercentage ); # 10%
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
