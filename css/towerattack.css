@@ -1147,7 +1147,11 @@ a {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
 
+.ta_tooltip b {
+	font-weight: normal;
+	color: #0277BD;
 }
 
 #activeinlanecontainer {

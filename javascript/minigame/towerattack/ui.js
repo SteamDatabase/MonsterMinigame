@@ -1247,35 +1247,56 @@ window.fnTooltipUpgradeDesc = function( context )
 	var desc = $context.data('desc');
 	var strOut = desc;
 
-	var multiplier = parseFloat( $context.data('multiplier') );
-	switch( $context.data('upgrade_type') )
+	var multiplier = parseFloat( $context.data( 'multiplier' ) );
+	switch( $context.data( 'upgrade_type' ) )
 	{
 		case 8:
 			break;
 		case 0:
-			strOut += '<br><br>Base Health: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.hp );
-			strOut += '<br>Current Health: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.max_hp );
-			strOut += '<br>New Health: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.hp * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.hp_multiplier + multiplier ) );
-			strOut += '<br><br>Base Increased by: ' + FormatNumberForDisplay( 100 * multiplier ) + '%';
+			strOut += '<br><br>Base Health: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.hp ) + '</b>';
+			strOut += '<br>Current Health: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.max_hp ) + '</b>';
+			strOut += '<br>New Health: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.hp * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.hp_multiplier + multiplier ) ) + '</b>';
+			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 1:
-			strOut += "<br>";
-			if ( $context.data('type') == 1 )
+			strOut += '<br>';
+			if ( $context.data( 'type' ) == 1 )
 			{
-				strOut += '<br>Base DPS: ' + ( $context.data('initial_value') );
+				strOut += '<br>Base DPS: <b>' + ( $context.data( 'initial_value' ) ) + '</b>';
 			}
-			strOut += '<br>Current DPS: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.dps );
-			strOut += '<br>New DPS: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.base_dps * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_dps + multiplier ) );
-			strOut += '<br><br>Base Increased by: ' + FormatNumberForDisplay( 100 * multiplier ) + '%';
+			strOut += '<br>Current DPS: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.dps ) + '</b>';
+			strOut += '<br>New DPS: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.base_dps * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_dps + multiplier ) ) + '</b>';
+			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 2:
-			strOut += '<br><br>Base: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.damage_per_click );
-			strOut += '<br>Current: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click );
-			strOut += '<br>Next Level: ' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.damage_per_click * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click_multiplier + multiplier ) );
-			strOut += '<br><br>Base Increased by: ' + FormatNumberForDisplay( 100 * multiplier ) + '%';
+			strOut += '<br><br>Base: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.damage_per_click ) + '</b>';
+			strOut += '<br>Current: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click ) + '</b>';
+			strOut += '<br>Next Level: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.damage_per_click * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click_multiplier + multiplier ) ) + '</b>';
+			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
+			break;
+		case 7: // Lucky Shot's type.
+			var currentMultiplier = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_crit;
+			var newMultiplier = currentMultiplier + multiplier;
+			var dps = g_Minigame.CurrentScene().m_rgPlayerTechTree.dps;
+			var clickDamage = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click;
+			strOut += '<br><br>Crit Percentage: <b>' + (g_Minigame.CurrentScene().m_rgPlayerTechTree.crit_percentage * 100).toFixed(1) + '%</b>';
+			strOut += '<br><br>Crit Damage Multiplier:';
+			strOut += '<br>Current: <b>' + ( currentMultiplier ) + 'x</b>';
+			strOut += '<br>Next Level: <b>' + ( newMultiplier ) + 'x</b>';
+			strOut += '<br><br>Damage With One Crit:';
+			strOut += '<br>DPS: <b>' + FormatNumberForDisplay( currentMultiplier * dps ) + '</b> => <b>' + FormatNumberForDisplay( newMultiplier * dps ) + '</b>';
+			strOut += '<br>Click: <b>' + FormatNumberForDisplay( currentMultiplier * clickDamage ) + '</b> => <b>' + FormatNumberForDisplay( newMultiplier * clickDamage ) + '</b>';
+			strOut += '<br><br>Base Increased By: <b>' + FormatNumberForDisplay(multiplier) + 'x</b>';
+			break;
+		case 9:
+			var bossLootChance = g_Minigame.CurrentScene().m_rgPlayerTechTree.boss_loot_drop_percentage * 100;
+			strOut += '<br><br>Boss Loot Drop Rate:';
+			strOut += '<br>Current: <b>' + bossLootChance + '%</b>';
+			strOut += '<br>Next Level: <b>' + ( bossLootChance + multiplier * 100 ) + '%</b>';
+			strOut += '<br><br>Base Increased By: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		default:
-			strOut += "<br><br>" + 'Base Increased by: ' + FormatNumberForDisplay( 100 * multiplier ) + '%';
+			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 	}
 
@@ -1290,7 +1311,7 @@ window.fnTooltipLaneElementDesc = function( context )
 	switch ( element )
 	{
 		case 1:
-			strOut = "This lane has Fire Monsters" ;
+			strOut = "This lane has Fire Monsters";
 			break
 		case 2:
 			strOut = "This lane has Water Monsters";
@@ -1380,12 +1401,12 @@ window.fnTooltipUpgradeElementDesc = function( context )
 	var dps = g_Minigame.CurrentScene().m_rgPlayerTechTree.dps;
 	var clickDamage = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click;
 	var newMultiplier = currentMultiplier + multiplier;
-	strOut += '<br><br>Current: ' + ( currentMultiplier ) + 'x';
-	strOut += '<br>Next Level: ' + ( newMultiplier ) + 'x';
+	strOut += '<br><br>Current: <b>' + ( currentMultiplier ) + 'x</b>';
+	strOut += '<br>Next Level: <b>' + ( newMultiplier ) + 'x</b>';
 
 	strOut += '<br><br>' + strDamagePrefix;
-	strOut += '<br>DPS: ' + FormatNumberForDisplay( currentMultiplier * dps ) + ' => ' + FormatNumberForDisplay( newMultiplier * dps );
-	strOut += '<br>Click: ' + FormatNumberForDisplay( currentMultiplier * clickDamage ) + ' => ' + FormatNumberForDisplay( newMultiplier * clickDamage );
+	strOut += '<br>DPS: <b>' + FormatNumberForDisplay( currentMultiplier * dps ) + '</b> => <b>' + FormatNumberForDisplay( newMultiplier * dps ) + '</b>';
+	strOut += '<br>Click: <b>' + FormatNumberForDisplay( currentMultiplier * clickDamage ) + '</b> => <b>' + FormatNumberForDisplay( newMultiplier * clickDamage ) + '</b>';
 
 	return strOut;
 }

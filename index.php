@@ -46,10 +46,7 @@
 							<span class="title_upgrates abilities">Abilities</span>
 							<div class="container_purchase"></div>
 						</div>
-					</div>
-					<div id="upgradesscroll">
-						<div></div>
-					</div>
+					</div><div id="upgradesscroll"><div></div></div>
 				</div>
 
 				<div id="elements">
