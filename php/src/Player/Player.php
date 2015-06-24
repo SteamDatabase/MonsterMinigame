@@ -294,6 +294,15 @@ class Player
 		return $this->Hp;
 	}
 
+	public function IncreaseHp( $Amount )
+	{
+		$this->Hp += $Amount;
+		if( $this->Hp > $this->GetTechTree()->GetMaxHp() )
+		{
+			$this->Hp = $this->GetTechTree()->GetMaxHp();
+		}
+	}
+
 	public function GetHpPercentage()
 	{
 		return ( $this->GetHp() / $this->GetTechTree()->GetMaxHp() ) * 100;

@@ -3,6 +3,7 @@ namespace SteamDB\CTowerAttack\Player\TechTree;
 
 use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
+use SteamDB\CTowerAttack\Player\ActiveAbility;
 
 class AbilityItem
 {
@@ -112,9 +113,6 @@ class AbilityItem
 
 		switch( $Ability->GetAbility() )
 		{
-			case Enums\EAbility::Support_Heal:
-				// TODO: Add ability logic
-				break;
 			case Enums\EAbility::Support_IncreaseGoldDropped:
 				// TODO: Add ability logic
 				break;
@@ -163,7 +161,12 @@ class AbilityItem
 				// TODO: Add ability logic
 				break;
 			case Enums\EAbility::Item_IncreaseHPPermanently:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
+					$Player->GetTechTree()->RecalulateUpgrades();
+					$Lane->AddActivePlayerAbility( new ActiveAbility( Enums\EAbility::Support_Heal, $Player->PlayerName ) );
+				}
 				break;
 			case Enums\EAbility::Item_GoldForDamage:
 				// TODO: Add ability logic
@@ -200,6 +203,7 @@ class AbilityItem
 				// TODO: Add ability logic
 			break;
 			default:
+			case Enums\EAbility::Support_Heal:
 			case Enums\EAbility::Support_IncreaseDamage:
 			case Enums\EAbility::Support_IncreaseCritPercentage:
 				# Delete?

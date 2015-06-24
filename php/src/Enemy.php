@@ -154,11 +154,19 @@ class Enemy
 	public function DecreaseHp( $Hp )
 	{
 		$this->Hp -= $Hp;
+		if( $this->Hp < 0 )
+		{
+			$this->Hp = 0;
+		}
 	}
 
 	public function IncreaseHp( $Hp )
 	{
 		$this->Hp += $Hp;
+		if( $this->Hp > $this->GetMaxHp() )
+		{
+			$this->Hp = $this->GetMaxHp();
+		}
 	}
 
 	public function SetHp( $Hp )

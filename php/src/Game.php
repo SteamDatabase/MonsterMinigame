@@ -409,7 +409,6 @@ class Game
 		$DeadLanes = 0;
 		foreach( $this->Lanes as $LaneId => $Lane )
 		{
-			$Lane->CheckActivePlayerAbilities( $this );
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
 			$EnemyDpsDamage = 0;
@@ -539,6 +538,7 @@ class Game
 				}
 			}
 			$Lane->Dps = $LaneDps[ $LaneId ];
+			$Lane->CheckActivePlayerAbilities( $this, $SecondsPassed );
 			$Lane->UpdateHpBuckets( $PlayersInLane );
 		}
 		if( $DeadLanes === 3 )

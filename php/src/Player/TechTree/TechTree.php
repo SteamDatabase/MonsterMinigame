@@ -245,6 +245,11 @@ class TechTree
 		return $this->HpMultiplier;
 	}
 
+	public function IncreaseHpMultiplier( $Multiplier )
+	{
+		$this->HpMultiplier += $Multiplier;
+	}
+
 	public function GetCritPercentage()
 	{
 		return $this->CritPercentage;
@@ -354,6 +359,11 @@ class TechTree
 		return $this->MaxHp;
 	}
 
+	public function IncreaseMaxHp( $Amount )
+	{
+		$this->MaxHp += $Amount;
+	}
+
 	public function GetDps()
 	{
 		return $this->Dps;
@@ -378,7 +388,7 @@ class TechTree
 			'damage_multiplier_air' => (double) $this->GetTuningData( 'damage_multiplier_air' ),
 			'damage_multiplier_earth' => (double) $this->GetTuningData( 'damage_multiplier_earth' ),
 			'damage_multiplier_crit' => (double) $this->GetTuningData( 'damage_multiplier_crit' ),
-			'hp_multiplier' => (double) 1,
+			'hp_multiplier' => (double) $this->GetHpMultiplier(),
 			'crit_percentage' => (double) $this->GetTuningData( 'crit_percentage' ),
 			'boss_loot_drop_percentage' => (double) $this->GetTuningData( 'loot_chance' ),
 			'damage_multiplier_dps' => (double) 0,

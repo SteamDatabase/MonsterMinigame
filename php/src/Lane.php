@@ -134,16 +134,42 @@ class Lane
 		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}
 
-	public function CheckActivePlayerAbilities( $Game )
+	public function CheckActivePlayerAbilities( $Game, $SecondsPassed )
 	{
+		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
+		$HealingPercentage = 0;
 		foreach( $this->ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
+			if( $SecondPassed )
+			{
+				switch( $ActiveAbility->GetAbility() )
+				{
+					case Enums\EAbility::Support_Heal:
+						$HealingPercentage += AbilityItem::GetMultiplier( $ActiveAbility->GetAbility() );
+						break;
+				}
+			}
 			if( $ActiveAbility->isDone() ) 
 			{
 				// TODO: @Contex: Remove whatever effects the ability had
 				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
 				AbilityItem::HandleAbility( $Game, $this, null, $ActiveAbility, true );
 				unset( $this->ActivePlayerAbilities[ $Key ] );
+			}
+		}
+
+		if( $HealingPercentage > 0 && $SecondPassed )
+		{
+			// Check Medics
+			$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
+			if ($HealingPercentage > 0) {
+				foreach( $PlayersInLane as $PlayerInLane )
+				{
+					if( !$PlayerInLane->IsDead() )
+					{
+						$PlayerInLane->IncreaseHp( $PlayerInLane->GetTechTree()->GetMaxHp() * $HealingPercentage * $SecondsPassed ); # TODO: GetHp() or GetTechTree()->GetMaxHp()?
+					}
+				}
 			}
 		}
 	}
@@ -247,6 +273,12 @@ class Lane
 	{
 		$EnemyGoldMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseGoldDropped );
 		return $EnemyGoldMultiplier !== 0 ? 1 + $EnemyGoldMultiplier : 0;
+	}
+
+	public function GetHealingPercentage()
+	{
+		$HealingPercentage = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_Heal );
+		return $HealingPercentage !== 0 ? $HealingPercentage : 0;
 	}
 
 	private function GetActivePlayerAbilityMultipler( $AbilityId )
