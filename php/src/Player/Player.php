@@ -417,10 +417,10 @@ class Player
 		return $ActiveAbilities;
 	}
 
-	public function AddActiveAbility( $Ability )
+	public function AddActiveAbility( $Ability, $DecreaseCooldown = false )
 	{
 		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
-		$ActiveAbility = new ActiveAbility( $Ability, $this->PlayerName );
+		$ActiveAbility = new ActiveAbility( $Ability, $this->PlayerName, $DecreaseCooldown );
 		$this->ActiveAbilities[ $Ability ] = $ActiveAbility;
 		return $ActiveAbility;
 	}
@@ -466,14 +466,14 @@ class Player
 		else if ( $Ability === Enums\EAbility::Item_KillMob ) # TODO: Move this to HandleAbility?
 		{
 			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if( $Enemy->GetType() !== Enums\EEnemyType::Mob && $Enemy->GetType() !== Enums\EEnemyType::MiniBoss )
+			if( $Enemy->GetType() !== Enums\EEnemyType::Mob && $Enemy->GetType() !== Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
 			{
 				return false;
 			}
 		}
 
 		// Ability executed succesfully!
-		$ActiveAbility = $this->AddActiveAbility( $Ability );
+		$ActiveAbility = $this->AddActiveAbility( $Ability, $Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns() );
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
 		$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility ); # TODO @Contex: Move this to HandleAbility?
 

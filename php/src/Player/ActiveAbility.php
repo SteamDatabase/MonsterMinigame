@@ -12,13 +12,19 @@ class ActiveAbility
 	private $TimestampDone;
 	private $TimestampCooldown;
 
-	public function __construct( $Ability, $Actor )
+	public function __construct( $Ability, $Actor, $DecreaseCooldown = false )
 	{
 		$this->Actor = $Actor;
 		$this->Ability = $Ability;
 		$this->Time = time();
+		$Duration = AbilityItem::GetDuration( $Ability );
+		$Cooldown = AbilityItem::GetCooldown( $Ability );
 		$this->TimestampDone = $this->Time + AbilityItem::GetDuration( $Ability );
-		$this->TimestampCooldown = $this->Time + AbilityItem::GetCooldown( $Ability );
+		if( $DecreaseCooldown ) 
+		{
+			$Cooldown *= AbilityItem::GetMultiplier( Enums\EAbility::Support_DecreaseCooldowns );
+		}
+		$this->TimestampCooldown = $this->Time + $Cooldown;
 	}
 
 	public function ToArray()

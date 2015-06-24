@@ -140,12 +140,6 @@ class AbilityItem
 
 		switch( $Ability->GetAbility() )
 		{
-			case Enums\EAbility::Support_IncreaseGoldDropped:
-				// TODO: Add ability logic
-				break;
-			case Enums\EAbility::Support_DecreaseCooldowns:
-				// TODO: Add ability logic
-				break;
 			case Enums\EAbility::Offensive_HighDamageOneTarget:
 				// TODO: Add ability logic
 				break;
@@ -186,7 +180,7 @@ class AbilityItem
 					{
 						$Enemy->SetHp( 1 );
 					}
-					else if( $Enemy->GetType() === Enums\EEnemyType::MiniBoss )
+					else if( $Enemy->GetType() === Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
 					{
 						$MaxPercentage = self::GetMultiplier( Enums\EAbility::Item_KillMob );
 						$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
@@ -212,7 +206,15 @@ class AbilityItem
 				{
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
-					$Lane->AddActivePlayerAbility( new ActiveAbility( Enums\EAbility::Support_IncreaseCritPercentage, $Player->PlayerName ) );
+					$Lane->AddActivePlayerAbility
+					( 
+						new ActiveAbility
+						( 
+							Enums\EAbility::Support_IncreaseCritPercentage, 
+							$Player->PlayerName,
+							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
+						) 
+					);
 				}
 				break;
 			case Enums\EAbility::Item_IncreaseHPPermanently:
@@ -220,7 +222,15 @@ class AbilityItem
 				{
 					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
-					$Lane->AddActivePlayerAbility( new ActiveAbility( Enums\EAbility::Support_Heal, $Player->PlayerName ) );
+					$Lane->AddActivePlayerAbility
+					( 
+						new ActiveAbility
+						( 
+							Enums\EAbility::Support_Heal, 
+							$Player->PlayerName,
+							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
+						) 
+					);
 				}
 				break;
 			case Enums\EAbility::Item_GoldForDamage:
@@ -270,6 +280,8 @@ class AbilityItem
 				break;
 			break;
 			default:
+			case Enums\EAbility::Support_IncreaseGoldDropped:
+			case Enums\EAbility::Support_DecreaseCooldowns:
 			case Enums\EAbility::Item_Invulnerability:
 			case Enums\EAbility::Item_StealHealth:
 			case Enums\EAbility::Support_Heal:
