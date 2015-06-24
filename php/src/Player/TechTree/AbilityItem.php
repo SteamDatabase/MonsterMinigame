@@ -196,10 +196,15 @@ class AbilityItem
 				}
 				break;
 			case Enums\EAbility::Item_GoldForDamage:
-				// TODO: Add ability logic
-				break;
-			case Enums\EAbility::Item_Invulnerability:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Player->DecreaseGold( $Player->GetGold() * 0.1 ); # 10%
+					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+					$Percentage = ( 0.01 + ( lcg_value() * ( abs( 0.1 - 0.01 ) ) ) ); # 1% - 10%
+					$Damage = $Enemy->GetMaxHp() * $Percentage;
+					$Player->Stats->AbilityDamageDealt += $Damage;
+					$Enemy->DamageTaken += $Damage;
+				}
 				break;
 			case Enums\EAbility::Item_GiveGold:
 				// TODO: Add ability logic
@@ -232,6 +237,7 @@ class AbilityItem
 				break;
 			break;
 			default:
+			case Enums\EAbility::Item_Invulnerability:
 			case Enums\EAbility::Item_StealHealth:
 			case Enums\EAbility::Support_Heal:
 			case Enums\EAbility::Support_IncreaseDamage:
