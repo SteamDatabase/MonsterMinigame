@@ -9,4 +9,9 @@ class EEnemyType
 	const MiniBoss = 3;
 	const TreasureMob = 4;
 	const Max = 5;
+
+	public static function GetList()
+	{
+        return ( new \ReflectionClass(__CLASS__) )->getConstants();
+	}
 }

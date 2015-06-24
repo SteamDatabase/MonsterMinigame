@@ -14,4 +14,9 @@ class EUpgradeType
 	const PurchaseAbility = 8;
 	const BossLootDropPercentage = 9;
 	const MaxTypes = 10;
+
+	public static function GetList()
+	{
+        return ( new \ReflectionClass(__CLASS__) )->getConstants();
+	}
 }

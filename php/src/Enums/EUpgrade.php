@@ -49,4 +49,9 @@ class EUpgrade
 	const DPS_Level3Drones = 42;
 	const ClickDamage_BionicArm = 43;
 	const MaxUpgrades = 44;
+
+	public static function GetList()
+	{
+        return ( new \ReflectionClass(__CLASS__) )->getConstants();
+	}
 }

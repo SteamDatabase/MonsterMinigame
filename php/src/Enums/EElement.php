@@ -8,4 +8,9 @@ class EElement
 	const Water = 2;
 	const Air = 3;
 	const Earth = 4;
+
+	public static function GetList()
+	{
+        return ( new \ReflectionClass(__CLASS__) )->getConstants();
+	}
 }

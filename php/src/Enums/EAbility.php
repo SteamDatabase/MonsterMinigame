@@ -41,4 +41,9 @@ class EAbility
 	const Item_End = 27;
 
 	const MaxAbilities = 28;
+
+	public static function GetList()
+	{
+        return ( new \ReflectionClass(__CLASS__) )->getConstants();
+	}
 }
