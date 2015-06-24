@@ -64,6 +64,11 @@ class AbilityItem
 		return self::GetTuningData( $AbilityId, 'multiplier' );
 	}
 
+	public static function GetMultiplierBoss( $AbilityId )
+	{
+		return self::GetTuningData( $AbilityId, 'multiplier_boss' );
+	}
+
 	public static function IsInstant( $AbilityId )
 	{
 		return self::GetTuningData( $AbilityId, 'instant' ) === 1;
@@ -141,13 +146,48 @@ class AbilityItem
 		switch( $Ability->GetAbility() )
 		{
 			case Enums\EAbility::Offensive_HighDamageOneTarget:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+					if ( !$Enemy->IsDead() )
+					{
+						$Damage = $Enemy->GetMaxHp();
+						if( $Enemy->GetType() === Enums\EEnemyType::Boss )
+						{
+							$Damage *= self::GetMultiplierBoss( Enums\EAbility::Offensive_HighDamageOneTarget );
+						}
+						else
+						{
+							$Damage *= self::GetMultiplier( Enums\EAbility::Offensive_HighDamageOneTarget );
+						}
+						$Player->Stats->AbilityDamageDealt += $Damage;
+						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+					}
+				}
 				break;
 			case Enums\EAbility::Offensive_DamageAllTargets:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Enemies = $Lane->GetAliveEnemies();
+					foreach( $Enemies as $Enemy )
+					{
+						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
+						$Player->Stats->AbilityDamageDealt += $Damage;
+						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+					}
+				}
 				break;
 			case Enums\EAbility::Offensive_DOTAllTargets:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Enemies = $Lane->GetAliveEnemies();
+					foreach( $Enemies as $Enemy )
+					{
+						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
+						$Player->Stats->AbilityDamageDealt += $Damage;
+						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+					}
+				}
 				break;
 			case Enums\EAbility::Item_Resurrection:
 				if( !$Deactivate )
@@ -182,7 +222,7 @@ class AbilityItem
 					}
 					else if( $Enemy->GetType() === Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
 					{
-						$MaxPercentage = self::GetMultiplier( Enums\EAbility::Item_KillMob );
+						$MaxPercentage = $AbilityMultiplier;
 						$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
 						$Damage = $Enemy->GetMaxHp() * $Percentage;
 						$Player->Stats->AbilityDamageDealt += $Damage;
@@ -236,7 +276,7 @@ class AbilityItem
 			case Enums\EAbility::Item_GoldForDamage:
 				if( !$Deactivate )
 				{
-					$MaxPercentage = self::GetMultiplier( Enums\EAbility::Item_GoldForDamage );
+					$MaxPercentage = $AbilityMultiplier;
 					$Percentage = $BasePercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 10%
 					$Player->DecreaseGold( $Player->GetGold() * $MaxPercentage ); # 10%
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
@@ -248,8 +288,14 @@ class AbilityItem
 			case Enums\EAbility::Item_GiveGold:
 				if( !$Deactivate )
 				{
-					$Player->IncreaseGold( self::GetMultiplier( Enums\EAbility::Item_GiveGold ) );
-					$Lane->AddActivePlayerAbility( new ActiveAbility( Enums\EAbility::Support_IncreaseGoldDropped, $Player->PlayerName ) );
+					$Player->IncreaseGold( $AbilityMultiplier );
+					$Lane->AddActivePlayerAbility( 
+						new ActiveAbility( 
+							Enums\EAbility::Support_IncreaseGoldDropped, 
+							$Player->PlayerName,
+							$Lane->HasActivePlayerAbilityDecreaseCooldowns() 
+						) 
+					);
 				}
 				break;
 			case Enums\EAbility::Item_GiveRandomItem:

@@ -457,19 +457,41 @@ class Player
 		} 
 		else if ( $Ability === Enums\EAbility::Item_KillTower ) # TODO: Move this to HandleAbility?
 		{
-			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if( $Enemy->GetType() !== Enums\EEnemyType::Tower )
-			{
+			if( 
+				$Enemy->GetType() !== Enums\EEnemyType::Tower 
+				|| 
+				$Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() )->IsDead()
+			) {
 				return false;
 			}
 		}
 		else if ( $Ability === Enums\EAbility::Item_KillMob ) # TODO: Move this to HandleAbility?
 		{
-			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if( $Enemy->GetType() !== Enums\EEnemyType::Mob && $Enemy->GetType() !== Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
+			if( 
+				( $Enemy->GetType() !== Enums\EEnemyType::Mob && $Enemy->GetType() !== Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
+				|| 
+				$Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() )->IsDead()
+			) {
+				return false;
+			}
+		}
+		else if ( $Ability === Enums\EAbility::Offensive_HighDamageOneTarget ) # TODO: Move this to HandleAbility?
+		{
+			if( $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() )->IsDead() )
 			{
 				return false;
 			}
+		}
+		else if ( 
+			(
+				$Ability === Enums\EAbility::Offensive_DamageAllTargets 
+				|| 
+				$Ability === Enums\EAbility::Offensive_DOTAllTargets 
+			)
+			&&
+			count( $Game->GetLane( $this->GetCurrentLane() )->GetAliveEnemies() ) === 0
+		) { # TODO: Move this to HandleAbility?
+			return false;
 		}
 
 		// Ability executed succesfully!

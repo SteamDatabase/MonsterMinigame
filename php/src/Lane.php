@@ -87,7 +87,8 @@ class Lane
 	public function GetEnemiesArray()
 	{
 		$EnemyArray = array();
-		foreach ( $this->GetEnemies() as $Enemy ){
+		foreach( $this->GetEnemies() as $Enemy )
+		{
 			$EnemyArray[] = $Enemy->ToArray();
 		}
 		return $EnemyArray;
@@ -234,17 +235,30 @@ class Lane
 		return null;
 	}
 
+	public function GetAliveEnemies( $EnemyType = null )
+	{
+		$AliveEnumies = [];
+		foreach( $this->Enemies as $Enemy )
+		{
+			if( !$Enemy->isDead() && ( $EnemyType !== null ? $EnemyType === $Enemy->GetType() : true ) )
+			{
+				$AliveEnumies[] = $Enemy;
+			}
+		}
+		return $AliveEnumies;
+	}
+
 	public function GetDeadEnemies( $EnemyType = null )
 	{
-		$GetDeadEnemies = [];
+		$DeadEnemies = [];
 		foreach( $this->Enemies as $Enemy )
 		{
 			if( $Enemy->isDead() && ( $EnemyType !== null ? $EnemyType === $Enemy->GetType() : true ) )
 			{
-				$GetDeadEnemies[] = $Enemy;
+				$DeadEnemies[] = $Enemy;
 			}
 		}
-		return $GetDeadEnemies;
+		return $DeadEnemies;
 	}
 
 	public function UpdateHpBuckets( $Players )
