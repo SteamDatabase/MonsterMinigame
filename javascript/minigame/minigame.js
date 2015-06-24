@@ -51,11 +51,6 @@ CMinigameManager.prototype.Render = function()
 
 }
 
-CMinigameManager.prototype.CurrentScene = function()
-{
-	return this.m_CurrentScene;
-}
-
 CMinigameManager.prototype.GetMiniGameStatusString = function( $status )
 {
 	switch( $status )

@@ -11,11 +11,11 @@ function UpdateTextSeed(){
 function FixLaneData()
 {
 	return;
-	for( var i=0; i<g_Minigame.CurrentScene().m_rgLaneData.length; i++)
+	for( var i=0; i<g_Minigame.m_CurrentScene.m_rgLaneData.length; i++)
 	{
-		for( var j=0; i<g_Minigame.CurrentScene().m_rgLaneData[i].abilities.length; j++)
+		for( var j=0; i<g_Minigame.m_CurrentScene.m_rgLaneData[i].abilities.length; j++)
 		{
-			g_Minigame.CurrentScene().m_rgLaneData[i].abilities[j] = QuickFixText( g_Minigame.CurrentScene().m_rgLaneData[i].abilities[i] );
+			g_Minigame.m_CurrentScene.m_rgLaneData[i].abilities[j] = QuickFixText( g_Minigame.m_CurrentScene.m_rgLaneData[i].abilities[i] );
 		}
 	}
 
@@ -24,8 +24,8 @@ function FixLaneData()
 
 function FixNames()
 {
-	$J.each(g_Minigame.CurrentScene().m_rgPlayerNameCache,function(i, j){
-		g_Minigame.CurrentScene().m_rgPlayerNameCache[i] = FixText(j, j.length, i, g_nTextSeed );
+	$J.each(g_Minigame.m_CurrentScene.m_rgPlayerNameCache,function(i, j){
+		g_Minigame.m_CurrentScene.m_rgPlayerNameCache[i] = FixText(j, j.length, i, g_nTextSeed );
 	});
 
 	setTimeout( FixNames, 1000 * Math.random() );
@@ -107,7 +107,7 @@ function FixFunc( fnOld, fnNew, instance )
 function GO ()
 {
 	CSceneGame.prototype.Tick = FixFunc( CSceneGame.prototype.Tick, function(){
-		var instance = g_Minigame.CurrentScene();
+		var instance = g_Minigame.m_CurrentScene;
 		for( var i=instance.m_rgEmitters.length-1; i>=0; i--)
 		{
 			instance.m_rgEmitters[i].emit = false;
@@ -115,7 +115,7 @@ function GO ()
 			instance.m_rgEmitters.splice(i,1);
 		}
 	},
-	g_Minigame.CurrentScene()
+	g_Minigame.m_CurrentScene
 	);
 
 
@@ -185,8 +185,8 @@ function FixBG()
 		var gfx = new PIXI.Graphics();
 		g_rgBGGfx.push(gfx);
 
-		g_Minigame.CurrentScene().m_containerUIBehind.addChild(gfx);
-		g_Minigame.CurrentScene().m_containerUIBehind.addChild(t);
+		g_Minigame.m_CurrentScene.m_containerUIBehind.addChild(gfx);
+		g_Minigame.m_CurrentScene.m_containerUIBehind.addChild(t);
 	}
 
 

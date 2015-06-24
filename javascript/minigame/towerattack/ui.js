@@ -282,8 +282,8 @@ CUI.prototype.Tick = function()
 			if( !this.m_gameOverDialog )
 			{
 				this.m_gameOverDialog = true;
-				g_Minigame.CurrentScene().m_containerEnemies.interactive = false;
-				g_Minigame.CurrentScene().m_spriteBackground.interactive = false;
+				g_Minigame.m_CurrentScene.m_containerEnemies.interactive = false;
+				g_Minigame.m_CurrentScene.m_spriteBackground.interactive = false;
 
 				var playerDeadDialog = this.m_dialogPlayerDied;
 				if( playerDeadDialog.m_bVisible )
@@ -364,7 +364,7 @@ CUI.prototype.UpdateSpendBadgePointsDialog = function()
 		{
 			ele = template.clone();
 			$J(ele).click( function( event ) {
-				g_Minigame.CurrentScene().TrySpendBadgePoints( this, 1 );
+				g_Minigame.m_CurrentScene.TrySpendBadgePoints( this, 1 );
 				event.stopPropagation();
 			} );
 			$J(ele).attr('id','purchase_abilityitem_' + i);
@@ -383,7 +383,7 @@ CUI.prototype.UpdateSpendBadgePointsDialog = function()
 			buyOption.data('type', i );
 			buyOption.data('cost', ability.badge_points_cost );
 			$J(buyOption).click( function( event ) {
-				g_Minigame.CurrentScene().TrySpendBadgePoints( this, 10 );
+				g_Minigame.m_CurrentScene.TrySpendBadgePoints( this, 10 );
 				event.stopPropagation();
 			} );
 
@@ -391,7 +391,7 @@ CUI.prototype.UpdateSpendBadgePointsDialog = function()
 			buyOption.data('type', i );
 			buyOption.data('cost', ability.badge_points_cost );
 			$J(buyOption).click( function( event ) {
-				g_Minigame.CurrentScene().TrySpendBadgePoints( this, 100 );
+				g_Minigame.m_CurrentScene.TrySpendBadgePoints( this, 100 );
 				event.stopPropagation();
 			} );
 
@@ -1253,9 +1253,9 @@ window.fnTooltipUpgradeDesc = function( context )
 		case 8:
 			break;
 		case 0:
-			strOut += '<br><br>Base Health: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.hp ) + '</b>';
-			strOut += '<br>Current Health: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.max_hp ) + '</b>';
-			strOut += '<br>New Health: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.hp * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.hp_multiplier + multiplier ) ) + '</b>';
+			strOut += '<br><br>Base Health: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.hp ) + '</b>';
+			strOut += '<br>Current Health: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.max_hp ) + '</b>';
+			strOut += '<br>New Health: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.hp * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.hp_multiplier + multiplier ) ) + '</b>';
 			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 1:
@@ -1264,22 +1264,22 @@ window.fnTooltipUpgradeDesc = function( context )
 			{
 				strOut += '<br>Base DPS: <b>' + ( $context.data( 'initial_value' ) ) + '</b>';
 			}
-			strOut += '<br>Current DPS: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.dps ) + '</b>';
-			strOut += '<br>New DPS: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.base_dps * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_dps + multiplier ) ) + '</b>';
+			strOut += '<br>Current DPS: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.dps ) + '</b>';
+			strOut += '<br>New DPS: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.base_dps * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_dps + multiplier ) ) + '</b>';
 			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 2:
-			strOut += '<br><br>Base: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.damage_per_click ) + '</b>';
-			strOut += '<br>Current: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click ) + '</b>';
-			strOut += '<br>Next Level: <b>' + FormatNumberForDisplay( g_Minigame.CurrentScene().m_rgTuningData.player.damage_per_click * ( g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click_multiplier + multiplier ) ) + '</b>';
+			strOut += '<br><br>Base: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.damage_per_click ) + '</b>';
+			strOut += '<br>Current: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_per_click ) + '</b>';
+			strOut += '<br>Next Level: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.damage_per_click * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_per_click_multiplier + multiplier ) ) + '</b>';
 			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 7: // Lucky Shot's type.
-			var currentMultiplier = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_crit;
+			var currentMultiplier = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_crit;
 			var newMultiplier = currentMultiplier + multiplier;
-			var dps = g_Minigame.CurrentScene().m_rgPlayerTechTree.dps;
-			var clickDamage = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click;
-			strOut += '<br><br>Crit Percentage: <b>' + (g_Minigame.CurrentScene().m_rgPlayerTechTree.crit_percentage * 100).toFixed(1) + '%</b>';
+			var dps = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.dps;
+			var clickDamage = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_per_click;
+			strOut += '<br><br>Crit Percentage: <b>' + (g_Minigame.m_CurrentScene.m_rgPlayerTechTree.crit_percentage * 100).toFixed(1) + '%</b>';
 			strOut += '<br><br>Crit Damage Multiplier:';
 			strOut += '<br>Current: <b>' + ( currentMultiplier ) + 'x</b>';
 			strOut += '<br>Next Level: <b>' + ( newMultiplier ) + 'x</b>';
@@ -1289,7 +1289,7 @@ window.fnTooltipUpgradeDesc = function( context )
 			strOut += '<br><br>Base Increased By: <b>' + FormatNumberForDisplay(multiplier) + 'x</b>';
 			break;
 		case 9:
-			var bossLootChance = g_Minigame.CurrentScene().m_rgPlayerTechTree.boss_loot_drop_percentage * 100;
+			var bossLootChance = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.boss_loot_drop_percentage * 100;
 			strOut += '<br><br>Boss Loot Drop Rate:';
 			strOut += '<br>Current: <b>' + bossLootChance + '%</b>';
 			strOut += '<br>Next Level: <b>' + ( bossLootChance + multiplier * 100 ) + '%</b>';
@@ -1336,7 +1336,7 @@ window.fnTooltipAbilityDesc = function( context )
 	var strOut = '';
 	var $context = $J(context);
 
-	var rgAbilities = g_Minigame.CurrentScene().m_rgTuningData.abilities;
+	var rgAbilities = g_Minigame.m_CurrentScene.m_rgTuningData.abilities;
 	var idx = $context.data('abilityid');
 	var ability = rgAbilities[idx];
 
@@ -1344,7 +1344,7 @@ window.fnTooltipAbilityDesc = function( context )
 
 	if ( idx == '22' )
 	{
-		var levelMultiplier = Math.pow( 10, Math.max( 0, Math.floor( log10( g_Minigame.CurrentScene().m_rgGameData.level ) ) - 1 ) );
+		var levelMultiplier = Math.pow( 10, Math.max( 0, Math.floor( log10( g_Minigame.m_CurrentScene.m_rgGameData.level ) ) - 1 ) );
 		var goldGiven = ability.multiplier * levelMultiplier;
 		strOut += '<br><br>Gold for this level: ' + FormatNumberForDisplay( goldGiven );
 	}
@@ -1370,7 +1370,7 @@ window.fnTooltipUpgradeElementDesc = function( context )
 	var strOut = '';
 	var $context = $J(context);
 
-	var upgrades = g_Minigame.CurrentScene().m_rgTuningData.upgrades.slice(0);
+	var upgrades = g_Minigame.m_CurrentScene.m_rgTuningData.upgrades.slice(0);
 	var idx = $context.data('type');
 	var upgrade = upgrades[idx];
 	var multiplier = parseFloat( upgrade.multiplier );
@@ -1381,25 +1381,25 @@ window.fnTooltipUpgradeElementDesc = function( context )
 	switch( idx )
 	{
 		case 3: // fire
-			currentMultiplier = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_fire;
+			currentMultiplier = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_fire;
 			strDamagePrefix = 'Damage to Fire Monsters: ';
 			break;
 		case 4: // water
-			currentMultiplier = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_water;
+			currentMultiplier = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_water;
 			strDamagePrefix = 'Damage to Water Monsters: ';
 			break;
 		case 5: // air
-			currentMultiplier = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_air;
+			currentMultiplier = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_air;
 			strDamagePrefix = 'Damage to Air Monsters: ';
 			break;
 		case 6: // earth
-			currentMultiplier = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_multiplier_earth;
+			currentMultiplier = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_earth;
 			strDamagePrefix = 'Damage to Earth Monsters: ';
 			break;
 	}
 
-	var dps = g_Minigame.CurrentScene().m_rgPlayerTechTree.dps;
-	var clickDamage = g_Minigame.CurrentScene().m_rgPlayerTechTree.damage_per_click;
+	var dps = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.dps;
+	var clickDamage = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_per_click;
 	var newMultiplier = currentMultiplier + multiplier;
 	strOut += '<br><br>Current: <b>' + ( currentMultiplier ) + 'x</b>';
 	strOut += '<br>Next Level: <b>' + ( newMultiplier ) + 'x</b>';

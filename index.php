@@ -57,25 +57,25 @@
 							<img src="/assets/minigame/towerattack/emoticons/shelterwildfire.png" alt="Fire">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="3" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="3" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade"  id="upgr_4">
 							<img src="/assets/minigame/towerattack/emoticons/waterrune.png" alt="Water">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="4" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="4" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade" id="upgr_6">
 							<img src="/assets/minigame/towerattack/emoticons/FateTree.png" alt="Earth">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="6" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="6" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade" id="upgr_5">
 							<img src="/assets/minigame/towerattack/emoticons/Wisp.png" alt="Air">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="5" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="5" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 					</div>
 				</div>
@@ -83,19 +83,19 @@
 
 			<div id="col_right">
 				<div class="lanes desert">
-					<a id="lane0" class="lane active" onclick="g_Minigame.CurrentScene().TryChangeLane( 0 )">
+					<a id="lane0" class="lane active" onclick="g_Minigame.m_CurrentScene.TryChangeLane( 0 )">
 						<span class="label">Lane 1</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
 						--><div class="lane_enemy enemy_icon_2" id="lane0_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
 						--><div class="lane_enemy enemy_icon_4" id="lane0_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
-					</a><a id="lane1" class="lane middle"  onclick="g_Minigame.CurrentScene().TryChangeLane( 1 )">
+					</a><a id="lane1" class="lane middle"  onclick="g_Minigame.m_CurrentScene.TryChangeLane( 1 )">
 						<span class="label">Lane 2</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
 						--><div class="lane_enemy enemy_icon_2" id="lane1_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
 						--><div class="lane_enemy enemy_icon_4" id="lane1_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
-					</a><a id="lane2" class="lane"  onclick="g_Minigame.CurrentScene().TryChangeLane( 2 )">
+					</a><a id="lane2" class="lane"  onclick="g_Minigame.m_CurrentScene.TryChangeLane( 2 )">
 						<span class="label">Lane 3</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
@@ -269,7 +269,7 @@
 					</div>
 				</div>
 
-				<a class="link" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
+				<a class="link" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
 					<span class="upgrade_text">Upgrade</span>
 					<div class="cost"></div>
 				</a>
@@ -289,21 +289,21 @@
 					</div>
 				</div>
 
-				<a class="link" href="#" onclick="g_Minigame.CurrentScene().TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
+				<a class="link" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
 					<div class="cost"></div>
 				</a>
 			</div>
 		</div>
 
 		<div id="abilitytemplate" class="abilitytemplate">
-			<a class="link ta_tip" href="#" onclick="g_Minigame.CurrentScene().TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
+			<a class="link ta_tip" href="#" onclick="g_Minigame.m_CurrentScene.TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
 				<img src="/assets/minigame/towerattack/ability_template_ph.png">
 				<div class="timeleft"></div>
 			</a>
 		</div>
 
 		<div id="abilityitemtemplate" class="abilitytemplate">
-			<a class="link ta_tip" href="#" onclick="g_Minigame.CurrentScene().TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
+			<a class="link ta_tip" href="#" onclick="g_Minigame.m_CurrentScene.TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
 				<img src="/assets/minigame/towerattack/ability_template_ph.png">
 				<div class="timeleft abilityitem"></div>
 				<div class="abilityitemquantity"></div>
@@ -389,7 +389,7 @@
 
 		function RespawnPlayer()
 		{
-			g_Minigame.CurrentScene().m_rgAbilityQueue.push({
+			g_Minigame.m_CurrentScene.m_rgAbilityQueue.push({
 				'ability': k_ETowerAttackAbility_Respawn
 			});
 		}
