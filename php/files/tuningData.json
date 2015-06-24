@@ -315,7 +315,6 @@
             "instant": 1,
             "duration": 10,
             "cooldown": 1800,
-            "start_of_game_cooldown": 0,
             "desc": "Grant every alive player in your lane one random special item.<br><br>This item can only be acquired by spending badge points."
         },
         "26": {
@@ -327,7 +326,6 @@
             "instant": 1,
             "duration": 10,
             "cooldown": 60,
-            "start_of_game_cooldown": 0,
             "desc": "Skip a level with each use (stackable) after the current level has been cleared, and grants 50k of gold to every player. Enemies will not drop gold or loot for any skipped levels.<br><br>When used on every 100th level, will skip 10 levels with each use and grant the appropriate amount of gold.<br><br>You must defeat a boss level after using Wormhole in order to level up your Monster Summer Badge.<br><br>This item can only be acquired by spending badge points."
         },
         "27": {
@@ -337,7 +335,6 @@
             "badge_points_cost": 100,
             "duration": 5,
             "cooldown": 1,
-            "start_of_game_cooldown": 0,
             "desc": "While active, clears the cooldown on every ability for all players in your lane.<br><br>This item can only be acquired by spending badge points."
         }
     },

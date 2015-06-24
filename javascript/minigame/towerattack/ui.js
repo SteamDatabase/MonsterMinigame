@@ -1019,12 +1019,9 @@ CUI.prototype.UpdateAbilities = function()
 			ele.m_nTimeLeft = nTimeLeft;
 
 			var nTimeLeft = this.m_Game.GetCooldownForAbility( i );
-			var strTimeLeft = FormatDeltaTimeString( nTimeLeft );
+			var strTimeLeft = FormatDeltaTimeString( nTimeLeft, true );
 			$J('.timeleft', ele)[0].textContent = strTimeLeft;
-
 		}
-
-
 	}
 
 	var abilityItemQuantities = {};
@@ -1088,9 +1085,8 @@ CUI.prototype.UpdateAbilities = function()
 				ele.m_bActive = true;
 
 				var nTimeLeft = this.m_Game.GetCooldownForAbility( i );
-				var strTimeLeft = FormatDeltaTimeString( nTimeLeft );
+				var strTimeLeft = FormatDeltaTimeString( nTimeLeft, true );
 				ele.eleTimeLeft.textContent = strTimeLeft;
-
 			}
 			else
 			{
@@ -1346,7 +1342,7 @@ window.fnTooltipAbilityDesc = function( context )
 	{
 		var levelMultiplier = Math.pow( 10, Math.max( 0, Math.floor( log10( g_Minigame.m_CurrentScene.m_rgGameData.level ) ) - 1 ) );
 		var goldGiven = ability.multiplier * levelMultiplier;
-		strOut += '<br><br>Gold for this level: ' + FormatNumberForDisplay( goldGiven );
+		strOut += '<br><br>Gold for this level: <b>' + FormatNumberForDisplay( goldGiven ) + '</b>';
 	}
 
 	if ( ability.instant )
@@ -1355,13 +1351,14 @@ window.fnTooltipAbilityDesc = function( context )
 	}
 	else if ( ability.duration )
 	{
-		strOut += '<br><br>Duration: ' + FormatDeltaTimeString( ability.duration );
-
+		strOut += '<br><br>Duration: <b>' + FormatDeltaTimeString( ability.duration, true ) + '</b>';
 	}
+
 	if ( ability.cooldown )
 	{
-		strOut += '<br><br>Cooldown: ' + FormatDeltaTimeString( ability.cooldown );
+		strOut += '<br><br>Cooldown: <b>' + FormatDeltaTimeString( ability.cooldown, true ) + '</b>';
 	}
+
 	return strOut;
 }
 
@@ -1411,20 +1408,32 @@ window.fnTooltipUpgradeElementDesc = function( context )
 	return strOut;
 }
 
-window.FormatDeltaTimeString = function( nTimeLeft )
+window.FormatDeltaTimeString = function( nTimeLeft, bNoHours )
 {
-	var hours = Math.floor( nTimeLeft / ( 60 * 60 ) );
-	var minutes =  Math.floor( ( nTimeLeft % ( 60 * 60 ) ) / 60 );
+	var hours = 0, minutes = 0;
+
+	if( bNoHours )
+	{
+		minutes = Math.floor( nTimeLeft / 60 );
+	}
+	else
+	{
+		hours = Math.floor( nTimeLeft / ( 60 * 60 ) );
+		minutes = Math.floor( ( nTimeLeft % ( 60 * 60 ) ) / 60 );
+	}
+
 	var seconds = nTimeLeft % 60;
 	var strTimeLeft = "";
+
 	if ( hours > 0 )
 	{
 		strTimeLeft += hours + ":";
 	}
+
 	strTimeLeft += ( hours > 0 && minutes < 9 ? "0" : "" ) + minutes + ":" + ( ( seconds >= 10 ) ? seconds : "0" + seconds );
+
 	return strTimeLeft;
 }
-
 
 window.FormatNumberForDisplay = function( num, digits )
 {

@@ -545,12 +545,8 @@ CSceneGame.prototype.ApplyClientOverrides = function( strTarget, bIgnoreTicks )
 
 					this.m_rgPlayerData.active_abilities.push({
 						ability: this.m_rgLocalOverrides[i].key,
-						timestamp_cooldown: this.m_rgLocalOverrides[i].value,
-						timestamp_done: 10
+						time: this.m_rgLocalOverrides[i].value
 					});
-
-					//console.log(this.m_rgPlayerData.active_abilities);
-
 				}
 				break;
 		}
@@ -1161,31 +1157,21 @@ CSceneGame.prototype.bIsAbilityActive = function( nAbilityID )
 	return ( 1 << nAbilityID ) & this.m_rgPlayerData.active_abilities_bitfield;
 }
 
-CSceneGame.prototype.GetCooldownForAbility =  function( nAbilityID )
+CSceneGame.prototype.GetCooldownForAbility = function( nAbilityID )
 {
-	if ( this.m_rgTuningData.abilities[nAbilityID].start_of_game_cooldown && this.m_rgGameData.timestamp_game_start )
-	{
-		var cooldown = this.m_rgTuningData.abilities[nAbilityID].start_of_game_cooldown;
-		var timeSinceStart = this.m_nTime - this.m_rgGameData.timestamp_game_start;
-		if ( timeSinceStart < cooldown )
-		{
-			return cooldown - timeSinceStart;
-		}
-	}
-
 	if( this.m_rgPlayerData && this.m_rgPlayerData.active_abilities )
 	{
 		for( var i=0; i<this.m_rgPlayerData.active_abilities.length; i++ )
 		{
 			if( this.m_rgPlayerData.active_abilities[i].ability == nAbilityID )
 			{
-				return this.m_rgPlayerData.active_abilities[i].timestamp_cooldown - this.m_nTime;
+				return this.m_rgPlayerData.active_abilities[i].time + this.m_rgTuningData.abilities[nAbilityID].cooldown - this.m_nTime;
 			}
 		}
 	}
+
 	return 0;
 }
-
 
 CSceneGame.prototype.GetTargetedEnemy = function()
 {
@@ -1467,21 +1453,17 @@ CSceneGame.prototype.TryAbility = function( ele )
 	var nAbilityID = $ele.data('type');
 
 	var nCooldown = this.GetCooldownForAbility( nAbilityID );
-	if( nCooldown > 0)
+	if( nCooldown > 0 )
 	{
 		g_AudioManager.play( 'wrongselection' );
 		return;
 	}
 
-
 	this.m_rgAbilityQueue.push({
 		'ability': nAbilityID
 	});
 
-
-	var nCooldownDuration = this.m_rgTuningData.abilities[nAbilityID].cooldown;
-	//console.log("cooldown is %s", nCooldownDuration);
-	this.ClientOverride('ability', parseInt( nAbilityID ), Math.floor(Date.now() / 1000 ) + nCooldownDuration );
+	this.ClientOverride('ability', parseInt( nAbilityID ), Math.floor( Date.now() / 1000 ) );
 	this.ApplyClientOverrides('ability', true );
 
 

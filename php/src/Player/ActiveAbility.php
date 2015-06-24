@@ -17,8 +17,8 @@ class ActiveAbility
 		$this->Actor = $Actor;
 		$this->Ability = $Ability;
 		$this->Time = time();
-		$this->TimestampDone = time() + AbilityItem::GetDuration( $Ability );
-		$this->TimestampCooldown = time() + AbilityItem::GetCooldown( $Ability );
+		$this->TimestampDone = $this->Time + AbilityItem::GetDuration( $Ability );
+		$this->TimestampCooldown = $this->Time + AbilityItem::GetCooldown( $Ability );
 	}
 
 	public function ToArray()
@@ -27,8 +27,6 @@ class ActiveAbility
 			'actor' => $this->Actor,
 			'ability' => $this->Ability,
 			'time' => $this->Time,
-			'timestamp_done' => $this->TimestampDone,
-			'timestamp_cooldown' => $this->TimestampCooldown
 		];
 	}
 
