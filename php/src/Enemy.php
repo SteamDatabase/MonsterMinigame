@@ -43,11 +43,7 @@ class Enemy
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
 		if( $Type === Enums\EEnemyType::MiniBoss ) 
 		{
-			$LowestHp = Util::PredictValue(
-				$TuningData[ 'hp_exponent' ], 
-				$TuningData[ 'hp' ], 
-				$Level * $TuningData[ 'hp_multiplier' ]
-			);
+			$LowestHp = self::GetValueAtLevel( 'hp', $Type, $Level, false ); # TODO: floor it?
 			$MiddleHp = $LowestHp * 1.84; # TODO: move to tuningData.json?
 			$HighestHp = $LowestHp * 2.83; # TODO: move to tuningData.json?
 			$HpArray = [ $LowestHp, $MiddleHp, $HighestHp ];
@@ -61,46 +57,42 @@ class Enemy
 
 	public static function GetDpsAtLevel( $Type, $Level )
 	{
+		$Level += 1; # @Contex: wtf Volvo, why?
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
-		if( $Type === Enums\EEnemyType::Mob ) 
-		{
-			$HighestDps = Util::PredictValue(
-				$TuningData[ 'dps_exponent' ], 
-				$TuningData[ 'dps' ], 
-				$Level * $TuningData[ 'dps_multiplier' ]
-			) + $TuningData[ 'dps_extra' ];
-			$NormalDps = Util::PredictValue(
-				$TuningData[ 'dps_exponent' ] - $TuningData[ 'dps_exponent_variance' ], 
-				$TuningData[ 'dps' ], 
-				$Level * $TuningData[ 'dps_multiplier' ]
-			) + $TuningData[ 'dps_extra' ];
-			$LowestDps = Util::PredictValue(
-				$TuningData[ 'dps_exponent' ] - ( $TuningData[ 'dps_exponent_variance' ] * 2 ), 
-				$TuningData[ 'dps' ], 
-				$Level * $TuningData[ 'dps_multiplier' ]
-			) + $TuningData[ 'dps_extra' ];
-			$DpsArray = [ $LowestDps, $NormalDps, $HighestDps ];
-			return floor( $DpsArray[ array_rand( $DpsArray ) ] );
-		}
-		else
-		{
-			return self::GetValueAtLevel( 'dps', $Type, $Level );
-		}
+		$HighestDps = Util::PredictValue(
+			$TuningData[ 'dps_exponent' ], 
+			$TuningData[ 'dps' ], 
+			$Level * $TuningData[ 'dps_multiplier' ]
+		);
+		$MiddleDps = Util::PredictValue(
+			$TuningData[ 'dps_exponent' ] - 0.1, # TODO: Move 0.1 to tuningData?
+			$TuningData[ 'dps' ], 
+			$Level * $TuningData[ 'dps_multiplier' ]
+		);
+		$LowestDps = Util::PredictValue(
+			$TuningData[ 'dps_exponent' ] - ( 0.1 * 2 ), # TODO: Move 0.1 to tuningData?
+			$TuningData[ 'dps' ], 
+			$Level * $TuningData[ 'dps_multiplier' ]
+		);
+		$DpsArray = [ $LowestDps, $MiddleDps, $HighestDps ];
+		return floor( $DpsArray[ array_rand( $DpsArray ) ] );
 	}
 
 	public static function GetGoldAtLevel( $Type, $Level )
 	{
+		$Level += 1;
 		return self::GetValueAtLevel( 'gold', $Type, $Level );
 	}
 
-	private static function GetValueAtLevel( $Category, $Type, $Level )
+	private static function GetValueAtLevel( $Category, $Type, $Level, $FloorIt = true )
 	{
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
-		return floor( Util::PredictValue(
+		$Value = Util::PredictValue(
 			$TuningData[ $Category . '_exponent' ], 
 			$TuningData[ $Category ], 
 			$Level * $TuningData[ $Category . '_multiplier' ]
-		) + $TuningData[ $Category . '_extra' ] );
+		);
+		return $FloorIt ? floor( $Value ) : $Value;
 	}
 
 	public function ToArray()
