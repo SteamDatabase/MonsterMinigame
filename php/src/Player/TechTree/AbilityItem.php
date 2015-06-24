@@ -185,7 +185,12 @@ class AbilityItem
 				}
 				break;
 			case Enums\EAbility::Item_IncreaseCritPercentagePermanently:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
+					$Player->GetTechTree()->RecalulateUpgrades();
+					$Lane->AddActivePlayerAbility( new ActiveAbility( Enums\EAbility::Support_IncreaseCritPercentage, $Player->PlayerName ) );
+				}
 				break;
 			case Enums\EAbility::Item_IncreaseHPPermanently:
 				if( !$Deactivate )

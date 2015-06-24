@@ -255,6 +255,11 @@ class TechTree
 		return $this->CritPercentage;
 	}
 
+	public function IncreaseCritPercentage( $Percent )
+	{
+		$this->CritPercentage += $Percent;
+	}
+
 	public function GetBadgePoints()
 	{
 		return $this->BadgePoints;
@@ -389,7 +394,7 @@ class TechTree
 			'damage_multiplier_earth' => (double) $this->GetTuningData( 'damage_multiplier_earth' ),
 			'damage_multiplier_crit' => (double) $this->GetTuningData( 'damage_multiplier_crit' ),
 			'hp_multiplier' => (double) $this->GetHpMultiplier(),
-			'crit_percentage' => (double) $this->GetTuningData( 'crit_percentage' ),
+			'crit_percentage' => (double) $this->GetCritPercentage(),
 			'boss_loot_drop_percentage' => (double) $this->GetTuningData( 'loot_chance' ),
 			'damage_multiplier_dps' => (double) 0,
 			'damage_per_click_multiplier' => (double) 1
@@ -442,7 +447,7 @@ class TechTree
 		$this->DamageMultiplierEarth = $Data['damage_multiplier_earth'];
 		$this->DamageMultiplierCrit = $Data['damage_multiplier_crit'];
 		$this->HpMultiplier = $Data['hp_multiplier'];
-		#$this->CritPercentage = $Data['crit_percentage'];
+		$this->CritPercentage = $Data['crit_percentage'];
 		$this->BossLootDropPercentage = $Data['boss_loot_drop_percentage'];
 		$this->DamageMultiplierDps = $Data['damage_multiplier_dps'];
 		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
