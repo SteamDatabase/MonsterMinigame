@@ -138,6 +138,7 @@ class Lane
 	{
 		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
 		$HealingPercentage = 0;
+		$ClearCooldowns = false;
 		foreach( $this->ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
 			if( $ActiveAbility->isDone() ) 
@@ -154,21 +155,28 @@ class Lane
 					case Enums\EAbility::Support_Heal:
 						$HealingPercentage += AbilityItem::GetMultiplier( $ActiveAbility->GetAbility() );
 						break;
+					case Enums\EAbility::Item_ClearCooldowns:
+						$ClearCooldowns = true;
+						break;
 				}
 			}
 		}
 
-		if( $HealingPercentage > 0 && $SecondPassed )
+		$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
+
+		if( $SecondPassed )
 		{
-			// Check Medics
-			$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
-			if ($HealingPercentage > 0) {
-				foreach( $PlayersInLane as $PlayerInLane )
+			foreach( $PlayersInLane as $PlayerInLane )
+			{
+				// Check "Medics" & heal
+				if( $HealingPercentage > 0 && !$PlayerInLane->IsDead() )
 				{
-					if( !$PlayerInLane->IsDead() )
-					{
-						$PlayerInLane->IncreaseHp( $PlayerInLane->GetTechTree()->GetMaxHp() * $HealingPercentage * $SecondsPassed ); # TODO: GetHp() or GetTechTree()->GetMaxHp()?
-					}
+					$PlayerInLane->IncreaseHp( $PlayerInLane->GetTechTree()->GetMaxHp() * $HealingPercentage * $SecondsPassed ); # TODO: GetHp() or GetTechTree()->GetMaxHp()?
+				}
+				// Clear player cooldowns
+				if( $ClearCooldowns )
+				{
+					$PlayerInLane->ClearActiveAbilities();
 				}
 			}
 		}

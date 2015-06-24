@@ -436,6 +436,14 @@ class Player
 		return $this->ActiveAbilities[ $AbilityId ];
 	}
 
+	public function ClearActiveAbilities()
+	{
+		foreach( $this->ActiveAbilities as $ActiveAbility )
+		{
+			$this->RemoveActiveAbility( $ActiveAbility->GetAbility() );
+		}
+	}
+
 	public function UseAbility( $Game, $Ability )
 	{
 		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )

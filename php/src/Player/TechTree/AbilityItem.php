@@ -107,6 +107,33 @@ class AbilityItem
 		return $TuningData[ $AbilityId ][ $Key ];
 	}
 
+	public static function GetAbilities( $Type = null)
+	{
+		if( $Type !== null )
+		{
+			$TypeAbilities = [];
+			$Abilities = Enums\EAbility::GetList();
+			foreach( $Abilities as $AbilityName => $AbilityId )
+			{
+				if( self::GetType( $AbilityItem ) === $Type )
+				{
+					$TypeAbilities[] = $AbilityId;
+				}
+			}
+			return $TypeAbilities
+		}
+		else
+		{
+	        return Enums\EAbility::GetList();
+		}
+	}
+
+	public static function GetRandomAbilityItem()
+	{
+		$ItemAbilities = self::GetAbilities( Enums\EAbilityType::Item );
+		return $ItemAbilities[ array_rand( $ItemAbilities ) ];
+	}
+
 	public static function HandleAbility( $Game, $Lane, $Player, $Ability, $Deactivate = false )
 	{
 		$AbilityMultiplier = self::GetMultiplier( $Ability->GetAbility() );
@@ -184,7 +211,17 @@ class AbilityItem
 				// TODO: Add ability logic
 				break;
 			case Enums\EAbility::Item_GiveRandomItem:
-				// TODO: Add ability logic
+				if( !$Deactivate )
+				{
+					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
+					foreach( $PlayersInLane as $PlayerInLane )
+					{
+						if( !$PlayerInLane->IsDead() )
+						{
+							$PlayerInLane->AddAbilityItem( self::GetRandomAbilityItem() );
+						}
+					}
+				}
 				break;
 			case Enums\EAbility::Item_SkipLevels:
 				// TODO: Add ability logic
@@ -199,10 +236,9 @@ class AbilityItem
 					$Game->GenerateNewLevel();
 				}
 				break;
-			case Enums\EAbility::Item_ClearCooldowns:
-				// TODO: Add ability logic
 			break;
 			default:
+			case Enums\EAbility::Item_ClearCooldowns:
 			case Enums\EAbility::Support_Heal:
 			case Enums\EAbility::Support_IncreaseDamage:
 			case Enums\EAbility::Support_IncreaseCritPercentage:
