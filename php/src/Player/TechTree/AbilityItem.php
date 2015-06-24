@@ -115,12 +115,12 @@ class AbilityItem
 			$Abilities = Enums\EAbility::GetList();
 			foreach( $Abilities as $AbilityName => $AbilityId )
 			{
-				if( self::GetType( $AbilityItem ) === $Type )
+				if( self::GetType( $AbilityId ) === $Type )
 				{
 					$TypeAbilities[] = $AbilityId;
 				}
 			}
-			return $TypeAbilities
+			return $TypeAbilities;
 		}
 		else
 		{

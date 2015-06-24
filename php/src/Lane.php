@@ -163,7 +163,8 @@ class Lane
 		}
 
 		$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
-
+		# TODO: Check if $HealingPercentage is 0.1% or 10%, 0.1% would make more sense if it stacks..
+		$HealingPercentage /= 10;
 		if( $SecondPassed )
 		{
 			foreach( $PlayersInLane as $PlayerInLane )
@@ -171,6 +172,7 @@ class Lane
 				// Check "Medics" & heal
 				if( $HealingPercentage > 0 && !$PlayerInLane->IsDead() )
 				{
+					# TODO: Check if $HealingPercentage is 0.1% or 10%, 0.1% would make more sense if it stacks..
 					$PlayerInLane->IncreaseHp( $PlayerInLane->GetTechTree()->GetMaxHp() * $HealingPercentage * $SecondsPassed ); # TODO: GetHp() or GetTechTree()->GetMaxHp()?
 				}
 				// Clear player cooldowns
@@ -283,10 +285,9 @@ class Lane
 		return $EnemyGoldMultiplier !== 0 ? 1 + $EnemyGoldMultiplier : 0;
 	}
 
-	public function GetHealingPercentage()
+	public function GetReflectDamageMultiplier()
 	{
-		$HealingPercentage = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_Heal );
-		return $HealingPercentage !== 0 ? $HealingPercentage : 0;
+		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_ReflectDamage );
 	}
 
 	private function GetActivePlayerAbilityMultipler( $AbilityId )
