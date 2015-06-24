@@ -181,7 +181,6 @@ class Player
 					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
 					if( $GoldMultiplier > 0 ) 
 					{
-						# TODO: Include metal detector (increases gold dropped by enemies)
 						$this->IncreaseGold( $Lane->GetGoldPerClickMultiplier() * $NumClicks * $Enemy->GetGold() );
 					}
 					break;

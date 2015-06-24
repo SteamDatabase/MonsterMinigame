@@ -243,8 +243,15 @@ class Lane
 		return $GoldMultiplier !== 0 ? 1 + $GoldMultiplier : 0;
 	}
 
+	public function GetEnemyGoldMultiplier()
+	{
+		$EnemyGoldMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseGoldDropped );
+		return $EnemyGoldMultiplier !== 0 ? 1 + $EnemyGoldMultiplier : 0;
+	}
+
 	private function GetActivePlayerAbilityMultipler( $AbilityId )
 	{
+		# TODO: @Contex: Create an additional array that can cache the result? Instead of looping every single time...
 		$Multiplier = 0;
 		foreach( $this->ActivePlayerAbilities as $ActivePlayerAbility )
 		{

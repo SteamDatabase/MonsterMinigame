@@ -462,7 +462,7 @@ class Game
 						}
 						$Enemy->SetHp( 0 );
 						$DeadEnemies++;
-						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() );
+						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() * $Lane->GetEnemyGoldMultiplier() );
 					}
 					else
 					{
