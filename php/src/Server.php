@@ -10,15 +10,11 @@ class Server
 	private $LastSecond;
 	private $Socket;
 	private $Game;
-	private $Queue;
 	protected $TickRate;
 	protected static $TuningData = array();
 
 	public function __construct( $Port )
 	{
-		$this->Queue = new \SplQueue();
-		$this->Queue->setIteratorMode( \SplDoublyLinkedList::IT_MODE_DELETE );
-
 		$this->Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 
 		socket_bind( $this->Socket, 'localhost', $Port);
@@ -115,7 +111,6 @@ class Server
 				case 'UseBadgePoints':
 				case 'ChooseUpgrade':
 				case 'UseAbilities':
-					$QueueData = null;
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
 
 					if( $Player === null )
@@ -124,31 +119,21 @@ class Server
 					}
 
 					if( $Data[ 'method' ] == 'ChooseUpgrade' )
-					{;
+					{
 						$Player->HandleUpgrade( $this->Game, $Data[ 'upgrades' ] );
 						$this->Game->UpdatePlayer( $Player );
-						$this->Game->Update();
 						$Response = array(
 							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
 					}
 					else if( $Data[ 'method' ] == 'UseAbilities' )
 					{
-						$QueueData = $Data[ 'requested_abilities' ];
+						$Player->HandleAbilityUsage( $this->Game, $Data[ 'abilities' ] );
+						$this->Game->UpdatePlayer( $Player );
 						$Response = array(
 							'player_data' => $Player->ToArray()
 						);
 					}
-
-					if( $QueueData !== null )
-					{
-						$this->Queue->enqueue( [
-							'Player' => $Player,
-							'Method' => $Data[ 'method' ],
-							'Data' => $QueueData
-						] );
-					}
-
 					break;
 				default:
 					// TODO: handle unknown methods
@@ -215,17 +200,6 @@ class Server
 		else if( $this->SaneServer )
 		{
 			pcntl_signal_dispatch();
-		}
-
-		foreach( $this->Queue as $QueueItem )
-		{
-			$Player = $QueueItem[ 'Player' ];
-
-			if( $QueueItem[ 'Method' ] == 'UseAbilities' )
-			{
-				$Player->HandleAbilityUsage( $this->Game, $QueueItem[ 'Data' ] );
-				$this->Game->UpdatePlayer( $Player );
-			}
 		}
 
 		$this->Game->Update( $SecondsPassed );
