@@ -164,7 +164,6 @@ class Lane
 
 		$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
 		# TODO: Check if $HealingPercentage is 0.1% or 10%, 0.1% would make more sense if it stacks..
-		$HealingPercentage /= 10;
 		if( $SecondPassed )
 		{
 			foreach( $PlayersInLane as $PlayerInLane )
@@ -287,7 +286,8 @@ class Lane
 
 	public function GetReflectDamageMultiplier()
 	{
-		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_ReflectDamage );
+		# TODO: Check if $ReflectDamageMultiplier is 0.5% or 50%, 0.5% would make more sense if it stacks..
+		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_ReflectDamage ) / 10;
 	}
 
 	private function GetActivePlayerAbilityMultipler( $AbilityId )

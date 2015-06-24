@@ -412,8 +412,7 @@ class Game
 			if( $SecondPassed )
 			{
 				# TODO: Apply this in Lane::CheckActivePlayerAbilities instead?
-				# TODO: Check if $ReflectDamageMultiplier is 0.5% or 50%, 0.5% would make more sense if it stacks..
-				$ReflectDamageMultiplier = $Lane->GetReflectDamageMultiplier() / 10;
+				$ReflectDamageMultiplier = $Lane->GetReflectDamageMultiplier();
 			}
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
