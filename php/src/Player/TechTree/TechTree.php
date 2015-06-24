@@ -257,7 +257,7 @@ class TechTree
 
 	public function AddAbilityItem( $AbilityId, $Quantity = 1 )
 	{
-		if( $Quantity === -1 )
+		if( AbilityItem::GetType( $AbilityId ) !== Enums\EAbilityType::Item )
 		{
 			$this->UnlockAbility( $AbilityId );
 			return;

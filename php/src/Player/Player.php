@@ -60,32 +60,32 @@ class Player
 		#$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
 
 		// support abilities
-		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseDamage, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Support_Heal, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseGoldDropped, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Support_DecreaseCooldowns, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseDamage );
+		$this->AddAbilityItem( Enums\EAbility::Support_Heal );
+		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseGoldDropped );
+		$this->AddAbilityItem( Enums\EAbility::Support_DecreaseCooldowns );
 
 		// offensive abilities
-		$this->AddAbilityItem( Enums\EAbility::Offensive_HighDamageOneTarget, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Offensive_DamageAllTargets, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Offensive_DOTAllTargets, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Offensive_HighDamageOneTarget );
+		$this->AddAbilityItem( Enums\EAbility::Offensive_DamageAllTargets );
+		$this->AddAbilityItem( Enums\EAbility::Offensive_DOTAllTargets );
 
 		// item
-		$this->AddAbilityItem( Enums\EAbility::Item_Resurrection, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_KillTower, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_KillMob, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_MaxElementalDamage, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseCritPercentagePermanently, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseHPPermanently, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_GoldForDamage, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_Invulnerability, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_GiveGold, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_StealHealth, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_ReflectDamage, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_GiveRandomItem, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
-		$this->AddAbilityItem( Enums\EAbility::Item_ClearCooldowns, 1 );
+		$this->AddAbilityItem( Enums\EAbility::Item_Resurrection );
+		$this->AddAbilityItem( Enums\EAbility::Item_KillTower );
+		$this->AddAbilityItem( Enums\EAbility::Item_KillMob );
+		$this->AddAbilityItem( Enums\EAbility::Item_MaxElementalDamage );
+		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick );
+		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseCritPercentagePermanently );
+		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseHPPermanently );
+		$this->AddAbilityItem( Enums\EAbility::Item_GoldForDamage );
+		$this->AddAbilityItem( Enums\EAbility::Item_Invulnerability );
+		$this->AddAbilityItem( Enums\EAbility::Item_GiveGold );
+		$this->AddAbilityItem( Enums\EAbility::Item_StealHealth );
+		$this->AddAbilityItem( Enums\EAbility::Item_ReflectDamage );
+		$this->AddAbilityItem( Enums\EAbility::Item_GiveRandomItem );
+		$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels );
+		$this->AddAbilityItem( Enums\EAbility::Item_ClearCooldowns );
 	}
 
 	public function IsActive()
@@ -244,7 +244,7 @@ class Player
 			}
 			else if( Upgrade::GetType( $UpgradeId ) === Enums\EUpgradeType::PurchaseAbility )
 			{
-				$this->GetTechTree()->AddAbilityItem( Upgrade::GetAbility( $UpgradeId ), -1 );
+				$this->GetTechTree()->AddAbilityItem( Upgrade::GetAbility( $UpgradeId ) );
 			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();
@@ -373,20 +373,8 @@ class Player
 		return $this->HasActiveAbility( Enums\EAbility::Item_Invulnerability );
 	}
 
-	public function AddAbility( $Ability )
+	public function AddAbilityItem( $Ability, $Quantity = 1 )
 	{
-		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
-	}
-
-	public function RemoveAbility( $Ability )
-	{
-		$this->ActiveAbilitiesBitfield &= ~( 1 << $Ability );
-	}
-
-	public function AddAbilityItem( $Ability, $Quantity )
-	{
-		$this->AddAbility( $Ability );
-		
 		$this->GetTechTree()->AddAbilityItem( $Ability, $Quantity );
 	}
 
@@ -412,15 +400,15 @@ class Player
 
 	public function AddActiveAbility( $Ability )
 	{
+		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
 		$ActiveAbility = new ActiveAbility( $Ability, $this->PlayerName );
-
 		$this->ActiveAbilities[ $Ability ] = $ActiveAbility;
-
 		return $ActiveAbility;
 	}
 
 	public function RemoveActiveAbility( $Ability )
 	{
+		$this->ActiveAbilitiesBitfield &= ~( 1 << $Ability );
 		unset( $this->ActiveAbilities[ $Ability ] );
 	}
 

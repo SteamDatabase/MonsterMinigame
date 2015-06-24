@@ -63,7 +63,7 @@ class AbilityItem
 		return self::GetTuningData( $AbilityId, 'multiplier' );
 	}
 
-	public static function IsAbilityInstant( $AbilityId )
+	public static function IsInstant( $AbilityId )
 	{
 		return self::GetTuningData( $AbilityId, 'instant' ) === 1;
 	}
