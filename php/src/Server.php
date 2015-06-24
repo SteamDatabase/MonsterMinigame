@@ -128,10 +128,11 @@ class Server
 					}
 					else if( $Data[ 'method' ] == 'UseAbilities' )
 					{
-						$Player->HandleAbilityUsage( $this->Game, $Data[ 'abilities' ] );
+						$Player->HandleAbilityUsage( $this->Game, $Data[ 'requested_abilities' ] );
 						$this->Game->UpdatePlayer( $Player );
 						$Response = array(
-							'player_data' => $Player->ToArray()
+							'player_data' => $Player->ToArray(),
+							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
 					}
 					break;

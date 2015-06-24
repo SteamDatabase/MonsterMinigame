@@ -26,7 +26,7 @@ class ActiveAbility
 		return [
 			'actor' => $this->Actor,
 			'ability' => $this->Ability,
-			'time' => $this->Time,
+			'time' => $this->Time
 		];
 	}
 
