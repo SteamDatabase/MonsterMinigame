@@ -52,7 +52,6 @@ class Enemy
 					# @Contex: This is really dirty, but it works...
 					# TODO: move values to tuningData.json?
 					$MaxHp = $MinHp * ( 2.83 + 0.85 );
-					$MinHp = $MinHp * 0.7;
 					$MultiplierVarianceMin = 0.195;
 					$MultiplierVarianceMax = 1;
 					$MultiplierVariance = ( $MultiplierVarianceMin + ( lcg_value() * ( abs( $MultiplierVarianceMax - $MultiplierVarianceMin ) ) ) );
@@ -62,7 +61,6 @@ class Enemy
 				{
 					# @Contex: This is really dirty, but it works...
 					# TODO: move values to tuningData.json?
-					$MinHp = self::GetValueAtLevel( 'hp', $Type, $Level, false ); # TODO: floor it?
 					$MidHip = $MinHp * 1.84; # TODO: move to tuningData.json?
 					$MaxHp = $MinHp * 2.83; # TODO: move to tuningData.json?
 					$HpArray = [ $MinHp, $MidHip, $MaxHp ];
