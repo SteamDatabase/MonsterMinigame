@@ -259,6 +259,11 @@ class TechTree
 	{
 		if( AbilityItem::GetType( $AbilityId ) !== Enums\EAbilityType::Item )
 		{
+			$Upgrade = $this->GetUpgradeByAbility( $AbilityId );
+			if( $Upgrade !== null && $Upgrade->GetLevel() === 0 ) 
+			{
+				$Upgrade->IncreaseLevel();
+			}
 			$this->UnlockAbility( $AbilityId );
 			return;
 		}
