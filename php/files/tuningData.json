@@ -50,7 +50,6 @@
         "hp_multiplier_variance": "0.2",
         "hp_extra": 50,
         "hp_exponent": "1.5",
-        "hp_exponent_variance": "0.02",
         "dps_multiplier": 1,
         "dps_exponent": "1.2",
         "gold_multiplier": "1.2",
