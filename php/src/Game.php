@@ -391,7 +391,7 @@ class Game
 					$Enemy->DamageTaken += $DealtDpsDamage;
 					foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
 					{
-						$LaneDps[ $LaneId ] += $LaneDamage / $SecondPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
+						$LaneDps[ $LaneId ] += $LaneDamage / $SecondsPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
 						$Player->LaneDamageBuffer[ $LaneId ] = 0;
 					}
 					$LaneDps[ $Player->GetCurrentLane() ] += $Player->GetTechTree()->GetDps() * $SecondsPassed;
