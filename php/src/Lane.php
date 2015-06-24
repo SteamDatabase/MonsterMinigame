@@ -140,7 +140,14 @@ class Lane
 		$HealingPercentage = 0;
 		foreach( $this->ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
-			if( $SecondPassed )
+			if( $ActiveAbility->isDone() ) 
+			{
+				// TODO: @Contex: Remove whatever effects the ability had
+				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
+				AbilityItem::HandleAbility( $Game, $this, null, $ActiveAbility, true );
+				unset( $this->ActivePlayerAbilities[ $Key ] );
+			} 
+			else if( $SecondPassed )
 			{
 				switch( $ActiveAbility->GetAbility() )
 				{
@@ -148,13 +155,6 @@ class Lane
 						$HealingPercentage += AbilityItem::GetMultiplier( $ActiveAbility->GetAbility() );
 						break;
 				}
-			}
-			if( $ActiveAbility->isDone() ) 
-			{
-				// TODO: @Contex: Remove whatever effects the ability had
-				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
-				AbilityItem::HandleAbility( $Game, $this, null, $ActiveAbility, true );
-				unset( $this->ActivePlayerAbilities[ $Key ] );
 			}
 		}
 
