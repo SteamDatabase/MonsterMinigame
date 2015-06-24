@@ -51,14 +51,12 @@ class Enemy
 		} 
 		else 
 		{
-			$Level += 1; # @Contex: wtf Volvo, why?
 			return self::GetValueAtLevel( 'hp', $Type, $Level );
 		}
 	}
 
 	public static function GetDpsAtLevel( $Type, $Level )
 	{
-		$Level += 1; # @Contex: wtf Volvo, why?
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
 		$HighestDps = Util::PredictValue(
 			$TuningData[ 'dps_exponent' ], 
@@ -81,7 +79,6 @@ class Enemy
 
 	public static function GetGoldAtLevel( $Type, $Level )
 	{
-		$Level += 1; # @Contex: wtf Volvo, why?
 		return self::GetValueAtLevel( 'gold', $Type, $Level );
 	}
 
