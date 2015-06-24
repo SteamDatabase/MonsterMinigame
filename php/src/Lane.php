@@ -290,6 +290,12 @@ class Lane
 		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_ReflectDamage ) / 10;
 	}
 
+	public function GetStealHealthMultiplier()
+	{
+		$StealHealthMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_StealHealth );
+		return $StealHealthMultiplier !== 0 ? 1 + $StealHealthMultiplier : 0;
+	}
+
 	private function GetActivePlayerAbilityMultipler( $AbilityId )
 	{
 		# TODO: @Contex: Create an additional array that can cache the result? Instead of looping every single time...

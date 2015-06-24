@@ -181,7 +181,12 @@ class Player
 					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
 					if( $GoldMultiplier > 0 ) 
 					{
-						$this->IncreaseGold( $Lane->GetGoldPerClickMultiplier() * $NumClicks * $Enemy->GetGold() );
+						$this->IncreaseGold( $GoldMultiplier * $NumClicks * $Enemy->GetGold() );
+					}
+					$StealHealthMultiplier = $Lane->GetStealHealthMultiplier();
+					if( $StealHealthMultiplier > 0 ) 
+					{
+						$this->IncreaseHp( $StealHealthMultiplier * $NumClicks * $Damage );
 					}
 					break;
 				case Enums\EAbility::ChangeLane:

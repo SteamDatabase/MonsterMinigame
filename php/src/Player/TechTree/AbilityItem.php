@@ -204,12 +204,6 @@ class AbilityItem
 			case Enums\EAbility::Item_GiveGold:
 				// TODO: Add ability logic
 				break;
-			case Enums\EAbility::Item_StealHealth:
-				// TODO: Add ability logic
-				break;
-			case Enums\EAbility::Item_ReflectDamage:
-				// TODO: Add ability logic
-				break;
 			case Enums\EAbility::Item_GiveRandomItem:
 				if( !$Deactivate )
 				{
@@ -238,10 +232,12 @@ class AbilityItem
 				break;
 			break;
 			default:
-			case Enums\EAbility::Item_ClearCooldowns:
+			case Enums\EAbility::Item_StealHealth:
 			case Enums\EAbility::Support_Heal:
 			case Enums\EAbility::Support_IncreaseDamage:
 			case Enums\EAbility::Support_IncreaseCritPercentage:
+			case Enums\EAbility::Item_ClearCooldowns:
+			case Enums\EAbility::Item_ReflectDamage:
 				# Delete?
 				break;
 		}
