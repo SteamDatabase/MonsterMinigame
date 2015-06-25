@@ -232,7 +232,7 @@ class Player
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
 			if(
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
-			||  ( $Upgrade->IsLevelOneUpgrade() && $Upgrade->GetLevel() >= 1) // One level upgrades
+			||  ( Upgrade::IsLevelOneUpgrade( $UpgradeId ) && $Upgrade->GetLevel() >= 1) // One level upgrades
 			||  ( Upgrade::HasRequiredUpgrade( $UpgradeId ) && $this->GetTechTree()->GetUpgrade( Upgrade::GetRequiredUpgrade( $UpgradeId ) )->GetLevel() < Upgrade::GetRequiredLevel( $UpgradeId ) ) // Does not have the required upgrade & level
 			) 
 			{
@@ -240,7 +240,7 @@ class Player
 			}
 			$this->DecreaseGold( $Upgrade->GetCostForNextLevel() );
 			$Upgrade->IncreaseLevel();
-			if( $Upgrade->IsElementalUpgrade() ) // Elemental upgrade
+			if( Upgrade::IsElementalUpgrade( $UpgradeId ) ) // Elemental upgrade
 			{
 				$ElementalUpgrades = $this->GetTechTree()->GetElementalUpgrades();
 				$TotalLevel = 0;

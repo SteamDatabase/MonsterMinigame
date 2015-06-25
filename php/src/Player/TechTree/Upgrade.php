@@ -62,22 +62,14 @@ class Upgrade
 		$this->SetCostForNextLevel( $this->GetPredictedCost( $NextLevel ) );
 	}
 
-	# TODO: @Contex: This doesn't really work as an ability item can have these id's
-	public function IsLevelOneUpgrade()
+	public static function IsLevelOneUpgrade( $UpgradeId )
 	{
-		return $this->GetUpgradeId() >= 11 && $this->GetUpgradeId() <= 19;
+		return self::GetAbility( $UpgradeId ) !== null;
 	}
 
-	# TODO: @Contex: This doesn't really work as an ability item can have these id's
-	public function IsElementalUpgrade()
+	public static function IsElementalUpgrade( $UpgradeId )
 	{
-		return $this->GetUpgradeId() >= 3 && $this->GetUpgradeId() <= 6;
-	}
-
-	# TODO: @Contex: This doesn't really work as an ability item can have these id's
-	public function IsAbilityUpgrade()
-	{
-		return $this->GetUpgradeId() >= 11 && $this->GetUpgradeId() <= 19;
+		return self::GetElement( $UpgradeId ) !== null;
 	}
 
 	public static function GetElement( $UpgradeId )
