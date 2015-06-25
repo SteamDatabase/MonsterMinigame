@@ -7,7 +7,14 @@
 		die;
 	}
 	
-	
+	header( 'Content-Security-Policy: "' .
+		'default-src \'none\'; ' .
+		'script-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
+		'style-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
+		'img-src data: \'self\' https://steamcdn-a.akamaihd.net; ' .
+		'font-src \'self\'; ' .
+		'connect-src \'self\' http:"' // TODO: 'self' is not working for some reason
+	);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +23,7 @@
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link href="/css/towerattack.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>">
 	<div class="breadcrumbs">
 		<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" style="float:right"><img src="/assets/minigame/towerattack/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
 		Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
@@ -365,7 +372,7 @@
 	<script type="text/javascript" src="/javascript/minigame/towerattack/enemies.js?v=oJIS22CYjGIR&amp;l=english"></script>
 	<script>
 		g_sessionID = 'g_sessionID';
-		g_steamID = '<?php echo $_SESSION[ 'SteamID' ]; ?>';
+		g_steamID = document.body.dataset.steamid;
 		g_GameID = '44925';
 		g_TuningData = <?php echo file_get_contents( __DIR__ . '/php/files/tuningData.json' ); ?>;
 		g_DebugMode = true;
