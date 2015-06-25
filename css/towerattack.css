@@ -173,6 +173,11 @@ a {
 	position: relative;
 	margin-top: 10px;
 	margin-left: 5px;
+	-webkit-user-select: text;
+	-khtml-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
 }
 #activityscroll {
 	height: 360px;
