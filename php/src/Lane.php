@@ -21,7 +21,6 @@ class Lane
 	public $Enemies;
 	public $Dps;
 	public $ActivityLog = [];
-	private $GoldDropped; #TODO: Increase GoldDropped?
 	private $ActivePlayerAbilities;
 	private $LaneId;
 
@@ -29,7 +28,6 @@ class Lane
 		$LaneId,
 		array $Enemies,
 		$Dps,
-		$GoldDropped,
 		array $ActivePlayerAbilities,
 		array $ActivityLog,
 		array $PlayerHpBuckets,
@@ -40,7 +38,6 @@ class Lane
 		$this->LaneId = $LaneId;
 		$this->Enemies = $Enemies;
 		$this->Dps = $Dps;
-		$this->GoldDropped = $GoldDropped;
 		$this->ActivePlayerAbilities = $ActivePlayerAbilities;
 		$this->ActivityLog = $ActivityLog;
 		$this->PlayerHpBuckets = $PlayerHpBuckets;
@@ -54,7 +51,6 @@ class Lane
 		return array(
 			'enemies' => $this->GetEnemiesArray(),
 			'dps' => (double) $this->GetDps(),
-			'gold_dropped' => (double) $this->GetGoldDropped(),
 			'active_player_abilities' => $this->GetActivePlayerAbilitiesAsArray(),
 			'activity_log' => array_slice( $this->ActivityLog, 50 ), // Only send last 50 recent events
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
@@ -97,11 +93,6 @@ class Lane
 	public function GetDps()
 	{
 		return $this->Dps;
-	}
-
-	public function GetGoldDropped()
-	{
-		return $this->GoldDropped;
 	}
 
 	public function GetActivePlayerAbilities()

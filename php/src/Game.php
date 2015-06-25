@@ -266,7 +266,6 @@ class Game
 				$i,
 				$Enemies,
 				0, //dps
-				0, //gold dropped
 				$ActivePlayerAbilities,
 				$ActivityLog,
 				$PlayerHpBuckets,
