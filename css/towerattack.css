@@ -386,11 +386,16 @@ a {
 	padding-left: 16px;
 }
 
-.purchase_ability_item .sub_item
+.purchase_ability_item .purchase_options
 {
 	position: absolute;
-	top: 12px;
-	right: 5px;
+	top: 20px;
+	right: 4px;
+}
+
+.purchase_ability_item .sub_item
+{
+	position: relative;
 	display: inline-block;
 	padding: 5px;
 	color: #fff;

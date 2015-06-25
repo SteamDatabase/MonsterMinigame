@@ -254,9 +254,14 @@
 				<span class="name"></span>
 				<span class="cost"></span>
 			</span>
-			<div class="sub_item">
-				x10
-			</div>
+			<span class="purchase_options">
+				<div class="sub_item ten">
+					x10
+				</div>
+				<div class="sub_item hundred">
+					x100
+				</div>
+			</span>
 		</div>
 
 		<div id="upgradetemplate">
