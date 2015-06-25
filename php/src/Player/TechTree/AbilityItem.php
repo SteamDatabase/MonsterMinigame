@@ -154,7 +154,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
-					if ( !$Enemy->IsDead() )
+					if( $Enemy !== null && !$Enemy->IsDead() )
 					{
 						$Damage = $Enemy->GetMaxHp();
 						if( $Enemy->GetType() === Enums\EEnemyType::Boss )
@@ -221,6 +221,12 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+
+					if( $Enemy === null )
+					{
+						break;
+					}
+
 					if( $Enemy->GetType() === Enums\EEnemyType::Mob )
 					{
 						$Enemy->SetHp( 1 );
@@ -272,10 +278,16 @@ class AbilityItem
 			case Enums\EAbility::Item_GoldForDamage:
 				if( !$Deactivate )
 				{
+					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+
+					if( $Enemy === null )
+					{
+						break;
+					}
+
 					$MaxPercentage = $AbilityMultiplier;
 					$Percentage = $MaxPercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 10%
 					$Player->DecreaseGold( $Player->GetGold() * $MaxPercentage ); # 10%
-					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
 					$Player->Stats->AbilityDamageDealt += $Damage;
 					$Enemy->DecreaseHp( $Damage );
