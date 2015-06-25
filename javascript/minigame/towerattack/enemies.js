@@ -425,6 +425,21 @@ CEnemy.prototype.Destroy = function()
 	//PlaySound('explode');
 }
 
+CEnemy.prototype.Remove = function()
+{
+	var instance = this;
+
+	this.m_Sprite.state.tracks[0].onComplete = function()
+	{
+		instance.m_Sprite.visible = false;
+
+		setTimeout( function()
+		{
+			instance.m_Game.m_containerEnemies.removeChild( instance.m_Sprite );
+		}, 0 );
+	}
+}
+
 //
 // Creep
 //
@@ -448,12 +463,7 @@ CEnemyCreep.prototype.Destroy = function()
 
 	//this.m_Graphics.clear();
 
-	var instance = this;
-	this.m_Sprite.state.tracks[0].onComplete = function()
-	{
-		instance.m_Sprite.visible = false;
-		instance.m_Game.m_containerEnemies.removeChild( instance.m_Sprite );
-	}
+	this.Remove();
 }
 
 CEnemyCreep.prototype.Tick = function()
@@ -628,13 +638,7 @@ CEnemyBoss.prototype.Destroy = function()
 
 	g_AudioManager.play( 'explode' );
 
-	var instance = this;
-	this.m_Sprite.state.tracks[0].onComplete = function()
-	{
-		instance.m_Sprite.visible = false;
-		instance.m_Game.m_containerEnemies.removeChild( instance.m_Sprite );
-	}
-
+	this.Remove();
 }
 
 CEnemyBoss.prototype.TakeDamage = function()
@@ -871,14 +875,9 @@ CEnemySpawner.prototype.Destroy = function()
 	this.m_flDisplayedHP = 0;
 	//this.DrawHealthBars();
 
-	var instance = this;
 	this.m_Sprite.state.tracks[0].onEvent = this.m_fnOnEvent;
-	this.m_Sprite.state.tracks[0].onComplete = function()
-	{
-		instance.m_Sprite.visible = false;
-		instance.m_Game.m_containerEnemies.removeChild( instance.m_Sprite );
-	}
 
+	this.Remove();
 }
 
 CEnemySpawner.prototype.TakeDamage = function()
