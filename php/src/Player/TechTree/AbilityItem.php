@@ -317,7 +317,7 @@ class AbilityItem
 			case Enums\EAbility::Item_GiveGold:
 				if( !$Deactivate )
 				{
-					$Player->IncreaseGold( $AbilityMultiplier );
+					$Player->IncreaseGold( $AbilityMultiplier * pow( 10, max( 0, floor( log10( $Game->GetLevel() ) ) - 1 ) ) );
 					$Lane->AddActivePlayerAbility( 
 						new ActiveAbility
 						(
