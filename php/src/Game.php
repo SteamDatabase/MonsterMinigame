@@ -3,6 +3,7 @@ namespace SteamDB\CTowerAttack;
 
 use SteamDB\CTowerAttack\Server;
 use SteamDB\CTowerAttack\Player;
+use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class Game
 {
@@ -395,6 +396,7 @@ class Game
 
 		foreach( $this->Players as $Player )
 		{
+			$Player->ClearLoot( $this->Time );
 			$Player->CheckActiveAbilities( $this );
 
 			if( $SecondPassed && !$Player->IsDead() )
@@ -486,6 +488,16 @@ class Game
 								$this->NumMobsKilled++;
 								break;
 							case Enums\EEnemyType::Boss:
+								if( $this->IsBossLevel() )
+								{
+									foreach( $this->Players as $Player )
+									{
+										if( $Player->IsLootDropped() )
+										{
+											$Player->AddLoot( $this->Time, AbilityItem::GetRandomAbilityItem() );
+										}
+									}
+								}
 								$this->NumBossesKilled++;
 								break;
 							case Enums\EEnemyType::MiniBoss:

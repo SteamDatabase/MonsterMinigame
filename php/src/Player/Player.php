@@ -11,6 +11,7 @@ class Player
 {
 	const MAX_CLICKS = 20; #TODO: Move to tuningData
 	const ACTIVE_PERIOD = 120; #TODO: Move to tuningData
+	const LOOT_TIME = 5; #TODO: Move to tuningData
 	
 	/*
 	optional double hp = 1;
@@ -33,6 +34,7 @@ class Player
 	public $CritDamage;
 	public $PlayerName;
 	public $AccountId;
+	private $LastLoot = null;
 	private $CurrentLane = 1;
 	private $Target = 0;
 	private $Gold = 100000000; # TODO: Set to 0
@@ -53,38 +55,6 @@ class Player
 			1 => 0,
 			2 => 0
 		];
-
-		// TODO
-		#$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick, 3 );
-		#$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels, 1 );
-
-		// support abilities
-		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseDamage );
-		$this->AddAbilityItem( Enums\EAbility::Support_Heal );
-		$this->AddAbilityItem( Enums\EAbility::Support_IncreaseGoldDropped );
-		$this->AddAbilityItem( Enums\EAbility::Support_DecreaseCooldowns );
-
-		// offensive abilities
-		$this->AddAbilityItem( Enums\EAbility::Offensive_HighDamageOneTarget );
-		$this->AddAbilityItem( Enums\EAbility::Offensive_DamageAllTargets );
-		$this->AddAbilityItem( Enums\EAbility::Offensive_DOTAllTargets );
-
-		// item
-		$this->AddAbilityItem( Enums\EAbility::Item_Resurrection );
-		$this->AddAbilityItem( Enums\EAbility::Item_KillTower );
-		$this->AddAbilityItem( Enums\EAbility::Item_KillMob );
-		$this->AddAbilityItem( Enums\EAbility::Item_MaxElementalDamage );
-		$this->AddAbilityItem( Enums\EAbility::Item_GoldPerClick );
-		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseCritPercentagePermanently );
-		$this->AddAbilityItem( Enums\EAbility::Item_IncreaseHPPermanently );
-		$this->AddAbilityItem( Enums\EAbility::Item_GoldForDamage );
-		$this->AddAbilityItem( Enums\EAbility::Item_Invulnerability );
-		$this->AddAbilityItem( Enums\EAbility::Item_GiveGold );
-		$this->AddAbilityItem( Enums\EAbility::Item_StealHealth );
-		$this->AddAbilityItem( Enums\EAbility::Item_ReflectDamage );
-		$this->AddAbilityItem( Enums\EAbility::Item_GiveRandomItem );
-		$this->AddAbilityItem( Enums\EAbility::Item_SkipLevels );
-		$this->AddAbilityItem( Enums\EAbility::Item_ClearCooldowns );
 	}
 
 	public function IsActive( $Time )
@@ -94,7 +64,7 @@ class Player
 
 	public function ToArray()
 	{
-		return array(
+		$Array = array(
 			'hp' => (double) $this->GetHp(),
 			'current_lane' => (int) $this->GetCurrentLane(),
 			'target' => (int) $this->GetTarget(),
@@ -105,6 +75,11 @@ class Player
 			'crit_damage' => (double) $this->GetCritDamage(),
 			'stats' => $this->Stats->ToArray()
 		);
+		if( !empty( $this->GetLoot() ) )
+		{
+			$Array[ 'loot' ] = $this->GetLoot();
+		}
+		return $Array;
 	}
 
 	public function HandleAbilityUsage( $Game, $RequestedAbilities )
@@ -180,7 +155,7 @@ class Player
 					$Game->NumClicks += $NumClicks;
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage; # TODO: this logic isn't correct.. it shouldn't buffer the whole lane, FIX!
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					$Enemy->DamageTaken += $Damage;
+					$Enemy->DamageTaken += $Damage * 549999;
 					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
 					if( $GoldMultiplier > 0 ) 
 					{
@@ -594,6 +569,31 @@ class Player
 	public function GetLoot()
 	{
 		return $this->Loot;
+	}
+
+	public function AddLoot( $Time, $AbilityId )
+	{
+		$this->LastLoot = $Time;
+		$this->Loot[] = [
+			'ability' => $AbilityId
+		];
+		$this->AddAbilityItem( $AbilityId );
+	}
+
+	public function ClearLoot( $Time )
+	{
+		if( $this->LastLoot !== null && ( $this->LastLoot + self::LOOT_TIME ) < $Time )
+		{
+			$this->Loot = [];
+			$this->LastLoot = null;
+		}
+	}
+
+	public function IsLootDropped( )
+	{
+		$DropPercentage = $this->GetTechTree()->GetBossLootDropPercentage() * 100;
+		$RandPercent = rand( 1, 100 );
+		return $RandPercent < $DropPercentage;
 	}
 
 	public static function GetTuningData( $Key = null )

@@ -36,7 +36,7 @@ class TechTree
 	private $UnlockedAbilitiesBitfield = 0;
 	private $HpMultiplier = 1.0;
 	private $CritPercentage = 0;
-	private $BadgePoints = 5000; #TODO: Remove
+	private $BadgePoints = 1000; #TODO: Remove
 	private $AbilityItems = array();
 	private $BossLootDropPercentage = 0.25;
 	private $DamageMultiplierDps = 1.0;
@@ -58,11 +58,9 @@ class TechTree
 		$this->DamageMultiplierCrit = $this->GetTuningData( 'damage_multiplier_crit' );
 		$this->UnlockedAbilitiesBitfield = 0;
 		$this->CritPercentage = $this->GetTuningData( 'crit_percentage' );
-		// TODO: Give 0.1 badgepoints per previous level (start_condition_minigame_badge)
-		// TODO: Give badgepoints for badge (1 & 10 points)
-		$this->AbilityItems = array();
-		$this->BossLootDropPercentage = $this->GetTuningData( 'loot_chance' ); # TODO: add boss loot
-		$this->DamageMultiplierDps = 1; # TODO
+		$this->AbilityItems = [];
+		$this->BossLootDropPercentage = $this->GetTuningData( 'loot_chance' );
+		$this->DamageMultiplierDps = 1;
 		$this->BaseDps = $this->GetTuningData( 'dps' );
 		$this->MaxHp = $this->GetTuningData( 'hp' );
 		$this->Dps = $this->GetTuningData( 'dps' );

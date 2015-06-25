@@ -2,6 +2,7 @@
 namespace SteamDB\CTowerAttack;
 
 use SteamDB\CTowerAttack\Enums;
+use \SteamDB\CTowerAttack\Player\Player;
 use \SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class Lane
