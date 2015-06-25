@@ -135,7 +135,7 @@ class Lane
 		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}
 
-	public function CheckActivePlayerAbilities( $Game, $SecondsPassed = 0, $LevelChanged = false )
+	public function CheckActivePlayerAbilities( $Game, $SecondsPassed = 0 )
 	{
 		$SecondPassed = $SecondsPassed > 0;
 		$HealingPercentage = 0;
@@ -145,7 +145,7 @@ class Lane
 
 		foreach( $ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
-			if( $LevelChanged || $ActiveAbility->IsDone() )
+			if( $ActiveAbility->IsDone() )
 			{
 				// TODO: @Contex: Remove whatever effects the ability had
 				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..

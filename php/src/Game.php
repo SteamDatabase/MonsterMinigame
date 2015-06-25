@@ -593,12 +593,6 @@ class Game
 				];
 
 				$this->WormholeCount = 0;
-
-				// Remove wormholes
-				foreach( $this->Lanes as $LaneId => $Lane )
-				{
-					$Lane->CheckActivePlayerAbilities( $this, false, true );
-				}
 			}
 
 			$this->GenerateNewLevel();
