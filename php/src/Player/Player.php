@@ -9,8 +9,8 @@ use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
 class Player
 {
-	const MAX_CLICKS = 20;
-	const ACTIVE_PERIOD = 120; // seconds
+	const MAX_CLICKS = 20; #TODO: Move to tuningData
+	const ACTIVE_PERIOD = 120; #TODO: Move to tuningData
 	
 	/*
 	optional double hp = 1;
@@ -35,7 +35,7 @@ class Player
 	public $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
-	private $Gold = 0;
+	private $Gold = 100000000; # TODO: Set to 0
 	private $ActiveAbilitiesBitfield = 0;
 	private $ActiveAbilities = [];
 	private $Loot = [];
