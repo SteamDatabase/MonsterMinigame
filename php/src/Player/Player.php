@@ -207,7 +207,7 @@ class Player
 				case Enums\EAbility::ChangeTarget:
 					$NewTarget = (int)$RequestedAbility[ 'new_target' ];
 
-					if( $NewTarget < 0 || $NewTargeet > 3 )
+					if( $NewTarget < 0 || $NewTarget > 3 )
 					{
 						break;
 					}
