@@ -538,7 +538,7 @@ class Player
 	{
 		foreach( $this->ActiveAbilities as $Key => $ActiveAbility )
 		{
-			if( $ActiveAbility->IsCooledDown() )
+			if( $ActiveAbility->IsCooledDown( $Game->Time ) )
 			{
 				AbilityItem::HandleAbility( 
 					$Game,

@@ -46,7 +46,7 @@ class ActiveAbility
 		return $this->TimestampDone;
 	}
 
-	public function IsDone()
+	public function IsDone( $Time )
 	{
 		// Wormhole is never done until the level ends
 		if( $this->Ability === Enums\EAbility::Item_SkipLevels )
@@ -54,7 +54,7 @@ class ActiveAbility
 			return false;
 		}
 
-		return $this->TimestampDone <= $this->Time;
+		return $this->TimestampDone <= $Time;
 	}
 
 	public function GetTimestampCooldown()
@@ -62,8 +62,8 @@ class ActiveAbility
 		return $this->TimestampCooldown;
 	}
 
-	public function IsCooledDown()
+	public function IsCooledDown( $Time )
 	{
-		return $this->TimestampCooldown <= $this->Time;
+		return $this->TimestampCooldown <= $Time;
 	}
 }

@@ -136,7 +136,7 @@ class Lane
 
 		foreach( $ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
-			if( $ActiveAbility->IsDone() )
+			if( $ActiveAbility->IsDone( $Game->Time ) )
 			{
 				// TODO: @Contex: Remove whatever effects the ability had
 				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
