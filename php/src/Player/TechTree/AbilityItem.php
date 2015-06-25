@@ -211,6 +211,12 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+
+					if( $Enemy === null )
+					{
+						break;
+					}
+
 					if( $Enemy->GetType() === Enums\EEnemyType::Tower )
 					{
 						$Enemy->SetHp( 1 );
@@ -325,14 +331,6 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Game->WormholeCount++;
-
-					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
-					$AbilityGold = self::GetGoldMultiplier( Enums\EAbility::Item_SkipLevels );
-
-					foreach( $PlayersInLane as $PlayerInLane )
-					{
-						$PlayerInLane->IncreaseGold( $AbilityGold ); # TODO: Is gold stackable as well? Is it applied AFTER or instant?
-					}
 				}
 				break;
 			break;

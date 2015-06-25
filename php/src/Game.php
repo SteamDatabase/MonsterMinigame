@@ -611,6 +611,13 @@ class Game
 
 				$this->Level += $this->WormholeCount;
 
+				$AbilityGold = AbilityItem::GetGoldMultiplier( Enums\EAbility::Item_SkipLevels );
+				$Players = $this->GetPlayers();
+				foreach( $Players as $Player )
+				{
+					$Player->IncreaseGold( $AbilityGold * $this->WormholeCount ); # TODO: Is gold stackable as well?
+				}
+
 				$this->Chat[] =
 				[
 					'time' => $this->Time,
