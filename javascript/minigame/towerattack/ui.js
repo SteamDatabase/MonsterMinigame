@@ -266,8 +266,8 @@ CUI.prototype.Tick = function()
 			}
 
 			this.UpdateLevelAndTimes();
-			this.UpdateAbilities();
 			this.UpdateLootNotification();
+			this.UpdateAbilities();
 			this.UpdateLog( game.m_rgActionLog );
 			this.UpdateHealthBars();
 			break;
