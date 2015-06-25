@@ -421,7 +421,7 @@ class Game
 						$DealtDpsDamage *= $Player->GetTechTree()->GetHighestElementalMultiplier();
 					}
 					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
-					$Enemy->DamageTaken += $DealtDpsDamage;
+					$Enemy->DpsDamageTaken += $DealtDpsDamage;
 					foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
 					{
 						$LaneDps[ $LaneId ] += $LaneDamage / $SecondsPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
@@ -454,13 +454,13 @@ class Game
 			{
 				if( $Enemy->IsDead() )
 				{
-					if( $Enemy->GetHpDifference() > 0 && $LaneId !== $EnemyCount )
+					if( $Enemy->GetDpsHpDifference() > 0 )
 					{
-						// Find next enemy to deal the rest of the damage to
+						// Find next enemy to deal the rest of the DPS damage to
 						$NextEnemy = $Lane->GetAliveEnemy();
 						if( $NextEnemy !== null )
 						{
-							$NextEnemy->DamageTaken += $Enemy->GetHpDifference();
+							$NextEnemy->DpsDamageTaken += $Enemy->GetDpsHpDifference();
 						}
 					}
 					$DeadEnemies++;
@@ -471,18 +471,20 @@ class Game
 					{
 						# TODO: Apply this in Lane::CheckActivePlayerAbilities instead?
 						# TODO: Check if $ReflectDamageMultiplier is 0.5% or 50%, 0.5% would make more sense if it stacks..
-						$Enemy->DamageTaken += $Enemy->GetHp() * $ReflectDamageMultiplier * $SecondsPassed;
+						$Enemy->AbilityDamageTaken += $Enemy->GetHp() * $ReflectDamageMultiplier * $SecondsPassed;
 					}
-					$Enemy->DecreaseHp( $Enemy->DamageTaken );
-					if( $Enemy->GetHpDifference() > 0 && $LaneId !== $EnemyCount )
+					$Enemy->Hp -= $Enemy->DpsDamageTaken;
+					if( $Enemy->GetDpsHpDifference() > 0 )
 					{
-						// Find next enemy to deal the rest of the damage to
+						// Find next enemy to deal the rest of the DPS damage to
 						$NextEnemy = $Lane->GetAliveEnemy();
 						if( $NextEnemy !== null )
 						{
-							$NextEnemy->DamageTaken += $Enemy->GetHpDifference();
+							$NextEnemy->DpsDamageTaken += $Enemy->GetDpsHpDifference();
 						}
 					}
+					$Enemy->Hp -= $Enemy->ClickDamageTaken;
+					$Enemy->Hp -= $Enemy->AbilityDamageTaken;
 					if( $Enemy->IsDead() )
 					{
 						switch( $Enemy->GetType() )
@@ -522,7 +524,9 @@ class Game
 						$EnemyDpsDamage += $Enemy->GetDps();
 					}
 				}
-				$Enemy->DamageTaken = 0;
+				$Enemy->DpsDamageTaken = 0;
+				$Enemy->ClickDamageTaken = 0;
+				$Enemy->AbilityDamageTaken = 0;
 
 				if( $Enemy->HasTimer() && $Enemy->IsTimerEnabled() && $Enemy->HasTimerRanOut( $SecondsPassed ) )
 				{

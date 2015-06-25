@@ -155,7 +155,7 @@ class Player
 					$Game->NumClicks += $NumClicks;
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage; # TODO: this logic isn't correct.. it shouldn't buffer the whole lane, FIX!
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
-					$Enemy->DamageTaken += $Damage;
+					$Enemy->ClickDamageTaken += $Damage;
 					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
 					if( $GoldMultiplier > 0 ) 
 					{

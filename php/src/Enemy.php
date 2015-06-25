@@ -14,7 +14,7 @@ class Enemy
 	*/
 	private $Id;
 	private $Type;
-	private $Hp;
+	public $Hp;
 	private $MaxHp;
 	private $Dps;
 	private $Timer;
@@ -178,9 +178,9 @@ class Enemy
 		$this->Hp = $this->GetMaxHp();
 	}
 
-	public function GetHpDifference()
+	public function GetDpsHpDifference()
 	{
-		return $this->Hp > 0 ? $this->DamageTaken - $this->Hp : $this->Hp * -1;
+		return $this->Hp > 0 ? $this->DpsDamageTaken - $this->Hp : $this->Hp * -1;
 	}
 
 	public function GetMaxHp()
