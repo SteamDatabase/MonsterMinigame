@@ -22,19 +22,17 @@ class Enemy
 	private $Gold;
 	public $DamageTaken = 0;
 
-	public function __construct( $Id, $Type, $Level )
+	public function __construct( $Id, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
 		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
 		// TODO: Figure out if valve floored the value or just rounded
-		$this->MaxHp = self::GetHpAtLevel( $Type, $Level );
-		// Deal with respawn/alive timer
-		// TODO: dps is wrong and does not match valve's data
+		$this->MaxHp = $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level );
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
-		$this->Dps = self::GetDpsAtLevel( $Type, $Level );
-		$this->Gold = self::GetGoldAtLevel( $Type, $Level );
+		$this->Dps = $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level );
+		$this->Gold = $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level );
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
