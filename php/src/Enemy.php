@@ -29,8 +29,6 @@ class Enemy
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
-		// TODO: TreasureMob has Lifetime and Chance, needs to be remove after x time?
-		// TODO: Figure out if valve floored the value or just rounded
 		$this->MaxHp = $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level );
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
