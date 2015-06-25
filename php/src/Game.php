@@ -39,6 +39,7 @@ class Game
 	public $NumTreasuresKilled = 0;
 	public $TimeSimulating = 0.0;
 	public $HighestTick = 0.0;
+	public $WormholeCount = 0;
 
 	private function GetLastMobId()
 	{
@@ -139,6 +140,11 @@ class Game
 	public function IsBossLevel()
 	{
 		return $this->Level % 10 === 0;
+	}
+
+	public function IsSpecialWormholeLevel()
+	{
+		return $this->Level % 100 === 0;
 	}
 
 	public function GenerateNewLanes()
@@ -558,6 +564,12 @@ class Game
 		}
 		if( $DeadLanes === 3 )
 		{
+			if( $this->WormholeCount > 0 )
+			{
+				#if( $this->IsSpecialWormholeLevel() ) TODO: do something?
+				$this->Level += $this->WormholeCount;
+				$this->WormholeCount = 0;
+			}
 			$this->GenerateNewLevel();
 		}
 	}

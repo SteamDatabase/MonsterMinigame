@@ -35,7 +35,7 @@ class Player
 	public $AccountId;
 	private $CurrentLane = 1;
 	private $Target = 0;
-	private $Gold = 10;
+	private $Gold = 0;
 	private $ActiveAbilitiesBitfield = 0;
 	private $ActiveAbilities = [];
 	private $Loot = [];
@@ -162,7 +162,7 @@ class Player
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 
 					// Abilities
-					$Damage *= $Lane->GetDamageMultiplier();
+					$Damage *= $Lane->GetDamageMultiplier() * 50000;
 					if( $Lane->HasActivePlayerAbilityMaxElementalDamage() )
 					{
 						$Damage *= $this->GetTechTree()->GetHighestElementalMultiplier();
@@ -461,20 +461,23 @@ class Player
 		} 
 		else if ( $Ability === Enums\EAbility::Item_KillTower ) # TODO: Move this to HandleAbility?
 		{
-			if( 
-				$Enemy->GetType() !== Enums\EEnemyType::Tower 
-				|| 
-				$Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() )->IsDead()
-			) {
+			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
+			if( $Enemy->GetType() !== Enums\EEnemyType::Tower || $Enemy->IsDead() ) 
+			{
 				return false;
 			}
 		}
 		else if ( $Ability === Enums\EAbility::Item_KillMob ) # TODO: Move this to HandleAbility?
 		{
+			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
 			if( 
-				( $Enemy->GetType() !== Enums\EEnemyType::Mob && $Enemy->GetType() !== Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
+				( 
+					$Enemy->GetType() !== Enums\EEnemyType::Mob 
+					&& 
+					$Enemy->GetType() !== Enums\EEnemyType::MiniBoss 
+				) # TODO: Boss or MiniBoss?
 				|| 
-				$Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() )->IsDead()
+				$Enemy->IsDead()
 			) {
 				return false;
 			}

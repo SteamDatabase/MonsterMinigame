@@ -59,6 +59,11 @@ class AbilityItem
 		return self::GetTuningData( $AbilityId, 'max_num_clicks' );
 	}
 
+	public static function GetGoldMultiplier( $AbilityId )
+	{
+		return self::GetTuningData( $AbilityId, 'gold_multiplier' );
+	}
+
 	public static function GetMultiplier( $AbilityId )
 	{
 		return self::GetTuningData( $AbilityId, 'multiplier' );
@@ -230,10 +235,6 @@ class AbilityItem
 					}
 				}
 				break;
-				break;
-			case Enums\EAbility::Item_MaxElementalDamage:
-				// TODO: Add ability logic
-				break;
 			case Enums\EAbility::Item_GoldPerClick:
 				// TODO: DELETE WHOLE CASE
 				if( !$Deactivate )
@@ -312,20 +313,29 @@ class AbilityItem
 				}
 				break;
 			case Enums\EAbility::Item_SkipLevels:
-				// TODO: Add ability logic
-				// TODO: stackable? check if player has ability? etc
-				// TODO: debugging
-				if( $Deactivate )
+				if( !$Deactivate )
 				{
-				}
-				else
-				{
-					l( 'Skipping level' );
-					$Game->GenerateNewLevel();
+					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
+					$AbilityGold = self::GetGoldMultiplier( Enums\EAbility::Item_SkipLevels );
+					if( $Game->IsSpecialWormholeLevel() )
+					{
+						$AbilityGold *= 10;
+						$Game->WormholeCount += 10;
+					}
+					else
+					{
+						$Game->WormholeCount++;
+					}
+
+					foreach( $PlayersInLane as $PlayerInLane )
+					{
+						$PlayerInLane->IncreaseGold( $AbilityGold ); # TODO: Is gold stackable as well? Is it applied AFTER or instant?
+					}
 				}
 				break;
 			break;
 			default:
+			case Enums\EAbility::Item_MaxElementalDamage:
 			case Enums\EAbility::Support_IncreaseGoldDropped:
 			case Enums\EAbility::Support_DecreaseCooldowns:
 			case Enums\EAbility::Item_Invulnerability:

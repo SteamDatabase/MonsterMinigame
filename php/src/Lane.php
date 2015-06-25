@@ -21,7 +21,7 @@ class Lane
 	public $Enemies;
 	public $Dps;
 	public $ActivityLog = [];
-	private $GoldDropped;
+	private $GoldDropped; #TODO: Increase GoldDropped?
 	private $ActivePlayerAbilities;
 	private $LaneId;
 
