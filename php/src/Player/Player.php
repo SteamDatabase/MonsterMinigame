@@ -123,7 +123,7 @@ class Player
 			{
 				case Enums\EAbility::Attack:
 					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
-					
+
 					if( $NumClicks > self::MAX_CLICKS )
 					{
 						$NumClicks = self::MAX_CLICKS;
@@ -132,6 +132,7 @@ class Player
 					{
 						$NumClicks = 1;
 					}
+
 					$Damage = $NumClicks * $this->GetTechTree()->GetDamagePerClick();
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 
@@ -150,38 +151,69 @@ class Player
 						$this->CritDamage = $Damage;
 						$this->Stats->CritDamageDealt += $Damage;
 					}
+
 					$this->Stats->NumClicks += $NumClicks;
 					$this->Stats->ClickDamageDealt += $Damage;
 					$Game->NumClicks += $NumClicks;
+
 					$this->LaneDamageBuffer[ $this->GetCurrentLane() ] += $Damage; # TODO: this logic isn't correct.. it shouldn't buffer the whole lane, FIX!
+
 					$Enemy = $Lane->GetEnemy( $this->GetTarget() );
+
+					if( $Enemy === null || $Enemy->IsDead() )
+					{
+						break;
+					}
+
 					$Enemy->ClickDamageTaken += $Damage;
+
 					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
 					if( $GoldMultiplier > 0 ) 
 					{
 						$this->IncreaseGold( $GoldMultiplier * $NumClicks * $Enemy->GetGold() );
 					}
+
 					$StealHealthMultiplier = $Lane->GetStealHealthMultiplier();
 					if( $StealHealthMultiplier > 0 ) 
 					{
 						$this->IncreaseHp( $StealHealthMultiplier * $NumClicks * $Damage );
 					}
+
 					break;
 				case Enums\EAbility::ChangeLane:
+					$NewLane = (int)$RequestedAbility[ 'new_lane' ];
+
+					if( $NewLane < 0 || $NewLane > 2 )
+					{
+						break;
+					}
+
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 					$Lane->RemovePlayer( $this );
-					$this->SetLane( $RequestedAbility[ 'new_lane' ] );
+
+					$this->SetLane( $NewLane );
+
 					$NewLane = $Game->GetLane( $this->GetCurrentLane() );
 					$NewLane->AddPlayer( $this );
+
 					break;
 				case Enums\EAbility::Respawn:
 					if( $this->IsDead() && $this->CanRespawn( $Game->Time ) )
 					{
 						$this->Respawn();
 					}
+
 					break;
 				case Enums\EAbility::ChangeTarget:
-					$this->SetTarget( $RequestedAbility[ 'new_target' ] );
+					$NewTarget = (int)$RequestedAbility[ 'new_target' ];
+
+					if( $NewTarget < 0 || $NewTargeet > 3 )
+					{
+						break;
+					}
+
+					$this->SetTarget( $NewTarget );
+
 					break;
 				default:
 					// Handle unknown ability?
