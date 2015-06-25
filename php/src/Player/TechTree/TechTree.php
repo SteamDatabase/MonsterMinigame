@@ -411,8 +411,8 @@ class TechTree
 			'damage_multiplier_air' => (double) $this->GetTuningData( 'damage_multiplier_air' ),
 			'damage_multiplier_earth' => (double) $this->GetTuningData( 'damage_multiplier_earth' ),
 			'damage_multiplier_crit' => (double) $this->GetTuningData( 'damage_multiplier_crit' ),
-			'hp_multiplier' => (double) $this->GetHpMultiplier(),
-			'crit_percentage' => (double) $this->GetCritPercentage(),
+			'hp_multiplier' => (double) 1,
+			'crit_percentage' => (double) $this->GetTuningData( 'crit_percentage' ),
 			'boss_loot_drop_percentage' => (double) $this->GetTuningData( 'loot_chance' ),
 			'damage_multiplier_dps' => (double) 0,
 			'damage_per_click_multiplier' => (double) 1
@@ -455,7 +455,7 @@ class TechTree
 					# TODO: ?
 					break;
 				case Enums\EUpgradeType::BossLootDropPercentage:
-					$Data[ 'boss_loot_drop_percentage' ] += $Value; // TODO: Not percentage but multiplier?
+					$Data[ 'boss_loot_drop_percentage' ] += $Value;
 					break;
 			}
 		}
