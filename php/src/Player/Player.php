@@ -319,9 +319,8 @@ class Player
 
 	public function GetHpLevel()
 	{
-		// TODO: fix if percentage is below 0 or above 100
-		$HpLevel = floor($this->GetHpPercentage() / 10) - 1;
-		return $HpLevel <= 0 ? 0 : $HpLevel;
+		$HpLevel = floor($this->GetHpPercentage() / 10);
+		return $HpLevel <= 0 ? 0 : ( $HpLevel > 9 ? 9 : $HpLevel );
 	}
 
 	public function GetCurrentLane()
