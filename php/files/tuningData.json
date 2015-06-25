@@ -2,7 +2,7 @@
     "minimum_players": 1,
     "universe_level": 100000000,
     "tick_rate": 0.1,
-    "game_version": "Alpha v0.9.3",
+    "game_version": "Alpha v0.9.4",
     "version": 1434662461,
     "player": {
         "respawn_time": 60,
