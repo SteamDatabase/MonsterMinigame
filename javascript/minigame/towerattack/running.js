@@ -841,7 +841,8 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 				$J('#nextlevel').fadeOut();
 			}, 750);
 		}
-		this.m_nCurrentLevel = this.m_rgGameData.level;
+
+		this.m_nCurrentLevel = this.m_rgGameData.level - 1; // Has to be -1 since it was 0 based by Valve
 
 		var nIndex = Math.floor( this.m_nCurrentLevel / 10 ) % this.m_rgLevelMap.length;
 		this.ChangeLevel( this.m_rgLevelMap[nIndex] );
