@@ -130,10 +130,34 @@ class Server
 					{
 						$Player->HandleAbilityUsage( $this->Game, $Data[ 'requested_abilities' ] );
 						$this->Game->UpdatePlayer( $Player );
-						$Response = array(
-							'player_data' => $Player->ToArray(),
-							'tech_tree' => $Player->GetTechTree()->ToArray()
-						);
+						$IncludeTechTree = false;
+						$AllowedAbilities = [
+							Enums\EAbility::Attack,
+							Enums\EAbility::ChangeTarget
+						];
+
+						foreach( $Data[ 'requested_abilities' ] as $RequestedAbility )
+						{
+							if( !in_array( $RequestedAbility[ 'ability' ], $AllowedAbilities ) )
+							{
+								$IncludeTechTree = true;
+								break;
+							}
+						}
+
+						if( $IncludeTechTree ) 
+						{
+							$Response = array(
+								'player_data' => $Player->ToArray(),
+								'tech_tree' => $Player->GetTechTree()->ToArray()
+							);
+						}
+						else
+						{
+							$Response = array(
+								'player_data' => $Player->ToArray()
+							);
+						}
 					}
 					else if( $Data[ 'method' ] == 'UseBadgePoints' )
 					{
