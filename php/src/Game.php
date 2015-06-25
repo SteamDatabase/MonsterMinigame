@@ -142,7 +142,7 @@ class Game
 		return $this->Level % 10 === 0;
 	}
 
-	public function IsSpecialWormholeLevel()
+	public function IsGoldHelmBossLevel()
 	{
 		return $this->Level % 100 === 0;
 	}
@@ -573,14 +573,34 @@ class Game
 			$Lane->CheckActivePlayerAbilities( $this, $SecondsPassed );
 			$Lane->UpdateHpBuckets( $PlayersInLane );
 		}
+
 		if( $DeadLanes === 3 )
 		{
 			if( $this->WormholeCount > 0 )
 			{
-				#if( $this->IsSpecialWormholeLevel() ) TODO: do something?
+				if( $this->IsGoldHelmBossLevel() )
+				{
+					$this->WormholeCount *= 10;
+				}
+
 				$this->Level += $this->WormholeCount;
+
+				$this->Chat[] =
+				[
+					'time' => time(),
+					'actor' => 'SERVER',
+					'message' => 'Skipped ' . number_format( $this->WormholeCount ) . ' level' . ( $this->WormholeCount === 1 ? '' : 's' )
+				];
+
 				$this->WormholeCount = 0;
+
+				// Remove wormholes
+				foreach( $this->Lanes as $LaneId => $Lane )
+				{
+					$Lane->CheckActivePlayerAbilities( $this, false, true );
+				}
 			}
+
 			$this->GenerateNewLevel();
 		}
 	}

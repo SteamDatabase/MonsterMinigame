@@ -48,6 +48,12 @@ class ActiveAbility
 
 	public function IsDone()
 	{
+		// Wormhole is never done until the level ends
+		if( $this->Ability === Enums\EAbility::Item_SkipLevels )
+		{
+			return false;
+		}
+
 		return $this->TimestampDone <= time();
 	}
 

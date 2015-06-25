@@ -56,7 +56,7 @@ class Lane
 			'dps' => (double) $this->GetDps(),
 			'gold_dropped' => (double) $this->GetGoldDropped(),
 			'active_player_abilities' => $this->GetActivePlayerAbilitiesAsArray(),
-			'activity_log' => $this->ActivityLog,
+			'activity_log' => array_slice( $this->ActivityLog, 50 ), // Only send last 50 recent events
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
 			'active_player_ability_decrease_cooldowns' => (double) $this->HasActivePlayerAbilityDecreaseCooldowns(),
@@ -135,20 +135,23 @@ class Lane
 		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}
 
-	public function CheckActivePlayerAbilities( $Game, $SecondsPassed )
+	public function CheckActivePlayerAbilities( $Game, $SecondsPassed = 0, $LevelChanged = false )
 	{
-		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
+		$SecondPassed = $SecondsPassed > 0;
 		$HealingPercentage = 0;
 		$ClearCooldowns = false;
-		foreach( $this->ActivePlayerAbilities as $Key => $ActiveAbility )
+
+		$ActivePlayerAbilities = $this->ActivePlayerAbilities;
+
+		foreach( $ActivePlayerAbilities as $Key => $ActiveAbility )
 		{
-			if( $ActiveAbility->isDone() ) 
+			if( $LevelChanged || $ActiveAbility->IsDone() )
 			{
 				// TODO: @Contex: Remove whatever effects the ability had
 				// TODO: @Contex: Do active abilities carry on over to the next lane? The logic below would fail if a player switches a lane..
 				AbilityItem::HandleAbility( $Game, $this, null, $ActiveAbility, true );
 				unset( $this->ActivePlayerAbilities[ $Key ] );
-			} 
+			}
 			else if( $SecondPassed )
 			{
 				switch( $ActiveAbility->GetAbility() )
@@ -163,10 +166,11 @@ class Lane
 			}
 		}
 
-		$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
 		# TODO: Check if $HealingPercentage is 0.1% or 10%, 0.1% would make more sense if it stacks..
 		if( $SecondPassed )
 		{
+			$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
+
 			foreach( $PlayersInLane as $PlayerInLane )
 			{
 				// Check "Medics" & heal

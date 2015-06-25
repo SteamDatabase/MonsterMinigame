@@ -315,17 +315,10 @@ class AbilityItem
 			case Enums\EAbility::Item_SkipLevels:
 				if( !$Deactivate )
 				{
+					$Game->WormholeCount++;
+
 					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
 					$AbilityGold = self::GetGoldMultiplier( Enums\EAbility::Item_SkipLevels );
-					if( $Game->IsSpecialWormholeLevel() )
-					{
-						$AbilityGold *= 10;
-						$Game->WormholeCount += 10;
-					}
-					else
-					{
-						$Game->WormholeCount++;
-					}
 
 					foreach( $PlayersInLane as $PlayerInLane )
 					{
