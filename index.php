@@ -18,7 +18,8 @@
 </head>
 <body>
 	<div class="breadcrumbs">
-		<a href="http://store.steampowered.com/">Summer Sale</a> &gt; <a href="http://steamcommunity.com/minigame/">Summer Game Info</a> &gt; Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
+		<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" style="float:right"><img src="/assets/minigame/towerattack/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
+		Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
 	</div>
 
 	<style>.disclaimer { text-align: center; padding-top: 17px; box-sizing: border-box; } .disclaimer p { margin: 0; color: #DDD; }</style>
