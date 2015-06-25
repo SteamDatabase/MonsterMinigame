@@ -88,7 +88,6 @@ class Game
 	{
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
-		// Remove status? $this->SetStatus( Enums\EStatus::Running );
 		l( 'Game moved to level #' . $this->GetLevel() );
 	}
 
