@@ -43,7 +43,6 @@ class Player
 
 	public function __construct( $AccountId, $PlayerName )
 	{
-		$this->LastActive = time();
 		$this->AccountId = $AccountId;
 		$this->PlayerName = $PlayerName;
 		$this->Hp = self::GetTuningData( 'hp' );
@@ -88,9 +87,9 @@ class Player
 		$this->AddAbilityItem( Enums\EAbility::Item_ClearCooldowns );
 	}
 
-	public function IsActive()
+	public function IsActive( $Time )
 	{
-		return time() < $this->LastActive + self::ACTIVE_PERIOD;
+		return $Time < $this->LastActive + self::ACTIVE_PERIOD;
 	}
 
 	public function ToArray()
@@ -116,7 +115,7 @@ class Player
 				( 
 					isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] ) 
 					&& 
-					$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > time() 
+					$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > $Game->Time
 				)
 				||
 				(
@@ -201,7 +200,7 @@ class Player
 					$NewLane->AddPlayer( $this );
 					break;
 				case Enums\EAbility::Respawn:
-					if( $this->IsDead() && $this->CanRespawn() )
+					if( $this->IsDead() && $this->CanRespawn( $Game->Time ) )
 					{
 						$this->Respawn();
 					}
@@ -214,7 +213,7 @@ class Player
 					break;
 			}
 
-			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = time();
+			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = $Game->Time;
 		}
 	}
 
@@ -348,15 +347,15 @@ class Player
 		return $this->TimeDied;
 	}
 
-	public function CanRespawn( $IsAutomatic = false )
+	public function CanRespawn( $Time, $IsAutomatic = false )
 	{
 		if ($IsAutomatic)
 		{
-			return time() > $this->TimeDied + self::GetRespawnTime();
+			return $Time > $this->TimeDied + self::GetRespawnTime();
 		}
 		else
 		{
-			return time() > $this->TimeDied + self::GetMinDeadTime();
+			return $Time > $this->TimeDied + self::GetMinDeadTime();
 		}
 	}
 
@@ -366,9 +365,9 @@ class Player
 		$this->TimeDied = 0;
 	}
 
-	public function Kill()
+	public function Kill( $Time )
 	{
-		$this->TimeDied = time();
+		$this->TimeDied = $Time;
 		$this->Hp = 0;
 		$this->Stats->TimesDied++;
 	}
@@ -420,10 +419,10 @@ class Player
 		return $ActiveAbilities;
 	}
 
-	public function AddActiveAbility( $Ability, $DecreaseCooldown = false )
+	public function AddActiveAbility( $Time, $Ability, $DecreaseCooldown = false )
 	{
 		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
-		$ActiveAbility = new ActiveAbility( $Ability, $this->PlayerName, $DecreaseCooldown );
+		$ActiveAbility = new ActiveAbility( $Time, $Ability, $this->PlayerName, $DecreaseCooldown );
 		$this->ActiveAbilities[ $Ability ] = $ActiveAbility;
 		return $ActiveAbility;
 	}
@@ -501,7 +500,12 @@ class Player
 		}
 
 		// Ability executed succesfully!
-		$ActiveAbility = $this->AddActiveAbility( $Ability, $Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns() );
+		$ActiveAbility = $this->AddActiveAbility
+		( 
+			$Game->Time, 
+			$Ability, 
+			$Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns() 
+		);
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
 		$Game->NumAbilitiesActivated++;
 		if( AbilityItem::GetType( $Ability ) === Enums\EAbilityType::Item  )

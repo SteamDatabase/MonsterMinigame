@@ -244,6 +244,7 @@ class AbilityItem
 					( 
 						new ActiveAbility
 						( 
+							$Game->Time,
 							Enums\EAbility::Support_IncreaseCritPercentage, 
 							$Player->PlayerName,
 							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
@@ -260,6 +261,7 @@ class AbilityItem
 					( 
 						new ActiveAbility
 						( 
+							$Game->Time,
 							Enums\EAbility::Support_Heal, 
 							$Player->PlayerName,
 							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
@@ -284,7 +286,9 @@ class AbilityItem
 				{
 					$Player->IncreaseGold( $AbilityMultiplier );
 					$Lane->AddActivePlayerAbility( 
-						new ActiveAbility( 
+						new ActiveAbility
+						(
+							$Game->Time,
 							Enums\EAbility::Support_IncreaseGoldDropped, 
 							$Player->PlayerName,
 							$Lane->HasActivePlayerAbilityDecreaseCooldowns() 

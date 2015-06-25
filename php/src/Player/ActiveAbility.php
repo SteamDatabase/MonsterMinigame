@@ -12,11 +12,11 @@ class ActiveAbility
 	private $TimestampDone;
 	private $TimestampCooldown;
 
-	public function __construct( $Ability, $Actor, $DecreaseCooldown = false )
+	public function __construct( $Time, $Ability, $Actor, $DecreaseCooldown = false )
 	{
+		$this->Time = $Time;
 		$this->Actor = $Actor;
 		$this->Ability = $Ability;
-		$this->Time = time();
 		$Duration = AbilityItem::GetDuration( $Ability );
 		$Cooldown = AbilityItem::GetCooldown( $Ability );
 		$this->TimestampDone = $this->Time + AbilityItem::GetDuration( $Ability );
@@ -54,7 +54,7 @@ class ActiveAbility
 			return false;
 		}
 
-		return $this->TimestampDone <= time();
+		return $this->TimestampDone <= $this->Time;
 	}
 
 	public function GetTimestampCooldown()
@@ -64,6 +64,6 @@ class ActiveAbility
 
 	public function IsCooledDown()
 	{
-		return $this->TimestampCooldown <= time();
+		return $this->TimestampCooldown <= $this->Time;
 	}
 }

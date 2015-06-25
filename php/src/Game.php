@@ -73,6 +73,7 @@ class Game
 		l( 'Creating new player ' . $AccountId . ' - ' . $Name );
 
 		$Player = new Player\Player($AccountId, $Name);
+		$Player->LastActive = $this->Time;
 
 		$this->Players[ $AccountId ] = $Player;
 
@@ -332,7 +333,7 @@ class Game
 		// So dirty to loop through this...
 		foreach( $this->Players as $Player )
 		{
-			if ($Player->IsActive())
+			if( $Player->IsActive( $this->Time ) )
 			{
 				$ActivePlayers[] = $Player;
 			}
@@ -422,7 +423,7 @@ class Game
 				}
 			}
 
-			if( $Player->IsDead() && $Player->CanRespawn( true ) )
+			if( $Player->IsDead() && $Player->CanRespawn( $this->Time, true ) )
 			{
 				// Respawn player
 				$Player->Respawn();
@@ -567,7 +568,7 @@ class Game
 						{
 							$Player->Stats->DamageTaken += $Player->Hp;
 							$Player->Hp = 0;
-							$Player->Kill();
+							$Player->Kill( $this->Time );
 						}
 					}
 				}
@@ -590,7 +591,7 @@ class Game
 
 				$this->Chat[] =
 				[
-					'time' => time(),
+					'time' => $this->Time,
 					'actor' => 'SERVER',
 					'message' => 'Skipped ' . number_format( $this->WormholeCount ) . ' level' . ( $this->WormholeCount === 1 ? '' : 's' )
 				];
