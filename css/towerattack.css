@@ -1217,6 +1217,10 @@ a {
 	display: block;
 }
 
+.chattemplate .ability {
+	word-wrap: break-word;
+}
+
 .activitytemplate .name {
 	color: #ffffff;
 }
