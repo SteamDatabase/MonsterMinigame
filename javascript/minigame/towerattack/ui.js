@@ -1324,7 +1324,7 @@ window.fnTooltipLaneElementDesc = function( context )
 }
 
 function log10( val ) {
-	return Math.log(val) / Math.LN10;
+	return Math.round(Math.log(val) / Math.LN10 * 1e6) / 1e6;
 }
 
 window.fnTooltipAbilityDesc = function( context )
