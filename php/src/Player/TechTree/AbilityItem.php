@@ -117,7 +117,7 @@ class AbilityItem
 		return $TuningData[ $AbilityId ][ $Key ];
 	}
 
-	public static function GetAbilities( $Type = null)
+	public static function GetAbilities( $Type = null )
 	{
 		if( $Type !== null )
 		{
@@ -125,8 +125,23 @@ class AbilityItem
 			$Abilities = Enums\EAbility::GetList();
 			foreach( $Abilities as $AbilityName => $AbilityId )
 			{
-				if( self::GetType( $AbilityId ) === $Type )
-				{
+				if( 
+					self::GetType( $AbilityId ) === $Type 
+					&& 
+					( 
+						$Type === Enums\EAbilityType::Item 
+						? 
+						( 
+							$AbilityId !== Enums\EAbility::Item_GiveRandomItem
+							&&
+							$AbilityId !== Enums\EAbility::Item_SkipLevels
+							&&
+							$AbilityId !== Enums\EAbility::Item_ClearCooldowns
+					 	) 
+					 	: 
+					 	true 
+				 	)
+				) {
 					$TypeAbilities[] = $AbilityId;
 				}
 			}
