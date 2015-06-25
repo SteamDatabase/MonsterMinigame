@@ -135,6 +135,15 @@ class Server
 							'tech_tree' => $Player->GetTechTree()->ToArray()
 						);
 					}
+					else if( $Data[ 'method' ] == 'UseBadgePoints' )
+					{
+						$Player->HandleBadgePoints( $this->Game, $Data[ 'ability_items' ] );
+						$this->Game->UpdatePlayer( $Player );
+						$Response = array(
+							'player_data' => $Player->ToArray(),
+							'tech_tree' => $Player->GetTechTree()->ToArray()
+						);
+					}
 					break;
 				default:
 					// TODO: handle unknown methods

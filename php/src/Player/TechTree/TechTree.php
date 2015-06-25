@@ -275,6 +275,16 @@ class TechTree
 		return $this->BadgePoints;
 	}
 
+	public function DecreaseBadgePoints( $Amount )
+	{
+		$this->BadgePoints -= $Amount;
+		if( $this->BadgePoints < 0 )
+		{
+			$this->BadgePoints = 0;
+		}
+		return $this->BadgePoints;
+	}
+
 	public function AddAbilityItem( $AbilityId, $Quantity = 1 )
 	{
 		if( AbilityItem::GetType( $AbilityId ) !== Enums\EAbilityType::Item )
@@ -287,7 +297,7 @@ class TechTree
 			$this->UnlockAbility( $AbilityId );
 			return;
 		}
-		if ( !isset( $this->AbilityId[ $AbilityId ] ) )
+		if ( !isset( $this->AbilityItems[ $AbilityId ] ) )
 		{
 			$this->AbilityItems[ $AbilityId ] = [
 				'ability' => $AbilityId,

@@ -220,7 +220,8 @@ class Player
 	public function HandleUpgrade( $Game, $Upgrades )
 	{
 		$HpUpgrade = false;
-		foreach( $Upgrades as $UpgradeId ) {
+		foreach( $Upgrades as $UpgradeId ) 
+		{
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
 			if(
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
@@ -264,6 +265,27 @@ class Player
 		if( $HpUpgrade )
 		{
 			$this->Hp = $this->getTechTree()->GetMaxHp();
+		}
+	}
+
+	public function HandleBadgePoints( $Game, $Abilities )
+	{
+		if( $this->GetTechTree()->GetBadgePoints() === 0 )
+		{
+			# Player cannot afford any ability, skip!
+			return;
+		}
+
+		foreach( $Abilities as $AbilityId ) 
+		{
+			if( $this->GetTechTree()->GetBadgePoints() < AbilityItem::GetBadgePointCost( $AbilityId ) )
+			{
+				# Player cannot afford ability, skip!
+				continue;
+			}
+
+			$this->GetTechTree()->DecreaseBadgePoints( AbilityItem::GetBadgePointCost( $AbilityId ) );
+			$this->GetTechTree()->AddAbilityItem( $AbilityId );
 		}
 	}
 
@@ -386,7 +408,11 @@ class Player
 	public function DecreaseGold( $Amount )
 	{
 		$this->Gold -= $Amount;
-		$this->Stats->GoldUsed += $Amount;
+		if( $this->Gold < 0 )
+		{
+			$this->Gold = 0;
+		}
+		$this->Stats->GoldUsed += $Amount; # TODO: Check statement above, amount won't be the same
 	}
 
 	public function IsInvulnerable()
