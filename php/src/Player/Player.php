@@ -162,7 +162,7 @@ class Player
 					$Lane = $Game->GetLane( $this->GetCurrentLane() );
 
 					// Abilities
-					$Damage *= $Lane->GetDamageMultiplier() * 50000;
+					$Damage *= $Lane->GetDamageMultiplier();
 					if( $Lane->HasActivePlayerAbilityMaxElementalDamage() )
 					{
 						$Damage *= $this->GetTechTree()->GetHighestElementalMultiplier();
