@@ -830,7 +830,9 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 	}
 
 	// Change level if needed
-	if( this.m_nCurrentLevel != this.m_rgGameData.level )
+	var levelOffByOne = this.m_rgGameData.level - 1; // Has to be -1 since it was 0 based by Valve
+
+	if( this.m_nCurrentLevel != levelOffByOne )
 	{
 		if( this.m_nCurrentLevel )
 		{
@@ -842,7 +844,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 			}, 750);
 		}
 
-		this.m_nCurrentLevel = this.m_rgGameData.level - 1; // Has to be -1 since it was 0 based by Valve
+		this.m_nCurrentLevel = levelOffByOne;
 
 		var nIndex = Math.floor( this.m_nCurrentLevel / 10 ) % this.m_rgLevelMap.length;
 		this.ChangeLevel( this.m_rgLevelMap[nIndex] );
