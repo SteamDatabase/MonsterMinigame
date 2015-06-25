@@ -166,7 +166,7 @@ class AbilityItem
 							$Damage *= self::GetMultiplier( Enums\EAbility::Offensive_HighDamageOneTarget );
 						}
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+						$Enemy->DecreaseHp( $Damage );
 					}
 				}
 				break;
@@ -178,7 +178,7 @@ class AbilityItem
 					{
 						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+						$Enemy->DecreaseHp( $Damage );
 					}
 				}
 				break;
@@ -190,7 +190,7 @@ class AbilityItem
 					{
 						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+						$Enemy->DecreaseHp( $Damage );
 					}
 				}
 				break;
@@ -231,7 +231,7 @@ class AbilityItem
 						$Percentage = $MaxPercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
 						$Damage = $Enemy->GetMaxHp() * $Percentage;
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+						$Enemy->DecreaseHp( $Damage );
 					}
 				}
 				break;
@@ -283,7 +283,7 @@ class AbilityItem
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
 					$Player->Stats->AbilityDamageDealt += $Damage;
-					$Enemy->DamageTaken += $Damage; # TODO: Should we set DamageTaken or just set the HP?
+					$Enemy->DecreaseHp( $Damage );
 				}
 				break;
 			case Enums\EAbility::Item_GiveGold:

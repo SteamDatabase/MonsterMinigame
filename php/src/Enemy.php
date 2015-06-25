@@ -21,6 +21,9 @@ class Enemy
 	private $TimerDisabled = false;
 	private $Gold;
 	public $DamageTaken = 0;
+	public $DpsDamageTaken = 0;
+	public $ClickDamageTaken = 0;
+	public $AbilityDamageTaken = 0;
 
 	public function __construct( $Id, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
 	{
