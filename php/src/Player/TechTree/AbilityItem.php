@@ -235,13 +235,6 @@ class AbilityItem
 					}
 				}
 				break;
-			case Enums\EAbility::Item_GoldPerClick:
-				// TODO: DELETE WHOLE CASE
-				if( !$Deactivate )
-				{
-					$Player->IncreaseGold( 100000000 );
-				}
-				break;
 			case Enums\EAbility::Item_IncreaseCritPercentagePermanently:
 				if( !$Deactivate )
 				{
@@ -327,19 +320,6 @@ class AbilityItem
 				}
 				break;
 			break;
-			default:
-			case Enums\EAbility::Item_MaxElementalDamage:
-			case Enums\EAbility::Support_IncreaseGoldDropped:
-			case Enums\EAbility::Support_DecreaseCooldowns:
-			case Enums\EAbility::Item_Invulnerability:
-			case Enums\EAbility::Item_StealHealth:
-			case Enums\EAbility::Support_Heal:
-			case Enums\EAbility::Support_IncreaseDamage:
-			case Enums\EAbility::Support_IncreaseCritPercentage:
-			case Enums\EAbility::Item_ClearCooldowns:
-			case Enums\EAbility::Item_ReflectDamage:
-				# Delete?
-				break;
 		}
 	}
 }
