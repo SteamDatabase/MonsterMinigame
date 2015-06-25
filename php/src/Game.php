@@ -155,6 +155,7 @@ class Game
 
 	public function GenerateNewLanes()
 	{
+		$NumPlayers = count( $this->Players );
 		$this->Lanes = array();
 		$HasTreasureMob = false;
 
@@ -199,6 +200,7 @@ class Game
 				if( $i === $BossLaneId )
 				{
 					$Enemies[] = new Enemy(
+						$NumPlayers,
 						$this->GetNextMobId(),
 						Enums\EEnemyType::Boss,
 						$this->GetLevel()
@@ -213,6 +215,7 @@ class Game
 					for( $a = 0; 3 > $a; $a++ )
 					{
 						$Enemies[] = new Enemy(
+							$NumPlayers,
 							$this->GetNextMobId(),
 							Enums\EEnemyType::MiniBoss,
 							$this->GetLevel(),
@@ -226,6 +229,7 @@ class Game
 			{
 				// Standard Tower (Spawner) + 3 Mobs per lane
 				$Enemies[] = new Enemy(
+					$NumPlayers,
 					$this->GetNextMobId(),
 					Enums\EEnemyType::Tower,
 					$this->GetLevel()
@@ -240,6 +244,7 @@ class Game
 					{
 						// Spawn Treasure mob
 						$Enemies[] = new Enemy(
+							$NumPlayers,
 							$this->GetNextMobId(),
 							Enums\EEnemyType::TreasureMob,
 							$this->GetLevel()
@@ -250,6 +255,7 @@ class Game
 					{
 						// Spawn normal mob
 						$Enemies[] = new Enemy(
+							$NumPlayers,
 							$this->GetNextMobId(),
 							Enums\EEnemyType::Mob,
 							$this->GetLevel(),

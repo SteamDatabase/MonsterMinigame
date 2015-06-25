@@ -25,15 +25,15 @@ class Enemy
 	public $ClickDamageTaken = 0;
 	public $AbilityDamageTaken = 0;
 
-	public function __construct( $Id, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
+	public function __construct( $NumPlayers, $Id, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
-		$this->MaxHp = $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level );
+		$this->MaxHp = ( $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level ) / 1000 ) * $NumPlayers;
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
-		$this->Dps = $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level );
-		$this->Gold = $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level );
+		$this->Dps = ( $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level ) / 1000 ) * $NumPlayers;
+		$this->Gold = ( $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level ) / 1000 ) * $NumPlayers;
 		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
