@@ -1168,7 +1168,7 @@ CSceneGame.prototype.GetCooldownForAbility = function( nAbilityID )
 		{
 			if( this.m_rgPlayerData.active_abilities[i].ability == nAbilityID )
 			{
-				return this.m_rgPlayerData.active_abilities[i].time + this.m_rgTuningData.abilities[nAbilityID].cooldown - this.m_nTime;
+				return this.m_rgPlayerData.active_abilities[i].timestamp_cooldown - this.m_nTime;
 			}
 		}
 	}
