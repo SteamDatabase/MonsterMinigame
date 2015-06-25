@@ -31,12 +31,17 @@ class Game
 	private $UniverseState;
 	private $LastMobId = 0;
 
+	// Stats
 	public $NumClicks = 0;
 	public $NumMobsKilled = 0;
 	public $NumTowersKilled = 0;
 	public $NumMiniBossesKilled = 0;
 	public $NumBossesKilled = 0;
 	public $NumTreasuresKilled = 0;
+	public $NumAbilitiesActivated = 0;
+	public $NumPlayersReachingMilestoneLevel = 0; # TODO: Implement
+	public $NumAbilityItemsActivated = 0;
+
 	public $TimeSimulating = 0.0;
 	public $HighestTick = 0.0;
 	public $WormholeCount = 0;
@@ -111,9 +116,9 @@ class Game
 			'num_bosses_killed' => $this->NumBossesKilled,
 			'num_treasures_killed' => $this->NumTreasuresKilled,
 			'num_clicks' => $this->NumClicks,
-			'num_abilities_activated' => 0,
-			'num_players_reaching_milestone_level' => 0,
-			'num_ability_items_activated' => 0,
+			'num_abilities_activated' => $this->NumAbilitiesActivated,
+			'num_players_reaching_milestone_level' => $this->NumPlayersReachingMilestoneLevel,
+			'num_ability_items_activated' => $this->NumAbilityItemsActivated,
 			'num_active_players' => count( $this->GetActivePlayers() ), # TODO: replace this with an increasing/decreasing variable
 			'time_total_ticks' => number_format( $this->TimeSimulating, 7 ),
 			'time_slowest_tick' => number_format( $this->HighestTick, 7 ),

@@ -504,6 +504,11 @@ class Player
 		// Ability executed succesfully!
 		$ActiveAbility = $this->AddActiveAbility( $Ability, $Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns() );
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
+		$Game->NumAbilitiesActivated++;
+		if( AbilityItem::GetType( $Ability ) === Enums\EAbilityType::Item  )
+		{
+			$Game->NumAbilityItemsActivated++;
+		}
 
 		// Add wormhole in all three lanes
 		if( $Ability === Enums\EAbility::Item_SkipLevels )
