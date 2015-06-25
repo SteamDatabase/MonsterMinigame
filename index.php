@@ -322,7 +322,7 @@
 			</span>
 		</div>
 
-		<div id="chattemplate" class="activitytemplate">
+		<div id="chattemplate" class="activitytemplate chattemplate">
 			<span class="icon"><img src="/assets/minigame/towerattack/ability_template_ph.png"></span>
 			<span class="ability_text">
 				<span class="name"></span> said: <div class="ability"></div>
