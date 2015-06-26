@@ -53,7 +53,7 @@ class Lane
 			'enemies' => $this->GetEnemiesArray(),
 			'dps' => (double) $this->GetDps(),
 			'active_player_abilities' => $this->GetActivePlayerAbilitiesAsArray(),
-			'activity_log' => array_slice( $this->ActivityLog, 50 ), // Only send last 50 recent events
+			'activity_log' => array_slice( $this->ActivityLog, -50, 50 ), // Only send last 50 recent events, TODO: Use SplQueue
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
 			'active_player_ability_decrease_cooldowns' => (double) $this->HasActivePlayerAbilityDecreaseCooldowns(),

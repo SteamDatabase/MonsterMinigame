@@ -1174,7 +1174,7 @@ CUI.prototype.UpdateLog = function( rgLaneLog )
 
 	// Prune older entries
 	var e = this.m_eleUpdateLogContainer[0];
-	while(e.children.length > 20 )
+	while(e.children.length > 50)
 	{
 		e.children[e.children.length-1].remove();
 	}

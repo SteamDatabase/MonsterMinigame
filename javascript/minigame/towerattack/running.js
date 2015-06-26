@@ -820,7 +820,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 					'time': rgActivityLog[i].time
 				});
 
-				if( this.m_rgActionLog.length > 50 )
+				if( this.m_rgActionLog.length > 50)
 					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
 
 				if( rgActivityLog[i].time > nHighestTime )

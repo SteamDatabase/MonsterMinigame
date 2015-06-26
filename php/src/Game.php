@@ -96,7 +96,7 @@ class Game
 	public function ToArray()
 	{
 		return array(
-			'chat' => $this->Chat,
+			'chat' => array_reverse( array_slice( $this->Chat, -50, 50 ) ), // TODO: Chat should be SplQueue with FIFO, this is just a temporary hack
 			'level' => (int) $this->GetLevel(),
 			'lanes' => $this->GetLanesArray(),
 			'timestamp' => $this->Time,
