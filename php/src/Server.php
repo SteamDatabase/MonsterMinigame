@@ -109,65 +109,65 @@ class Server
 
 					break;
 				case 'UseBadgePoints':
+					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
+
+					if( $Player === null )
+					{
+						break;
+					}
+
+					$Player->HandleBadgePoints( $this->Game, $Data[ 'ability_items' ] );
+					$this->Game->UpdatePlayer( $Player );
+					$Response =
+					[
+						'player_data' => $Player->ToArray(),
+						'tech_tree' => $Player->GetTechTree()->ToArray()
+					];
+
+					break;
 				case 'ChooseUpgrade':
+					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
+
+					if( $Player === null )
+					{
+						break;
+					}
+
+					$Player->HandleUpgrade( $this->Game, $Data[ 'upgrades' ] );
+					$this->Game->UpdatePlayer( $Player );
+					$Response =
+					[
+						'tech_tree' => $Player->GetTechTree()->ToArray()
+					];
+
+					break;
 				case 'UseAbilities':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
 
 					if( $Player === null )
 					{
-						$Player = $this->Game->CreatePlayer( $Data[ 'steamid' ], '[wtf]' );
+						break;
 					}
 
-					if( $Data[ 'method' ] == 'ChooseUpgrade' )
-					{
-						$Player->HandleUpgrade( $this->Game, $Data[ 'upgrades' ] );
-						$this->Game->UpdatePlayer( $Player );
-						$Response = array(
-							'tech_tree' => $Player->GetTechTree()->ToArray()
-						);
-					}
-					else if( $Data[ 'method' ] == 'UseAbilities' )
-					{
-						$Player->HandleAbilityUsage( $this->Game, $Data[ 'requested_abilities' ] );
-						$this->Game->UpdatePlayer( $Player );
-						$IncludeTechTree = false;
-						$AllowedAbilities = [
-							Enums\EAbility::Attack,
-							Enums\EAbility::ChangeTarget
-						];
+					$Player->HandleAbilityUsage( $this->Game, $Data[ 'requested_abilities' ] );
+					$this->Game->UpdatePlayer( $Player );
 
-						foreach( $Data[ 'requested_abilities' ] as $RequestedAbility )
-						{
-							if( !in_array( $RequestedAbility[ 'ability' ], $AllowedAbilities ) )
-							{
-								$IncludeTechTree = true;
-								break;
-							}
-						}
+					$Response =
+					[
+						'player_data' => $Player->ToArray()
+					];
 
-						if( $IncludeTechTree ) 
-						{
-							$Response = array(
-								'player_data' => $Player->ToArray(),
-								'tech_tree' => $Player->GetTechTree()->ToArray()
-							);
-						}
-						else
-						{
-							$Response = array(
-								'player_data' => $Player->ToArray()
-							);
-						}
-					}
-					else if( $Data[ 'method' ] == 'UseBadgePoints' )
+					foreach( $Data[ 'requested_abilities' ] as $RequestedAbility )
 					{
-						$Player->HandleBadgePoints( $this->Game, $Data[ 'ability_items' ] );
-						$this->Game->UpdatePlayer( $Player );
-						$Response = array(
-							'player_data' => $Player->ToArray(),
-							'tech_tree' => $Player->GetTechTree()->ToArray()
-						);
+						// We don't need to send techtree if user only sent clicks to target change
+						if( $RequestedAbility[ 'ability' ] !== Enums\EAbility::Attack
+						||  $RequestedAbility[ 'ability' ] !== Enums\EAbility::ChangeTarget )
+						{
+							$Response[ 'tech_tree' ] = $Player->GetTechTree()->ToArray();
+							break;
+						}
 					}
+
 					break;
 				default:
 					// TODO: handle unknown methods
