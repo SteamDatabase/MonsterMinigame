@@ -129,9 +129,9 @@
 					<span class="title_activity"><span id="players_in_lane">0</span> Players in lane</span>
 					<div id="activitycontainer"><div></div></div><div id="activityscroll"><div></div></div>
 
-					<form id="chatform" style="margin-top: 29px;margin-left: 6px;z-index:1337;position:relative">
-						<textarea name="message" maxlength="500" placeholder="Your chat message" style="height:40px;width:220px;box-sizing:border-box;"></textarea>
-						<button type="submit" name="button" style="vertical-align: top;height: 40px;width: 50px;box-sizing: border-box;">Send</button>
+					<form id="chatform" class="chatform">
+						<textarea name="message" maxlength="500" placeholder="Your chat message"></textarea>
+						<button type="submit" name="button">Send</button>
 					</form>
 				</div>
 			</div>

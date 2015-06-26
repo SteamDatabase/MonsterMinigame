@@ -1484,3 +1484,53 @@ a {
 .icon_earth, .element_4 {
 	background-image: url('/assets/minigame/towerattack/emoticons/FateTree.png');
 }
+
+.chatform {
+	margin-top: 29px;
+	margin-left: 6px;
+	z-index: 1337;
+	position: relative;
+}
+
+.chatform textarea {
+	resize: none;
+	outline: none;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	font-size: 8px;
+	vertical-align: top;
+	height: 40px;
+	width: 220px;
+	box-sizing: border-box;
+	box-shadow: 2px 2px 0px #000;
+	background-color: #4F463D;
+	color: #D9FF54;
+	border: 2px solid #2A2624;
+	padding: 3px;
+}
+
+.chatform textarea:focus {
+	box-shadow: none;
+}
+
+.chatform button {
+	outline: none;
+	background-color: #884691;
+	font-family: 'Press Start 2P', arial, sans-serif;
+	color: #ee7aff;
+	border: 2px solid #a554b1;
+	font-size: 8px;
+	text-align: center;
+	cursor: pointer;
+	display: inline-block;
+	vertical-align: top;
+	height: 40px;
+	width: 50px;
+	box-sizing: border-box;
+	box-shadow: 2px 2px 0px #000;
+}
+
+.chatform button:focus,
+.chatform button:hover {
+	background-color: #a554b1;
+	color: #fff;
+}
