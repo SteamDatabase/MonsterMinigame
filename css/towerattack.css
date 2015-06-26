@@ -23,15 +23,22 @@ body {
 	background-position: 0 0;
 }
 
+[hidden],
+template {
+	display: none;
+}
+
+img {
+	border: 0;
+}
+
 a {
 	color: #ebebeb;
+	background-color: transparent;
 	text-decoration: none;
 	cursor: pointer;
 }
 
-.something {
-
-}
 .breadcrumbs {
 	height: 28px;
 	position: relative;
