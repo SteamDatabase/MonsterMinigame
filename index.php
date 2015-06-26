@@ -7,13 +7,14 @@
 		die;
 	}
 	
-	header( 'Content-Security-Policy: "' .
+	header( 'Content-Security-Policy: ' .
 		'default-src \'none\'; ' .
 		'script-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
 		'style-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
 		'img-src data: \'self\' https://steamcdn-a.akamaihd.net; ' .
 		'font-src \'self\'; ' .
-		'connect-src \'self\' http:"' // TODO: 'self' is not working for some reason
+		'media-src \'self\'; ' .
+		'connect-src \'self\' http:' // TODO: 'self' is not working for some reason
 	);
 ?><!DOCTYPE html>
 <html lang="en">
@@ -253,7 +254,7 @@
 
 	<table id="stats" style="width: 350px;margin: 0px auto;background-color: #222;padding: 6px 20px;text-align: right;"></table>
 
-	<div style="display: none">
+	<div hidden>
 		<!-- Templates -->
 
 		<div id="purchase_ability_item_template" class="purchase_ability_item ta_tip" data-tooltip-func="fnTooltipAbilityDesc">
