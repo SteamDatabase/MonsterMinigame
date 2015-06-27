@@ -63,7 +63,7 @@ class Enemy
 					$MidHip = $MinHp * 1.84; # TODO: move to tuningData.json?
 					$MaxHp = $MinHp * 2.83; # TODO: move to tuningData.json?
 					$HpArray = [ $MinHp, $MidHip, $MaxHp ];
-					return floor( $HpArray[ array_rand( $HpArray ) ] );
+					return floor( $HpArray[ mt_rand( 0, 2 ) ] );
 				}
 			default:
 				return self::GetValueAtLevel( 'hp', $Type, $Level );
@@ -319,7 +319,7 @@ class Enemy
 	public static function SpawnTreasureMob()
 	{
 		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' );
-		$RandPercent = rand( 1, 100 );
+		$RandPercent = mt_rand( 1, 100 );
 
 		return $RandPercent < $SpawnChance;
 	}

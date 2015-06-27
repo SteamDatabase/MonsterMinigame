@@ -597,7 +597,7 @@ class Player
 	{
 		$CritPercentage = $this->GetTechTree()->GetCritPercentage();
 		$CritPercentage += $Lane->GetCritClickDamageAddition();
-		$RandPercent = rand( 1, 100 );
+		$RandPercent = mt_rand( 1, 100 );
 		return $RandPercent < $CritPercentage;
 	}
 
@@ -627,7 +627,7 @@ class Player
 	public function IsLootDropped( )
 	{
 		$DropPercentage = $this->GetTechTree()->GetBossLootDropPercentage() * 100;
-		$RandPercent = rand( 1, 100 );
+		$RandPercent = mt_rand( 1, 100 );
 		return $RandPercent < $DropPercentage;
 	}
 

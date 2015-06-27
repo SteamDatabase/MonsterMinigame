@@ -9,6 +9,9 @@ class EElement
 	const Air = 3;
 	const Earth = 4;
 
+	const Start = 1;
+	const End = 4;
+
 	public static function GetList()
 	{
         return ( new \ReflectionClass(__CLASS__) )->getConstants();

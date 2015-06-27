@@ -161,7 +161,7 @@ class Game
 
 		if( $this->IsBossLevel() )
 		{
-			$BossLaneId = rand( 0, 2 );
+			$BossLaneId = mt_rand( 0, 2 );
 		}
 		// Create 3 lanes
 		for( $i = 0; 3 > $i; $i++ )
@@ -265,14 +265,6 @@ class Game
 					}
 				}
 			}
-			# TODO: Add Minibosses and treasure mobs
-
-			$ElementalArray = array(
-				Enums\EElement::Fire,
-				Enums\EElement::Water,
-				Enums\EElement::Air,
-				Enums\EElement::Earth
-			);
 
 			$this->Lanes[] = new Lane(
 				$i,
@@ -281,7 +273,7 @@ class Game
 				$ActivePlayerAbilities,
 				$ActivityLog,
 				$PlayerHpBuckets,
-				$ElementalArray[ array_rand( $ElementalArray ) ], //element
+				mt_rand( Enums\EElement::Start, Enums\EElement::End ), // element
 				0, //decrease cooldown
 				0 //gold per click
 			);
