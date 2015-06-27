@@ -72,24 +72,7 @@ class Enemy
 
 	public static function GetDpsAtLevel( $Type, $Level )
 	{
-		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
-		$MaxDps = Util::PredictValue(
-			$TuningData[ 'dps_exponent' ], 
-			$TuningData[ 'dps' ], 
-			$Level * $TuningData[ 'dps_multiplier' ]
-		);
-		$MidDps = Util::PredictValue(
-			$TuningData[ 'dps_exponent' ] - 0.1, # TODO: Move 0.1 to tuningData?
-			$TuningData[ 'dps' ], 
-			$Level * $TuningData[ 'dps_multiplier' ]
-		);
-		$MinDps = Util::PredictValue(
-			$TuningData[ 'dps_exponent' ] - ( 0.1 * 2 ), # TODO: Move 0.1 to tuningData?
-			$TuningData[ 'dps' ], 
-			$Level * $TuningData[ 'dps_multiplier' ]
-		);
-		$DpsArray = [ $MinDps, $MidDps, $MaxDps ];
-		return floor( $DpsArray[ array_rand( $DpsArray ) ] );
+		return self::GetValueAtLevel( 'dps', $Type, $Level )
 	}
 
 	public static function GetGoldAtLevel( $Type, $Level )
