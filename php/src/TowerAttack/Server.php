@@ -10,22 +10,24 @@ class Server
 	private $LastSecond;
 	private $Socket;
 	private $Game;
+	private static $Logger;
 	protected $TickRate;
 	protected static $TuningData = array();
 
 	public function __construct( $Port )
 	{
+		self::$Logger = new Logger;
 		$this->Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 
 		socket_bind( $this->Socket, 'localhost', $Port);
 		socket_listen( $this->Socket, 5 );
 
-		l( 'Listening on port ' . $Port );
+		self::GetLogger()->info( 'Listening on port ' . $Port );
 
 		self::LoadTuningData();
 
 		$this->TickRate = self::GetTuningData( 'tick_rate' );
-		$this->Game = new Game;
+		$this->Game = new Game();
 	}
 
 	public function Listen( )
@@ -202,7 +204,7 @@ class Server
 
 			$DebugTime = microtime( true ) - $DebugTime;
 
-			l( 'Spent ' . number_format( $DebugTime, 7 ) . ' seconds handling sockets and ticks' );
+			self::GetLogger()->debug( 'Spent ' . number_format( $DebugTime, 7 ) . ' seconds handling sockets and ticks' );
 
 			if( $DebugTime > $this->Game->HighestTick )
 			{
@@ -215,18 +217,18 @@ class Server
 		socket_shutdown( $this->Socket, 2 );
 		socket_close( $this->Socket );
 
-		l( 'Sockets closed' );
+		self::GetLogger()->debug( 'Sockets closed' );
 	}
 
 	private function Tick( $Tick, $SecondsPassed )
 	{
-		l( 'Ticking... seconds passed: ' . $SecondsPassed );
+		self::GetLogger()->debug( 'Ticking... seconds passed: ' . $SecondsPassed );
 
 		if( $this->Shutdown > 0 )
 		{
 			if( $Tick - $this->Shutdown > Player\Player::ACTIVE_PERIOD )
 			{
-				l( 'Good bye' );
+				self::GetLogger()->info( 'Good bye' );
 
 				$this->Running = false;
 			}
@@ -241,13 +243,13 @@ class Server
 
 	public static function LoadTuningData()
 	{
-		$file = file_get_contents( __DIR__ . '/../files/tuningData.json' );
+		$File = file_get_contents( __DIR__ . '/../files/tuningData.json' );
 
-		self::$TuningData = json_decode( $file, true );
+		self::$TuningData = json_decode( $File, true );
 
-		if( empty( $file ) )
+		if( empty( $File ) )
 		{
-			l( 'Failed to load tuning data' );
+			self::GetLogger()->error( 'Failed to load tuning data' );
 
 			die;
 		}
@@ -280,6 +282,11 @@ class Server
 
 		$this->Game->SetStatus( Enums\EStatus::Ended );
 
-		l( 'Waiting ' . Player\Player::ACTIVE_PERIOD . ' seconds until shutdown' );
+		self::GetLogger()->info( 'Waiting ' . Player\Player::ACTIVE_PERIOD . ' seconds until shutdown' );
+	}
+
+	public static function GetLogger()
+	{
+		return self::$Logger;
 	}
 }

@@ -34,7 +34,7 @@ class Enemy
 		$this->Hp = $this->MaxHp;
 		$this->Dps = ceil( ( ( $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level ) ) / 1000 ) * $NumPlayers );
 		$this->Gold = ceil( ( ( $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level ) ) / 1000 ) * $NumPlayers );
-		l( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
+		Server::GetLogger()->debug( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
 	public static function GetHpAtLevel( $Type, $Level )

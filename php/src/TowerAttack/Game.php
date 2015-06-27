@@ -66,12 +66,12 @@ class Game
 		$this->SetStatus( Enums\EStatus::WaitingForPlayers );
 		$this->GenerateNewLanes();
 
-		l( 'Created new game' );
+		Server::GetLogger()->info( 'Created new game' );
 	}
 
 	public function CreatePlayer( $AccountId, $Name )
 	{
-		l( 'Creating new player ' . $AccountId . ' - ' . $Name );
+		Server::GetLogger()->debug( 'Creating new player ' . $AccountId . ' - ' . $Name );
 
 		$Player = new Player\Player($AccountId, $Name);
 		$Player->LastActive = $this->Time;
@@ -90,7 +90,7 @@ class Game
 	{
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
-		l( 'Game moved to level #' . $this->GetLevel() );
+		Server::GetLogger()->debug( 'Game moved to level #' . $this->GetLevel() );
 	}
 
 	public function ToArray()
