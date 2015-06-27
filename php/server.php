@@ -2,7 +2,7 @@
 require_once 'autoloader.php';
 
 function SignalHandler( $Signal )
-{	
+{
 	global $Server; // ayy
 
 	Server::GetLogger()->info( 'Caught signal ' . $Signal );

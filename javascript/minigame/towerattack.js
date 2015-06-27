@@ -54,7 +54,7 @@ var g_rgTextureCache =
 	night_sky:              { url: '/assets/minigame/towerattack/night_sky.png' },
 	night_bg_near:          { url: '/assets/minigame/towerattack/night_bg_near.png' },
 	night_bg_mid:           { url: '/assets/minigame/towerattack/night_bg_mid.png' },
-	night_bg_far:           { url: '/assets/minigame/towerattack/night_bg_far.png' },	
+	night_bg_far:           { url: '/assets/minigame/towerattack/night_bg_far.png' },
 	// spaaaaaaaaaaaaaaaaaace
 	space_floor:            { url: '/assets/minigame/towerattack/space_floor.png' },
 	space_sky:              { url: '/assets/minigame/towerattack/space_sky.png' },

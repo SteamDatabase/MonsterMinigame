@@ -40,7 +40,7 @@ class Enemy
 	public static function GetHpAtLevel( $Type, $Level )
 	{
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
-		switch( $Type ) 
+		switch( $Type )
 		{
 			case Enums\EEnemyType::Mob:
 			case Enums\EEnemyType::MiniBoss:
@@ -84,8 +84,8 @@ class Enemy
 	{
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
 		$Value = Util::PredictValue(
-			$TuningData[ $Category . '_exponent' ], 
-			$TuningData[ $Category ], 
+			$TuningData[ $Category . '_exponent' ],
+			$TuningData[ $Category ],
 			$Level * $TuningData[ $Category . '_multiplier' ]
 		);
 		return $FloorIt ? floor( $Value ) : $Value;
@@ -101,7 +101,7 @@ class Enemy
 			'dps' => (double) $this->GetDps(),
 			'gold' => (double) $this->GetGold()
 		);
-		if( $this->HasTimer() ) 
+		if( $this->HasTimer() )
 		{
 			$ReturnArray[ 'timer' ] = $this->GetTimer();
 		}
@@ -188,7 +188,7 @@ class Enemy
 
 	public function ResetTimer()
 	{
-		switch( $this->Type ) 
+		switch( $this->Type )
 		{
 			case Enums\EEnemyType::Tower:
 			case Enums\EEnemyType::MiniBoss:
@@ -315,7 +315,7 @@ class Enemy
 	{
 		return self::GetTuningData( $this->GetTypeName(), $Key );
 	}
-	
+
 	public static function SpawnTreasureMob()
 	{
 		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' );
@@ -328,11 +328,11 @@ class Enemy
 	{
 		$TuningData = Server::GetTuningData( $TypeName );
 
-		if( $Key === null ) 
+		if( $Key === null )
 		{
 			return $TuningData;
-		} 
-		else if( !array_key_exists( $Key, $TuningData ) ) 
+		}
+		else if( !array_key_exists( $Key, $TuningData ) )
 		{
 			return null;
 		}
@@ -342,7 +342,7 @@ class Enemy
 
 	public static function GetEnemyTypeName( $Type )
 	{
-		switch( $Type ) 
+		switch( $Type )
 		{
 			case Enums\EEnemyType::Tower:
 				return 'tower';
@@ -359,7 +359,7 @@ class Enemy
 
 	public static function GetEnemyTypeId( $TypeName )
 	{
-		switch( $TypeName ) 
+		switch( $TypeName )
 		{
 			case 'tower':
 				return Enums\EEnemyType::Tower;

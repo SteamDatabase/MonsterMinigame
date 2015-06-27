@@ -161,21 +161,21 @@ window.CSceneGame = function()
 	{
 		var textarea = $J(this).find('textarea');
 		var message = textarea.val();
-		
+
 		if( message.length )
 		{
 			textarea.val( '' );
-			
+
 			g_Server.ChatMessage( message );
 		}
-		
+
 		return false;
 	}).on('keydown', function(ev)
 	{
 		if( ev.keyCode == 10 || ev.keyCode == 13 )
 		{
 			$J( this ).submit();
-			
+
 			return false;
 		}
 	});
@@ -431,7 +431,7 @@ CSceneGame.prototype.Tick = function()
 CSceneGame.prototype.UpdatePlayerData = function( )
 {
 	var instance = this;
-	
+
 	g_Server.GetPlayerData(
 		function( rgResult )
 		{
@@ -802,7 +802,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 					nHighestTime = rgActivityLog[i].time;
 			}
 		}
-		
+
 		// chat
 		rgActivityLog = this.m_rgGameData.chat;
 		if( rgActivityLog )
@@ -1057,7 +1057,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 			this.m_rgActiveParticles[ 8 ][2].emit = false;
 			this.m_rgActiveParticles[ 8 ] = false;
 		}
-		
+
 		if( window.g_TESTG || this.m_rgLaneData[ this.m_rgPlayerData.current_lane ].abilities[ 9 ] )
 		{
 			if( !this.m_rgActiveParticles[ 9 ] )

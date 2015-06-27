@@ -135,15 +135,15 @@ class Upgrade
 	public static function GetTuningData( $UpgradeId, $Key = null )
 	{
 		$TuningData = Server::GetTuningData( 'upgrades' );
-		if( $UpgradeId === null ) 
+		if( $UpgradeId === null )
 		{
 			return $TuningData;
-		} 
-		else if( $Key === null ) 
+		}
+		else if( $Key === null )
 		{
 			return $TuningData[ $UpgradeId ];
-		} 
-		else if( !isset( $TuningData[ $UpgradeId ][ $Key ] ) ) 
+		}
+		else if( !isset( $TuningData[ $UpgradeId ][ $Key ] ) )
 		{
 			return null;
 		}

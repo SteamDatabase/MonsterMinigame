@@ -306,7 +306,7 @@ CUI.prototype.Tick = function()
 CUI.prototype.UpdateLevelAndTimes = function()
 {
 	var game = this.m_Game, formatted = game.m_rgGameData.level;
-	
+
 	if( this.m_eleInfoLevel[0].textContent !== formatted )
 	{
 		this.m_eleInfoLevel[0].textContent = formatted;
@@ -319,7 +319,7 @@ CUI.prototype.UpdateLevelAndTimes = function()
 		this.m_eleInfoGameTime[0].textContent = formatted;
 	}
 
-	formatted = FormatDeltaTimeString( game.m_nSimulatedTime - game.m_rgGameData.timestamp_level_start ); 
+	formatted = FormatDeltaTimeString( game.m_nSimulatedTime - game.m_rgGameData.timestamp_level_start );
 
 	if( this.m_eleInfoLevelTime[0].textContent !== formatted )
 	{
@@ -475,7 +475,7 @@ CUI.prototype.UpdateStats = function()
 				bNeedsResort = true;
 			}
 			elem = $J( elem );
-			
+
 			if( elem.text() !== value )
 			{
 				elem.text( value );
@@ -694,7 +694,7 @@ CUI.prototype.UpdateLanes = function()
 		}
 
 		this.m_nLastLane =  instance.m_rgPlayerData.current_lane;
-	
+
 	}
 
 }

@@ -26,6 +26,7 @@ class TechTree
 	optional double max_hp = 17;
 	optional double dps = 18;
 	*/
+
 	private $Upgrades = array();
 	private $DamagePerClick = 1.0;
 	private $DamageMultiplierFire = 1.0;
@@ -288,7 +289,7 @@ class TechTree
 		if( AbilityItem::GetType( $AbilityId ) !== Enums\EAbilityType::Item )
 		{
 			$Upgrade = $this->GetUpgradeByAbility( $AbilityId );
-			if( $Upgrade !== null && $Upgrade->GetLevel() === 0 ) 
+			if( $Upgrade !== null && $Upgrade->GetLevel() === 0 )
 			{
 				$Upgrade->IncreaseLevel();
 			}
@@ -329,7 +330,7 @@ class TechTree
 		else
 		{
 			$Upgrade = $this->GetUpgradeByAbility( $AbilityId );
-			if( $Upgrade !== null ) 
+			if( $Upgrade !== null )
 			{
 				return $Upgrade->GetLevel() > 0;
 			}
@@ -418,14 +419,14 @@ class TechTree
 			'damage_per_click_multiplier' => (double) 1
 		);
 
-		foreach( $this->GetUpgrades() as $Upgrade ) 
+		foreach( $this->GetUpgrades() as $Upgrade )
 		{
 			$Value = Upgrade::GetMultiplier( $Upgrade->GetUpgradeId() ) * $Upgrade->GetLevel();
-			if( $Value === 0 ) 
+			if( $Value === 0 )
 			{
 				continue;
 			}
-			switch( Upgrade::GetType( $Upgrade->GetUpgradeId() ) ) 
+			switch( Upgrade::GetType( $Upgrade->GetUpgradeId() ) )
 			{
 				case Enums\EUpgradeType::HitPoints:
 					$Data[ 'hp_multiplier' ] += $Value;
@@ -477,11 +478,11 @@ class TechTree
 	private function GetTuningData( $Key = null )
 	{
 		$TuningData = Server::GetTuningData( 'player' );
-		if( $Key === null ) 
+		if( $Key === null )
 		{
 			return $TuningData;
-		} 
-		else if( !array_key_exists( $Key, $TuningData ) ) 
+		}
+		else if( !array_key_exists( $Key, $TuningData ) )
 		{
 			return null;
 		}

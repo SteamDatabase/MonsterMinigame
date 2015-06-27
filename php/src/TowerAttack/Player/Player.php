@@ -12,7 +12,7 @@ class Player
 	const MAX_CLICKS = 20; #TODO: Move to tuningData
 	const ACTIVE_PERIOD = 120; #TODO: Move to tuningData
 	const LOOT_TIME = 5; #TODO: Move to tuningData
-	
+
 	/*
 	optional double hp = 1;
 	optional uint32 current_lane = 2;
@@ -84,18 +84,18 @@ class Player
 
 	public function HandleAbilityUsage( $Game, $RequestedAbilities )
 	{
-		foreach( $RequestedAbilities as $RequestedAbility ) 
+		foreach( $RequestedAbilities as $RequestedAbility )
 		{
-			if( 
-				( 
-					isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] ) 
-					&& 
+			if(
+				(
+					isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] )
+					&&
 					$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > $Game->Time
 				)
 				||
 				(
-					$this->IsDead() 
-					&& 
+					$this->IsDead()
+					&&
 					$RequestedAbility[ 'ability' ] !== Enums\EAbility::Respawn
 				)
 			) {
@@ -119,7 +119,7 @@ class Player
 			# Handle rest of the abilities below
 			// TODO: @Contex: move this to AbilityItem as well?
 
-			switch( $RequestedAbility[ 'ability' ] ) 
+			switch( $RequestedAbility[ 'ability' ] )
 			{
 				case Enums\EAbility::Attack:
 					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
@@ -168,13 +168,13 @@ class Player
 					$Enemy->ClickDamageTaken += $Damage;
 
 					$GoldMultiplier = $Lane->GetGoldPerClickMultiplier();
-					if( $GoldMultiplier > 0 ) 
+					if( $GoldMultiplier > 0 )
 					{
 						$this->IncreaseGold( $GoldMultiplier * $NumClicks * $Enemy->GetGold() );
 					}
 
 					$StealHealthMultiplier = $Lane->GetStealHealthMultiplier();
-					if( $StealHealthMultiplier > 0 ) 
+					if( $StealHealthMultiplier > 0 )
 					{
 						$this->IncreaseHp( $StealHealthMultiplier * $NumClicks * $Damage );
 					}
@@ -227,14 +227,14 @@ class Player
 	public function HandleUpgrade( $Game, $Upgrades )
 	{
 		$HpUpgrade = false;
-		foreach( $Upgrades as $UpgradeId ) 
+		foreach( $Upgrades as $UpgradeId )
 		{
 			$Upgrade = $this->GetTechTree()->GetUpgrade( $UpgradeId );
 			if(
 				( $Upgrade->GetCostForNextLevel() > $this->GetGold() ) // Not enough gold
 			||  ( Upgrade::IsLevelOneUpgrade( $UpgradeId ) && $Upgrade->GetLevel() >= 1) // One level upgrades
 			||  ( Upgrade::HasRequiredUpgrade( $UpgradeId ) && $this->GetTechTree()->GetUpgrade( Upgrade::GetRequiredUpgrade( $UpgradeId ) )->GetLevel() < Upgrade::GetRequiredLevel( $UpgradeId ) ) // Does not have the required upgrade & level
-			) 
+			)
 			{
 				continue;
 			}
@@ -244,12 +244,12 @@ class Player
 			{
 				$ElementalUpgrades = $this->GetTechTree()->GetElementalUpgrades();
 				$TotalLevel = 0;
-				foreach( $ElementalUpgrades as $ElementalUpgrade ) 
+				foreach( $ElementalUpgrades as $ElementalUpgrade )
 				{
 					$TotalLevel += $ElementalUpgrade->GetLevel();
 				}
 				// Loop again to set the next level cost for each elemental
-				foreach( $ElementalUpgrades as $ElementalUpgrade ) 
+				foreach( $ElementalUpgrades as $ElementalUpgrade )
 				{
 					$ElementalUpgrade->SetPredictedCostForNextLevel( $TotalLevel );
 				}
@@ -283,7 +283,7 @@ class Player
 			return;
 		}
 
-		foreach( $Abilities as $AbilityId ) 
+		foreach( $Abilities as $AbilityId )
 		{
 			if( $this->GetTechTree()->GetBadgePoints() < AbilityItem::GetBadgePointCost( $AbilityId ) )
 			{
@@ -489,7 +489,7 @@ class Player
 		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )
 		{
 			return false;
-		} 
+		}
 		else if ( $Ability === Enums\EAbility::Item_KillTower ) # TODO: Move this to HandleAbility?
 		{
 			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
@@ -505,9 +505,9 @@ class Player
 				$Enemy === null
 				||
 				(
-					$Enemy->GetType() !== Enums\EEnemyType::Mob 
-					&& 
-					$Enemy->GetType() !== Enums\EEnemyType::MiniBoss 
+					$Enemy->GetType() !== Enums\EEnemyType::Mob
+					&&
+					$Enemy->GetType() !== Enums\EEnemyType::MiniBoss
 				) # TODO: Boss or MiniBoss?
 				||
 				$Enemy->IsDead()
@@ -523,11 +523,11 @@ class Player
 				return false;
 			}
 		}
-		else if ( 
+		else if (
 			(
-				$Ability === Enums\EAbility::Offensive_DamageAllTargets 
-				|| 
-				$Ability === Enums\EAbility::Offensive_DOTAllTargets 
+				$Ability === Enums\EAbility::Offensive_DamageAllTargets
+				||
+				$Ability === Enums\EAbility::Offensive_DOTAllTargets
 			)
 			&&
 			count( $Game->GetLane( $this->GetCurrentLane() )->GetAliveEnemies() ) === 0
@@ -537,10 +537,10 @@ class Player
 
 		// Ability executed succesfully!
 		$ActiveAbility = $this->AddActiveAbility
-		( 
-			$Game->Time, 
-			$Ability, 
-			$Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns() 
+		(
+			$Game->Time,
+			$Ability,
+			$Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns()
 		);
 		$this->GetTechTree()->RemoveAbilityItem( $Ability );
 		$Game->NumAbilitiesActivated++;
@@ -564,7 +564,7 @@ class Player
 
 		AbilityItem::HandleAbility(
 			$Game,
-			$Game->GetLane( $this->GetCurrentLane() ), 
+			$Game->GetLane( $this->GetCurrentLane() ),
 			$this,
 			$ActiveAbility
 		);
@@ -576,9 +576,9 @@ class Player
 		{
 			if( $ActiveAbility->IsCooledDown( $Game->Time ) )
 			{
-				AbilityItem::HandleAbility( 
+				AbilityItem::HandleAbility(
 					$Game,
-					$Game->GetLane( $this->GetCurrentLane() ), 
+					$Game->GetLane( $this->GetCurrentLane() ),
 					$this,
 					$ActiveAbility,
 					true
@@ -634,11 +634,11 @@ class Player
 	public static function GetTuningData( $Key = null )
 	{
 		$TuningData = Server::GetTuningData( 'player' );
-		if( $Key === null ) 
+		if( $Key === null )
 		{
 			return $TuningData;
-		} 
-		else if ( !array_key_exists( $Key, $TuningData ) ) 
+		}
+		else if ( !array_key_exists( $Key, $TuningData ) )
 		{
 			return null;
 		}

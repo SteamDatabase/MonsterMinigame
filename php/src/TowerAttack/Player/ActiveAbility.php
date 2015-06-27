@@ -20,7 +20,7 @@ class ActiveAbility
 		$Duration = AbilityItem::GetDuration( $Ability );
 		$Cooldown = AbilityItem::GetCooldown( $Ability );
 		$this->TimestampDone = $this->Time + AbilityItem::GetDuration( $Ability );
-		if( $DecreaseCooldown ) 
+		if( $DecreaseCooldown )
 		{
 			$Cooldown -= $Cooldown * AbilityItem::GetMultiplier( Enums\EAbility::Support_DecreaseCooldowns );
 		}

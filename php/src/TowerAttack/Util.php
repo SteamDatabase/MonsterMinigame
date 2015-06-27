@@ -10,12 +10,12 @@ class Util
 			$Coefficient,
 			$Base
 		);
-		
+
 		if( $FloorIt )
 		{
 			$Value = self::FloorToMultipleOf( 10, $Value );
 		}
-		
+
 		return $Value;
 	}
 

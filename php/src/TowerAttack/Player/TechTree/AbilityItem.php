@@ -102,15 +102,15 @@ class AbilityItem
 	public static function GetTuningData( $AbilityId = null, $Key = null )
 	{
 		$TuningData = Server::GetTuningData( 'abilities' );
-		if( $AbilityId === null ) 
+		if( $AbilityId === null )
 		{
 			return $TuningData;
-		} 
-		else if( $Key === null ) 
+		}
+		else if( $Key === null )
 		{
 			return $TuningData[ $AbilityId ];
-		} 
-		else if( !isset( $TuningData[ $AbilityId ][ $Key ] ) ) 
+		}
+		else if( !isset( $TuningData[ $AbilityId ][ $Key ] ) )
 		{
 			return null;
 		}
@@ -125,21 +125,21 @@ class AbilityItem
 			$Abilities = Enums\EAbility::GetList();
 			foreach( $Abilities as $AbilityName => $AbilityId )
 			{
-				if( 
-					self::GetType( $AbilityId ) === $Type 
-					&& 
-					( 
-						$Type === Enums\EAbilityType::Item 
-						? 
-						( 
+				if(
+					self::GetType( $AbilityId ) === $Type
+					&&
+					(
+						$Type === Enums\EAbilityType::Item
+						?
+						(
 							$AbilityId !== Enums\EAbility::Item_GiveRandomItem
 							&&
 							$AbilityId !== Enums\EAbility::Item_SkipLevels
 							&&
 							$AbilityId !== Enums\EAbility::Item_ClearCooldowns
-					 	) 
-					 	: 
-					 	true 
+					 	)
+					 	:
+					 	true
 				 	)
 				) {
 					$TypeAbilities[] = $AbilityId;
@@ -268,14 +268,14 @@ class AbilityItem
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
 					$Lane->AddActivePlayerAbility
-					( 
+					(
 						new ActiveAbility
-						( 
+						(
 							$Game->Time,
-							Enums\EAbility::Support_IncreaseCritPercentage, 
+							Enums\EAbility::Support_IncreaseCritPercentage,
 							$Player->PlayerName,
 							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-						) 
+						)
 					);
 				}
 				break;
@@ -285,14 +285,14 @@ class AbilityItem
 					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
 					$Lane->AddActivePlayerAbility
-					( 
+					(
 						new ActiveAbility
-						( 
+						(
 							$Game->Time,
-							Enums\EAbility::Support_Heal, 
+							Enums\EAbility::Support_Heal,
 							$Player->PlayerName,
 							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-						) 
+						)
 					);
 				}
 				break;
@@ -318,14 +318,14 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->IncreaseGold( $AbilityMultiplier * pow( 10, max( 0, floor( log10( $Game->GetLevel() ) ) - 1 ) ) );
-					$Lane->AddActivePlayerAbility( 
+					$Lane->AddActivePlayerAbility(
 						new ActiveAbility
 						(
 							$Game->Time,
-							Enums\EAbility::Support_IncreaseGoldDropped, 
+							Enums\EAbility::Support_IncreaseGoldDropped,
 							$Player->PlayerName,
-							$Lane->HasActivePlayerAbilityDecreaseCooldowns() 
-						) 
+							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
+						)
 					);
 				}
 				break;

@@ -1,12 +1,12 @@
 <?php
 	session_start();
-	
+
 	if( !isset( $_SESSION[ 'SteamID' ] ) )
 	{
 		header( 'Location: /login.php' );
 		die;
 	}
-	
+
 	header( 'Content-Security-Policy: ' .
 		'default-src \'none\'; ' .
 		'script-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
