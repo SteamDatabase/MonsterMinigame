@@ -22,7 +22,7 @@ class Server
 		socket_bind( $this->Socket, 'localhost', $Port);
 		socket_listen( $this->Socket, 5 );
 
-		self::GetLogger()->info( 'Listening on port ' . $Port );
+		self::GetLogger()->info( 'Server is listening on port ' . $Port );
 
 		self::LoadTuningData();
 
@@ -52,7 +52,7 @@ class Server
 			    continue;
 			}
 
-			l( ( isset( $Data[ 'steamid' ] ) ? ( $Data[ 'steamid' ] . ' - ' ) : '' ) . $Data[ 'method' ] );
+			self::GetLogger()->debug( ( isset( $Data[ 'steamid' ] ) ? ( $Data[ 'steamid' ] . ' - ' ) : '' ) . $Data[ 'method' ] );
 
 			// Handle the request, this could be moved elsewhere...
 			$Response = [];
