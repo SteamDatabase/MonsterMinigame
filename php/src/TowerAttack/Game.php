@@ -157,7 +157,7 @@ class Game
 	public function GenerateNewLanes()
 	{
 		Server::GetLogger()->debug( 'Starting to generate new lanes for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
-		$NumPlayers = Server::GetTuningData( 'minimum_players' ); # TODO: Or count( $this->Players )
+		$NumPlayers = count( $this->Players ); # TODO: Or count( $this->Players )
 		$this->Lanes = array();
 		$HasTreasureMob = false;
 

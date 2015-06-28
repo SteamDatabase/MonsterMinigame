@@ -29,11 +29,11 @@ class Enemy
 	{
 		$this->Id = $Id;
 		$this->Type = $Type;
-		$this->MaxHp = ceil( ( ( $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level ) ) / 1000 ) * $NumPlayers );
+		$this->MaxHp = ceil( ( ( $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level ) ) / 1500 ) * $NumPlayers );
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
-		$this->Dps = ceil( ( ( $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level ) ) / 1000 ) * $NumPlayers );
-		$this->Gold = ceil( ( ( $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level ) ) / 1000 ) * $NumPlayers );
+		$this->Dps = ceil( ( ( $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level ) ) / 1500 ) * $NumPlayers );
+		$this->Gold = ceil( ( ( $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level ) ) / 1500 ) * $NumPlayers );
 		Server::GetLogger()->debug( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
