@@ -375,7 +375,7 @@
 		g_sessionID = 'g_sessionID';
 		g_steamID = document.body.dataset.steamid;
 		g_GameID = '44925';
-		g_TuningData = <?php echo file_get_contents( __DIR__ . '/php/files/tuningData.json' ); ?>;
+		g_TuningData = <?php echo file_get_contents( __DIR__ . '/php/src/files/tuningData.json' ); ?>;
 		g_DebugMode = true;
 		g_DebugUpdateStats = g_DebugMode;
 		g_IncludeGameStats = g_DebugMode;
