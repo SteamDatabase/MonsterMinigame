@@ -58,20 +58,21 @@ class Game
 		return $this->LastMobId;
 	}
 
-	public function __construct()
+	public function __construct( $GameId )
 	{
+		$this->GameId = $GameId;
 		$this->Time = time();
 		$this->TimestampGameStart = $this->Time;
 		$this->TimestampLevelStart = $this->Time;
 		$this->SetStatus( Enums\EStatus::WaitingForPlayers );
 		$this->GenerateNewLanes();
 
-		Server::GetLogger()->info( 'Created new game' );
+		Server::GetLogger()->info( 'Created new game #' . $GameId );
 	}
 
 	public function CreatePlayer( $AccountId, $Name )
 	{
-		Server::GetLogger()->debug( 'Creating new player ' . $AccountId . ' - ' . $Name );
+		Server::GetLogger()->debug( 'Creating new player ' . $Name . ': #' . $AccountId);
 
 		$Player = new Player\Player($AccountId, $Name);
 		$Player->LastActive = $this->Time;
@@ -90,7 +91,7 @@ class Game
 	{
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
-		Server::GetLogger()->debug( 'Game moved to level #' . $this->GetLevel() );
+		Server::GetLogger()->debug( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
 	}
 
 	public function ToArray()
@@ -155,6 +156,7 @@ class Game
 
 	public function GenerateNewLanes()
 	{
+		Server::GetLogger()->debug( 'Starting to generate new lanes for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
 		$NumPlayers = Server::GetTuningData( 'minimum_players' ); # TODO: Or count( $this->Players )
 		$this->Lanes = array();
 		$HasTreasureMob = false;
@@ -372,6 +374,7 @@ class Game
 
 	public function UpdatePlayer( $Player )
 	{
+		Server::GetLogger()->debug( 'Updating player ' . $Player->PlayerName . ' (#' . $Player->GetAccountId() . ')' );
 		$Player->LastActive = $this->Time;
 		$this->Players[ $Player->GetAccountId() ] = $Player;
 	}
@@ -382,8 +385,11 @@ class Game
 
 		if( !$this->IsRunning() )
 		{
+			Server::GetLogger()->debug( 'Game #' . $this->GameId . ' is not running, canceling update' );
 			return;
 		}
+
+		Server::GetLogger()->debug( 'Updating game #' . $this->GameId );
 
 		$SecondPassed = $SecondsPassed !== false && $SecondsPassed > 0;
 		$LaneDps = [
@@ -414,12 +420,19 @@ class Game
 					}
 					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
 					$Enemy->DpsDamageTaken += $DealtDpsDamage;
+					if( $DealtDpsDamage > 0)
+					{
+						Server::GetLogger()->debug(
+							'Player ' . $Player->PlayerName . ' (#' . $Player->GetAccountId() . ')' .
+							' did ' . $DealtDpsDamage . ' DPS damage to enemy #' . $Enemy->GetId()
+						);
+					}
 					foreach( $Player->LaneDamageBuffer as $LaneId => $LaneDamage )
 					{
 						$LaneDps[ $LaneId ] += $LaneDamage / $SecondsPassed; // TODO: This is damage done by clicks, not per second, remove or keep?
 						$Player->LaneDamageBuffer[ $LaneId ] = 0;
 					}
-					$LaneDps[ $Player->GetCurrentLane() ] += $Player->GetTechTree()->GetDps() * $SecondsPassed;
+					$LaneDps[ $Player->GetCurrentLane() ] += $Player->GetTechTree()->GetDps() * $SecondsPassed; #TODO: $DealtDpsDamage?
 				}
 			}
 
@@ -452,6 +465,11 @@ class Game
 						$NextEnemy = $Lane->GetAliveEnemy();
 						if( $NextEnemy !== null )
 						{
+							Server::GetLogger()->debug(
+								'Enemy #' . $Enemy->GetId() . ' is dead. Passing on ' . 
+								$Enemy->GetDpsHpDifference() . ' DPS damage to enemy #' . 
+								$NextEnemy->GetId()
+							);
 							$NextEnemy->DpsDamageTaken += $Enemy->GetDpsHpDifference();
 						}
 					}
@@ -472,6 +490,11 @@ class Game
 						$NextEnemy = $Lane->GetAliveEnemy();
 						if( $NextEnemy !== null )
 						{
+							Server::GetLogger()->debug(
+								'Enemy #' . $Enemy->GetId() . ' is dead. Passing on ' . 
+								$Enemy->GetDpsHpDifference() . ' DPS damage to enemy #' . 
+								$NextEnemy->GetId()
+							);
 							$NextEnemy->DpsDamageTaken += $Enemy->GetDpsHpDifference();
 						}
 					}
@@ -509,7 +532,12 @@ class Game
 						}
 						$Enemy->SetHp( 0 );
 						$DeadEnemies++;
-						$Lane->GiveGoldToPlayers( $this, $Enemy->GetGold() * $Lane->GetEnemyGoldMultiplier() );
+						$EnemyGold = $Enemy->GetGold() * $Lane->GetEnemyGoldMultiplier();
+						Server::GetLogger()->debug(
+							'Enemy #' . $Enemy->GetId() . ' is dead. Giving ' . $EnemyGold . 
+							' gold to players in lane #' . $Lane->GetLaneId()
+						);
+						$Lane->GiveGoldToPlayers( $this, $EnemyGold );
 					}
 					else
 					{
@@ -530,6 +558,10 @@ class Game
 								continue;
 							}
 							// Revive dead mobs in the lane if the tower timer ran out
+							Server::GetLogger()->debug( 
+								'Respawn timer has ran out in lane #' . 
+								$Lane->GetLaneId() . ', reviving dead mobs in the lane' 
+							);
 							foreach( $Lane->GetDeadEnemies( Enums\EEnemyType::Mob ) as $DeadEnemy )
 							{
 								$DeadEnemy->ResetHp();
@@ -541,6 +573,10 @@ class Game
 								continue;
 							}
 							// Revive dead miniboss if he's dead and the timer ran out
+							Server::GetLogger()->debug( 
+								'Respawn timer has ran out for miniboss #' . $Enemy->GetId() . 
+								' in lane #' . $Lane->GetLaneId() . ', reviving dead miniboss' 
+							);
 							$Enemy->ResetHp();
 							break;
 						case Enums\EEnemyType::TreasureMob:
@@ -549,6 +585,11 @@ class Game
 								continue;
 							}
 							// Kill the treasure mob and set gold to 0 if the timer (lifetime) ran out
+							Server::GetLogger()->debug( 
+								'Treasure mob #' . $Enemy->GetId() . 
+								' timer has ran out in lane #' . $Lane->GetLaneId() . 
+								', killing treasure mob' 
+							);
 							$Enemy->SetHp( 0 );
 							$Enemy->SetGold( 0 );
 							$Enemy->DisableTimer();
