@@ -27,7 +27,7 @@ class Server
 		self::LoadTuningData();
 
 		$this->TickRate = self::GetTuningData( 'tick_rate' );
-		$this->Game = new Game();
+		$this->Game = new Game( 44925 ); #TODO: dynamic room ids
 	}
 
 	public function Listen( )
