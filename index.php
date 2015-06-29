@@ -14,7 +14,7 @@
 		'img-src data: \'self\' https://steamcdn-a.akamaihd.net; ' .
 		'font-src \'self\'; ' .
 		'media-src \'self\'; ' .
-		'connect-src \'self\' http:' // TODO: 'self' is not working for some reason
+		'connect-src \'self\''
 	);
 ?><!DOCTYPE html>
 <html lang="en">
