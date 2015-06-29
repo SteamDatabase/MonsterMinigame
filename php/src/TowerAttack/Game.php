@@ -119,7 +119,6 @@ class Game
 			'num_treasures_killed' => $this->NumTreasuresKilled,
 			'num_clicks' => $this->NumClicks,
 			'num_abilities_activated' => $this->NumAbilitiesActivated,
-			'num_players_reaching_milestone_level' => $this->NumPlayersReachingMilestoneLevel,
 			'num_ability_items_activated' => $this->NumAbilityItemsActivated,
 			'num_active_players' => count( $this->GetActivePlayers() ), # TODO: replace this with an increasing/decreasing variable
 			'time_total_ticks' => number_format( $this->TimeSimulating, 7 ),
