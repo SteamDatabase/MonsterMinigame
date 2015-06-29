@@ -176,8 +176,7 @@
 			<div id="player_dead_dialog" style="display: none">
 				<div class="player_dead_ctn">
 					<div class="title_dead">You are dead</div>
-					<div class="title_dead_break">Time for a break?<br>Check out <a href="http://store.steampowered.com/">today's deals</a> in the Steam Store</div>
-					<div class="title_dead_sub">Don't worry, you'll still be in this game helping to take down the Summer Sale Monsters and earning in-game gold and items.</div>
+					<div class="title_dead_sub">Don't worry, you'll still be in this game helping to take down the monsters and earning in-game gold and items.</div>
 					<div class="cannot_respawn">
 						Can respawn in: 						<span class="timeleft"></span>
 					</div>
