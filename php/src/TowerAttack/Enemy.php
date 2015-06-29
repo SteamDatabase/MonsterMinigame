@@ -13,6 +13,7 @@ class Enemy
 	optional double gold = 7;
 	*/
 	private $Id;
+	private $Position;
 	private $Type;
 	public $Hp;
 	private $MaxHp;
@@ -25,9 +26,10 @@ class Enemy
 	public $ClickDamageTaken = 0;
 	public $AbilityDamageTaken = 0;
 
-	public function __construct( $NumPlayers, $Id, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
+	public function __construct( $NumPlayers, $Id, $Position, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
 	{
 		$this->Id = $Id;
+		$this->Position = $Position;
 		$this->Type = $Type;
 		$this->MaxHp = ceil( ( ( $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level ) ) / 1500 ) * $NumPlayers );
 		$this->ResetTimer();
@@ -117,6 +119,11 @@ class Enemy
 	public function GetId()
 	{
 		return $this->Id;
+	}
+
+	public function GetPosition()
+	{
+		return $this->Position;
 	}
 
 	public function GetType()

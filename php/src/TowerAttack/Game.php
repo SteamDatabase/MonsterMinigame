@@ -203,6 +203,7 @@ class Game
 					$Enemies[] = new Enemy(
 						$NumPlayers,
 						$this->GetNextMobId(),
+						0,
 						Enums\EEnemyType::Boss,
 						$this->GetLevel()
 					);
@@ -218,6 +219,7 @@ class Game
 						$Enemies[] = new Enemy(
 							$NumPlayers,
 							$this->GetNextMobId(),
+							$a,
 							Enums\EEnemyType::MiniBoss,
 							$this->GetLevel(),
 							$MiniBossDps,
@@ -232,6 +234,7 @@ class Game
 				$Enemies[] = new Enemy(
 					$NumPlayers,
 					$this->GetNextMobId(),
+					0,
 					Enums\EEnemyType::Tower,
 					$this->GetLevel()
 				);
@@ -247,6 +250,7 @@ class Game
 						$Enemies[] = new Enemy(
 							$NumPlayers,
 							$this->GetNextMobId(),
+							$a,
 							Enums\EEnemyType::TreasureMob,
 							$this->GetLevel()
 						);
@@ -258,6 +262,7 @@ class Game
 						$Enemies[] = new Enemy(
 							$NumPlayers,
 							$this->GetNextMobId(),
+							$a,
 							Enums\EEnemyType::Mob,
 							$this->GetLevel(),
 							$MobDps,
@@ -405,7 +410,17 @@ class Game
 			if( $SecondPassed && !$Player->IsDead() )
 			{
 				// Deal DPS damage to current target
-				$Enemy = $this->Lanes[ $Player->GetCurrentLane() ]->GetEnemy( $Player->GetTarget() );
+				$Lane = $this->Lanes[ $Player->GetCurrentLane() ];
+				$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
+
+				if( $Enemy === null || $Enemy->IsDead() )
+				{
+					$Enemy = $Lane->GetAliveEnemy();
+					if( $Enemy !== null )
+					{
+						$Player->SetTarget( $Enemy->GetPosition() );
+					}
+				}
 
 				if( $Enemy !== null )
 				{
