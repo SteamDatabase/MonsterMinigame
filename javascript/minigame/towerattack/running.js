@@ -1856,8 +1856,15 @@ CSceneGame.prototype.CheckNewPlayer = function( )
 
 		this.m_containerParticles.addChild( this.m_spriteFinger );
 	}
+	else
+	{
+		var leaveGameHelper = document.getElementById( 'leave_game_helper' );
 
-
+		if( leaveGameHelper )
+		{
+			leaveGameHelper.parentNode.removeChild( leaveGameHelper );
+		}
+	}
 }
 // Stats functions we don't always include, redefine just in case.
 function FloorToMultipleOf( multipleOf, number )
