@@ -20,7 +20,7 @@ class Game
 
 	private $AbilityQueue;
 	public $Players = array();
-	private $Level = 1;
+	private $Level = 9;
 	public $Time;
 	public $Lanes = array();
 	public $Chat = [];
@@ -91,7 +91,7 @@ class Game
 	{
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
-		Server::GetLogger()->info( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
+		Server::GetLogger()->debug( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
 	}
 
 	public function ToArray()

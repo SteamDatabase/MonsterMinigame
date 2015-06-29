@@ -337,6 +337,7 @@ class AbilityItem
 					{
 						if( !$PlayerInLane->IsDead() )
 						{
+							var_dump(self::GetRandomAbilityItem());
 							$PlayerInLane->AddAbilityItem( self::GetRandomAbilityItem() );
 						}
 					}

@@ -603,7 +603,8 @@ class Player
 	{
 		$CritPercentage = $this->GetTechTree()->GetCritPercentage();
 		$CritPercentage += $Lane->GetCritClickDamageAddition();
-		$RandPercent = Util::GetRand();
+		$CritPercentage *= 100;
+		$RandPercent = mt_rand( 1, 100 );
 		return $RandPercent < $CritPercentage;
 	}
 
