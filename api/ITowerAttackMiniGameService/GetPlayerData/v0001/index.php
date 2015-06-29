@@ -13,5 +13,6 @@
 		'method' => 'GetPlayerData',
 		'steamid' => filter_input( INPUT_GET, 'steamid' ),
 		'player_name' => isset( $_SESSION[ 'Name' ] ) ? $_SESSION[ 'Name' ] : '[unnamed]',
-		'include_tech_tree' => isset( $_GET[ 'include_tech_tree' ] ) && $_GET[ 'include_tech_tree' ]
+		'include_tech_tree' => isset( $_GET[ 'include_tech_tree' ] ) && $_GET[ 'include_tech_tree' ],
+		'include_stats' => isset( $_GET[ 'include_stats' ] ) && $_GET[ 'include_stats' ]
 	] );

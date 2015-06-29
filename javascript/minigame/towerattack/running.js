@@ -75,6 +75,7 @@ window.CSceneGame = function()
 	this.m_rgPlayerData = false;
 	this.m_rgGameData = false;
 	this.m_rgStats = false;
+	this.m_rgPlayerStats = false;
 	this.m_bUpgradesBusy = false;
 	this.m_rgTuningData = false;
 	this.m_bNeedTechTree = true;
@@ -457,6 +458,9 @@ CSceneGame.prototype.HandleUpdatePlayerData = function( instance, rgResult )
 		instance.ApplyClientOverrides('player_data');
 		instance.ApplyClientOverrides('ability');
 	}
+
+	if( rgResult.response.stats )
+		instance.m_rgPlayerStats = rgResult.response.stats;
 
 	if( rgResult.response.tech_tree )
 	{

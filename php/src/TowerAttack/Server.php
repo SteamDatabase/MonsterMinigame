@@ -108,6 +108,11 @@ class Server
 						$Response[ 'tech_tree' ] = $Player->GetTechTree()->ToArray();
 					}
 
+					if( $Data[ 'include_stats' ] )
+					{
+						$Response[ 'stats' ] = $Player->Stats->ToArray();
+					}
+
 					break;
 				case 'UseBadgePoints':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );

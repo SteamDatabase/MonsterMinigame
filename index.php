@@ -252,7 +252,10 @@
 		<div class="leave_game_helper" id="leave_game_helper">You can safely close the game or leave this screen at any time—you will continue collecting gold and damaging monsters even while away from your computer. Check back occasionally to see how you're doing and use in-game gold to purchase upgrades.</div>
 	</div>
 
-	<table id="stats" style="width: 350px;margin: 0px auto;background-color: #222;padding: 6px 20px;text-align: right;"></table>
+	<div style="width: 700px;margin: 0 auto;">
+		<table id="stats" style="margin: 0 auto;float: left;width: 350px;background-color: #222;padding: 6px 20px;text-align: right;"></table>
+		<table id="player_stats" style="margin: 0 auto;float: left;width: 350px;background-color: #222;padding: 6px 20px;text-align: right;"></table>	
+	</div>
 
 	<div hidden>
 		<!-- Templates -->

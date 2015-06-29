@@ -59,7 +59,8 @@ CServerInterface.prototype.GetPlayerData = function( callback, error, bIncludeTe
 	{
 		gameid: this.m_nGameID,
 		steamid: g_steamID,
-		include_tech_tree: bIncludeTechTree ? 1 : 0
+		include_tech_tree: bIncludeTechTree ? 1 : 0,
+		include_stats: 1
 	};
 
 	var instance = this;

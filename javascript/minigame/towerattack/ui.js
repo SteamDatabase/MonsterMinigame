@@ -300,6 +300,7 @@ CUI.prototype.Tick = function()
 	}
 
 	this.UpdateStats();
+	this.UpdatePlayerStats();
 	this.UpdateSpendBadgePointsDialog();
 }
 
@@ -461,6 +462,56 @@ CUI.prototype.UpdateStats = function()
 
 		var bNeedsResort = false;
 		$J.each( this.m_Game.m_rgStats, function( key, value ) {
+			var elem = $J( "." + key, container )[0];
+			if ( !elem )
+			{
+				var row = $J('<tr/>' );
+				row.data( 'sortIndex', key );
+				var label = $J('<td/>' );
+				label.text( key );
+				row.append( label );
+				elem = $J('<td/>', { "class" : key } );
+				row.append( elem );
+				container.append( row );
+				bNeedsResort = true;
+			}
+			elem = $J( elem );
+
+			if( elem.text() !== value )
+			{
+				elem.text( value );
+			}
+		} );
+
+		if ( bNeedsResort )
+		{
+			var statElems = container.children();
+			statElems.sort( function( a, b ) {
+				var sort_a = $J( a ).data('sortIndex');
+				var sort_b = $J( b ).data('sortIndex');
+				if ( sort_a < sort_b )
+					return -1;
+				if ( sort_a > sort_b )
+					return 1;
+				return 0;
+			} );
+			statElems.detach().appendTo( container );
+		}
+	}
+}
+
+CUI.prototype.UpdatePlayerStats = function()
+{
+	if ( g_DebugUpdateStats && this.m_Game.m_rgStats )
+	{
+		var container = this.m_rgElementCache['player_stats'];
+		if ( !container )
+		{
+			container = $J( "#player_stats" );
+		}
+
+		var bNeedsResort = false;
+		$J.each( this.m_Game.m_rgPlayerStats, function( key, value ) {
 			var elem = $J( "." + key, container )[0];
 			if ( !elem )
 			{

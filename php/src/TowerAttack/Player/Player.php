@@ -73,8 +73,7 @@ class Player
 			'gold' => (double) $this->GetGold(),
 			'active_abilities' => $this->GetActiveAbilitiesToArray(),
 			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
-			'crit_damage' => (double) $this->GetCritDamage(),
-			'stats' => $this->Stats->ToArray()
+			'crit_damage' => (double) $this->GetCritDamage()
 		);
 		if( !empty( $this->GetLoot() ) )
 		{
