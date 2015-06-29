@@ -23,7 +23,7 @@ class Game
 	private $Level = 1;
 	public $Time;
 	public $Lanes = array();
-	public $Chat = [];
+	private $Chat = []; // TODO: SplQueue
 	//private $Timestamp; - Use function instead?
 	private $Status;
 	//private $Events; - Not used, morning/evning deals
@@ -319,6 +319,17 @@ class Game
 	public function IsRunning()
 	{
 		return $this->Status == Enums\EStatus::Running;
+	}
+
+	public function AddChatEntry( $ChatType, $Actor, $Message )
+	{
+		$this->Chat[] =
+		[
+			'type' => $ChatType,
+			'time' => $this->Time,
+			'actor' => $Actor,
+			'message' => $Message
+		];
 	}
 
 	public function GetEvents()
@@ -664,12 +675,7 @@ class Game
 					$Player->IncreaseGold( $AbilityGold * $this->WormholeCount ); # TODO: Is gold stackable as well?
 				}
 
-				$this->Chat[] =
-				[
-					'time' => $this->Time,
-					'actor' => 'SERVER',
-					'message' => 'Skipped ' . number_format( $this->WormholeCount ) . ' level' . ( $this->WormholeCount === 1 ? '' : 's' )
-				];
+				$this->AddChatEntry( 'server', '', 'Skipped ' . number_format( $this->WormholeCount ) . ' level' . ( $this->WormholeCount === 1 ? '' : 's' ) );
 
 				$this->WormholeCount = 0;
 			}

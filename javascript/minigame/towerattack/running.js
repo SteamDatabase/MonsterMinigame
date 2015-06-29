@@ -818,7 +818,7 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 
 				this.m_rgActionLog.push({
 					'icon': false,
-					'type': 'chat',
+					'type': rgActivityLog[i].type,
 					'actor_name': rgActivityLog[i].actor,
 					'message': rgActivityLog[i].message,
 					'time': rgActivityLog[i].time

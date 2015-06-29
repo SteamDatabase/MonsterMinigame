@@ -337,7 +337,15 @@
 		<div id="chattemplate" class="activitytemplate chattemplate">
 			<span class="icon"><img src="/assets/minigame/towerattack/ability_template_ph.png"></span>
 			<span class="ability_text">
-				<span class="name"></span> said: <div class="ability"></div>
+				<span class="name"></span> <span class="action">said:</span> <div class="ability"></div>
+			</span>
+		</div>
+
+		<div id="servertemplate" class="activitytemplate chattemplate">
+			<span class="icon"><img src="/assets/minigame/towerattack/emoticons/happy_creep.png"></span>
+			<span class="ability_text">
+				<span class="name">Game Notice</span>
+				<div class="ability"></div>
 			</span>
 		</div>
 

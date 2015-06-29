@@ -68,12 +68,7 @@ class Server
 
 					$Response = true;
 
-					$this->Game->Chat[] =
-					[
-						'time' => time(),
-						'actor' => $Player->PlayerName,
-						'message' => $Data[ 'message' ]
-					];
+					$this->Game->AddChatEntry( 'chat', $Player->PlayerName, $Data[ 'message' ] );
 
 					break;
 				case 'GetGameData':
