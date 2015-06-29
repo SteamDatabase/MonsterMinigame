@@ -91,7 +91,7 @@ class Game
 	{
 		$this->IncreaseLevel();
 		$this->GenerateNewLanes();
-		Server::GetLogger()->debug( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
+		Server::GetLogger()->info( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
 	}
 
 	public function ToArray()

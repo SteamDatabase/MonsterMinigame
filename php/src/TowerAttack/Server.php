@@ -216,7 +216,7 @@ class Server
 		socket_shutdown( $this->Socket, 2 );
 		socket_close( $this->Socket );
 
-		self::GetLogger()->debug( 'Sockets closed' );
+		self::GetLogger()->info( 'Sockets closed' );
 	}
 
 	private function Tick( $Tick, $SecondsPassed )
