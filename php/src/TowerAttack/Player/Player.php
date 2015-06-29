@@ -490,6 +490,10 @@ class Player
 		{
 			return false;
 		}
+		else if( $this->HasActiveAbility( $Ability ) && !$this->GetActiveAbility( $Ability )->IsCooledDown( $Game->Time ) )
+		{
+			return false;
+		}
 		else if ( $Ability === Enums\EAbility::Item_KillTower ) # TODO: Move this to HandleAbility?
 		{
 			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
