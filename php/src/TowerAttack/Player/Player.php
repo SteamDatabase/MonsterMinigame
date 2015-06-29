@@ -271,7 +271,7 @@ class Player
 			}
 		}
 		$this->GetTechTree()->RecalulateUpgrades();
-		if( $HpUpgrade )
+		if( $HpUpgrade && !$this->IsDead() )
 		{
 			$this->Hp = $this->getTechTree()->GetMaxHp();
 		}
