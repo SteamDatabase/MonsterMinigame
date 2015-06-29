@@ -4,7 +4,6 @@ namespace SteamDB\CTowerAttack;
 class Server
 {
 	public $SaneServer;
-	private $Shutdown;
 	private $Running;
 	private $LastTick;
 	private $LastSecond;
@@ -224,16 +223,7 @@ class Server
 	{
 		self::GetLogger()->debug( 'Ticking... seconds passed: ' . $SecondsPassed );
 
-		if( $this->Shutdown > 0 )
-		{
-			if( $Tick - $this->Shutdown > Player\Player::ACTIVE_PERIOD )
-			{
-				self::GetLogger()->info( 'Good bye' );
-
-				$this->Running = false;
-			}
-		}
-		else if( $this->SaneServer )
+		if( $this->SaneServer )
 		{
 			pcntl_signal_dispatch();
 		}
@@ -270,19 +260,12 @@ class Server
 
 	public function Shutdown()
 	{
-		if( $this->Shutdown > 0 )
+		if( $this->Running )
 		{
-			return;
+			$this->Running = false;
+
+			self::GetLogger()->info( 'Good bye' );
 		}
-
-		// kill it straight away for now
-		$this->Running = false;
-
-		$this->Shutdown = microtime( true );
-
-		$this->Game->SetStatus( Enums\EStatus::Ended );
-
-		self::GetLogger()->info( 'Waiting ' . Player\Player::ACTIVE_PERIOD . ' seconds until shutdown' );
 	}
 
 	public static function GetLogger()
