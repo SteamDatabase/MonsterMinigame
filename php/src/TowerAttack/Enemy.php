@@ -326,7 +326,7 @@ class Enemy
 
 	public static function SpawnTreasureMob()
 	{
-		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' );
+		$SpawnChance = self::GetTuningData( self::GetEnemyTypeName( Enums\EEnemyType::TreasureMob ), 'chance' ) * 100;
 		$RandPercent = mt_rand( 1, 100 );
 
 		return $RandPercent < $SpawnChance;
