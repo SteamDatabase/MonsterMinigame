@@ -27,7 +27,6 @@ class Upgrade
 		return array(
 			'upgrade' => (int) $this->GetUpgradeId(),
 			'level' => (int) $this->GetLevel(),
-			'cost_for_next_level' => (double) $this->GetCostForNextLevel()
 		);
 	}
 
