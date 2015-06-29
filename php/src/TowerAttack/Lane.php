@@ -294,7 +294,7 @@ class Lane
 	public function GetEnemyGoldMultiplier()
 	{
 		$EnemyGoldMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Support_IncreaseGoldDropped );
-		return $EnemyGoldMultiplier !== 0 ? 1 + $EnemyGoldMultiplier : 0;
+		return $EnemyGoldMultiplier !== 0 ? 1 + $EnemyGoldMultiplier : 1;
 	}
 
 	public function GetReflectDamageMultiplier()

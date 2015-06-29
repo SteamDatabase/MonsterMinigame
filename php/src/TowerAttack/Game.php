@@ -535,7 +535,7 @@ class Game
 						$EnemyGold = $Enemy->GetGold() * $Lane->GetEnemyGoldMultiplier();
 						Server::GetLogger()->debug(
 							'Enemy #' . $Enemy->GetId() . ' is dead. Giving ' . $EnemyGold . 
-							' gold to players in lane #' . $Lane->GetLaneId()
+							' gold (Multiplier: ' . $Lane->GetEnemyGoldMultiplier() . ') to players in lane #' . $Lane->GetLaneId()
 						);
 						$Lane->GiveGoldToPlayers( $this, $EnemyGold );
 					}
