@@ -4,6 +4,7 @@ namespace SteamDB\CTowerAttack\Player;
 use SteamDB\CTowerAttack\Enums;
 use SteamDB\CTowerAttack\Server;
 use SteamDB\CTowerAttack\Game;
+use SteamDB\CTowerAttack\Util;
 use SteamDB\CTowerAttack\Player\TechTree\Upgrade;
 use SteamDB\CTowerAttack\Player\TechTree\AbilityItem;
 
@@ -147,6 +148,7 @@ class Player
 
 					// Elementals
 					$Damage *= $this->GetTechTree()->GetExtraDamageMultipliers( $Lane->GetElement() );
+					$this->CritDamage = 0;
 					if( $this->IsCriticalHit( $Lane ) )
 					{
 						$Damage *= $this->GetTechTree()->GetDamageMultiplierCrit();
@@ -601,7 +603,7 @@ class Player
 	{
 		$CritPercentage = $this->GetTechTree()->GetCritPercentage();
 		$CritPercentage += $Lane->GetCritClickDamageAddition();
-		$RandPercent = mt_rand( 1, 100 );
+		$RandPercent = Util::GetRand();
 		return $RandPercent < $CritPercentage;
 	}
 

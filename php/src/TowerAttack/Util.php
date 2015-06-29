@@ -28,4 +28,9 @@ class Util
 	{
 		return $Coefficient * pow( $Base, $Exponent );
 	}
+
+	public static function GetRand( $Min = 0, $Max = 1 )
+	{
+		return ( $Min + ( $Max - $Min ) * ( mt_rand() / mt_getrandmax() ) );
+	}
 }
