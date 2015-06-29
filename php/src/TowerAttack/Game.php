@@ -20,7 +20,7 @@ class Game
 
 	private $AbilityQueue;
 	public $Players = array();
-	private $Level = 9;
+	private $Level = 1;
 	public $Time;
 	public $Lanes = array();
 	public $Chat = [];
