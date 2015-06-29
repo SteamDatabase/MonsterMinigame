@@ -243,7 +243,7 @@ class Server
 
 	public static function LoadTuningData()
 	{
-		$File = file_get_contents( __DIR__ . '/../files/tuningData.json' );
+		$File = file_get_contents( __DIR__ . '/../../files/tuningData.json' );
 
 		self::$TuningData = json_decode( $File, true );
 
