@@ -525,16 +525,14 @@ class Game
 								$this->NumMobsKilled++;
 								break;
 							case Enums\EEnemyType::Boss:
-								if( $this->IsBossLevel() )
+								foreach( $this->Players as $Player )
 								{
-									foreach( $this->Players as $Player )
+									if( $Player->IsLootDropped() )
 									{
-										if( $Player->IsLootDropped() )
-										{
-											$Player->AddLoot( $this->Time, AbilityItem::GetRandomAbilityItem() );
-										}
+										$Player->AddLoot( $this->Time, AbilityItem::GetRandomAbilityItem() );
 									}
 								}
+
 								$this->NumBossesKilled++;
 								break;
 							case Enums\EEnemyType::MiniBoss:
@@ -558,6 +556,7 @@ class Game
 						$EnemyDpsDamage += $Enemy->GetDps();
 					}
 				}
+
 				$Enemy->DpsDamageTaken = 0;
 				$Enemy->ClickDamageTaken = 0;
 				$Enemy->AbilityDamageTaken = 0;
