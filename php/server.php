@@ -5,8 +5,6 @@ function SignalHandler( $Signal )
 {
 	global $Server; // ayy
 
-	Server::GetLogger()->info( 'Caught signal ' . $Signal );
-
 	$Server->Shutdown();
 }
 
