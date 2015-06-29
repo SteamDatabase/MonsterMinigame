@@ -90,7 +90,7 @@ class Player
 				(
 					isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] )
 					&&
-					$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] + 1 > $Game->Time
+					$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] >= $Game->Time
 				)
 				||
 				(
@@ -103,14 +103,16 @@ class Player
 				continue;
 			}
 
+			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = $Game->Time;
+
 			$AllowedAbilityTypes =
 			[
-				Enums\EAbilityType::Support,
-				Enums\EAbilityType::Offensive,
-				Enums\EAbilityType::Item
+				Enums\EAbilityType::Support => true,
+				Enums\EAbilityType::Offensive => true,
+				Enums\EAbilityType::Item => true
 			];
 
-			if( in_array( AbilityItem::GetType( $RequestedAbility[ 'ability' ] ), $AllowedAbilityTypes ) )
+			if( isset( $AllowedAbilityTypes[ AbilityItem::GetType( $RequestedAbility[ 'ability' ] ) ] ) )
 			{
 				$this->UseAbility( $Game, $RequestedAbility[ 'ability' ] );
 				continue;
@@ -219,8 +221,6 @@ class Player
 					// Handle unknown ability?
 					break;
 			}
-
-			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = $Game->Time;
 		}
 	}
 
