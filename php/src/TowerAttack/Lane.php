@@ -289,7 +289,7 @@ class Lane
 	public function GetGoldPerClickMultiplier()
 	{
 		$GoldMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_GoldPerClick );
-		return $GoldMultiplier !== 0 ? 1 + $GoldMultiplier : 0;
+		return $GoldMultiplier !== 0 ? $GoldMultiplier : 0;
 	}
 
 	public function GetEnemyGoldMultiplier()
