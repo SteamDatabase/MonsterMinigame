@@ -197,18 +197,6 @@ class AbilityItem
 					}
 				}
 				break;
-			case Enums\EAbility::Offensive_DOTAllTargets:
-				if( !$Deactivate )
-				{
-					$Enemies = $Lane->GetAliveEnemies();
-					foreach( $Enemies as $Enemy )
-					{
-						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
-						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DecreaseHp( $Damage );
-					}
-				}
-				break;
 			case Enums\EAbility::Item_Resurrection:
 				if( !$Deactivate )
 				{
