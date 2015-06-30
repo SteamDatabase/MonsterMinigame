@@ -90,8 +90,8 @@ class Game
 	public function GenerateNewLevel()
 	{
 		$this->IncreaseLevel();
-		$this->GenerateNewLanes();
-		Server::GetLogger()->debug( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
+		$this->GenerateNewEnemies();
+		Server::GetLogger()->info( 'Game #' . $this->GameId . ' moved to level #' . $this->GetLevel() );
 	}
 
 	public function ToArray()
@@ -153,52 +153,24 @@ class Game
 		return $this->Level % 100 === 0;
 	}
 
-	public function GenerateNewLanes()
+	public function GenerateNewEnemies()
 	{
-		Server::GetLogger()->debug( 'Starting to generate new lanes for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
-		$NumPlayers = count( $this->Players ); # TODO: Or count( $this->Players )
-		$this->Lanes = array();
+		Server::GetLogger()->debug( 'Starting to generate new enemies for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
+		$NumPlayers = count( $this->GetActivePlayers() ); # TODO: Or count( $this->Players )
 		$HasTreasureMob = false;
 
 		if( $this->IsBossLevel() )
 		{
 			$BossLaneId = mt_rand( 0, 2 );
 		}
-		// Create 3 lanes
-		for( $i = 0; 3 > $i; $i++ )
-		{
-			$PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-			$ActivePlayerAbilities = []; # TODO: @Contex: Get previous active player abilities?
-			$ActivityLog = []; # TODO: Get previous log?
-			/* TODO: @Contex: Delete this? Grab previous abilities from prev lane.
-			foreach( $this->Players as $Player )
-			{
-				if( $Player->GetCurrentLane() === $i )
-				{
-					$PlayerHpBuckets[ $Player->GetHpLevel() ]++;
-					foreach( $Player->GetActiveAbilities() as $ActiveAbility )
-					{
-						if ( !isset( $ActivePlayerAbilities[ $ActiveAbility->GetAbility() ] ) )
-						{
-							$ActivePlayerAbilities[ $ActiveAbility->GetAbility() ] = [
-								'ability' => $ActiveAbility->GetAbility(),
-								'quantity' => 1
-							];
-						}
-						else
-						{
-							$ActivePlayerAbilities[ $ActiveAbility->GetAbility() ][ 'quantity' ]++;
-						}
-					}
-				}
-			}
-			*/
 
+		foreach( $this->Lanes as $LaneId => $Lane )
+		{
 			$Enemies = array();
 			if( $this->IsBossLevel() )
 			{
 				// Boss
-				if( $i === $BossLaneId )
+				if( $LaneId === $BossLaneId )
 				{
 					$Enemies[] = new Enemy(
 						$NumPlayers,
@@ -271,19 +243,20 @@ class Game
 					}
 				}
 			}
-
-			$this->Lanes[] = new Lane(
-				$i,
-				$Enemies,
-				0, //dps
-				$ActivePlayerAbilities,
-				$ActivityLog,
-				$PlayerHpBuckets,
-				mt_rand( Enums\EElement::Start, Enums\EElement::End ), // element
-				0, //decrease cooldown
-				0 //gold per click
-			);
+			$Lane->Enemies = $Enemies;
+			$Lane->Element = mt_rand( Enums\EElement::Start, Enums\EElement::End );
 		}
+	}
+
+	public function GenerateNewLanes()
+	{
+		Server::GetLogger()->info( 'Starting to generate new lanes for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
+		$this->Lanes = array();
+		for( $i = 0; 3 > $i; $i++ )
+		{
+			$this->Lanes[] = new Lane( $i );
+		}
+		$this->GenerateNewEnemies();
 	}
 
 	public function GetLane($LaneId)

@@ -22,19 +22,20 @@ class Lane
 	public $Enemies;
 	public $Dps;
 	public $ActivityLog = [];
+	public $Element;
 	private $ActivePlayerAbilities;
 	private $LaneId;
 
 	public function __construct(
 		$LaneId,
-		array $Enemies,
-		$Dps,
-		array $ActivePlayerAbilities,
-		array $ActivityLog,
-		array $PlayerHpBuckets,
-		$Element,
-		$ActivePlayerAbilityDecreaseCooldowns,
-		$ActivePlayerAbilityGoldPerClick
+		array $Enemies = array(),
+		$Dps = 0,
+		array $ActivePlayerAbilities = array(),
+		array $ActivityLog = array(),
+		array $PlayerHpBuckets = array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
+		$Element = Enums\EElement::Start,
+		$ActivePlayerAbilityDecreaseCooldowns = 0,
+		$ActivePlayerAbilityGoldPerClick = 0
 	) {
 		$this->LaneId = $LaneId;
 		$this->Enemies = $Enemies;
