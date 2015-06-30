@@ -416,6 +416,12 @@ class Game
 					{
 						$DealtDpsDamage *= $Player->GetTechTree()->GetHighestElementalMultiplier();
 					}
+					if( $Player->GetCritDamage() > 0 )
+					{
+						$DealtDpsDamage *= $Player->GetTechTree()->GetDamageMultiplierCrit();
+						$Player->Stats->CritDamageDealt += $DealtDpsDamage;
+						$Player->CritDamage = 0;
+					}
 					$Player->Stats->DpsDamageDealt += $DealtDpsDamage;
 					$Enemy->DpsDamageTaken += $DealtDpsDamage;
 					if( $DealtDpsDamage > 0)
