@@ -886,6 +886,7 @@ CSceneGame.prototype.UpdateEnemies = function()
 			players: 0,
 			abilities: {},
 			player_hpbuckets_max: 0,
+			active_players_count: 0,
 			has_boss: 0,
 			has_treasure_mob: 0,
 		};
@@ -970,6 +971,12 @@ CSceneGame.prototype.UpdateEnemies = function()
 			this.m_rgLaneData[i].players += this.m_rgGameData.lanes[i].player_hp_buckets[j];
 			if( this.m_rgGameData.lanes[i].player_hp_buckets[j] > this.m_rgLaneData[i].player_hpbuckets_max )
 				this.m_rgLaneData[i].player_hpbuckets_max = this.m_rgGameData.lanes[i].player_hp_buckets[j];
+		}
+
+		// Update active players in lane
+		if( this.m_rgGameData.lanes[i].active_players_count !== this.m_rgLaneData[i].active_players_count )
+		{
+			this.m_rgLaneData[i].active_players_count = this.m_rgGameData.lanes[i].active_players_count;
 		}
 
 		// Update active lane abilities

@@ -23,6 +23,7 @@ class Lane
 	public $Dps;
 	public $ActivityLog = [];
 	public $Element;
+	private $ActivePlayersCount = 0;
 	private $ActivePlayerAbilities;
 	private $LaneId;
 
@@ -57,6 +58,7 @@ class Lane
 			'activity_log' => array_slice( $this->ActivityLog, -50, 50 ), // Only send last 50 recent events, TODO: Use SplQueue
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => (int) $this->GetElement(),
+			'active_players_count' => (int) $this->GetActivePlayersCount(),
 			'active_player_ability_decrease_cooldowns' => (double) $this->HasActivePlayerAbilityDecreaseCooldowns(),
 			'active_player_ability_gold_per_click' => (double) $this->GetGoldPerClickMultiplier() #TODO: GetActivePlayerAbilityGoldPerClick()
 		);
@@ -67,14 +69,19 @@ class Lane
 		return $this->LaneId;
 	}
 
-	public function GetEnemy( $Key )
+	public function GetActivePlayersCount()
 	{
-		if( !isset( $this->Enemies[ $Key ] ) )
+		return $this->ActivePlayersCount;
+	} 
+
+	public function GetEnemy( $Position )
+	{
+		if( !isset( $this->Enemies[ $Position ] ) )
 		{
 			return null;
 		}
 
-		return $this->Enemies[ $Key ];
+		return $this->Enemies[ $Position ];
 	}
 
 	public function GetEnemies()
@@ -266,11 +273,16 @@ class Lane
 		return $DeadEnemies;
 	}
 
-	public function UpdateHpBuckets( $Players )
+	public function UpdateHpBuckets( $Time, $Players )
 	{
-		$this->PlayerHpBuckets = array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+		$this->ActivePlayersCount = 0;
+		$this->PlayerHpBuckets = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 		foreach( $Players as $Player )
 		{
+			if( $Player->IsActive( $Time ) )
+			{
+				$this->ActivePlayersCount++;
+			}
 			$this->PlayerHpBuckets[ $Player->GetHpLevel() ]++;
 		}
 	}

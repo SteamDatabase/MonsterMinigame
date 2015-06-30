@@ -77,7 +77,11 @@ CUI.prototype.BuildUI = function()
 	this.m_rgElementCache['lane_2_treasure'] = $J('.enemy_icon_4', this.m_rgElementCache['lane2' ] );
 	this.m_rgElementCache['lane_2_boss'] = $J('.enemy_icon_2', this.m_rgElementCache['lane2' ] );
 
-	this.m_rgElementCache['players_in_lane'] = $J('#players_in_lane');
+	//this.m_rgElementCache['players_in_lane'] = $J('#players_in_lane');
+	this.m_rgElementCache['total_players'] = $J('#total_players');
+	this.m_rgElementCache['active_players_in_lane'] = $J('#active_players_in_lane');
+	//this.m_rgElementCache['active_total_players'] = $J('#active_total_players');
+	//this.m_rgElementCache['dead_players_in_lane'] = $J('#dead_players_in_lane');
 
 
 	// Active in lane block
@@ -669,7 +673,7 @@ CUI.prototype.UpdateLanes = function()
 	{
 		for( var i=0; i < 10; i++ )
 		{
-			var nHeight = 100 * ( instance.m_rgGameData.lanes[ instance.m_rgPlayerData.current_lane ].player_hp_buckets[i] / instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].player_hpbuckets_max );
+			var nHeight = 100 * ( instance.m_rgGameData.lanes[ instance.m_rgPlayerData.current_lane ].player_hp_buckets[i] / instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].player_hpbuckets_max );
 			nHeight = nHeight.toFixed() + '%';
 
 			if( this.m_rgElementCache['teamhealth_' + i][0].style.height !== nHeight )
@@ -680,9 +684,14 @@ CUI.prototype.UpdateLanes = function()
 	}
 
 	// Update players in my lane
-	if( this.m_rgElementCache['players_in_lane'].text() !== instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].players )
+	if( this.m_rgElementCache['active_players_in_lane'].text() !== instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].active_players_count )
 	{
-		this.m_rgElementCache['players_in_lane'].text( instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane].players );
+		this.m_rgElementCache['active_players_in_lane'].text( instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].active_players_count );
+	}
+
+	if( this.m_rgElementCache['total_players'].text() !== instance.m_rgStats.num_players )
+	{
+		this.m_rgElementCache['total_players'].text( instance.m_rgStats.num_players );
 	}
 
 	// @optimize

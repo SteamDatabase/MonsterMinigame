@@ -643,7 +643,7 @@ class Game
 			}
 			$Lane->Dps = $LaneDps[ $LaneId ];
 			$Lane->CheckActivePlayerAbilities( $this, $SecondsPassed );
-			$Lane->UpdateHpBuckets( $PlayersInLane );
+			$Lane->UpdateHpBuckets( $this->Time, $PlayersInLane );
 		}
 
 		if( $DeadLanes === 3 )

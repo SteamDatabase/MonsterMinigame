@@ -127,7 +127,7 @@
 				</div>
 
 				<div id="activitylog">
-					<span class="title_activity"><span id="players_in_lane">0</span> Players in lane</span>
+					<span class="title_activity"><span id="active_players_in_lane">0</span>/<span id="total_players">0</span> Players in lane</span>
 					<div id="activitycontainer"><div></div></div><div id="activityscroll"><div></div></div>
 
 					<form id="chatform" class="chatform">
