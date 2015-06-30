@@ -80,7 +80,7 @@ window.CSceneGame = function()
 	this.m_rgTuningData = false;
 	this.m_bNeedTechTree = true;
 
-	this.m_rgStoredCrits = [];
+	this.m_rgStoredCrit = 0;
 
 	this.m_rgLocalOverrides = [];
 
@@ -587,7 +587,7 @@ CSceneGame.prototype.OnReceiveUpdate = function()
 	this.m_UI.OnPlayerDataUpdate();
 
 	if( this.m_rgPlayerData.crit_damage )
-		this.m_rgStoredCrits.push(this.m_rgPlayerData.crit_damage);
+		this.m_rgStoredCrit = this.m_rgPlayerData.crit_damage;
 
 	if( !this.m_easingBG )
 	{
@@ -1338,11 +1338,10 @@ CSceneGame.prototype.DoClick = function( mouseData )
 		y = point.y;
 	}
 
-	if ( this.m_rgStoredCrits.length > 0 )
+	if ( this.m_rgStoredCrit > 0 )
 	{
-		var rgDamage = this.m_rgStoredCrits.splice(0,1);
-
-		this.DoCritEffect( rgDamage[0],x, y, 'Crit!' );
+		this.DoCritEffect( this.m_rgStoredCrit, x, y, 'Crit!' );
+		this.m_rgStoredCrit = 0;
 	} else {
 		this.DoClickEffect(this.CalculateDamage( this.m_rgPlayerTechTree.damage_per_click, element ), x, y);
 	}
