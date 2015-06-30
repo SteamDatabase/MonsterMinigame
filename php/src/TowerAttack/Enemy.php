@@ -28,6 +28,10 @@ class Enemy
 
 	public function __construct( $NumPlayers, $Id, $Position, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
 	{
+		if( $NumPlayers === 0 )
+		{
+			$NumPlayers = 1;
+		}
 		$this->Id = $Id;
 		$this->Position = $Position;
 		$this->Type = $Type;
