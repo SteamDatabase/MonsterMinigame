@@ -816,6 +816,12 @@ CUI.prototype.UpdateUpgrades = function()
 					ele = purchasetemplate.clone();
 				else
 					ele = template.clone();
+				$J(ele).find('.link').on('click', function()
+				{
+					g_Minigame.m_CurrentScene.TryUpgrade(this);
+
+					return false;
+				});
 				$J(ele).attr('id','upgr_' + i);
 				this.m_rgElementCache['upgr_'+i] = ele;
 				$J('.name', ele).text( upgrade.name );
@@ -1049,6 +1055,12 @@ CUI.prototype.UpdateAbilities = function()
 		if( !ele )
 		{
 			ele = template.clone();
+			$J(ele).find('.link').on('click', function()
+			{
+				g_Minigame.m_CurrentScene.TryAbility(this);
+
+				return false;
+			});
 			$J(ele).attr('id','ability_' + i);
 			this.m_rgElementCache['ability_'+i] = ele;
 			$J(ele).data('sortIndex', i );
@@ -1113,6 +1125,12 @@ CUI.prototype.UpdateAbilities = function()
 		if( !ele )
 		{
 			ele = item_template.clone();
+			$J(ele).find('.link').on('click', function()
+			{
+				g_Minigame.m_CurrentScene.TryAbility(this);
+
+				return false;
+			});
 			$J(ele).attr('id','abilityitem_' + i);
 			this.m_rgElementCache['abilityitem_'+i] = ele;
 			$J(ele).data('sortIndex', 28 + i );

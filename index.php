@@ -9,7 +9,7 @@
 
 	header( 'Content-Security-Policy: ' .
 		'default-src \'none\'; ' .
-		'script-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
+		'script-src \'self\'; ' .
 		'style-src \'unsafe-inline\' \'self\'; ' . // TODO: Remove unsafe-inline
 		'img-src data: \'self\' https://steamcdn-a.akamaihd.net; ' .
 		'font-src \'self\'; ' .
@@ -22,9 +22,9 @@
 	<meta charset="UTF-8">
 	<title>Tower Attack</title>
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link href="/css/towerattack.css" rel="stylesheet" type="text/css">
+	<link href="/css/towerattack.css?v=<?php echo hash_file( 'crc32', __DIR__ . '/css/towerattack.css' ); ?>" rel="stylesheet" type="text/css">
 </head>
-<body data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>">
+<body data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>" data-gameid="1">
 	<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" class="github"><img src="/assets/minigame/towerattack/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
 
 	<div class="breadcrumbs">
@@ -67,25 +67,25 @@
 							<img src="/assets/minigame/towerattack/emoticons/shelterwildfire.png" alt="Fire">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="3" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="3" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade"  id="upgr_4">
 							<img src="/assets/minigame/towerattack/emoticons/waterrune.png" alt="Water">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="4" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="4" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade" id="upgr_6">
 							<img src="/assets/minigame/towerattack/emoticons/FateTree.png" alt="Earth">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="6" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="6" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade" id="upgr_5">
 							<img src="/assets/minigame/towerattack/emoticons/Wisp.png" alt="Air">
 							<span class="level">0</span>
 							<br>
-							<a class="link element_upgrade_btn" data-type="5" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
+							<a class="link element_upgrade_btn" data-type="5" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 					</div>
 				</div>
@@ -93,19 +93,19 @@
 
 			<div id="col_right">
 				<div class="lanes desert">
-					<a id="lane0" class="lane active" onclick="g_Minigame.m_CurrentScene.TryChangeLane( 0 )">
+					<a id="lane0" class="lane active" href="#" data-lane="0">
 						<span class="label">Lane 1</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
 						--><div class="lane_enemy enemy_icon_2" id="lane0_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
 						--><div class="lane_enemy enemy_icon_4" id="lane0_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
-					</a><a id="lane1" class="lane middle"  onclick="g_Minigame.m_CurrentScene.TryChangeLane( 1 )">
+					</a><a id="lane1" class="lane" href="#" data-lane="1">
 						<span class="label">Lane 2</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
 						--><div class="lane_enemy enemy_icon_2" id="lane1_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
 						--><div class="lane_enemy enemy_icon_4" id="lane1_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
-					</a><a id="lane2" class="lane"  onclick="g_Minigame.m_CurrentScene.TryChangeLane( 2 )">
+					</a><a id="lane2" class="lane" href="#" data-lane="2">
 						<span class="label">Lane 3</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
@@ -192,7 +192,7 @@
 					<div class="cannot_respawn">
 						Can respawn in: 						<span class="timeleft"></span>
 					</div>
-					<span class="btn_respawn" id="player_respawn_btn" onclick="RespawnPlayer();">
+					<span class="btn_respawn" id="player_respawn_btn">
 						<span>Respawn Now</span>
 					</span>
 					<div class="automatically_respawn">
@@ -206,7 +206,7 @@
 				<div class="spend_badge_ponts_border">
 					<div class="spend_badge_ponts_ctn">
 						<div class="welcome_back">Welcome Back!</div>
-						<div class="desc">You have badge points from defeating boss levels in your previous games, as well as leveling up your Summer Sale badge and Monster Game badge. You can use badge points to purchase one-time use special items below.</div>
+						<div class="desc">You have badge points to spend. You can use badge points to purchase one-time use special items below.</div>
 						<div class="badge_points"><span id="num_badge_points"></span>&nbsp;Badge Points available</div>
 						<div id="badge_items"></div>
 					</div>
@@ -248,15 +248,15 @@
 	</div>
 
 	<div class="game_options">
-		<span onclick="ToggleSound()" class="toggle_sfx_btn">
+		<span class="toggle_sfx_btn" id="toggle_sfx_btn">
 			<span>Toggle SFX</span>
 		</span>
 
-		<span onclick="g_AudioManager.ToggleMusic()" class="toggle_music_btn">
+		<span class="toggle_music_btn" id="toggle_music_btn">
 			<span>Toggle Music</span>
 		</span>
 
-		<a href="http://steamcommunity.com/minigame/" class="leave_game_btn">
+		<a href="#" class="leave_game_btn">
 			<span>Close<br>Game</span>
 		</a>
 
@@ -288,7 +288,7 @@
 		</div>
 
 		<div id="upgradetemplate">
-			<div class="upgrade" >
+			<div class="upgrade">
 				<div class="info">
 					<div class="name"></div>
 					<div class="level"></div>
@@ -297,7 +297,7 @@
 					</div>
 				</div>
 
-				<a class="link" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
+				<a class="link" href="#" data-tooltip-func="fnTooltipUpgradeDesc">
 					<span class="upgrade_text">Upgrade</span>
 					<div class="cost"></div>
 				</a>
@@ -305,7 +305,7 @@
 		</div>
 
 		<div id="purchasetemplate">
-			<div class="upgrade purchase" >
+			<div class="upgrade purchase">
 				<div class="info">
 					<div>
 						<img src="/assets/minigame/towerattack/ability_template_ph.png" class="icon">
@@ -317,21 +317,21 @@
 					</div>
 				</div>
 
-				<a class="link" href="#" onclick="g_Minigame.m_CurrentScene.TryUpgrade(this); return false;" data-tooltip-func="fnTooltipUpgradeDesc">
+				<a class="link" href="#" data-tooltip-func="fnTooltipUpgradeDesc">
 					<div class="cost"></div>
 				</a>
 			</div>
 		</div>
 
 		<div id="abilitytemplate" class="abilitytemplate">
-			<a class="link ta_tip" href="#" onclick="g_Minigame.m_CurrentScene.TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
+			<a class="link ta_tip" href="#" data-tooltip-func="fnTooltipAbilityDesc">
 				<img src="/assets/minigame/towerattack/ability_template_ph.png">
 				<div class="timeleft"></div>
 			</a>
 		</div>
 
 		<div id="abilityitemtemplate" class="abilitytemplate">
-			<a class="link ta_tip" href="#" onclick="g_Minigame.m_CurrentScene.TryAbility(this); return false;" data-tooltip-func="fnTooltipAbilityDesc">
+			<a class="link ta_tip" href="#" data-tooltip-func="fnTooltipAbilityDesc">
 				<img src="/assets/minigame/towerattack/ability_template_ph.png">
 				<div class="timeleft abilityitem"></div>
 				<div class="abilityitemquantity"></div>
@@ -382,61 +382,15 @@
 
 	<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
 	<script type="text/javascript" src="/javascript/tooltip.js"></script>
-	<script type="text/javascript">$J = jQuery.noConflict();</script>
 	<script type="text/javascript" src="/javascript/pixi.min.js"></script>
 	<script type="text/javascript" src="/javascript/pixi-spine.min.js"></script>
 	<script type="text/javascript" src="/javascript/pixi-particles.min.js"></script>
-	<script type="text/javascript" src="/javascript/minigame/minigame.js?v=0-6JLp6pJyHl&amp;l=english"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/running.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/network.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/ui.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/easing.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/enemies.js?v=oJIS22CYjGIR&amp;l=english"></script>
-	<script>
-		g_sessionID = 'g_sessionID';
-		g_steamID = document.body.dataset.steamid;
-		g_GameID = '44925';
-		g_TuningData = <?php echo file_get_contents( __DIR__ . '/php/files/tuningData.json' ); ?>;
-		g_DebugMode = true;
-		g_DebugUpdateStats = g_DebugMode;
-		g_IncludeGameStats = g_DebugMode;
-		$J('#game_version').text( g_TuningData['game_version'] );
-
-		function CheckTuningDataVersion()
-		{
-			$J.ajax({
-				url: 'http://steamcommunity.com/minigame/ajaxgettuningdataversion/'
-			}).success(function(json){
-				if ( json.version > g_TuningData['version'] )
-				{
-					top.location.reload();
-				}
-			} );
-		}
-
-		$J(window).bind('load', function()
-		{
-			Boot();
-
-			//setInterval( function() { CheckTuningDataVersion(); }, 1000 * 60 * 30 );
-
-		});
-
-		function RespawnPlayer()
-		{
-			g_Minigame.m_CurrentScene.m_rgAbilityQueue.push({
-				'ability': k_ETowerAttackAbility_Respawn
-			});
-		}
-
-		function LeaveGame()
-		{
-			$J.post(
-				'http://steamcommunity.com/minigame/ajaxleavegame/',
-				{ 'gameid' : '44925', 'sessionid' : g_sessionID }
-				);
-		}
-	</script>
+	<script type="text/javascript" src="/javascript/minigame/minigame.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/minigame.js' ); ?>"></script>
+	<script type="text/javascript" src="/javascript/minigame/towerattack.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack.js' ); ?>"></script>
+	<script type="text/javascript" src="/javascript/minigame/towerattack/running.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/running.js' ); ?>"></script>
+	<script type="text/javascript" src="/javascript/minigame/towerattack/network.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/network.js' ); ?>"></script>
+	<script type="text/javascript" src="/javascript/minigame/towerattack/ui.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/ui.js' ); ?>"></script>
+	<script type="text/javascript" src="/javascript/minigame/towerattack/easing.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/easing.js' ); ?>"></script>
+	<script type="text/javascript" src="/javascript/minigame/towerattack/enemies.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/enemies.js' ); ?>"></script>
 </body>
 </html>

@@ -1,6 +1,8 @@
 //<script>
 "use strict"
 
+window.$J = jQuery.noConflict(); // valve
+
 var CMinigameManager = function( ){}
 
 CMinigameManager.prototype.Initialize = function(ele)

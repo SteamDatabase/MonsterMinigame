@@ -418,11 +418,6 @@ CEnemy.prototype.Destroy = function()
 	}
 
 	this.m_bIsDestroyed = true;
-
-
-
-
-	//PlaySound('explode');
 }
 
 CEnemy.prototype.Remove = function()

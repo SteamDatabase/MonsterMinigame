@@ -174,16 +174,71 @@ var g_rgSoundCache =
 	creep_11: { urlv: '/assets/minigame/towerattack/sfx/creep8.1.ogg', urlm: '/assets/minigame/towerattack/sfx/creep8.1.mp3' },
 };
 
-
+var g_steamID = document.body.dataset.steamid;
+var g_GameID =  document.body.dataset.gameid;
 var g_Server = false;
 var g_Minigame = false;
 var g_AudioManager = false;
-var g_GameID = 0;
 var g_TuningData = null;
 var g_DebugMode = false;
 var g_DebugUpdateStats = false;
 
-function Boot() {
+$J(window).bind('load', function()
+{
+	// Moved Valve's onclicks here
+	$J( '.element_upgrade_btn' ).on( 'click', function()
+	{
+		g_Minigame.m_CurrentScene.TryUpgrade( this );
+
+		return false;
+	} );
+
+	$J( '.lane' ).on( 'click', function()
+	{
+		g_Minigame.m_CurrentScene.TryChangeLane( this.dataset.lane );
+
+		return false;
+	} );
+
+	document.getElementById( 'player_respawn_btn' ).addEventListener( 'click', function( ev )
+	{
+		ev.preventDefault();
+
+		g_Minigame.m_CurrentScene.m_rgAbilityQueue.push( {
+			'ability': k_ETowerAttackAbility_Respawn
+		} );
+	}, false );
+
+	document.getElementById( 'toggle_sfx_btn' ).addEventListener( 'click', function( ev )
+	{
+		ev.preventDefault();
+
+		g_AudioManager.ToggleSound();
+	}, false );
+
+	document.getElementById( 'toggle_music_btn' ).addEventListener( 'click', function( ev )
+	{
+		ev.preventDefault();
+
+		g_AudioManager.ToggleMusic();
+	}, false );
+
+	g_Server = new CServerInterface( );
+
+	// This is stupid, we shouldn't wait for load event
+	$J.ajax({
+		url: g_Server.BuildURL( 'ITowerAttackMiniGameService', 'GetTuningData' ),
+		dataType: 'json'
+	}).done(Boot);
+});
+
+function Boot( rgTuningData ) {
+	g_TuningData = '';
+	g_DebugMode = true;
+	g_DebugUpdateStats = g_DebugMode;
+	g_IncludeGameStats = g_DebugMode;
+
+	document.getElementById( 'game_version' ).textContent = rgTuningData.game_version;
 
 	// create an new instance of a pixi stage
 
@@ -196,7 +251,7 @@ function Boot() {
 	//LoadScene('preload');
 	g_Minigame = new CMinigameManager;
 	g_Minigame.gameid = g_GameID;
-	g_Minigame.rgTuningData = g_TuningData;
+	g_Minigame.rgTuningData = rgTuningData;
 
 	g_Minigame.Initialize($J('#gamecontainer')[0]);
 
@@ -216,7 +271,6 @@ function Boot() {
 		ctx2d.webkitImageSmoothingEnabled = false;
 		ctx2d.mozImageSmoothingEnabled = false;
 	}
-
 };
 
 var CScenePreload = function()
@@ -272,7 +326,6 @@ CScenePreload.prototype.Tick = function()
 		// DO STUFF
 		this.m_cEmittersLoaded = 0;
 		this.m_cEmittersLoading = 0;
-		g_Server = new CServerInterface( );
 
 		var gamescene = new CSceneGame( this.m_Manager );
 		this.m_Manager.EnterScene( gamescene );
@@ -450,25 +503,6 @@ CScenePreload.prototype.Enter = function()
 	});
 }
 
-function ToggleSound()
-{
-	localStorage.setItem('minigame_mute', localStorage.getItem('minigame_mute') === '1' ? '0' : '1');
-}
-
-function bIsMuted()
-{
-	return localStorage.getItem('minigame_mute') === '1';
-}
-
-function PlaySound( sound )
-{
-	if( bIsMuted() )
-		return;
-	g_rgSoundCache[sound].element.currentTime=0;
-	g_rgSoundCache[sound].element.play();
-}
-
-
 // Keyvalues->JSON always produces objects even when it shouldn't. This cleans it up.
 function V_ToArray( obj )
 {
@@ -507,7 +541,7 @@ CAudioManager.prototype.tick = function()
 
 CAudioManager.prototype.play = function( sound, channel )
 {
-	if( bIsMuted() || !g_rgSoundCache[sound].element )
+	if( localStorage.getItem('minigame_mute') === '1' || !g_rgSoundCache[sound].element )
 		return;
 
 	if( channel )
@@ -550,6 +584,11 @@ CAudioManager.prototype.CrossfadeTrack = function( strNewTrack )
 		return;
 
 	this.m_eleMusic.play();
+}
+
+CAudioManager.prototype.ToggleSound = function( )
+{
+	localStorage.setItem('minigame_mute', localStorage.getItem('minigame_mute') === '1' ? '0' : '1');
 }
 
 CAudioManager.prototype.ToggleMusic = function( )
