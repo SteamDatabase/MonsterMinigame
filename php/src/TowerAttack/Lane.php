@@ -304,6 +304,12 @@ class Lane
 		return $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_ReflectDamage ) / 10;
 	}
 
+	public function GetNapalmDamageMultiplier()
+	{
+		$NapalmDamageMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Offensive_DOTAllTargets );
+		return $NapalmDamageMultiplier !== 0 ? $NapalmDamageMultiplier : 0;
+	}
+
 	public function GetStealHealthMultiplier()
 	{
 		$StealHealthMultiplier = $this->GetActivePlayerAbilityMultipler( Enums\EAbility::Item_StealHealth );

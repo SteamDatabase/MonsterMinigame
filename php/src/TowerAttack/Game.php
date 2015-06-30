@@ -449,6 +449,7 @@ class Game
 			{
 				# TODO: Apply this in Lane::CheckActivePlayerAbilities instead?
 				$ReflectDamageMultiplier = $Lane->GetReflectDamageMultiplier();
+				$NapalmDamageMultiplier = $Lane->GetNapalmDamageMultiplier();
 			}
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
@@ -475,11 +476,20 @@ class Game
 				}
 				else
 				{
-					if( $SecondPassed && $ReflectDamageMultiplier > 0 )
+					if( $SecondPassed )
 					{
 						# TODO: Apply this in Lane::CheckActivePlayerAbilities instead?
 						# TODO: Check if $ReflectDamageMultiplier is 0.5% or 50%, 0.5% would make more sense if it stacks..
-						$Enemy->AbilityDamageTaken += $Enemy->GetHp() * $ReflectDamageMultiplier * $SecondsPassed;
+						if( $ReflectDamageMultiplier > 0 )
+						{
+							$Enemy->AbilityDamageTaken += $Enemy->GetHp() * $ReflectDamageMultiplier * $SecondsPassed;
+						}
+
+						if( $NapalmDamageMultiplier > 0 )
+						{
+							$Damage = $Enemy->GetMaxHp() * $NapalmDamageMultiplier * $SecondsPassed;
+							$Enemy->AbilityDamageTaken += $Damage;
+						}
 					}
 					$Enemy->Hp -= $Enemy->DpsDamageTaken;
 					if( $Enemy->GetDpsHpDifference() > 0 )
