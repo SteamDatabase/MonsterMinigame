@@ -587,7 +587,13 @@ CSceneGame.prototype.OnReceiveUpdate = function()
 	this.m_UI.OnPlayerDataUpdate();
 
 	if( this.m_rgPlayerData.crit_damage )
+	{
 		this.m_rgStoredCrit = this.m_rgPlayerData.crit_damage;
+		var enemy = this.GetEnemy( this.m_rgPlayerData.current_lane, this.m_rgPlayerData.target ); // TODO: @Contex: use previous target (this.m_nTarget) instead?
+		var x = enemy.m_Sprite.position.x - (enemy.m_nLane * 440);
+		var y = enemy.m_Sprite.position.y - 52;
+		this.DoCritEffect( this.m_rgStoredCrit, x, y, 'Crit!' );
+	}
 
 	if( !this.m_easingBG )
 	{
@@ -1347,7 +1353,6 @@ CSceneGame.prototype.DoClick = function( mouseData )
 
 	if ( this.m_rgStoredCrit > 0 )
 	{
-		this.DoCritEffect( this.m_rgStoredCrit, x, y, 'Crit!' );
 		this.m_rgStoredCrit = 0;
 	} else {
 		this.DoClickEffect(this.CalculateDamage( this.m_rgPlayerTechTree.damage_per_click, element ), x, y);
