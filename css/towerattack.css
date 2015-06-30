@@ -126,13 +126,15 @@ a {
 
 #activitylog {
 	font-size: 8px;
-	margin-top: 29px;
+	margin-top: 19px;
 	margin-left: 6px;
 }
-#activitylog .title_activity {
+
+#activitylog .player_activity {
+	width: 261px;
+	text-align: center;
 	color: #ddd;
 }
-
 
 #upgrades {
 	font-size: 8px;
