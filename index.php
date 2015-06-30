@@ -127,7 +127,24 @@
 				</div>
 
 				<div id="activitylog">
-					<span class="title_activity"><span id="active_players_in_lane">0</span>/<span id="total_players">0</span> Players in lane</span>
+					<span class="title_activity">
+						<table id="player_activity" style="margin-left: -5px; margin-top: -10px;">
+							<thead>
+								<tr>
+									<th style="padding-right: 7px;">In lane</th>
+									<th style="padding-right: 7px;">Active in-game</th>
+									<th style="padding-right: 7px;">Total in-game</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr style="text-align: center;">
+									<td id="players_in_lane">0</td>
+									<td id="active_players">0</td>
+									<td id="total_players">0</td>
+								</tr>
+							</tbody>
+						</table>
+					</span>
 					<div id="activitycontainer"><div></div></div><div id="activityscroll"><div></div></div>
 
 					<form id="chatform" class="chatform">

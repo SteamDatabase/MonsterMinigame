@@ -77,11 +77,9 @@ CUI.prototype.BuildUI = function()
 	this.m_rgElementCache['lane_2_treasure'] = $J('.enemy_icon_4', this.m_rgElementCache['lane2' ] );
 	this.m_rgElementCache['lane_2_boss'] = $J('.enemy_icon_2', this.m_rgElementCache['lane2' ] );
 
-	//this.m_rgElementCache['players_in_lane'] = $J('#players_in_lane');
 	this.m_rgElementCache['total_players'] = $J('#total_players');
-	this.m_rgElementCache['active_players_in_lane'] = $J('#active_players_in_lane');
-	//this.m_rgElementCache['active_total_players'] = $J('#active_total_players');
-	//this.m_rgElementCache['dead_players_in_lane'] = $J('#dead_players_in_lane');
+	this.m_rgElementCache['active_players'] = $J('#active_players');
+	this.m_rgElementCache['players_in_lane'] = $J('#players_in_lane');
 
 
 	// Active in lane block
@@ -684,14 +682,19 @@ CUI.prototype.UpdateLanes = function()
 	}
 
 	// Update players in my lane
-	if( this.m_rgElementCache['active_players_in_lane'].text() !== instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].active_players_count )
+	if( this.m_rgElementCache['players_in_lane'].text() !== instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].players )
 	{
-		this.m_rgElementCache['active_players_in_lane'].text( instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].active_players_count );
+		this.m_rgElementCache['players_in_lane'].text( instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].players );
 	}
 
 	if( this.m_rgElementCache['total_players'].text() !== instance.m_rgStats.num_players )
 	{
 		this.m_rgElementCache['total_players'].text( instance.m_rgStats.num_players );
+	}
+
+	if( this.m_rgElementCache['active_players'].text() !== instance.m_rgStats.num_active_players )
+	{
+		this.m_rgElementCache['active_players'].text( instance.m_rgStats.num_active_players );
 	}
 
 	// @optimize
