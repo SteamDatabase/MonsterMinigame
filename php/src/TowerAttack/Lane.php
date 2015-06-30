@@ -18,35 +18,20 @@ class Lane
 	optional double active_player_ability_decrease_cooldowns = 7 [default = 1];
 	optional double active_player_ability_gold_per_click = 8 [default = 0];
 	*/
-	public $Players = array();
-	public $Enemies;
-	public $Dps;
+	public $Players = [];
+	public $Enemies = [];
+	public $Dps = 0;
 	public $ActivityLog = [];
-	public $Element;
+	public $Element = Enums\EElement::Start;
 	private $ActivePlayersCount = 0;
-	private $ActivePlayerAbilities;
+	private $ActivePlayerAbilities = [];
+	private $ActivePlayerAbilityDecreaseCooldowns = 0;
+	private $ActivePlayerAbilityGoldPerClick = 0;
+	private $PlayerHpBuckets = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 	private $LaneId;
 
-	public function __construct(
-		$LaneId,
-		array $Enemies = array(),
-		$Dps = 0,
-		array $ActivePlayerAbilities = array(),
-		array $ActivityLog = array(),
-		array $PlayerHpBuckets = array( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ),
-		$Element = Enums\EElement::Start,
-		$ActivePlayerAbilityDecreaseCooldowns = 0,
-		$ActivePlayerAbilityGoldPerClick = 0
-	) {
+	public function __construct( $LaneId ) {
 		$this->LaneId = $LaneId;
-		$this->Enemies = $Enemies;
-		$this->Dps = $Dps;
-		$this->ActivePlayerAbilities = $ActivePlayerAbilities;
-		$this->ActivityLog = $ActivityLog;
-		$this->PlayerHpBuckets = $PlayerHpBuckets;
-		$this->Element = $Element;
-		$this->ActivePlayerAbilityDecreaseCooldowns = $ActivePlayerAbilityDecreaseCooldowns;
-		$this->ActivePlayerAbilityGoldPerClick = $ActivePlayerAbilityGoldPerClick;
 	}
 
 	public function ToArray()
