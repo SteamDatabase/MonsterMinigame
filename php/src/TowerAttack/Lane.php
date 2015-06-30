@@ -30,7 +30,8 @@ class Lane
 	private $PlayerHpBuckets = [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 ];
 	private $LaneId;
 
-	public function __construct( $LaneId ) {
+	public function __construct( $LaneId ) 
+	{
 		$this->LaneId = $LaneId;
 	}
 
