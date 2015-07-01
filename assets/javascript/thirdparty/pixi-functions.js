@@ -37,7 +37,7 @@ PixiFunctions.prototype.addCSS = function()
 	var css = document.createElement("link");
 	css.setAttribute("type", "text/css");
 	css.setAttribute("rel", "stylesheet");
-	css.setAttribute("href", 'css/pixi.css');
+	css.setAttribute("href", g_AssetsHost + '/assets/css/pixi.css');
 	css.setAttribute("class", 'mw_added_css');
 	document.body.appendChild(css);
 }
@@ -66,7 +66,7 @@ PixiFunctions.prototype.playSong = function()
 {
 	var audioTag = document.createElement("audio");
 	audioTag.setAttribute("class", 'mw_added_css');
-	audioTag.src = 'assets/pixi/play.ogg';
+	audioTag.src = g_AssetsHost + '/assets/pixi/play.ogg';
 	audioTag.loop = false;
 
 	var instance = this;
