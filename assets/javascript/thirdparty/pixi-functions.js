@@ -184,6 +184,8 @@ PixiFunctions.prototype.shakeSlow = function( id, enemy, positive )
 
 PixiFunctions.prototype.stopShakeAll = function()
 {
+	g_Minigame.m_CurrentScene.m_Container.filters = null;
+	
 	// TODO: @Contex: RESET SPRITE SIZE!
 	var len = this.nodes.length;
 	this.done = true;
