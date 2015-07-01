@@ -10,19 +10,14 @@
 	$Config = json_decode( file_get_contents( __DIR__ . '/php/files/config.json' ) );
 	$CDN = $CDNRule = $Config->Assets->Host;
 
-	if( empty( $CDNRule ) )
-	{
-		$CDNRule = "'self'";
-	}
-
 	header( 'Content-Security-Policy: ' .
 		'default-src \'none\'; ' .
-		'script-src ' . $CDNRule . '; ' .
-		'style-src \'unsafe-inline\' ' . $CDNRule . '; ' .
-		'img-src data: ' . $CDNRule . ' https://steamcdn-a.akamaihd.net; ' .
-		'font-src ' . $CDNRule . '; ' .
-		'media-src ' . $CDNRule . '; ' .
-		'connect-src \'self\''
+		'connect-src \'self\' ' . $CDNRule . '; ' .
+		'img-src \'self\' data: ' . $CDNRule . ' https://steamcdn-a.akamaihd.net; ' .
+		'script-src ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; ' .
+		'style-src \'unsafe-inline\' ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; ' .
+		'font-src ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; ' .
+		'media-src ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; '
 	);
 ?><!DOCTYPE html>
 <html lang="en">
