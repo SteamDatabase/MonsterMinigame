@@ -18,7 +18,7 @@ body {
 	padding:0;
 
 	background-color: #4f463d;
-	background-image: url('/assets/minigame/towerattack/background_top_gradient.png');
+	background-image: url('/assets/images/background_top_gradient.png');
 	background-repeat: repeat-x;
 	background-position: 0 0;
 }
@@ -90,7 +90,7 @@ a {
 
 	pointer-events: none !important;
 
-	background: url('/assets/minigame/towerattack/game_frame_tv.png');
+	background: url('/assets/images/game_frame_tv.png');
 	background-repeat: no-repeat;
 }
 .scanlines {
@@ -105,7 +105,7 @@ a {
 
 	pointer-events: none !important;
 
-	background: url('/assets/minigame/towerattack/scanlines.png');
+	background: url('/assets/images/scanlines.png');
 	background-repeat: no-repeat;
 }
 
@@ -205,7 +205,7 @@ a {
 	height: 45px;
 	width: 15px;
 	margin: 0 0 0 -5px;
-	background: url('/assets/minigame/towerattack/scroll_handle.png');
+	background: url('/assets/images/scroll_handle.png');
 	background-repeat: no-repeat;
 	position: absolute;
 	box-shadow: 2px 2px 0px #000;
@@ -236,7 +236,7 @@ a {
 
 #elements .element_cost .cost {
 	color: #e1b21e;
-	background-image: url('/assets/minigame/towerattack/emoticons/coinz.png');
+	background-image: url('/assets/emoticons/coinz.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 14px 14px;
@@ -266,7 +266,7 @@ a {
 	color: #fff;
 }
 .element_upgrade .element_upgrade_btn {
-	background: url('/assets/minigame/towerattack/element_upgrade_default.png');
+	background: url('/assets/images/element_upgrade_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	width: 53px;
@@ -277,13 +277,13 @@ a {
 }
 .element_upgrade.cantafford .element_upgrade_btn,
 .element_upgrade.cantafford .element_upgrade_btn:hover {
-	background: url('/assets/minigame/towerattack/element_upgrade_default.png');
+	background: url('/assets/images/element_upgrade_default.png');
 	background-repeat: no-repeat;
 	background-position: -106px 0px;
 	cursor: default;
 }
 .element_upgrade .element_upgrade_btn:hover {
-	background: url('/assets/minigame/towerattack/element_upgrade_default.png');
+	background: url('/assets/images/element_upgrade_default.png');
 	background-repeat: no-repeat;
 	background-position: -53px 0px;
 }
@@ -306,7 +306,7 @@ a {
 	box-shadow: 4px 4px 0px rgba( 0, 0, 0, 0.6);
 }
 .spend_badge_ponts_ctn {
-	background: url('/assets/minigame/towerattack/badge_points_bg.png');
+	background: url('/assets/images/badge_points_bg.png');
 	background-repeat: no-repeat;
 	font-size: 8px;
 	padding: 20px;
@@ -332,7 +332,7 @@ a {
 {
 	margin-bottom: 10px;
 	color: #407898;
-	background-image: url('/assets/minigame/towerattack/emoticons/sheriffsbadge.png');
+	background-image: url('/assets/emoticons/sheriffsbadge.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 13px 13px;
@@ -393,7 +393,7 @@ a {
 	color: #fff;
 	display: block;
 	line-height: 12px;
-	background-image: url('/assets/minigame/towerattack/emoticons/sheriffsbadge.png');
+	background-image: url('/assets/emoticons/sheriffsbadge.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 13px 13px;
@@ -502,7 +502,7 @@ a {
 #game_over_dialog .player_dead_ctn,
 #player_dead_dialog .player_dead_ctn {
 	border: 1px solid #252525;
-	background: url('/assets/minigame/towerattack/dead_bg.png');
+	background: url('/assets/images/dead_bg.png');
 	background-repeat: no-repeat;
 }
 #game_over_dialog .title_dead,
@@ -674,14 +674,14 @@ a {
 
 #abilitiescontainer > div {
 	display: inline-block;
-	background: url('/assets/minigame/towerattack/ability_btn_default.png');
+	background: url('/assets/images/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	margin: 3px;
 	padding: 5px;
 }
 #abilitiescontainer > div:hover {
-	background: url('/assets/minigame/towerattack/ability_btn_default.png');
+	background: url('/assets/images/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: -46px 0px;
 }
@@ -692,12 +692,12 @@ a {
 }
 
 #abilitiescontainer > div.active {
-	background: url('/assets/minigame/towerattack/ability_btn_default.png');
+	background: url('/assets/images/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: -92px 0px;
 }
 #abilitiescontainer > div.active:hover {
-	background: url('/assets/minigame/towerattack/ability_btn_default.png');
+	background: url('/assets/images/ability_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: -92px 0px;
 }
@@ -736,43 +736,43 @@ a {
 	margin-bottom: 14px;
 }
 #col_right .lanes.desert {
-	background: url('/assets/minigame/towerattack/panel_right_desert.png');
+	background: url('/assets/images/panel_right_desert.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.city_day {
-	background: url('/assets/minigame/towerattack/panel_right_city.png');
+	background: url('/assets/images/panel_right_city.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.city_destroyed {
-	background: url('/assets/minigame/towerattack/panel_right_cityr.png');
+	background: url('/assets/images/panel_right_cityr.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.ocean_floor {
-	background: url('/assets/minigame/towerattack/panel_right_ocean.png');
+	background: url('/assets/images/panel_right_ocean.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.city_night {
-	background: url('/assets/minigame/towerattack/panel_right_night.png');
+	background: url('/assets/images/panel_right_night.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.space {
-	background: url('/assets/minigame/towerattack/panel_right_space.png');
+	background: url('/assets/images/panel_right_space.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.stadium {
-	background: url('/assets/minigame/towerattack/panel_right_stadium.png');
+	background: url('/assets/images/panel_right_stadium.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.volcano {
-	background: url('/assets/minigame/towerattack/panel_right_volcano.png');
+	background: url('/assets/images/panel_right_volcano.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.island {
-	background: url('/assets/minigame/towerattack/panel_right_island.png');
+	background: url('/assets/images/panel_right_island.png');
 	background-repeat: no-repeat;
 }
 #col_right .lanes.snow {
-	background: url('/assets/minigame/towerattack/panel_right_snow.png');
+	background: url('/assets/images/panel_right_snow.png');
 	background-repeat: no-repeat;
 }
 
@@ -883,7 +883,7 @@ a {
 }
 
 .lane {
-	background: url('/assets/minigame/towerattack/lane_default.png');
+	background: url('/assets/images/lane_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	display: inline-block;
@@ -898,7 +898,7 @@ a {
 	}
 
 .lane:hover {
-	background: url('/assets/minigame/towerattack/lane_default.png');
+	background: url('/assets/images/lane_default.png');
 	background-repeat: no-repeat;
 	background-position: -91px 0px;
 }
@@ -912,7 +912,7 @@ a {
 	width: 102px;
 	padding-right: 8px;
 	height: 73px;
-	background: url('/assets/minigame/towerattack/lane_active.png');
+	background: url('/assets/images/lane_active.png');
 	background-repeat: no-repeat;
 	border: 0px;
 	color: #fff;
@@ -1028,12 +1028,12 @@ a {
 	margin: 3px 0;
 	width: 254px;
 	min-height: 42px;
-	background: url('/assets/minigame/towerattack/upgrade_ctn_bg.png');
+	background: url('/assets/images/upgrade_ctn_bg.png');
 	background-repeat: no-repeat;
 }
 .upgrade.purchase {
 	min-height: 28px;
-	background: url('/assets/minigame/towerattack/purchase_ctn_bg.png');
+	background: url('/assets/images/purchase_ctn_bg.png');
 	background-repeat: no-repeat;
 }
 .upgrade.purchase img {
@@ -1044,7 +1044,7 @@ a {
 }
 
 .upgrade .link {
-	background: url('/assets/minigame/towerattack/upgrade_btn_default.png');
+	background: url('/assets/images/upgrade_btn_default.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	color: #ee7aff;
@@ -1060,24 +1060,24 @@ a {
 }
 
 .upgrade.purchase .link {
-	background: url('/assets/minigame/towerattack/purchase_btn_default.png');
+	background: url('/assets/images/purchase_btn_default.png');
 	background-repeat: no-repeat;
 	height: 16px;
 }
 .upgrade .link:hover {
-	background: url('/assets/minigame/towerattack/upgrade_btn_default.png');
+	background: url('/assets/images/upgrade_btn_default.png');
 	background-position: -107px 0px;
 	color: #fff;
 }
 .upgrade.purchase .link:hover {
-	background: url('/assets/minigame/towerattack/purchase_btn_default.png');
+	background: url('/assets/images/purchase_btn_default.png');
 	background-position: -107px 0px;
 	color: #fff;
 }
 .cantafford .upgrade .link,
 .cantafford .upgrade .link:hover {
 	box-shadow: none;
-	background: url('/assets/minigame/towerattack/upgrade_btn_default.png');
+	background: url('/assets/images/upgrade_btn_default.png');
 	background-position: -214px 0px;
 	color: #aaa;
 	cursor: default;
@@ -1085,7 +1085,7 @@ a {
 .cantafford .upgrade.purchase .link,
 .cantafford .upgrade.purchase .link:hover {
 	box-shadow: none;
-	background: url('/assets/minigame/towerattack/purchase_btn_default.png');
+	background: url('/assets/images/purchase_btn_default.png');
 	background-position: -214px 0px;
 	color: #aaa;
 	cursor: default;
@@ -1093,7 +1093,7 @@ a {
 
 .upgrade .cost {
 	color: #e1b21e;
-	background-image: url('/assets/minigame/towerattack/emoticons/coinz.png');
+	background-image: url('/assets/emoticons/coinz.png');
 	background-repeat: no-repeat;
 	background-position: left;
 	background-size: 14px 14px;
@@ -1204,7 +1204,7 @@ a {
 	margin-right: 10px;
 	height: 42px;
 	width: 42px;
-	background-image: url('/assets/minigame/towerattack/active_ability_ctn.png');
+	background-image: url('/assets/images/active_ability_ctn.png');
 	background-repeat: no-repeat;
 }
 .activeinlanetemplate .icon {
@@ -1355,7 +1355,7 @@ a {
 	width: 1280px;
 	height: 72px;
 
-	background: url('/assets/minigame/towerattack/game_controls.png');
+	background: url('/assets/images/game_controls.png');
 	background-repeat: no-repeat;
 
 	margin: 0px auto;
@@ -1374,7 +1374,7 @@ a {
 	height: 23px;
 }
 .game_options .leave_game_btn {
-	background: url('/assets/minigame/towerattack/leave_game_btn.png');
+	background: url('/assets/images/leave_game_btn.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	height: 56px;
@@ -1385,13 +1385,13 @@ a {
 	cursor: pointer;
 }
 .game_options .leave_game_btn:hover {
-	background: url('/assets/minigame/towerattack/leave_game_btn.png');
+	background: url('/assets/images/leave_game_btn.png');
 	background-repeat: no-repeat;
 	background-position: -206px 0px;
 	color: #fff;
 }
 .game_options .toggle_music_btn {
-	background: url('/assets/minigame/towerattack/toggle_sfx_btn.png');
+	background: url('/assets/images/toggle_sfx_btn.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	width: 150px;
@@ -1400,7 +1400,7 @@ a {
 	cursor: pointer;
 }
 .game_options .toggle_sfx_btn {
-	background: url('/assets/minigame/towerattack/toggle_sfx_btn.png');
+	background: url('/assets/images/toggle_sfx_btn.png');
 	background-repeat: no-repeat;
 	background-position: 0px 0px;
 	width: 150px;
@@ -1410,7 +1410,7 @@ a {
 }
 .game_options .toggle_music_btn:hover,
 .game_options .toggle_sfx_btn:hover {
-	background: url('/assets/minigame/towerattack/toggle_sfx_btn.png');
+	background: url('/assets/images/toggle_sfx_btn.png');
 	background-repeat: no-repeat;
 	background-position: -150px 0px;
 	color: #fff;
@@ -1472,19 +1472,19 @@ a {
 
 
 .icon_fire, .element_1 {
-	background-image: url('/assets/minigame/towerattack/emoticons/shelterwildfire.png');
+	background-image: url('/assets/emoticons/shelterwildfire.png');
 }
 
 .icon_water, .element_2 {
-	background-image: url('/assets/minigame/towerattack/emoticons/waterrune.png');
+	background-image: url('/assets/emoticons/waterrune.png');
 }
 
 .icon_air, .element_3 {
-	background-image: url('/assets/minigame/towerattack/emoticons/Wisp.png');
+	background-image: url('/assets/emoticons/Wisp.png');
 }
 
 .icon_earth, .element_4 {
-	background-image: url('/assets/minigame/towerattack/emoticons/FateTree.png');
+	background-image: url('/assets/emoticons/FateTree.png');
 }
 
 .chatform {

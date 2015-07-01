@@ -22,10 +22,10 @@
 	<meta charset="UTF-8">
 	<title>Tower Attack</title>
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-	<link href="/css/towerattack.css?v=<?php echo hash_file( 'crc32', __DIR__ . '/css/towerattack.css' ); ?>" rel="stylesheet" type="text/css">
+	<link href="/assets/css/towerattack.css?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/css/towerattack.css' ); ?>" rel="stylesheet" type="text/css">
 </head>
 <body data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>" data-gameid="1">
-	<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" class="github"><img src="/assets/minigame/towerattack/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
+	<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" class="github"><img src="/assets/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
 
 	<div class="breadcrumbs">
 		Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
@@ -44,7 +44,7 @@
 
 			<div id="col_left">
 				<div class="gold_count">
-					<img src="/assets/minigame/towerattack/emoticons/coinz.png" alt="Gold">
+					<img src="/assets/emoticons/coinz.png" alt="Gold">
 					<div id="info_gold"></div>
 				</div>
 
@@ -64,25 +64,25 @@
 					<div class="element_cost">Next Level Cost:<span class="cost" id="element_cost">00,000</span></div>
 					<div class="upgrades">
 						<div class="element_upgrade" id="upgr_3">
-							<img src="/assets/minigame/towerattack/emoticons/shelterwildfire.png" alt="Fire">
+							<img src="/assets/emoticons/shelterwildfire.png" alt="Fire">
 							<span class="level">0</span>
 							<br>
 							<a class="link element_upgrade_btn" data-type="3" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade"  id="upgr_4">
-							<img src="/assets/minigame/towerattack/emoticons/waterrune.png" alt="Water">
+							<img src="/assets/emoticons/waterrune.png" alt="Water">
 							<span class="level">0</span>
 							<br>
 							<a class="link element_upgrade_btn" data-type="4" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade" id="upgr_6">
-							<img src="/assets/minigame/towerattack/emoticons/FateTree.png" alt="Earth">
+							<img src="/assets/emoticons/FateTree.png" alt="Earth">
 							<span class="level">0</span>
 							<br>
 							<a class="link element_upgrade_btn" data-type="6" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
 						</div>
 						<div class="element_upgrade" id="upgr_5">
-							<img src="/assets/minigame/towerattack/emoticons/Wisp.png" alt="Air">
+							<img src="/assets/emoticons/Wisp.png" alt="Air">
 							<span class="level">0</span>
 							<br>
 							<a class="link element_upgrade_btn" data-type="5" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
@@ -97,20 +97,20 @@
 						<span class="label">Lane 1</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
-						--><div class="lane_enemy enemy_icon_2" id="lane0_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
-						--><div class="lane_enemy enemy_icon_4" id="lane0_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
+						--><div class="lane_enemy enemy_icon_2" id="lane0_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/images/ability_template_ph.png"></div><!--
+						--><div class="lane_enemy enemy_icon_4" id="lane0_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/images/ability_template_ph.png"></div>
 					</a><a id="lane1" class="lane" href="#" data-lane="1">
 						<span class="label">Lane 2</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
-						--><div class="lane_enemy enemy_icon_2" id="lane1_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
-						--><div class="lane_enemy enemy_icon_4" id="lane1_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
+						--><div class="lane_enemy enemy_icon_2" id="lane1_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/images/ability_template_ph.png"></div><!--
+						--><div class="lane_enemy enemy_icon_4" id="lane1_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/images/ability_template_ph.png"></div>
 					</a><a id="lane2" class="lane" href="#" data-lane="2">
 						<span class="label">Lane 3</span>
 						<div class="bar"><div></div></div>
 						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
-						--><div class="lane_enemy enemy_icon_2" id="lane2_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div><!--
-						--><div class="lane_enemy enemy_icon_4" id="lane2_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/minigame/towerattack/ability_template_ph.png"></div>
+						--><div class="lane_enemy enemy_icon_2" id="lane2_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="/assets/images/ability_template_ph.png"></div><!--
+						--><div class="lane_enemy enemy_icon_4" id="lane2_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="/assets/images/ability_template_ph.png"></div>
 					</a>
 				</div>
 
@@ -272,7 +272,7 @@
 		<!-- Templates -->
 
 		<div id="purchase_ability_item_template" class="purchase_ability_item ta_tip" data-tooltip-func="fnTooltipAbilityDesc">
-			<img src="/assets/minigame/towerattack/ability_template_ph.png">
+			<img src="/assets/images/ability_template_ph.png">
 			<span class="nameblock">
 				<span class="name"></span>
 				<span class="cost"></span>
@@ -308,7 +308,7 @@
 			<div class="upgrade purchase">
 				<div class="info">
 					<div>
-						<img src="/assets/minigame/towerattack/ability_template_ph.png" class="icon">
+						<img src="/assets/images/ability_template_ph.png" class="icon">
 						<span class="name"></span>
 					</div>
 					<div class="level"></div>
@@ -325,35 +325,35 @@
 
 		<div id="abilitytemplate" class="abilitytemplate">
 			<a class="link ta_tip" href="#" data-tooltip-func="fnTooltipAbilityDesc">
-				<img src="/assets/minigame/towerattack/ability_template_ph.png">
+				<img src="/assets/images/ability_template_ph.png">
 				<div class="timeleft"></div>
 			</a>
 		</div>
 
 		<div id="abilityitemtemplate" class="abilitytemplate">
 			<a class="link ta_tip" href="#" data-tooltip-func="fnTooltipAbilityDesc">
-				<img src="/assets/minigame/towerattack/ability_template_ph.png">
+				<img src="/assets/images/ability_template_ph.png">
 				<div class="timeleft abilityitem"></div>
 				<div class="abilityitemquantity"></div>
 			</a>
 		</div>
 
 		<div id="activitytemplate" class="activitytemplate" data-tooltip-func="fnTooltipAbilityDesc">
-			<span class="icon"><img src="/assets/minigame/towerattack/ability_template_ph.png"></span>
+			<span class="icon"><img src="/assets/images/ability_template_ph.png"></span>
 			<span class="ability_text">
 				<span class="name"></span> used <span class="ability"></span>
 			</span>
 		</div>
 
 		<div id="chattemplate" class="activitytemplate chattemplate">
-			<span class="icon"><img src="/assets/minigame/towerattack/ability_template_ph.png"></span>
+			<span class="icon"><img src="/assets/images/ability_template_ph.png"></span>
 			<span class="ability_text">
 				<span class="name"></span> <span class="action">said:</span> <div class="ability"></div>
 			</span>
 		</div>
 
 		<div id="servertemplate" class="activitytemplate chattemplate">
-			<span class="icon"><img src="/assets/minigame/towerattack/emoticons/happy_creep.png"></span>
+			<span class="icon"><img src="/assets/emoticons/happy_creep.png"></span>
 			<span class="ability_text">
 				<span class="name">Game Notice</span>
 				<div class="ability"></div>
@@ -362,7 +362,7 @@
 
 		<div id="activeinlanetemplate" class="activeinlanetemplate" data-tooltip-func="fnTooltipAbilityDesc">
 			<div class="icon">
-				<img src="/assets/minigame/towerattack/ability_template_ph.png">
+				<img src="/assets/images/ability_template_ph.png">
 				<div class="quantity"></div>
 			</div>
 		</div>
@@ -380,18 +380,18 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="/javascript/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="/javascript/tooltip.js"></script>
-	<script type="text/javascript" src="/javascript/pixi.min.js"></script>
-	<script type="text/javascript" src="/javascript/pixi-spine.min.js"></script>
-	<script type="text/javascript" src="/javascript/pixi-particles.min.js"></script>
-	<script type="text/javascript" src="/javascript/pixi-functions.js"></script>
-	<script type="text/javascript" src="/javascript/minigame/minigame.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/minigame.js' ); ?>"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack.js' ); ?>"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/running.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/running.js' ); ?>"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/network.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/network.js' ); ?>"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/ui.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/ui.js' ); ?>"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/easing.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/easing.js' ); ?>"></script>
-	<script type="text/javascript" src="/javascript/minigame/towerattack/enemies.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/enemies.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/thirdparty/jquery-1.11.1.min.js"></script>
+	<script type="text/javascript" src="/assets/javascript/thirdparty/tooltip.js"></script>
+	<script type="text/javascript" src="/assets/javascript/thirdparty/pixi.min.js"></script>
+	<script type="text/javascript" src="/assets/javascript/thirdparty/pixi-spine.min.js"></script>
+	<script type="text/javascript" src="/assets/javascript/thirdparty/pixi-particles.min.js"></script>
+	<script type="text/javascript" src="/assets/javascript/thirdparty/pixi-functions.js"></script>
+	<script type="text/javascript" src="/assets/javascript/minigame.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/minigame.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/towerattack.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/towerattack.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/running.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/running.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/network.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/network.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/ui.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/ui.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/easing.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/easing.js' ); ?>"></script>
+	<script type="text/javascript" src="/assets/javascript/enemies.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/enemies.js' ); ?>"></script>
 </body>
 </html>
