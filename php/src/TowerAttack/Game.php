@@ -539,7 +539,7 @@ class Game
 								$this->NumMiniBossesKilled++;
 								break;
 							case Enums\EEnemyType::TreasureMob:
-								$this->NumTreasureMobsKilled++;
+								$this->NumTreasuresKilled++;
 								break;
 						}
 						$Enemy->SetHp( 0 );
