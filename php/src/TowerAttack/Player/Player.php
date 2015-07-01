@@ -36,7 +36,7 @@ class Player
 	public $PlayerName;
 	public $AccountId;
 	private $LastLoot = null;
-	private $CurrentLane = 1;
+	private $CurrentLane = 0;
 	private $Target = 0;
 	private $Gold = 100000000; # TODO: Set to 0
 	private $ActiveAbilitiesBitfield = 0;
