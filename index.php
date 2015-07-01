@@ -385,6 +385,7 @@
 	<script type="text/javascript" src="/javascript/pixi.min.js"></script>
 	<script type="text/javascript" src="/javascript/pixi-spine.min.js"></script>
 	<script type="text/javascript" src="/javascript/pixi-particles.min.js"></script>
+	<script type="text/javascript" src="/javascript/pixi-functions.js"></script>
 	<script type="text/javascript" src="/javascript/minigame/minigame.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/minigame.js' ); ?>"></script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack.js' ); ?>"></script>
 	<script type="text/javascript" src="/javascript/minigame/towerattack/running.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/javascript/minigame/towerattack/running.js' ); ?>"></script>

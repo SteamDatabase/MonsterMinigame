@@ -1,0 +1,17 @@
+.mw-strobe_light {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100000;
+  background-color: rgba(250,250,250,0.8);
+  display: block;
+}
+
+.flash, .mw-strobe_light {
+  -webkit-animation-name: flash;
+  -moz-animation-name: flash;
+  -o-animation-name: flash;
+  animation-name: flash;
+}
