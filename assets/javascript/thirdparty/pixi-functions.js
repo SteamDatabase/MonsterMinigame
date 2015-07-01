@@ -10,6 +10,7 @@ window.PixiFunctions = function()
 	this.firstEnemy = null;
 	this.currentKeys = [];
 	this.shakeData = {};
+	this.playSfx = false;
 
 	var specialKeys = '38,38,40,40,37,39,37,39,66,65';
 	var specialEvent;
@@ -22,6 +23,13 @@ window.PixiFunctions = function()
 			instance.firstEnemy = gameInstance.GetEnemy( gameInstance.m_rgPlayerData.current_lane, gameInstance.m_rgPlayerData.target );
 			if ( instance.firstEnemy )
 			{
+				if ( localStorage.getItem('minigame_mute') !== '1' )
+				{
+					this.playSfx = true;
+				}
+
+				g_AudioManager.m_eleMusic.pause();
+
 				instance.addCSS();
 				instance.playSong();
 				$J( document ).unbind( 'keydown' , specialEvent );
@@ -84,7 +92,6 @@ PixiFunctions.prototype.playSong = function()
 		if (audioTag.currentTime >= 15.5 && !instance.shake)
 		{
 			instance.shake = true;
-			instance.stopShakeAll();
 			instance.flashScreen();
 			for (var i = 0; i < len; i++)
 			{
@@ -185,7 +192,17 @@ PixiFunctions.prototype.shakeSlow = function( id, enemy, positive )
 PixiFunctions.prototype.stopShakeAll = function()
 {
 	g_Minigame.m_CurrentScene.m_Container.filters = null;
-	
+
+	if ( localStorage.getItem('minigame_mutemusic') !== '1' )
+	{
+		g_AudioManager.m_eleMusic.play();
+	}
+
+	if ( this.playSfx )
+	{
+		localStorage.setItem( 'minigame_mute', '0' );
+	}
+
 	// TODO: @Contex: RESET SPRITE SIZE!
 	var len = this.nodes.length;
 	this.done = true;
