@@ -600,15 +600,20 @@ class Game
 							{
 								continue;
 							}
+
 							// Kill the treasure mob and set gold to 0 if the timer (lifetime) ran out
 							Server::GetLogger()->debug( 
 								'Treasure mob #' . $Enemy->GetId() . 
 								' timer has ran out in lane #' . $Lane->GetLaneId() . 
 								', killing treasure mob' 
 							);
+
 							$Enemy->SetHp( 0 );
 							$Enemy->SetGold( 0 );
 							$Enemy->DisableTimer();
+
+							$this->AddChatEntry( 'server', '', 'You were too slow to kill the treasure, it has despawned' );
+
 							break;
 					}
 					$Enemy->ResetTimer();
