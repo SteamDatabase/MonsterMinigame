@@ -274,6 +274,13 @@ class TechTree
 		return $this->BadgePoints;
 	}
 
+	public function IncreaseBadgePoints( $Amount )
+	{
+		$this->BadgePoints += $Amount;
+
+		return $this->BadgePoints;
+	}
+
 	public function DecreaseBadgePoints( $Amount )
 	{
 		$this->BadgePoints -= $Amount;

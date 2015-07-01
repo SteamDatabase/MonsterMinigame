@@ -665,11 +665,19 @@ class Game
 
 				$this->Level += $this->WormholeCount;
 
+				$BadgePoints = Util::FloorToMultipleOf( 10, $this->WormholeCount * 0.1 );
 				$AbilityGold = AbilityItem::GetGoldMultiplier( Enums\EAbility::Item_SkipLevels );
+
 				$Players = $this->GetPlayers();
+
 				foreach( $Players as $Player )
 				{
 					$Player->IncreaseGold( $AbilityGold * $this->WormholeCount ); # TODO: Is gold stackable as well?
+
+					if( $BadgePoints > 0 )
+					{
+						$Player->GetTechTree()->IncreaseBadgePoints( $BadgePoints );
+					}
 				}
 
 				$this->AddChatEntry( 'server', '', 'Skipped ' . number_format( $this->WormholeCount ) . ' level' . ( $this->WormholeCount === 1 ? '' : 's' ) );
