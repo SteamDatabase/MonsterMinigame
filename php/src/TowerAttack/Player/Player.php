@@ -506,17 +506,8 @@ class Player
 		else if ( $Ability === Enums\EAbility::Item_KillMob ) # TODO: Move this to HandleAbility?
 		{
 			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if(
-				$Enemy === null
-				||
-				(
-					$Enemy->GetType() !== Enums\EEnemyType::Mob
-					&&
-					$Enemy->GetType() !== Enums\EEnemyType::MiniBoss
-				) # TODO: Boss or MiniBoss?
-				||
-				$Enemy->IsDead()
-			) {
+			if( $Enemy === null || $Enemy->IsDead() )
+			{
 				return false;
 			}
 		}

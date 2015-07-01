@@ -236,17 +236,17 @@ class AbilityItem
 						break;
 					}
 
-					if( $Enemy->GetType() === Enums\EEnemyType::Mob )
-					{
-						$Enemy->SetHp( 1 );
-					}
-					else if( $Enemy->GetType() === Enums\EEnemyType::MiniBoss ) # TODO: Boss or MiniBoss?
+					if( $Enemy->GetType() === Enums\EEnemyType::Boss )
 					{
 						$MaxPercentage = $AbilityMultiplier;
 						$Percentage = $MaxPercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
 						$Damage = $Enemy->GetMaxHp() * $Percentage;
 						$Player->Stats->AbilityDamageDealt += $Damage;
 						$Enemy->DecreaseHp( $Damage );
+					}
+					else
+					{
+						$Enemy->SetHp( 1 );
 					}
 				}
 				break;
