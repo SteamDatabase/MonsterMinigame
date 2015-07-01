@@ -2,6 +2,7 @@
 
 This is a fully fledged clone of Valve's Summer Sale 2015 Minigame also known as "Tower Attack".
 
+Media appearances: [Kotaku](http://steamed.kotaku.com/the-steam-summer-sale-game-ended-so-players-are-making-1715214618)
 
 ### Disclaimer & Licenses
 
