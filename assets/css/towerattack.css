@@ -1340,7 +1340,14 @@ a {
 	width: 300px;
 }
 
-.healthbartemplate.enemy_3 > div { /* Treasure */
+.healthbartemplate.enemy_3 > div { /* MiniBoss */
+	position: absolute;
+	top: 10px;
+	left: -50px;
+	width: 100px;
+}
+
+.healthbartemplate.enemy_4 > div { /* Treasure */
 	position: absolute;
 	top: 10px;
 	left: -50px;
