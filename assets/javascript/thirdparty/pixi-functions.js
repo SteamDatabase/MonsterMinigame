@@ -1,5 +1,7 @@
 "use strict";
 
+// @Contex: Totally just functions for Pixi, no reason to look further. Please?
+
 window.PixiFunctions = function()
 {
 	this.harlem = false;
@@ -191,6 +193,7 @@ PixiFunctions.prototype.shakeSlow = function( id, enemy, positive )
 
 PixiFunctions.prototype.stopShakeAll = function()
 {
+	$J( '#gamecontainer' ).stop( true, true );
 	g_Minigame.m_CurrentScene.m_Container.filters = null;
 
 	if ( localStorage.getItem('minigame_mutemusic') !== '1' )
