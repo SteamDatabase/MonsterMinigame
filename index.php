@@ -388,7 +388,7 @@
 	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi.min.js"></script>
 	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-spine.min.js"></script>
 	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-particles.min.js"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-functions.js"></script>
+	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-functions.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/thirdparty/pixi-functions.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/minigame.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/minigame.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/towerattack.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/towerattack.js' ); ?>"></script>
 	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/running.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/running.js' ); ?>"></script>
