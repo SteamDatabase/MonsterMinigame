@@ -40,7 +40,6 @@ class Game
 	public $NumBossesKilled = 0;
 	public $NumTreasuresKilled = 0;
 	public $NumAbilitiesActivated = 0;
-	public $NumPlayersReachingMilestoneLevel = 0; # TODO: Implement
 	public $NumAbilityItemsActivated = 0;
 
 	public $TimeSimulating = 0.0;
