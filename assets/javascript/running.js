@@ -703,8 +703,6 @@ function SmackTV()
 	g_Minigame.m_CurrentScene.m_Container.filters = r;
 
 	$J('#gamecontainer').animate({'left': -10 + 'px', 'top': 3 + 'px'}, 75,function(){ $J('#gamecontainer').css({'left': "0", 'top' : 0}); });
-
-	console.log("%c*Whump*", "font-size: 32px;");
 }
 
 CSceneGame.prototype.OnSimulatedServerTick = function()
