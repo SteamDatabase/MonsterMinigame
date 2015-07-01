@@ -226,7 +226,10 @@ class Game
 							Enums\EEnemyType::TreasureMob,
 							$this->GetLevel()
 						);
+
 						$HasTreasureMob = true;
+
+						$this->AddChatEntry( 'server', '', 'Treasure spawned in ' . $Lane->GetLaneName() . ' lane' );
 					}
 					else
 					{

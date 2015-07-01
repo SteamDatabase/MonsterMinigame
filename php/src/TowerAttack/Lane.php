@@ -55,6 +55,16 @@ class Lane
 		return $this->LaneId;
 	}
 
+	public function GetLaneName()
+	{
+		switch( $this->LaneId )
+		{
+			case 0: return 'Left';
+			case 1: return 'Middle';
+			case 2: return 'Right';
+		}
+	}
+
 	public function GetActivePlayersCount()
 	{
 		return $this->ActivePlayersCount;
