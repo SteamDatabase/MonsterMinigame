@@ -1340,19 +1340,20 @@ window.fnTooltipUpgradeDesc = function( context )
 		case 8:
 			break;
 		case 0:
-			strOut += '<br><br>Base Health: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.hp ) + '</b>';
-			strOut += '<br>Current Health: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.max_hp ) + '</b>';
-			strOut += '<br>New Health: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.hp * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.hp_multiplier + multiplier ) ) + '</b>';
+			strOut += '<br><br>Health:';
+			strOut += '<br>Base: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.hp ) + '</b>';
+			strOut += '<br>Current: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.max_hp ) + '</b>';
+			strOut += '<br>Next Level: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.hp * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.hp_multiplier + multiplier ) ) + '</b>';
 			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 1:
-			strOut += '<br>';
+			strOut += '<br><br>DPS:';
 			if ( $context.data( 'type' ) == 1 )
 			{
-				strOut += '<br>Base DPS: <b>' + ( $context.data( 'initial_value' ) ) + '</b>';
+				strOut += '<br>Base: <b>' + ( $context.data( 'initial_value' ) ) + '</b>';
 			}
-			strOut += '<br>Current DPS: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.dps ) + '</b>';
-			strOut += '<br>New DPS: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.base_dps * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_dps + multiplier ) ) + '</b>';
+			strOut += '<br>Current: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.dps ) + '</b>';
+			strOut += '<br>Next Level: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.base_dps * ( g_Minigame.m_CurrentScene.m_rgPlayerTechTree.damage_multiplier_dps + multiplier ) ) + '</b>';
 			strOut += '<br><br>Base Increased by: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
 			break;
 		case 2:
@@ -1378,6 +1379,7 @@ window.fnTooltipUpgradeDesc = function( context )
 		case 9:
 			var bossLootChance = g_Minigame.m_CurrentScene.m_rgPlayerTechTree.boss_loot_drop_percentage * 100;
 			strOut += '<br><br>Boss Loot Drop Rate:';
+			strOut += '<br>Base: <b>' + FormatNumberForDisplay( g_Minigame.m_CurrentScene.m_rgTuningData.player.loot_chance * 100 ) + '%</b>';
 			strOut += '<br>Current: <b>' + bossLootChance + '%</b>';
 			strOut += '<br>Next Level: <b>' + ( bossLootChance + multiplier * 100 ) + '%</b>';
 			strOut += '<br><br>Base Increased By: <b>' + FormatNumberForDisplay( 100 * multiplier ) + '%</b>';
