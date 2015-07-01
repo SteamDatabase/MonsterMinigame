@@ -19,7 +19,7 @@
 			die;
 		}
 
-		$Key = trim( file_get_contents( __DIR__ . '/php/files/apikey.txt' ) );
+		$Config = json_decode( file_get_contents( __DIR__ . '/php/files/config.json' ) );
 
 		$c = cURL_Init( );
 
@@ -27,7 +27,7 @@
 			CURLOPT_USERAGENT      => 'Steam Database Party OpenID Login',
 			CURLOPT_ENCODING       => 'gzip',
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_URL            => 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?format=json&key=' . $Key . '&steamids=' . $CommunityID,
+			CURLOPT_URL            => 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?format=json&key=' . $Config->Steam->APIKey . '&steamids=' . $CommunityID,
 			CURLOPT_CONNECTTIMEOUT => 5,
 			CURLOPT_TIMEOUT        => 5
 		) );

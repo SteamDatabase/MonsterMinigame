@@ -1,0 +1,10 @@
+{
+	"Steam":
+	{
+		"APIKey": "your api key"
+	},
+	"Assets":
+	{
+		"Host": ""
+	}
+}
