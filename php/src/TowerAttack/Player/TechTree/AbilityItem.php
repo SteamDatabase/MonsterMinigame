@@ -182,6 +182,10 @@ class AbilityItem
 						}
 						$Player->Stats->AbilityDamageDealt += $Damage;
 						$Enemy->DecreaseHp( $Damage );
+						if( $Enemy->GetHp() === 0 )
+						{
+							$Game->IncreaseEnemiesKilled( $Enemy );
+						}
 					}
 				}
 				break;
@@ -194,6 +198,10 @@ class AbilityItem
 						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
 						$Player->Stats->AbilityDamageDealt += $Damage;
 						$Enemy->DecreaseHp( $Damage );
+						if( $Enemy->GetHp() === 0 )
+						{
+							$Game->IncreaseEnemiesKilled( $Enemy );
+						}
 					}
 				}
 				break;
@@ -243,6 +251,10 @@ class AbilityItem
 						$Damage = $Enemy->GetMaxHp() * $Percentage;
 						$Player->Stats->AbilityDamageDealt += $Damage;
 						$Enemy->DecreaseHp( $Damage );
+						if( $Enemy->GetHp() === 0 )
+						{
+							$Game->IncreaseEnemiesKilled( $Enemy );
+						}
 					}
 					else
 					{
@@ -300,6 +312,10 @@ class AbilityItem
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
 					$Player->Stats->AbilityDamageDealt += $Damage;
 					$Enemy->DecreaseHp( $Damage );
+					if( $Enemy->GetHp() === 0 )
+					{
+						$Game->IncreaseEnemiesKilled( $Enemy );
+					}
 				}
 				break;
 			case Enums\EAbility::Item_GiveGold:

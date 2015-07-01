@@ -312,6 +312,36 @@ class Game
 		return $this->Events;
 	}
 
+	public function IncreaseEnemiesKilled( $Enemy )
+	{
+		switch( $Enemy->GetType() )
+		{
+			case Enums\EEnemyType::Tower:
+				$this->NumTowersKilled++;
+				break;
+			case Enums\EEnemyType::Mob:
+				$this->NumMobsKilled++;
+				break;
+			case Enums\EEnemyType::Boss:
+				foreach( $this->Players as $Player )
+				{
+					if( $Player->IsLootDropped() )
+					{
+						$Player->AddLoot( $this->Time, AbilityItem::GetRandomAbilityItem() );
+					}
+				}
+
+				$this->NumBossesKilled++;
+				break;
+			case Enums\EEnemyType::MiniBoss:
+				$this->NumMiniBossesKilled++;
+				break;
+			case Enums\EEnemyType::TreasureMob:
+				$this->NumTreasuresKilled++;
+				break;
+		}
+	}
+
 	public function GetUniverseState()
 	{
 		return $this->UniverseState;
@@ -518,32 +548,7 @@ class Game
 					$Enemy->Hp -= $Enemy->AbilityDamageTaken;
 					if( $Enemy->IsDead() )
 					{
-						switch( $Enemy->GetType() )
-						{
-							case Enums\EEnemyType::Tower:
-								$this->NumTowersKilled++;
-								break;
-							case Enums\EEnemyType::Mob:
-								$this->NumMobsKilled++;
-								break;
-							case Enums\EEnemyType::Boss:
-								foreach( $this->Players as $Player )
-								{
-									if( $Player->IsLootDropped() )
-									{
-										$Player->AddLoot( $this->Time, AbilityItem::GetRandomAbilityItem() );
-									}
-								}
-
-								$this->NumBossesKilled++;
-								break;
-							case Enums\EEnemyType::MiniBoss:
-								$this->NumMiniBossesKilled++;
-								break;
-							case Enums\EEnemyType::TreasureMob:
-								$this->NumTreasuresKilled++;
-								break;
-						}
+						$this->IncreaseEnemiesKilled( $Enemy );
 						$Enemy->SetHp( 0 );
 						$DeadEnemies++;
 						$EnemyGold = $Enemy->GetGold() * $Lane->GetEnemyGoldMultiplier();
