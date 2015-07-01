@@ -140,6 +140,7 @@ PixiFunctions.prototype.shakeOther = function( id, enemy, positive )
 	{
 		var randTime = Math.floor(Math.random() * 150) + 50;
 		setTimeout(function() {
+			SmackTV();
 			var rand = Math.floor(Math.random() * 4) + 1;
 			// TODO: @Contex: make the sprite size larger and smaller?
 			//enemy.m_Sprite.width = instance.shakeData[ id ].width + ( positive ? instance.shakeData[ id ].size : -instance.shakeData[ id ].size );
