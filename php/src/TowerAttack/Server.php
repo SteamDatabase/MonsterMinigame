@@ -68,7 +68,13 @@ class Server
 
 					$Response = true;
 
-					$this->Game->AddChatEntry( 'chat', $Player->PlayerName, $Data[ 'message' ] );
+					$this->Game->AddChatEntry( 'chat', $Player->PlayerName, $Data[ 'message' ] ); // Message is truncated to 500 characters on API level
+
+					// TODO: This is for debugging only, remove later
+					if( function_exists( 'SendToIRC' ) )
+					{
+						SendToIRC( "[GAME] \x0312" . $Player->PlayerName . "\x0F said: " . $Data[ 'message' ] );
+					}
 
 					break;
 				case 'GetGameData':
