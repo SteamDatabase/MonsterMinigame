@@ -163,7 +163,7 @@ class AbilityItem
 	 *
 	 * @return bool Returns true if ability has been successfully used, false otherwise.
 	 */
-	public static function HandleAbility( $Game, $Lane, $Player, $Ability, $Deactivate = false )
+	public static function HandleAbility( $Game, $Lane, $Player, &$Ability, $Deactivate = false )
 	{
 		$AbilityMultiplier = self::GetMultiplier( $Ability->GetAbility() );
 
@@ -274,15 +274,11 @@ class AbilityItem
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
 
-					$Lane->AddActivePlayerAbility
-					(
-						new ActiveAbility
-						(
-							$Game->Time,
-							Enums\EAbility::Support_IncreaseCritPercentage,
-							$Player->PlayerName,
-							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-						)
+					$Ability = new ActiveAbility(
+						$Game->Time,
+						Enums\EAbility::Support_IncreaseCritPercentage,
+						$Player->PlayerName,
+						$Lane->HasActivePlayerAbilityDecreaseCooldowns()
 					);
 				}
 				break;
@@ -292,15 +288,11 @@ class AbilityItem
 					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
 
-					$Lane->AddActivePlayerAbility
-					(
-						new ActiveAbility
-						(
-							$Game->Time,
-							Enums\EAbility::Support_Heal,
-							$Player->PlayerName,
-							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-						)
+					$Ability = new ActiveAbility(
+						$Game->Time,
+						Enums\EAbility::Support_Heal,
+						$Player->PlayerName,
+						$Lane->HasActivePlayerAbilityDecreaseCooldowns()
 					);
 				}
 				break;
@@ -327,14 +319,11 @@ class AbilityItem
 				{
 					$Player->IncreaseGold( $AbilityMultiplier * pow( 10, max( 0, floor( log10( $Game->GetLevel() ) ) - 1 ) ) );
 
-					$Lane->AddActivePlayerAbility(
-						new ActiveAbility
-						(
-							$Game->Time,
-							Enums\EAbility::Support_IncreaseGoldDropped,
-							$Player->PlayerName,
-							$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-						)
+					$Ability = new ActiveAbility(
+						$Game->Time,
+						Enums\EAbility::Support_IncreaseGoldDropped,
+						$Player->PlayerName,
+						$Lane->HasActivePlayerAbilityDecreaseCooldowns()
 					);
 				}
 				break;
