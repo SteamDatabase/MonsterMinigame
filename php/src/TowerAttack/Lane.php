@@ -184,6 +184,19 @@ class Lane
 		}
 	}
 
+	public function RemoveActiveWormholes()
+	{
+		$ActivePlayerAbilities = $this->ActivePlayerAbilities;
+
+		foreach( $ActivePlayerAbilities as $Key => $ActiveAbility )
+		{
+			if( $ActiveAbility->GetAbility() === Enums\EAbility::Item_SkipLevels )
+			{
+				unset( $this->ActivePlayerAbilities[ $Key ] );
+			}
+		}
+	}
+
 	public function GetPlayerHpBuckets()
 	{
 		return $this->PlayerHpBuckets;

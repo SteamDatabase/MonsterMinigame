@@ -481,6 +481,7 @@ class Game
 
 		// Loop through lanes and deal damage etc
 		$DeadLanes = 0;
+
 		foreach( $this->Lanes as $LaneId => $Lane )
 		{
 			if( $SecondPassed )
@@ -489,9 +490,11 @@ class Game
 				$ReflectDamageMultiplier = $Lane->GetReflectDamageMultiplier();
 				$NapalmDamageMultiplier = $Lane->GetNapalmDamageMultiplier();
 			}
+
 			$DeadEnemies = 0;
 			$EnemyCount = count( $Lane->Enemies );
 			$EnemyDpsDamage = 0;
+
 			foreach( $Lane->Enemies as $Enemy )
 			{
 				if( $Enemy->IsDead() )
@@ -500,16 +503,19 @@ class Game
 					{
 						// Find next enemy to deal the rest of the DPS damage to
 						$NextEnemy = $Lane->GetAliveEnemy();
+
 						if( $NextEnemy !== null )
 						{
 							Server::GetLogger()->debug(
-								'Enemy #' . $Enemy->GetId() . ' is dead. Passing on ' . 
-								$Enemy->GetDpsHpDifference() . ' DPS damage to enemy #' . 
+								'Enemy #' . $Enemy->GetId() . ' is dead. Passing on ' .
+								$Enemy->GetDpsHpDifference() . ' DPS damage to enemy #' .
 								$NextEnemy->GetId()
 							);
+
 							$NextEnemy->DpsDamageTaken += $Enemy->GetDpsHpDifference();
 						}
 					}
+
 					$DeadEnemies++;
 				}
 				else
@@ -529,33 +535,40 @@ class Game
 							$Enemy->AbilityDamageTaken += $Damage;
 						}
 					}
+
 					$Enemy->Hp -= $Enemy->DpsDamageTaken;
+
 					if( $Enemy->GetDpsHpDifference() > 0 )
 					{
 						// Find next enemy to deal the rest of the DPS damage to
 						$NextEnemy = $Lane->GetAliveEnemy();
+
 						if( $NextEnemy !== null )
 						{
 							Server::GetLogger()->debug(
-								'Enemy #' . $Enemy->GetId() . ' is dead. Passing on ' . 
-								$Enemy->GetDpsHpDifference() . ' DPS damage to enemy #' . 
+								'Enemy #' . $Enemy->GetId() . ' is dead. Passing on ' .
+								$Enemy->GetDpsHpDifference() . ' DPS damage to enemy #' .
 								$NextEnemy->GetId()
 							);
 							$NextEnemy->DpsDamageTaken += $Enemy->GetDpsHpDifference();
 						}
 					}
+
 					$Enemy->Hp -= $Enemy->ClickDamageTaken;
 					$Enemy->Hp -= $Enemy->AbilityDamageTaken;
+
 					if( $Enemy->IsDead() )
 					{
 						$this->IncreaseEnemiesKilled( $Enemy );
 						$Enemy->SetHp( 0 );
 						$DeadEnemies++;
 						$EnemyGold = $Enemy->GetGold() * $Lane->GetEnemyGoldMultiplier();
+
 						Server::GetLogger()->debug(
-							'Enemy #' . $Enemy->GetId() . ' is dead. Giving ' . $EnemyGold . 
+							'Enemy #' . $Enemy->GetId() . ' is dead. Giving ' . $EnemyGold .
 							' gold (Multiplier: ' . $Lane->GetEnemyGoldMultiplier() . ') to players in lane #' . $Lane->GetLaneId()
 						);
+
 						$Lane->GiveGoldToPlayers( $this, $EnemyGold );
 					}
 					else
@@ -577,26 +590,31 @@ class Game
 							{
 								continue;
 							}
+
 							// Revive dead mobs in the lane if the tower timer ran out
-							Server::GetLogger()->debug( 
-								'Respawn timer has ran out in lane #' . 
-								$Lane->GetLaneId() . ', reviving dead mobs in the lane' 
+							Server::GetLogger()->debug(
+								'Respawn timer has ran out in lane #' .
+								$Lane->GetLaneId() . ', reviving dead mobs in the lane'
 							);
+
 							foreach( $Lane->GetDeadEnemies( Enums\EEnemyType::Mob ) as $DeadEnemy )
 							{
 								$DeadEnemy->ResetHp();
 							}
+
 							break;
 						case Enums\EEnemyType::MiniBoss:
 							if( !$Enemy->IsDead() )
 							{
 								continue;
 							}
+
 							// Revive dead miniboss if he's dead and the timer ran out
-							Server::GetLogger()->debug( 
-								'Respawn timer has ran out for miniboss #' . $Enemy->GetId() . 
-								' in lane #' . $Lane->GetLaneId() . ', reviving dead miniboss' 
+							Server::GetLogger()->debug(
+								'Respawn timer has ran out for miniboss #' . $Enemy->GetId() .
+								' in lane #' . $Lane->GetLaneId() . ', reviving dead miniboss'
 							);
+
 							$Enemy->ResetHp();
 							break;
 						case Enums\EEnemyType::TreasureMob:
@@ -606,10 +624,10 @@ class Game
 							}
 
 							// Kill the treasure mob and set gold to 0 if the timer (lifetime) ran out
-							Server::GetLogger()->debug( 
-								'Treasure mob #' . $Enemy->GetId() . 
-								' timer has ran out in lane #' . $Lane->GetLaneId() . 
-								', killing treasure mob' 
+							Server::GetLogger()->debug(
+								'Treasure mob #' . $Enemy->GetId() .
+								' timer has ran out in lane #' . $Lane->GetLaneId() .
+								', killing treasure mob'
 							);
 
 							$Enemy->SetHp( 0 );
@@ -620,25 +638,32 @@ class Game
 
 							break;
 					}
+
 					$Enemy->ResetTimer();
 				}
 			}
+
 			$DeadLanes += $DeadEnemies === count( $Lane->Enemies ) ? 1 : 0;
+
 			// Deal damage to players in lane
-			$PlayersInLane = array();
+			$PlayersInLane = [];
+
 			foreach( $this->Players as $Player )
 			{
 				if( $Player->GetCurrentLane() === $LaneId )
 				{
 					$PlayersInLane[] = $Player;
+
 					if( $Player->IsInvulnerable() )
 					{
 						continue;
 					}
+
 					if( $SecondPassed && !$Player->IsDead() )
 					{
 						$EnemyDamage = $EnemyDpsDamage * $SecondsPassed;
 						$PlayerHp = $Player->Hp - $EnemyDamage;
+
 						if( $PlayerHp > 0 )
 						{
 							$Player->Stats->DamageTaken += $EnemyDamage;
@@ -653,6 +678,7 @@ class Game
 					}
 				}
 			}
+
 			$Lane->Dps = $LaneDps[ $LaneId ];
 			$Lane->CheckActivePlayerAbilities( $this, $SecondsPassed );
 			$Lane->UpdateHpBuckets( $this->Time, $PlayersInLane );
@@ -687,6 +713,11 @@ class Game
 				$this->AddChatEntry( 'server', '', 'Skipped ' . number_format( $this->WormholeCount ) . ' level' . ( $this->WormholeCount === 1 ? '' : 's' ) );
 
 				$this->WormholeCount = 0;
+
+				foreach( $this->Lanes as $Lane )
+				{
+					$Lane->RemoveActiveWormholes();
+				}
 			}
 
 			$this->GenerateNewLevel();
