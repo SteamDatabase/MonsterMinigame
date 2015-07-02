@@ -181,10 +181,6 @@ class Game
 				}
 				else
 				{
-
-					$MiniBossDps = Enemy::GetDpsAtLevel( Enums\EEnemyType::MiniBoss, $this->GetLevel() );
-					$MiniBossGold = Enemy::GetGoldAtLevel( Enums\EEnemyType::MiniBoss, $this->GetLevel() );
-
 					for( $a = 0; 3 > $a; $a++ )
 					{
 						$Enemies[] = new Enemy(
@@ -192,9 +188,7 @@ class Game
 							$this->GetNextMobId(),
 							$a,
 							Enums\EEnemyType::MiniBoss,
-							$this->GetLevel(),
-							$MiniBossDps,
-							$MiniBossGold
+							$this->GetLevel()
 						);
 					}
 				}
@@ -209,9 +203,6 @@ class Game
 					Enums\EEnemyType::Tower,
 					$this->GetLevel()
 				);
-
-				$MobDps = Enemy::GetDpsAtLevel( Enums\EEnemyType::Mob, $this->GetLevel() );
-				$MobGold = Enemy::GetGoldAtLevel( Enums\EEnemyType::Mob, $this->GetLevel() );
 
 				for( $a = 0; 3 > $a; $a++ )
 				{
@@ -238,9 +229,7 @@ class Game
 							$this->GetNextMobId(),
 							$a,
 							Enums\EEnemyType::Mob,
-							$this->GetLevel(),
-							$MobDps,
-							$MobGold
+							$this->GetLevel()
 						);
 					}
 				}

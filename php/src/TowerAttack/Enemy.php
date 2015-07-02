@@ -26,7 +26,7 @@ class Enemy
 	public $ClickDamageTaken = 0;
 	public $AbilityDamageTaken = 0;
 
-	public function __construct( $NumPlayers, $Id, $Position, $Type, $Level, $Dps = null, $Gold = null, $Hp = null )
+	public function __construct( $NumPlayers, $Id, $Position, $Type, $Level )
 	{
 		if( $NumPlayers === 0 )
 		{
@@ -35,53 +35,52 @@ class Enemy
 		$this->Id = $Id;
 		$this->Position = $Position;
 		$this->Type = $Type;
-		$this->MaxHp = ceil( ( ( $Hp !== null ? $Hp : self::GetHpAtLevel( $Type, $Level ) ) / 1500 ) * $NumPlayers ); // TODO: Move 1500 constant (base room size)
+		$this->MaxHp = ceil( ( self::GetHpAtLevel( $Type, $Level ) / 1500 ) * $NumPlayers ); // TODO: Move 1500 constant (base room size)
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
-		$this->Gold = $Dps !== null ? $Dps : self::GetDpsAtLevel( $Type, $Level );
-		$this->Gold = $Gold !== null ? $Gold : self::GetGoldAtLevel( $Type, $Level );
+		$this->Dps = self::GetDpsAtLevel( $Type, $Level );
+		$this->Gold = self::GetGoldAtLevel( $Type, $Level );
 		Server::GetLogger()->debug( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
-	public static function GetHpAtLevel( $Type, $Level )
+	private static function GetHpAtLevel( $Type, $Level )
 	{
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
 		switch( $Type )
 		{
 			case Enums\EEnemyType::Mob:
+				$MinHp = self::GetValueAtLevel( 'hp', $Type, $Level, false ); # TODO: floor it?
+
+				# @Contex: This is really dirty, but it works...
+				# TODO: move values to tuningData.json?
+				$MaxHp = $MinHp * ( 2.83 + 0.85 );
+				$MultiplierVarianceMin = 0.195;
+				$MultiplierVarianceMax = 1;
+				$MultiplierVariance = ( $MultiplierVarianceMin + ( lcg_value() * ( abs( $MultiplierVarianceMax - $MultiplierVarianceMin ) ) ) );
+
+				return floor( $MaxHp * $MultiplierVariance );
 			case Enums\EEnemyType::MiniBoss:
 			case Enums\EEnemyType::TreasureMob:
 				$MinHp = self::GetValueAtLevel( 'hp', $Type, $Level, false ); # TODO: floor it?
-				if( $Type === Enums\EEnemyType::Mob )
-				{
-					# @Contex: This is really dirty, but it works...
-					# TODO: move values to tuningData.json?
-					$MaxHp = $MinHp * ( 2.83 + 0.85 );
-					$MultiplierVarianceMin = 0.195;
-					$MultiplierVarianceMax = 1;
-					$MultiplierVariance = ( $MultiplierVarianceMin + ( lcg_value() * ( abs( $MultiplierVarianceMax - $MultiplierVarianceMin ) ) ) );
-					return floor($MaxHp * $MultiplierVariance);
-				}
-				else
-				{
-					# @Contex: This is really dirty, but it works...
-					# TODO: move values to tuningData.json?
-					$MidHip = $MinHp * 1.84; # TODO: move to tuningData.json?
-					$MaxHp = $MinHp * 2.83; # TODO: move to tuningData.json?
-					$HpArray = [ $MinHp, $MidHip, $MaxHp ];
-					return floor( $HpArray[ mt_rand( 0, 2 ) ] );
-				}
+
+				# @Contex: This is really dirty, but it works...
+				# TODO: move values to tuningData.json?
+				$MidHip = $MinHp * 1.84; # TODO: move to tuningData.json?
+				$MaxHp = $MinHp * 2.83; # TODO: move to tuningData.json?
+				$HpArray = [ $MinHp, $MidHip, $MaxHp ];
+
+				return floor( $HpArray[ mt_rand( 0, 2 ) ] );
 			default:
 				return self::GetValueAtLevel( 'hp', $Type, $Level );
 		}
 	}
 
-	public static function GetDpsAtLevel( $Type, $Level )
+	private static function GetDpsAtLevel( $Type, $Level )
 	{
 		return self::GetValueAtLevel( 'dps', $Type, $Level );
 	}
 
-	public static function GetGoldAtLevel( $Type, $Level )
+	private static function GetGoldAtLevel( $Type, $Level )
 	{
 		return self::GetValueAtLevel( 'gold', $Type, $Level );
 	}
