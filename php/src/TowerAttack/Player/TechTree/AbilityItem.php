@@ -347,7 +347,7 @@ class AbilityItem
 					{
 						if( !$PlayerInLane->IsDead() )
 						{
-							$PlayerInLane->AddAbilityItem( self::GetRandomAbilityItem() );
+							$PlayerInLane->AddLoot( $Game->Time, AbilityItem::GetRandomAbilityItem() );
 						}
 					}
 				}
