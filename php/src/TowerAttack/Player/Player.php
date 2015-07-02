@@ -420,6 +420,7 @@ class Player
 
 	public function DecreaseGold( $Amount )
 	{
+		assert( $this->Gold >= 0 );
 		$this->Gold -= $Amount;
 		$this->Stats->GoldUsed += $Amount;
 	}
