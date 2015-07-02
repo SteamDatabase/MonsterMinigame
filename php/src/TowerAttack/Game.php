@@ -155,7 +155,8 @@ class Game
 
 	public function GenerateNewEnemies()
 	{
-		Server::GetLogger()->info( 'Starting to generate new enemies for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
+		Server::GetLogger()->debug( 'Starting to generate new enemies for level #' . $this->GetLevel() . ' in game #' . $this->GameId );
+
 		$NumPlayers = count( $this->Players ); # TODO: Or count( $this->Players )
 		$HasTreasureMob = false;
 
