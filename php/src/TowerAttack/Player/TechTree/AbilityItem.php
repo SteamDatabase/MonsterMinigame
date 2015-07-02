@@ -215,14 +215,21 @@ class AbilityItem
 			case Enums\EAbility::Item_Resurrection:
 				if( !$Deactivate )
 				{
+					$NotUsed = true;
 					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
 
 					foreach( $PlayersInLane as $PlayerInLane )
 					{
 						if( $PlayerInLane->IsDead() )
 						{
+							$NotUsed = false;
 							$PlayerInLane->Respawn();
 						}
+					}
+
+					if( $NotUsed )
+					{
+						return false;
 					}
 				}
 				break;
