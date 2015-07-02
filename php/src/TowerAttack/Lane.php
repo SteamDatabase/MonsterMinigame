@@ -230,16 +230,18 @@ class Lane
 	public function GiveGoldToPlayers( $Game, $Amount )
 	{
 		$GoldMultiplierWhileDead = Player::GetGoldMultiplierWhileDead(); # TODO: Should this only apply on gold from enemies, or also anything related to gold?
-		foreach( $this->Players as $AccountId => $Set )
+
+		$PlayersInLane = $Game->GetPlayersInLane( $this->GetLaneId() );
+
+		foreach( $PlayersInLane as $PlayerInLane )
 		{
-			$Player = $Game->GetPlayer( $AccountId );
-			if( $Player->IsDead() )
+			if( $PlayerInLane->IsDead() )
 			{
-				$Player->IncreaseGold( $Amount * $GoldMultiplierWhileDead );
+				$PlayerInLane->IncreaseGold( $Amount * $GoldMultiplierWhileDead );
 			}
 			else
 			{
-				$Player->IncreaseGold( $Amount );
+				$PlayerInLane->IncreaseGold( $Amount );
 			}
 		}
 	}
