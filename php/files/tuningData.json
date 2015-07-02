@@ -17,16 +17,7 @@
         "damage_multiplier_earth": 1,
         "damage_multiplier_crit": 2,
         "crit_percentage": "0.1",
-        "loot_chance": "0.25",
-        "start_condition_minigame_badge": {
-            "badge_points_per_level_factor": "0.1"
-        },
-        "start_condition_summersale_badge": {
-            "badge_points_per_level_factor": 1
-        },
-        "start_condition_summersale_foil_badge": {
-            "badge_points_per_level_factor": 10
-        }
+        "loot_chance": "0.25"
     },
     "tower": {
         "respawn_time": 30,
@@ -325,7 +316,7 @@
             "instant": 1,
             "duration": 10,
             "cooldown": 60,
-            "desc": "Skip a level with each use (stackable) after the current level has been cleared, and grants 50k of gold to every player. Enemies will not drop gold or loot for any skipped levels.<br><br>When used on every 100th level, will skip 10 levels with each use and grant the appropriate amount of gold.<br><br>You must defeat a boss level after using Wormhole in order to level up your Monster Summer Badge.<br><br>This item can only be acquired by spending badge points."
+            "desc": "Skip a level with each use (stackable) after the current level has been cleared, and grants 50k of gold to every player. Enemies will not drop gold or loot for any skipped levels.<br><br>When used on every 100th level, will skip 10 levels with each use and grant the appropriate amount of gold.<br><br>This item can only be acquired by spending badge points."
         },
         "27": {
             "name": "Like New",
