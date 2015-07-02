@@ -309,7 +309,7 @@ class AbilityItem
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 
-					if( $Enemy === null || $Enemy->IsDead() )
+					if( $Player->GetGold() === 0 || $Enemy === null || $Enemy->IsDead() )
 					{
 						return false;
 					}

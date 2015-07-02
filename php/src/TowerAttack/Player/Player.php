@@ -421,13 +421,7 @@ class Player
 	public function DecreaseGold( $Amount )
 	{
 		$this->Gold -= $Amount;
-
-		if( $this->Gold < 0 )
-		{
-			$this->Gold = 0;
-		}
-
-		$this->Stats->GoldUsed += $Amount; # TODO: Check statement above, amount won't be the same
+		$this->Stats->GoldUsed += $Amount;
 	}
 
 	public function IsInvulnerable()
