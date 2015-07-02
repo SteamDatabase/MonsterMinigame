@@ -181,11 +181,7 @@ class AbilityItem
 							$Damage *= self::GetMultiplier( Enums\EAbility::Offensive_HighDamageOneTarget );
 						}
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DecreaseHp( $Damage );
-						if( $Enemy->GetHp() === 0 )
-						{
-							$Game->IncreaseEnemiesKilled( $Enemy );
-						}
+						$Enemy->AbilityDamageTaken += $Damage;
 					}
 				}
 				break;
@@ -197,11 +193,7 @@ class AbilityItem
 					{
 						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DecreaseHp( $Damage );
-						if( $Enemy->GetHp() === 0 )
-						{
-							$Game->IncreaseEnemiesKilled( $Enemy );
-						}
+						$Enemy->AbilityDamageTaken += $Damage;
 					}
 				}
 				break;
@@ -250,11 +242,7 @@ class AbilityItem
 						$Percentage = $MaxPercentage + ( lcg_value() * ( abs( $MaxPercentage - 0.01 ) ) ); # 1% - 5%
 						$Damage = $Enemy->GetMaxHp() * $Percentage;
 						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->DecreaseHp( $Damage );
-						if( $Enemy->GetHp() === 0 )
-						{
-							$Game->IncreaseEnemiesKilled( $Enemy );
-						}
+						$Enemy->AbilityDamageTaken += $Damage;
 					}
 					else
 					{
@@ -311,11 +299,7 @@ class AbilityItem
 					$Player->DecreaseGold( $Player->GetGold() * $MaxPercentage ); # 10%
 					$Damage = $Enemy->GetMaxHp() * $Percentage;
 					$Player->Stats->AbilityDamageDealt += $Damage;
-					$Enemy->DecreaseHp( $Damage );
-					if( $Enemy->GetHp() === 0 )
-					{
-						$Game->IncreaseEnemiesKilled( $Enemy );
-					}
+					$Enemy->AbilityDamageTaken += $Damage;
 				}
 				break;
 			case Enums\EAbility::Item_GiveGold:
