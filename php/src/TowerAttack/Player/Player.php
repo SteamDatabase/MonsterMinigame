@@ -334,7 +334,10 @@ class Player
 
 	public function IncreaseHp( $Amount )
 	{
+		$Amount = floor( $Amount );
+
 		$this->Hp += $Amount;
+
 		if( $this->Hp > $this->GetTechTree()->GetMaxHp() )
 		{
 			$this->Hp = $this->GetTechTree()->GetMaxHp();
@@ -409,6 +412,8 @@ class Player
 
 	public function IncreaseGold( $Amount )
 	{
+		$Amount = floor( $Amount );
+
 		$this->Gold += $Amount;
 		$this->Stats->GoldRecieved += $Amount;
 	}
@@ -416,10 +421,12 @@ class Player
 	public function DecreaseGold( $Amount )
 	{
 		$this->Gold -= $Amount;
+
 		if( $this->Gold < 0 )
 		{
 			$this->Gold = 0;
 		}
+
 		$this->Stats->GoldUsed += $Amount; # TODO: Check statement above, amount won't be the same
 	}
 
