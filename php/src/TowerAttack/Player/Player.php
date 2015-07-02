@@ -453,12 +453,10 @@ class Player
 		return $ActiveAbilities;
 	}
 
-	public function AddActiveAbility( $Time, $Ability, $DecreaseCooldown = false )
+	public function AddActiveAbility( $Ability, $ActiveAbility )
 	{
 		$this->ActiveAbilitiesBitfield |= ( 1 << $Ability );
-		$ActiveAbility = new ActiveAbility( $Time, $Ability, $this->PlayerName, $DecreaseCooldown );
 		$this->ActiveAbilities[ $Ability ] = $ActiveAbility;
-		return $ActiveAbility;
 	}
 
 	public function RemoveActiveAbility( $Ability )
@@ -487,83 +485,63 @@ class Player
 
 	public function UseAbility( $Game, $Ability )
 	{
+		// If player doesn't have this ability, don't do anything
 		if( !$this->GetTechTree()->HasAbilityItem( $Ability ) )
 		{
 			return false;
 		}
+		// If player has the ability currently active and it's not cooled down, don't do anything
 		else if( $this->HasActiveAbility( $Ability ) && !$this->GetActiveAbility( $Ability )->IsCooledDown( $Game->Time ) )
 		{
 			return false;
 		}
-		else if ( $Ability === Enums\EAbility::Item_KillTower ) # TODO: Move this to HandleAbility?
-		{
-			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if( $Enemy === null || $Enemy->GetType() !== Enums\EEnemyType::Tower || $Enemy->IsDead() )
-			{
-				return false;
-			}
-		}
-		else if ( $Ability === Enums\EAbility::Item_KillMob ) # TODO: Move this to HandleAbility?
-		{
-			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if( $Enemy === null || $Enemy->IsDead() )
-			{
-				return false;
-			}
-		}
-		else if ( $Ability === Enums\EAbility::Offensive_HighDamageOneTarget ) # TODO: Move this to HandleAbility?
-		{
-			$Enemy = $Game->GetLane( $this->GetCurrentLane() )->GetEnemy( $this->GetTarget() );
-			if( $Enemy === null || $Enemy->IsDead() )
-			{
-				return false;
-			}
-		}
-		else if (
-			(
-				$Ability === Enums\EAbility::Offensive_DamageAllTargets
-				||
-				$Ability === Enums\EAbility::Offensive_DOTAllTargets
-			)
-			&&
-			count( $Game->GetLane( $this->GetCurrentLane() )->GetAliveEnemies() ) === 0
-		) { # TODO: Move this to HandleAbility?
-			return false;
-		}
 
-		// Ability executed succesfully!
-		$ActiveAbility = $this->AddActiveAbility
-		(
+		$Lane = $Game->GetLane( $this->GetCurrentLane() );
+		
+		$ActiveAbility = new ActiveAbility(
 			$Game->Time,
 			$Ability,
-			$Game->GetLane( $this->GetCurrentLane() )->HasActivePlayerAbilityDecreaseCooldowns()
+			$this->PlayerName,
+			$Lane->HasActivePlayerAbilityDecreaseCooldowns()
 		);
-		$this->GetTechTree()->RemoveAbilityItem( $Ability );
-		$Game->NumAbilitiesActivated++;
-		if( AbilityItem::GetType( $Ability ) === Enums\EAbilityType::Item  )
-		{
-			$Game->NumAbilityItemsActivated++;
-		}
 
-		// Add wormhole in all three lanes
-		if( $Ability === Enums\EAbility::Item_SkipLevels )
+		if( AbilityItem::HandleAbility(
+			$Game,
+			$Lane,
+			$this,
+			$ActiveAbility
+		) )
 		{
-			foreach( $Game->Lanes as $LaneId => $Lane )
+			// Ability executed succesfully!
+			$this->AddActiveAbility( $Ability, $ActiveAbility );
+
+			$this->GetTechTree()->RemoveAbilityItem( $Ability );
+			$Game->NumAbilitiesActivated++;
+
+			if( AbilityItem::GetType( $Ability ) === Enums\EAbilityType::Item )
+			{
+				$Game->NumAbilityItemsActivated++;
+			}
+
+			// Add wormhole in all three lanes
+			if( $Ability === Enums\EAbility::Item_SkipLevels )
+			{
+				foreach( $Game->Lanes as $Lane )
+				{
+					$Lane->AddActivePlayerAbility( $ActiveAbility );
+				}
+			}
+			else
 			{
 				$Lane->AddActivePlayerAbility( $ActiveAbility );
 			}
-		}
-		else
-		{
-			$Game->GetLane( $this->GetCurrentLane() )->AddActivePlayerAbility( $ActiveAbility ); # TODO @Contex: Move this to HandleAbility?
+
+			return true;
 		}
 
-		AbilityItem::HandleAbility(
-			$Game,
-			$Game->GetLane( $this->GetCurrentLane() ),
-			$this,
-			$ActiveAbility
-		);
+		unset( $ActiveAbility );
+
+		return false;
 	}
 
 	public function CheckActiveAbilities( Game $Game )

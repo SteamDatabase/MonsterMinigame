@@ -159,6 +159,10 @@ class AbilityItem
 		return $ItemAbilities[ array_rand( $ItemAbilities ) ];
 	}
 
+	/**
+	 *
+	 * @return bool Returns true if ability has been successfully used, false otherwise.
+	 */
 	public static function HandleAbility( $Game, $Lane, $Player, $Ability, $Deactivate = false )
 	{
 		$AbilityMultiplier = self::GetMultiplier( $Ability->GetAbility() );
@@ -169,26 +173,37 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
-					if( $Enemy !== null && !$Enemy->IsDead() )
+
+					if( $Enemy === null || $Enemy->IsDead() )
 					{
-						$Damage = $Enemy->GetMaxHp();
-						if( $Enemy->GetType() === Enums\EEnemyType::Boss )
-						{
-							$Damage *= self::GetMultiplierBoss( Enums\EAbility::Offensive_HighDamageOneTarget );
-						}
-						else
-						{
-							$Damage *= self::GetMultiplier( Enums\EAbility::Offensive_HighDamageOneTarget );
-						}
-						$Player->Stats->AbilityDamageDealt += $Damage;
-						$Enemy->AbilityDamageTaken += $Damage;
+						return false;
 					}
+
+					$Damage = $Enemy->GetMaxHp();
+
+					if( $Enemy->GetType() === Enums\EEnemyType::Boss )
+					{
+						$Damage *= self::GetMultiplierBoss( Enums\EAbility::Offensive_HighDamageOneTarget );
+					}
+					else
+					{
+						$Damage *= $AbilityMultiplier;
+					}
+
+					$Player->Stats->AbilityDamageDealt += $Damage;
+					$Enemy->AbilityDamageTaken += $Damage;
 				}
 				break;
 			case Enums\EAbility::Offensive_DamageAllTargets:
 				if( !$Deactivate )
 				{
 					$Enemies = $Lane->GetAliveEnemies();
+
+					if( empty( $Enemies ) )
+					{
+						return false;
+					}
+
 					foreach( $Enemies as $Enemy )
 					{
 						$Damage = $Enemy->GetMaxHp() * $AbilityMultiplier;
@@ -201,6 +216,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
+
 					foreach( $PlayersInLane as $PlayerInLane )
 					{
 						if( $PlayerInLane->IsDead() )
@@ -215,15 +231,17 @@ class AbilityItem
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 
-					if( $Enemy === null )
+					if( $Enemy === null || $Enemy->IsDead() )
 					{
-						break;
+						return false;
 					}
 
-					if( $Enemy->GetType() === Enums\EEnemyType::Tower )
+					if( $Enemy->GetType() !== Enums\EEnemyType::Tower )
 					{
-						$Enemy->SetHp( 1 );
+						return false;
 					}
+
+					$Enemy->SetHp( 1 );
 				}
 				break;
 			case Enums\EAbility::Item_KillMob:
@@ -231,9 +249,9 @@ class AbilityItem
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 
-					if( $Enemy === null )
+					if( $Enemy === null || $Enemy->IsDead() )
 					{
-						break;
+						return false;
 					}
 
 					if( $Enemy->GetType() === Enums\EEnemyType::Boss )
@@ -255,6 +273,7 @@ class AbilityItem
 				{
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
+
 					$Lane->AddActivePlayerAbility
 					(
 						new ActiveAbility
@@ -272,6 +291,7 @@ class AbilityItem
 				{
 					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
+
 					$Lane->AddActivePlayerAbility
 					(
 						new ActiveAbility
@@ -289,9 +309,9 @@ class AbilityItem
 				{
 					$Enemy = $Lane->GetEnemy( $Player->GetTarget() );
 
-					if( $Enemy === null )
+					if( $Enemy === null || $Enemy->IsDead() )
 					{
-						break;
+						return false;
 					}
 
 					$MaxPercentage = $AbilityMultiplier;
@@ -306,6 +326,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->IncreaseGold( $AbilityMultiplier * pow( 10, max( 0, floor( log10( $Game->GetLevel() ) ) - 1 ) ) );
+
 					$Lane->AddActivePlayerAbility(
 						new ActiveAbility
 						(
@@ -321,6 +342,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$PlayersInLane = $Game->GetPlayersInLane( $Lane->GetLaneId() );
+
 					foreach( $PlayersInLane as $PlayerInLane )
 					{
 						if( !$PlayerInLane->IsDead() )
@@ -338,5 +360,7 @@ class AbilityItem
 				break;
 			break;
 		}
+
+		return true;
 	}
 }

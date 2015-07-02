@@ -17,13 +17,17 @@ class ActiveAbility
 		$this->Time = $Time;
 		$this->Actor = $Actor;
 		$this->Ability = $Ability;
+
 		$Duration = AbilityItem::GetDuration( $Ability );
 		$Cooldown = AbilityItem::GetCooldown( $Ability );
+
 		$this->TimestampDone = $this->Time + AbilityItem::GetDuration( $Ability );
+
 		if( $DecreaseCooldown )
 		{
 			$Cooldown -= $Cooldown * AbilityItem::GetMultiplier( Enums\EAbility::Support_DecreaseCooldowns );
 		}
+
 		$this->TimestampCooldown = $this->Time + $Cooldown;
 	}
 
