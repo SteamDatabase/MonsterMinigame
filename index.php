@@ -8,16 +8,16 @@
 	}
 
 	$Config = json_decode( file_get_contents( __DIR__ . '/php/files/config.json' ) );
-	$CDN = $CDNRule = $Config->Assets->Host;
+	$CDN = $Config->Assets->Host;
 
 	header( 'Content-Security-Policy: ' .
 		'default-src \'none\'; ' .
-		'connect-src \'self\' ' . $CDNRule . '; ' .
-		'img-src \'self\' data: ' . $CDNRule . ' https://steamcdn-a.akamaihd.net; ' .
-		'script-src ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; ' .
-		'style-src \'unsafe-inline\' ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; ' .
-		'font-src ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; ' .
-		'media-src ' . ( empty( $CDNRule ) ? "'self'" : $CDNRule ) . '; '
+		'connect-src \'self\' ' . $CDN . '; ' .
+		'img-src \'self\' data: ' . $CDN . ' https://steamcdn-a.akamaihd.net https://www.google-analytics.com; ' .
+		'script-src ' . ( empty( $CDN ) ? "'self'" : $CDN ) . ' https://www.google-analytics.com; ' .
+		'style-src \'unsafe-inline\' ' . ( empty( $CDN ) ? "'self'" : $CDN ) . '; ' .
+		'font-src ' . ( empty( $CDN ) ? "'self'" : $CDN ) . '; ' .
+		'media-src ' . ( empty( $CDN ) ? "'self'" : $CDN ) . '; '
 	);
 ?><!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,11 @@
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 	<link href="<?php echo $CDN; ?>/assets/css/towerattack.css?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/css/towerattack.css' ); ?>" rel="stylesheet" type="text/css">
 </head>
-<body data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>" data-gameid="1" data-assets="<?php echo $CDN; ?>">
+<body
+data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>"
+data-gameid="1"
+data-assets="<?php echo $CDN; ?>"
+data-ga="<?php echo $Config->Google->Analytics; ?>">
 	<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" class="github"><img src="<?php echo $CDN; ?>/assets/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
 
 	<div class="breadcrumbs">

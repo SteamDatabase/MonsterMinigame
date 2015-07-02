@@ -6,5 +6,9 @@
 	"Assets":
 	{
 		"Host": ""
+	},
+	"Google":
+	{
+		"Analytics": ""
 	}
 }
