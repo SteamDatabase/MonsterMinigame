@@ -66,14 +66,14 @@ class Player
 	public function ToArray()
 	{
 		$Array = array(
-			'hp' => (double) $this->GetHp(),
-			'current_lane' => (int) $this->GetCurrentLane(),
-			'target' => (int) $this->GetTarget(),
-			'time_died' => (int) $this->GetTimeDied(),
-			'gold' => (double) $this->GetGold(),
+			'hp' => $this->GetHp(),
+			'current_lane' => $this->GetCurrentLane(),
+			'target' => $this->GetTarget(),
+			'time_died' => $this->GetTimeDied(),
+			'gold' => $this->GetGold(),
 			'active_abilities' => $this->GetActiveAbilitiesToArray(),
-			'active_abilities_bitfield' => (int) $this->GetActiveAbilitiesBitfield(),
-			'crit_damage' => (double) $this->GetCritDamage()
+			'active_abilities_bitfield' => $this->GetActiveAbilitiesBitfield(),
+			'crit_damage' => $this->GetCritDamage()
 		);
 		if( !empty( $this->GetLoot() ) )
 		{

@@ -39,14 +39,14 @@ class Lane
 	{
 		return array(
 			'enemies' => $this->GetEnemiesArray(),
-			'dps' => (double) $this->GetDps(),
+			'dps' => $this->GetDps(),
 			'active_player_abilities' => $this->GetActivePlayerAbilitiesAsArray(),
 			'activity_log' => array_slice( $this->ActivityLog, -50, 50 ), // Only send last 50 recent events, TODO: Use SplQueue
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
-			'element' => (int) $this->GetElement(),
-			'active_players_count' => (int) $this->GetActivePlayersCount(),
-			'active_player_ability_decrease_cooldowns' => (double) $this->HasActivePlayerAbilityDecreaseCooldowns(),
-			'active_player_ability_gold_per_click' => (double) $this->GetGoldPerClickMultiplier() #TODO: GetActivePlayerAbilityGoldPerClick()
+			'element' => $this->GetElement(),
+			'active_players_count' => $this->GetActivePlayersCount(),
+			'active_player_ability_decrease_cooldowns' => $this->HasActivePlayerAbilityDecreaseCooldowns(),
+			'active_player_ability_gold_per_click' => $this->GetGoldPerClickMultiplier() #TODO: GetActivePlayerAbilityGoldPerClick()
 		);
 	}
 

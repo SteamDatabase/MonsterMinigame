@@ -22,6 +22,7 @@ class Game
 	public $Players = array();
 	private $Level = 1;
 	public $Time;
+	public $GameId;
 	public $Lanes = array();
 	private $Chat = []; // TODO: SplQueue
 	//private $Timestamp; - Use function instead?
@@ -97,7 +98,7 @@ class Game
 	{
 		return array(
 			'chat' => array_reverse( array_slice( $this->Chat, -50, 50 ) ), // TODO: Chat should be SplQueue with FIFO, this is just a temporary hack
-			'level' => (int) $this->GetLevel(),
+			'level' => $this->GetLevel(),
 			'lanes' => $this->GetLanesArray(),
 			'timestamp' => $this->Time,
 			'status' => $this->GetStatus(),

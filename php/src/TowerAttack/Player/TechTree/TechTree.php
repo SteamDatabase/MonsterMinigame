@@ -71,23 +71,23 @@ class TechTree
 	{
 		return array(
 			'upgrades' => $this->GetUpgradesArray(),
-			'damage_per_click' => (double) $this->GetDamagePerClick(),
-			'damage_multiplier_fire' => (double) $this->GetDamageMultiplierFire(),
-			'damage_multiplier_water' => (double) $this->GetDamageMultiplierWater(),
-			'damage_multiplier_air' => (double) $this->GetDamageMultiplierAir(),
-			'damage_multiplier_earth' => (double) $this->GetDamageMultiplierEarth(),
-			'damage_multiplier_crit' => (double) $this->GetDamageMultiplierCrit(),
-			'unlocked_abilities_bitfield' => (int) $this->GetUnlockedAbilitiesBitfield(),
-			'hp_multiplier' => (double) $this->GetHpMultiplier(),
-			'crit_percentage' => (double) $this->GetCritPercentage(),
-			'badge_points' => (double) $this->GetBadgePoints(),
+			'damage_per_click' => $this->GetDamagePerClick(),
+			'damage_multiplier_fire' => $this->GetDamageMultiplierFire(),
+			'damage_multiplier_water' => $this->GetDamageMultiplierWater(),
+			'damage_multiplier_air' => $this->GetDamageMultiplierAir(),
+			'damage_multiplier_earth' => $this->GetDamageMultiplierEarth(),
+			'damage_multiplier_crit' => $this->GetDamageMultiplierCrit(),
+			'unlocked_abilities_bitfield' => $this->GetUnlockedAbilitiesBitfield(),
+			'hp_multiplier' => $this->GetHpMultiplier(),
+			'crit_percentage' => $this->GetCritPercentage(),
+			'badge_points' => $this->GetBadgePoints(),
 			'ability_items' => $this->GetAbilityItemsToArray(),
-			'boss_loot_drop_percentage' => (double) $this->GetBossLootDropPercentage(),
-			'damage_multiplier_dps' => (double) $this->GetDamageMultiplierDps(),
-			'base_dps' => (double) $this->GetBaseDps(),
-			'damage_per_click_multiplier' => (double) $this->GetDamagePerClickMultiplier(),
-			'max_hp' => (double) $this->GetMaxHp(),
-			'dps' => (double) $this->GetDps()
+			'boss_loot_drop_percentage' => $this->GetBossLootDropPercentage(),
+			'damage_multiplier_dps' => $this->GetDamageMultiplierDps(),
+			'base_dps' => $this->GetBaseDps(),
+			'damage_per_click_multiplier' => $this->GetDamagePerClickMultiplier(),
+			'max_hp' => $this->GetMaxHp(),
+			'dps' => $this->GetDps()
 		);
 	}
 
@@ -413,17 +413,17 @@ class TechTree
 	public function RecalulateUpgrades()
 	{
 		$Data = array(
-			'damage_per_click' => (double) $this->GetTuningData( 'damage_per_click' ),
-			'damage_multiplier_fire' => (double) $this->GetTuningData( 'damage_multiplier_fire' ),
-			'damage_multiplier_water' => (double) $this->GetTuningData( 'damage_multiplier_water' ),
-			'damage_multiplier_air' => (double) $this->GetTuningData( 'damage_multiplier_air' ),
-			'damage_multiplier_earth' => (double) $this->GetTuningData( 'damage_multiplier_earth' ),
-			'damage_multiplier_crit' => (double) $this->GetTuningData( 'damage_multiplier_crit' ),
-			'hp_multiplier' => (double) 1,
-			'crit_percentage' => (double) $this->GetTuningData( 'crit_percentage' ),
-			'boss_loot_drop_percentage' => (double) $this->GetTuningData( 'loot_chance' ),
-			'damage_multiplier_dps' => (double) 0,
-			'damage_per_click_multiplier' => (double) 1
+			'damage_per_click' => $this->GetTuningData( 'damage_per_click' ),
+			'damage_multiplier_fire' => $this->GetTuningData( 'damage_multiplier_fire' ),
+			'damage_multiplier_water' => $this->GetTuningData( 'damage_multiplier_water' ),
+			'damage_multiplier_air' => $this->GetTuningData( 'damage_multiplier_air' ),
+			'damage_multiplier_earth' => $this->GetTuningData( 'damage_multiplier_earth' ),
+			'damage_multiplier_crit' => $this->GetTuningData( 'damage_multiplier_crit' ),
+			'hp_multiplier' => 1,
+			'crit_percentage' => $this->GetTuningData( 'crit_percentage' ),
+			'boss_loot_drop_percentage' => $this->GetTuningData( 'loot_chance' ),
+			'damage_multiplier_dps' => 0,
+			'damage_per_click_multiplier' => 1
 		);
 
 		foreach( $this->GetUpgrades() as $Upgrade )

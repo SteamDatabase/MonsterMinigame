@@ -16,15 +16,15 @@ class Stats
 	public function ToArray()
 	{
 		return [
-			'gold_recieved' => (double) $this->GoldRecieved,
-			'gold_used' => (double) $this->GoldUsed,
-			'num_clicks' => (int) $this->NumClicks,
-			'crit_damage_dealt' => (double) $this->CritDamageDealt,
-			'click_damage_dealt' => (double) $this->ClickDamageDealt,
-			'dps_damage_dealt' => (double) $this->DpsDamageDealt,
-			'ability_damage_dealt' => (double) $this->AbilityDamageDealt,
-			'damage_taken' =>(double) $this->DamageTaken,
-			'times_died' => (double) $this->TimesDied
+			'gold_recieved' => $this->GoldRecieved,
+			'gold_used' => $this->GoldUsed,
+			'num_clicks' => $this->NumClicks,
+			'crit_damage_dealt' => $this->CritDamageDealt,
+			'click_damage_dealt' => $this->ClickDamageDealt,
+			'dps_damage_dealt' => $this->DpsDamageDealt,
+			'ability_damage_dealt' => $this->AbilityDamageDealt,
+			'damage_taken' =>$this->DamageTaken,
+			'times_died' => $this->TimesDied
 		];
 	}
 }

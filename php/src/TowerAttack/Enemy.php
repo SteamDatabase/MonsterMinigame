@@ -99,12 +99,12 @@ class Enemy
 	public function ToArray()
 	{
 		$ReturnArray = array(
-			'id' => (int) $this->GetId(),
-			'type' => (int) $this->GetType(),
-			'hp' => (double) $this->GetHp(),
-			'max_hp' => (double) $this->GetMaxHp(),
-			'dps' => (double) $this->GetDps(),
-			'gold' => (double) $this->GetGold()
+			'id' => $this->GetId(),
+			'type' => $this->GetType(),
+			'hp' => $this->GetHp(),
+			'max_hp' => $this->GetMaxHp(),
+			'dps' => $this->GetDps(),
+			'gold' => $this->GetGold()
 		);
 		if( $this->HasTimer() )
 		{

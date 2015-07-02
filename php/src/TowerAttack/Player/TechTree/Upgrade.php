@@ -25,8 +25,8 @@ class Upgrade
 	public function ToArray()
 	{
 		return array(
-			'upgrade' => (int) $this->GetUpgradeId(),
-			'level' => (int) $this->GetLevel(),
+			'upgrade' => $this->GetUpgradeId(),
+			'level' => $this->GetLevel(),
 		);
 	}
 
