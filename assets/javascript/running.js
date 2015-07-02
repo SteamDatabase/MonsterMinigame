@@ -1231,6 +1231,11 @@ CSceneGame.prototype.TryUpgrade = function( ele )
 	this.m_UI.UpdateUpgrades();
 
 	g_AudioManager.play( 'upgrade' );
+
+	if( typeof ga === 'function' )
+	{
+		ga( 'send', 'event', 'Upgrade', 'Purchase', this.m_rgTuningData.upgrades[ nUpgradeID ].name, nCurrentLevel + 1 );
+	}
 }
 
 CSceneGame.prototype.SendChooseUpgradesRequest = function()
@@ -1325,6 +1330,11 @@ CSceneGame.prototype.TrySpendBadgePoints = function( ele, count )
 	}
 
 	g_AudioManager.play( 'upgrade' );
+
+	if( typeof ga === 'function' )
+	{
+		ga( 'send', 'event', 'Badge Points', 'Spend', this.m_rgTuningData.abilities[ type ].name );
+	}
 }
 
 
