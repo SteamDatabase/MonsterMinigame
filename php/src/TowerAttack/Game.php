@@ -19,12 +19,12 @@ class Game
 	*/
 
 	private $AbilityQueue;
-	public $Players = array();
+	public $Players = [];
 	private $Level = 1;
 	public $Time;
 	public $GameId;
-	public $Lanes = array();
-	private $Chat = []; // TODO: SplQueue
+	public $Lanes = [];
+	private $Chat = [];
 	//private $Timestamp; - Use function instead?
 	private $Status;
 	//private $Events; - Not used, morning/evning deals
@@ -98,7 +98,7 @@ class Game
 	public function ToArray()
 	{
 		return array(
-			'chat' => array_reverse( array_slice( $this->Chat, -50, 50 ) ), // TODO: Chat should be SplQueue with FIFO, this is just a temporary hack
+			'chat' => $this->Chat,
 			'level' => $this->GetLevel(),
 			'lanes' => $this->GetLanesArray(),
 			'timestamp' => $this->Time,
@@ -292,13 +292,17 @@ class Game
 
 	public function AddChatEntry( $ChatType, $Actor, $Message )
 	{
-		$this->Chat[] =
-		[
+		if( count( $this->Chat ) > 49 )
+		{
+			array_pop( $this->Chat );
+		}
+
+		array_unshift( $this->Chat, [
 			'type' => $ChatType,
 			'time' => $this->Time,
 			'actor' => $Actor,
 			'message' => $Message
-		];
+		] );
 	}
 
 	public function GetEvents()
