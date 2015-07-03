@@ -186,7 +186,7 @@ CUI.prototype.Tick = function()
 
 	if( game.m_rgPlayerData )
 	{
-		this.m_flDisplayedHP = this.m_predictorHP.Get();
+		this.m_flDisplayedHP = game.m_rgPlayerData.hp > 0 ? this.m_predictorHP.Get() : 0;
 
 		this.m_eleInfoHP[0].textContent = FormatNumberForDisplay( this.m_flDisplayedHP, 5) + " HP";
 		this.m_eleHPBar[0].style.width = ( 100*( this.m_flDisplayedHP / game.m_rgPlayerTechTree.max_hp ) ) + "%";
