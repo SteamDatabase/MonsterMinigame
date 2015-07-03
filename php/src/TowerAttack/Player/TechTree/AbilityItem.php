@@ -279,7 +279,6 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
-					$Player->GetTechTree()->RecalulateUpgrades();
 
 					$Ability = new ActiveAbility(
 						$Game->Time,

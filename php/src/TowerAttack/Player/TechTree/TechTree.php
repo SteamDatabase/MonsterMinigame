@@ -420,7 +420,6 @@ class TechTree
 			'damage_multiplier_earth' => $this->GetTuningData( 'damage_multiplier_earth' ),
 			'damage_multiplier_crit' => $this->GetTuningData( 'damage_multiplier_crit' ),
 			'hp_multiplier' => 1,
-			'crit_percentage' => $this->GetTuningData( 'crit_percentage' ),
 			'boss_loot_drop_percentage' => $this->GetTuningData( 'loot_chance' ),
 			'damage_multiplier_dps' => 0,
 			'damage_per_click_multiplier' => 1
@@ -473,7 +472,6 @@ class TechTree
 		$this->DamageMultiplierEarth = $Data['damage_multiplier_earth'];
 		$this->DamageMultiplierCrit = $Data['damage_multiplier_crit'];
 		$this->HpMultiplier = $Data['hp_multiplier'];
-		$this->CritPercentage = $Data['crit_percentage'];
 		$this->BossLootDropPercentage = $Data['boss_loot_drop_percentage'];
 		$this->DamageMultiplierDps = $Data['damage_multiplier_dps'];
 		$this->DamagePerClickMultiplier = $Data['damage_per_click_multiplier'];
