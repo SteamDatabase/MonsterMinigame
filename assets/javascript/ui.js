@@ -255,7 +255,7 @@ CUI.prototype.Tick = function()
 			$J( "#num_players_waiting", this.m_dialogWaitingForPlayers )[0].textContent = numPlayers;
 			$J( "#num_players_minimum", this.m_dialogWaitingForPlayers )[0].textContent = minPlayers;
 
-			// We need this here to update chat
+			this.UpdateAbilities();
 			this.UpdateLog( game.m_rgActionLog );
 
 			break;
