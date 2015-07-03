@@ -34,8 +34,8 @@ function Handle( $Method, $Data = [] )
 	
 	socket_set_option( $Socket, SOL_SOCKET, SO_KEEPALIVE, 0 );
 	socket_set_option( $Socket, SOL_SOCKET, SO_REUSEADDR, 1 );
-	socket_set_option( $Socket, SOL_SOCKET, SO_RCVTIMEO, [ 'sec' => 1, 'usec' => 0 ] );
-	socket_set_option( $Socket, SOL_SOCKET, SO_SNDTIMEO, [ 'sec' => 1, 'usec' => 0 ] );
+	socket_set_option( $Socket, SOL_SOCKET, SO_RCVTIMEO, [ 'sec' => 3, 'usec' => 0 ] );
+	socket_set_option( $Socket, SOL_SOCKET, SO_SNDTIMEO, [ 'sec' => 3, 'usec' => 0 ] );
 	
 	if( @socket_connect( $Socket, 'localhost', 5337 ) )
 	{
