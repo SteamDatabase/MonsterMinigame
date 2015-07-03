@@ -1888,7 +1888,7 @@ CSceneGame.prototype.CheckNewPlayer = function( )
 
 		if( leaveGameHelper )
 		{
-			leaveGameHelper.parentNode.removeChild( leaveGameHelper );
+			leaveGameHelper.hidden = true;
 		}
 	}
 }
