@@ -294,15 +294,16 @@ class Game
 	{
 		if( count( $this->Chat ) > 49 )
 		{
-			array_pop( $this->Chat );
+			array_shift( $this->Chat );
 		}
 
-		array_unshift( $this->Chat, [
+		$this->Chat[] =
+		[
 			'type' => $ChatType,
 			'time' => $this->Time,
 			'actor' => $Actor,
 			'message' => $Message
-		] );
+		];
 	}
 
 	public function GetEvents()

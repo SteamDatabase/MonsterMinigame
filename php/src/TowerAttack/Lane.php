@@ -41,7 +41,7 @@ class Lane
 			'enemies' => $this->GetEnemiesArray(),
 			'dps' => $this->GetDps(),
 			'active_player_abilities' => $this->GetActivePlayerAbilitiesAsArray(),
-			'activity_log' => array_slice( $this->ActivityLog, -50, 50 ), // Only send last 50 recent events, TODO: Use SplQueue
+			'activity_log' => $this->ActivityLog,
 			'player_hp_buckets' => $this->GetPlayerHpBuckets(),
 			'element' => $this->GetElement(),
 			'active_players_count' => $this->GetActivePlayersCount(),
@@ -127,6 +127,11 @@ class Lane
 
 	public function AddActivePlayerAbility( \SteamDB\CTowerAttack\Player\ActiveAbility $ActiveAbility )
 	{
+		if( count( $this->ActivityLog ) > 49 )
+		{
+			array_shift( $this->ActivityLog );
+		}
+
 		$this->ActivePlayerAbilities[] = $ActiveAbility;
 		$this->ActivityLog[] = $ActiveAbility->ToArray();
 	}

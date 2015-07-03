@@ -790,35 +790,11 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 
 	if( this.m_rgPlayerData )
 	{
-		var rgActivityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].activity_log;
-		if( rgActivityLog )
-		{
-			for( var i=0; i<rgActivityLog.length; i++ )
-			{
-				if( rgActivityLog[i].time <= this.m_nLastAbilitySeen )
-					continue;
-
-				this.m_rgActionLog.push({
-					'icon': false,
-					'type': 'ability',
-					'ability': rgActivityLog[i].ability,
-					'actor_name': rgActivityLog[i].actor,
-					'time': rgActivityLog[i].time
-				});
-
-				if( this.m_rgActionLog.length > 50 )
-					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
-
-				if( rgActivityLog[i].time > nHighestTime )
-					nHighestTime = rgActivityLog[i].time;
-			}
-		}
-
 		// chat
 		rgActivityLog = this.m_rgGameData.chat;
 		if( rgActivityLog )
 		{
-			for( var i=0; i<rgActivityLog.length; i++ )
+			for( var i = rgActivityLog.length - 1; i >= 0; i-- )
 			{
 				if( rgActivityLog[i].time <= this.m_nLastAbilitySeen )
 					continue;
@@ -832,7 +808,31 @@ CSceneGame.prototype.OnGameDataUpdate = function()
 				});
 
 				if( this.m_rgActionLog.length > 50)
-					this.m_rgActionLog.splice(0, this.m_rgActionLog.length - 50);
+					this.m_rgActionLog.splice(this.m_rgActionLog.length - 50);
+
+				if( rgActivityLog[i].time > nHighestTime )
+					nHighestTime = rgActivityLog[i].time;
+			}
+		}
+
+		var rgActivityLog = this.m_rgGameData.lanes[this.m_rgPlayerData.current_lane].activity_log;
+		if( rgActivityLog )
+		{
+			for( var i = rgActivityLog.length - 1; i >= 0; i-- )
+			{
+				if( rgActivityLog[i].time <= this.m_nLastAbilitySeen )
+					continue;
+
+				this.m_rgActionLog.push({
+					'icon': false,
+					'type': 'ability',
+					'ability': rgActivityLog[i].ability,
+					'actor_name': rgActivityLog[i].actor,
+					'time': rgActivityLog[i].time
+				});
+
+				if( this.m_rgActionLog.length > 50 )
+					this.m_rgActionLog.splice(this.m_rgActionLog.length - 50);
 
 				if( rgActivityLog[i].time > nHighestTime )
 					nHighestTime = rgActivityLog[i].time;
