@@ -43,6 +43,7 @@ class Game
 	public $NumAbilitiesActivated = 0;
 	public $NumAbilityItemsActivated = 0;
 
+	public $TotalTicks = 1;
 	public $TimeSimulating = 0.0;
 	public $HighestTick = 0.0;
 	public $WormholeCount = 0;
@@ -121,8 +122,10 @@ class Game
 			'num_abilities_activated' => $this->NumAbilitiesActivated,
 			'num_ability_items_activated' => $this->NumAbilityItemsActivated,
 			'num_active_players' => count( $this->GetActivePlayers() ), # TODO: replace this with an increasing/decreasing variable
-			'time_total_ticks' => number_format( $this->TimeSimulating, 7 ),
-			'time_slowest_tick' => number_format( $this->HighestTick, 7 ),
+			'ticks_total' => $this->TotalTicks,
+			'ticks_time_average' => number_format( $this->TimeSimulating / $this->TotalTicks, 7 ),
+			'ticks_time_total' => number_format( $this->TimeSimulating, 7 ),
+			'ticks_time_slowest' => number_format( $this->HighestTick, 7 ),
 		);
 	}
 

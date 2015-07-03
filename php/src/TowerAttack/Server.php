@@ -205,6 +205,8 @@ class Server
 				{
 					$this->Tick( $Tick, false );
 				}
+				
+				$this->Game->TotalTicks++;
 			}
 
 			$DebugTime = microtime( true ) - $DebugTime;
