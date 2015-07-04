@@ -40,7 +40,6 @@ function Handle( $Method, $Data = [] )
 	if( @socket_connect( $Socket, 'localhost', 5337 ) )
 	{
 		socket_write( $Socket, $Data, strlen( $Data ) );
-		socket_shutdown( $Socket, 1 );
 		
 		$Buffer = '';
 		
@@ -51,7 +50,7 @@ function Handle( $Method, $Data = [] )
 		
 		echo $Buffer;
 		
-		socket_shutdown( $Socket, 0 );
+		socket_shutdown( $Socket, 2 );
 		socket_close( $Socket );
 		
 		return true;
