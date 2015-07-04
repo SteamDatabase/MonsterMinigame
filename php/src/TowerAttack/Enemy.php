@@ -35,7 +35,7 @@ class Enemy
 		$this->Id = $Id;
 		$this->Position = $Position;
 		$this->Type = $Type;
-		$this->MaxHp = ceil( ( self::GetHpAtLevel( $Type, $Level ) / 1500 ) * $NumPlayers ); // TODO: Move 1500 constant (base room size)
+		$this->MaxHp = self::GetHpAtLevel( $Type, $Level, $NumPlayers );
 		$this->ResetTimer();
 		$this->Hp = $this->MaxHp;
 		$this->Dps = self::GetDpsAtLevel( $Type, $Level );
@@ -43,36 +43,14 @@ class Enemy
 		Server::GetLogger()->debug( "Created new enemy [Id=$this->Id, Type=$this->Type, Hp=$this->Hp, MaxHp=$this->MaxHp, Dps=$this->Dps, Timer=$this->Timer, Gold=$this->Gold]" );
 	}
 
-	private static function GetHpAtLevel( $Type, $Level )
+	private static function GetHpAtLevel( $Type, $Level, $RoomSize )
 	{
 		$TuningData = self::GetTuningData( self::GetEnemyTypeName( $Type ) );
-		switch( $Type )
-		{
-			case Enums\EEnemyType::Mob:
-				$MinHp = self::GetValueAtLevel( 'hp', $Type, $Level, false ); # TODO: floor it?
-
-				# @Contex: This is really dirty, but it works...
-				# TODO: move values to tuningData.json?
-				$MaxHp = $MinHp * ( 2.83 + 0.85 );
-				$MultiplierVarianceMin = 0.195;
-				$MultiplierVarianceMax = 1;
-				$MultiplierVariance = ( $MultiplierVarianceMin + ( lcg_value() * ( abs( $MultiplierVarianceMax - $MultiplierVarianceMin ) ) ) );
-
-				return floor( $MaxHp * $MultiplierVariance );
-			case Enums\EEnemyType::MiniBoss:
-			case Enums\EEnemyType::TreasureMob:
-				$MinHp = self::GetValueAtLevel( 'hp', $Type, $Level, false ); # TODO: floor it?
-
-				# @Contex: This is really dirty, but it works...
-				# TODO: move values to tuningData.json?
-				$MidHip = $MinHp * 1.84; # TODO: move to tuningData.json?
-				$MaxHp = $MinHp * 2.83; # TODO: move to tuningData.json?
-				$HpArray = [ $MinHp, $MidHip, $MaxHp ];
-
-				return floor( $HpArray[ mt_rand( 0, 2 ) ] );
-			default:
-				return self::GetValueAtLevel( 'hp', $Type, $Level );
-		}
+		return ceil( Util::PredictValue(
+			$TuningData[ 'hp_exponent' ],
+			$TuningData[ 'hp' ],
+			$Level * ( $RoomSize / 1500 ) // TODO: Move constant somewhere else
+		) );
 	}
 
 	private static function GetDpsAtLevel( $Type, $Level )
