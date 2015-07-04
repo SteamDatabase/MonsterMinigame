@@ -163,7 +163,7 @@ class AbilityItem
 	 *
 	 * @return bool Returns true if ability has been successfully used, false otherwise.
 	 */
-	public static function HandleAbility( $Game, $Lane, $Player, &$Ability, $Deactivate = false )
+	public static function HandleAbility( $Game, $Lane, $Player, $Ability, $Deactivate = false )
 	{
 		$AbilityMultiplier = self::GetMultiplier( $Ability->GetAbility() );
 
@@ -279,14 +279,13 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
-					$Player->AddActiveAbility( $Ability );
 
-					$Ability = new ActiveAbility(
+					$Lane->AddActivePlayerAbility( new ActiveAbility(
 						$Game->Time,
 						Enums\EAbility::Support_IncreaseCritPercentage,
 						$Player->PlayerName,
 						$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-					);
+					) );
 				}
 				break;
 			case Enums\EAbility::Item_IncreaseHPPermanently:
@@ -294,14 +293,13 @@ class AbilityItem
 				{
 					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
-					$Player->AddActiveAbility( $Ability );
 
-					$Ability = new ActiveAbility(
+					$Lane->AddActivePlayerAbility( new ActiveAbility(
 						$Game->Time,
 						Enums\EAbility::Support_Heal,
 						$Player->PlayerName,
 						$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-					);
+					) );
 				}
 				break;
 			case Enums\EAbility::Item_GoldForDamage:
@@ -326,14 +324,13 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->IncreaseGold( $AbilityMultiplier * pow( 10, max( 0, floor( log10( $Game->GetLevel() ) ) - 1 ) ) );
-					$Player->AddActiveAbility( $Ability );
 
-					$Ability = new ActiveAbility(
+					$Lane->AddActivePlayerAbility( new ActiveAbility(
 						$Game->Time,
 						Enums\EAbility::Support_IncreaseGoldDropped,
 						$Player->PlayerName,
 						$Lane->HasActivePlayerAbilityDecreaseCooldowns()
-					);
+					) );
 				}
 				break;
 			case Enums\EAbility::Item_GiveRandomItem:

@@ -564,7 +564,13 @@ class Player
 					$Lane->AddActivePlayerAbility( $ActiveAbility );
 				}
 			}
-			else
+			else if(
+				$Ability !== Enums\EAbility::Item_IncreaseCritPercentagePermanently
+				&&
+				$Ability !== Enums\EAbility::Item_IncreaseHPPermanently
+				&&
+				$Ability !== Enums\EAbility::Item_GiveGold
+			)
 			{
 				$Lane->AddActivePlayerAbility( $ActiveAbility );
 			}
