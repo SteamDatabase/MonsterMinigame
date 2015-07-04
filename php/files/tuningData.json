@@ -108,6 +108,11 @@
             "type": 0,
             "cost": 0
         },
+        "30": {
+            "name": "Chat Message",
+            "type": 0,
+            "cost": 0
+        },
         "5": {
             "name": "Morale Booster",
             "type": 1,

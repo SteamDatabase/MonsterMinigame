@@ -97,13 +97,15 @@ class Player
 					$this->IsDead()
 					&&
 					$RequestedAbility[ 'ability' ] !== Enums\EAbility::Respawn
+					&&
+					$RequestedAbility[ 'ability' ] !== Enums\EAbility::ChatMessage
 				)
 			) {
 				// Rate limit
 				continue;
 			}
 
-			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = $Game->Time;
+			$this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] = $Game->Time + 1;
 
 			$AllowedAbilityTypes =
 			[
@@ -123,8 +125,30 @@ class Player
 
 			switch( $RequestedAbility[ 'ability' ] )
 			{
+				case Enums\EAbility::ChatMessage:
+					if( !isset( $RequestedAbility[ 'message' ] ) )
+					{
+						break;
+					}
+
+					$Message = mb_substr( $RequestedAbility[ 'message' ], 0, 500 );
+
+					$Game->AddChatEntry( 'chat', $this->PlayerName, $Message );
+
+					// TODO: This is for debugging only, remove later
+					if( function_exists( 'SendToIRC' ) )
+					{
+						SendToIRC( "[GAME] \x0312" . $this->PlayerName . "\x0F: " . $Message );
+					}
+
+					break;
 				case Enums\EAbility::Attack:
-					$NumClicks = (int) $RequestedAbility[ 'num_clicks' ];
+					if( !isset( $RequestedAbility[ 'num_clicks' ] ) )
+					{
+						break;
+					}
+
+					$NumClicks = (int)$RequestedAbility[ 'num_clicks' ];
 
 					if( $NumClicks > self::MAX_CLICKS )
 					{
@@ -184,6 +208,11 @@ class Player
 
 					break;
 				case Enums\EAbility::ChangeLane:
+					if( !isset( $RequestedAbility[ 'new_lane' ] ) )
+					{
+						break;
+					}
+
 					$NewLane = (int)$RequestedAbility[ 'new_lane' ];
 
 					if( $NewLane < 0 || $NewLane > 2 )
@@ -208,6 +237,11 @@ class Player
 
 					break;
 				case Enums\EAbility::ChangeTarget:
+					if( !isset( $RequestedAbility[ 'new_target' ] ) )
+					{
+						break;
+					}
+
 					$NewTarget = (int)$RequestedAbility[ 'new_target' ];
 
 					if( $NewTarget < 0 || $NewTarget > 3 )
@@ -217,9 +251,6 @@ class Player
 
 					$this->SetTarget( $NewTarget );
 
-					break;
-				default:
-					// Handle unknown ability?
 					break;
 			}
 		}

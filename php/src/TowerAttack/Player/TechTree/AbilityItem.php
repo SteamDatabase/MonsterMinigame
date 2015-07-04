@@ -353,7 +353,6 @@ class AbilityItem
 					$Game->WormholeCount++;
 				}
 				break;
-			break;
 		}
 
 		return true;

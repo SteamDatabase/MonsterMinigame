@@ -58,6 +58,7 @@ class Server
 
 			switch ( $Data[ 'method' ] )
 			{
+				// TODO: Remove this in favor of UseAbilities
 				case 'ChatMessage':
 					$Player = $this->Game->GetPlayer( $Data[ 'steamid' ] );
 
@@ -68,13 +69,7 @@ class Server
 
 					$Response = true;
 
-					$this->Game->AddChatEntry( 'chat', $Player->PlayerName, $Data[ 'message' ] ); // Message is truncated to 500 characters on API level
-
-					// TODO: This is for debugging only, remove later
-					if( function_exists( 'SendToIRC' ) )
-					{
-						SendToIRC( "[GAME] \x0312" . $Player->PlayerName . "\x0F said: " . $Data[ 'message' ] );
-					}
+					$Player->HandleAbilityUsage( $this->Game, [ [ 'ability' => Enums\EAbility::ChatMessage, 'message' => mb_substr( $Data[ 'message' ], 0, 500 ) ] ] );
 
 					break;
 				case 'GetGameData':

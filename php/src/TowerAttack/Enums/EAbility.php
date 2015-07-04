@@ -8,6 +8,7 @@ class EAbility
 	const ChangeLane = 2;
 	const Respawn = 3;
 	const ChangeTarget = 4;
+	const ChatMessage = 30;
 
 	// support abilities
 	const Support_IncreaseDamage = 5;
