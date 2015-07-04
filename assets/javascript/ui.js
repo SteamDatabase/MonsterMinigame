@@ -671,7 +671,7 @@ CUI.prototype.UpdateLanes = function()
 	{
 		for( var i=0; i < 10; i++ )
 		{
-			var nHeight = 100 * ( instance.m_rgGameData.lanes[ instance.m_rgPlayerData.current_lane ].player_hp_buckets[i] / instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].player_hpbuckets_max );
+			var nHeight = 100 * ( instance.m_rgGameData.lanes[ instance.m_rgPlayerData.current_lane ].player_hp_buckets[i] / instance.m_rgLaneData[ instance.m_rgPlayerData.current_lane ].players );
 			nHeight = nHeight.toFixed() + '%';
 
 			if( this.m_rgElementCache['teamhealth_' + i][0].style.height !== nHeight )
