@@ -279,6 +279,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->GetTechTree()->IncreaseCritPercentage( $AbilityMultiplier );
+					$Player->AddActiveAbility( $Ability );
 
 					$Ability = new ActiveAbility(
 						$Game->Time,
@@ -293,6 +294,7 @@ class AbilityItem
 				{
 					$Player->GetTechTree()->IncreaseHpMultiplier( $AbilityMultiplier );
 					$Player->GetTechTree()->RecalulateUpgrades();
+					$Player->AddActiveAbility( $Ability );
 
 					$Ability = new ActiveAbility(
 						$Game->Time,
@@ -324,6 +326,7 @@ class AbilityItem
 				if( !$Deactivate )
 				{
 					$Player->IncreaseGold( $AbilityMultiplier * pow( 10, max( 0, floor( log10( $Game->GetLevel() ) ) - 1 ) ) );
+					$Player->AddActiveAbility( $Ability );
 
 					$Ability = new ActiveAbility(
 						$Game->Time,
