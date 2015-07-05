@@ -40,7 +40,7 @@ data-ga="<?php echo $Config->Google->Analytics; ?>">
 
 	<style>.disclaimer { text-align: center; padding-top: 17px; box-sizing: border-box; } .disclaimer p { margin: 0; color: #DDD; } .github { position: fixed; right: 10px; top: 10px; z-index: 1000; padding: 10px; background-color: rgba(33, 150, 243, 0.5); } .github:hover { background-color: #2196F3; }</style>
 	<div class="game_options disclaimer">
-		<p>This minigame is using assets by Valve without permission <i>(we did reach out)</i>, play at your own risk. Backend server has been mostly written by SteamDB top men, including <a href="https://github.com/Contex">Contex</a> and <a href="https://xpaw.me">xPaw</a>.</p>
+		<p>This minigame is using assets by Valve without permission <i>(we did reach out)</i>, play at your own risk. Backend server has been mostly written by SteamDB top men, including <a href="https://contex.me">Contex</a> and <a href="https://xpaw.me">xPaw</a>.</p>
 		<p>Server might or might not be open-sourced in the future. We don't know if we will make this game public due to asset reuse.</p>
 	</div>
 
