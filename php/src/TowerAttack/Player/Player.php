@@ -86,6 +86,17 @@ class Player
 	{
 		foreach( $RequestedAbilities as $RequestedAbility )
 		{
+			$RequestedAbility[ 'ability' ] = (int)$RequestedAbility[ 'ability' ];
+			
+			if( $RequestedAbility[ 'ability' ] <= Enums\EAbility::Invalid
+			||  $RequestedAbility[ 'ability' ] >= Enums\EAbility::MaxAbilities
+			{
+				Server::GetLogger()->debug( $this->AccountId . ' tried to use an invalid ability: ' . $RequestedAbility[ 'ability' ] );
+
+				// Ignore invalid abilities
+				continue;
+			}
+
 			if(
 				(
 					isset( $this->AbilityLastUsed[ $RequestedAbility[ 'ability' ] ] )
@@ -95,6 +106,8 @@ class Player
 				||
 				(
 					$this->IsDead()
+					&&
+					$RequestedAbility[ 'ability' ] !== Enums\EAbility::ChangeLane
 					&&
 					$RequestedAbility[ 'ability' ] !== Enums\EAbility::Respawn
 					&&

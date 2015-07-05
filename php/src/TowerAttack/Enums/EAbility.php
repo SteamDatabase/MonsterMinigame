@@ -8,7 +8,6 @@ class EAbility
 	const ChangeLane = 2;
 	const Respawn = 3;
 	const ChangeTarget = 4;
-	const ChatMessage = 30;
 
 	// support abilities
 	const Support_IncreaseDamage = 5;
@@ -41,7 +40,9 @@ class EAbility
 	const Item_Start = 13;
 	const Item_End = 27;
 
-	const MaxAbilities = 28;
+	const ChatMessage = 28;
+
+	const MaxAbilities = 29;
 
 	public static function GetList()
 	{
