@@ -18,7 +18,8 @@ class Server
 		self::$Logger = new Logger;
 		$this->Socket = socket_create( AF_INET, SOCK_STREAM, SOL_TCP );
 
-		socket_bind( $this->Socket, 'localhost', $Port);
+		socket_set_option( $this->Socket, SOL_SOCKET, SO_REUSEADDR, 1 );
+		socket_bind( $this->Socket, 'localhost', $Port );
 		socket_listen( $this->Socket, 5 );
 
 		self::GetLogger()->info( 'Server is listening on port ' . $Port );
