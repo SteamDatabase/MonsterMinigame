@@ -1,4 +1,6 @@
-## Blinking Nipples
+<h2 align="center">Blinking Nipples</h2>
+
+<p align="center"><img src="/assets/promo_bg/10_space_boss.gif"></p>
 
 This is a fully fledged clone of Valve's Summer Sale 2015 Minigame also known as "Tower Attack".
 
