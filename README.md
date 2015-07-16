@@ -8,6 +8,6 @@ Media appearances: [Kotaku](http://steamed.kotaku.com/the-steam-summer-sale-game
 
 All PHP files in this repository are licensed under GPLv3, for more information see [LICENSE](LICENSE) file.
 
-Everything under `assets` folder is © 2015 Valve Corporation. Some CSS and JS has been modified by us however.
+Everything under `assets` folder is © 2015 Valve Corporation.
 
-Some parts of Valve's javascript code have been modified to fix bugs and add new features.
+Some parts of Valve's javascript and CSS code have been modified to fix bugs and add new features.
