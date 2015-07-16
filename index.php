@@ -32,7 +32,7 @@ data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>"
 data-gameid="1"
 data-assets="<?php echo $CDN; ?>"
 data-ga="<?php echo $Config->Google->Analytics; ?>">
-	<a href="https://github.com/SteamDatabase/MonsterMinigame/issues" target="_blank" class="github"><img src="<?php echo $CDN; ?>/assets/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> Report bugs on GitHub</a>
+	<a href="https://github.com/SteamDatabase/MonsterMinigame" target="_blank" class="github"><img src="<?php echo $CDN; ?>/assets/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> View on GitHub</a>
 
 	<div class="breadcrumbs">
 		Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
@@ -40,8 +40,8 @@ data-ga="<?php echo $Config->Google->Analytics; ?>">
 
 	<style>.disclaimer { text-align: center; padding-top: 17px; box-sizing: border-box; } .disclaimer p { margin: 0; color: #DDD; } .github { position: fixed; right: 10px; top: 10px; z-index: 1000; padding: 10px; background-color: rgba(33, 150, 243, 0.5); } .github:hover { background-color: #2196F3; }</style>
 	<div class="game_options disclaimer">
-		<p>This minigame is using assets by Valve without permission <i>(we did reach out)</i>, play at your own risk. Backend server has been mostly written by SteamDB top men, including <a href="https://contex.me">Contex</a> and <a href="https://xpaw.me">xPaw</a>.</p>
-		<p>Server might or might not be open-sourced in the future. We don't know if we will make this game public due to asset reuse.</p>
+		<p>This minigame is using assets by Valve without permission <i>(we did reach out)</i>, play at your own risk.</p>
+		<p>Backend server has been written by <a href="https://contex.me">Contex</a> and <a href="https://xpaw.me">xPaw</a>.</p>
 	</div>
 
 	<div id="gamecontainer">
