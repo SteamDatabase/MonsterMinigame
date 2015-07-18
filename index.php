@@ -1,404 +1,385 @@
 <?php
 	session_start();
 
-	if( !isset( $_SESSION[ 'SteamID' ] ) )
-	{
-		header( 'Location: /login.php' );
-		die;
-	}
-
 	$Config = json_decode( file_get_contents( __DIR__ . '/php/files/config.json' ) );
 	$CDN = $Config->Assets->Host;
-
-	header( 'Content-Security-Policy: ' .
-		'default-src \'none\'; ' .
-		'connect-src \'self\' ' . $CDN . '; ' .
-		'img-src \'self\' data: ' . $CDN . ' https://steamcdn-a.akamaihd.net https://www.google-analytics.com; ' .
-		'script-src ' . ( empty( $CDN ) ? "'self'" : $CDN ) . ' https://www.google-analytics.com; ' .
-		'style-src \'unsafe-inline\' ' . ( empty( $CDN ) ? "'self'" : $CDN ) . '; ' .
-		'font-src ' . ( empty( $CDN ) ? "'self'" : $CDN ) . '; ' .
-		'media-src ' . ( empty( $CDN ) ? "'self'" : $CDN ) . '; '
-	);
+	
+	header( 'Content-Security-Policy: script-src \'none\';' );
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Tower Attack</title>
 	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
 	<link href="<?php echo $CDN; ?>/assets/css/towerattack.css?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/css/towerattack.css' ); ?>" rel="stylesheet" type="text/css">
+	<link href="<?php echo $CDN; ?>/assets/css/towerattack_listgames.css?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/css/towerattack_listgames.css' ); ?>" rel="stylesheet" type="text/css">
 </head>
-<body
-data-steamid="<?php echo $_SESSION[ 'SteamID' ]; ?>"
-data-gameid="1"
-data-assets="<?php echo $CDN; ?>"
-data-ga="<?php echo $Config->Google->Analytics; ?>">
-	<a href="https://github.com/SteamDatabase/MonsterMinigame" target="_blank" class="github"><img src="<?php echo $CDN; ?>/assets/emoticons/rfacepalm.png" style="vertical-align:text-bottom;image-rendering:pixelated"> View on GitHub</a>
+<body class="flat_page">
+	<div class="page_background" style="background-image: url('/assets/promo_bg/08_volcano_page_background.jpg');">
 
-	<div class="breadcrumbs">
-		Monster Game &gt; <span id="game_version" style="color:#9AC0FF"></span>
-	</div>
-
-	<style>.disclaimer { text-align: center; padding-top: 17px; box-sizing: border-box; } .disclaimer p { margin: 0; color: #DDD; } .github { position: fixed; right: 10px; top: 10px; z-index: 1000; padding: 10px; background-color: rgba(33, 150, 243, 0.5); } .github:hover { background-color: #2196F3; }</style>
-	<div class="game_options disclaimer">
-		<p>This minigame is using assets by Valve without permission <i>(we did reach out)</i>, play at your own risk.</p>
-		<p>Backend server has been written by <a href="https://contex.me">Contex</a> and <a href="https://xpaw.me">xPaw</a>.</p>
-	</div>
-
-	<div id="gamecontainer">
-		<div id="uicontainer">
-			<div class="tv_ui"></div>
-			<div class="scanlines"></div>
-
-			<div id="col_left">
-				<div class="gold_count">
-					<img src="<?php echo $CDN; ?>/assets/emoticons/coinz.png" alt="Gold">
-					<div id="info_gold"></div>
-				</div>
-
-				<div id="upgrades">
-					<div id="upgradescontainer">
-						<div>
-							<span class="title_upgrates">Upgrades</span>
-							<div class="container_upgrades"></div>
-							<span class="title_upgrates abilities">Abilities</span>
-							<div class="container_purchase"></div>
-						</div>
-					</div><div id="upgradesscroll"><div></div></div>
-				</div>
-
-				<div id="elements">
-					<span class="title_elements">Elemental Damage</span>
-					<div class="element_cost">Next Level Cost:<span class="cost" id="element_cost">00,000</span></div>
-					<div class="upgrades">
-						<div class="element_upgrade" id="upgr_3">
-							<img src="<?php echo $CDN; ?>/assets/emoticons/shelterwildfire.png" alt="Fire">
-							<span class="level">0</span>
-							<br>
-							<a class="link element_upgrade_btn" data-type="3" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
-						</div>
-						<div class="element_upgrade"  id="upgr_4">
-							<img src="<?php echo $CDN; ?>/assets/emoticons/waterrune.png" alt="Water">
-							<span class="level">0</span>
-							<br>
-							<a class="link element_upgrade_btn" data-type="4" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
-						</div>
-						<div class="element_upgrade" id="upgr_6">
-							<img src="<?php echo $CDN; ?>/assets/emoticons/FateTree.png" alt="Earth">
-							<span class="level">0</span>
-							<br>
-							<a class="link element_upgrade_btn" data-type="6" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
-						</div>
-						<div class="element_upgrade" id="upgr_5">
-							<img src="<?php echo $CDN; ?>/assets/emoticons/Wisp.png" alt="Air">
-							<span class="level">0</span>
-							<br>
-							<a class="link element_upgrade_btn" data-type="5" href="#" data-tooltip-func="fnTooltipUpgradeElementDesc">&nbsp;</a>
-						</div>
+		<div class="section_overview">
+			<div class="section_monster">
+				<div class="monster_ctn">
+					<img class="promo_creep" src="/assets/promo_bg/08_volcano_creep.gif">
+					<img class="promo_creep_shadow" src="/assets/promo_bg/shadow_small.png">
+					<div class="boss_ctn">
+						<img class="promo_boss" src="/assets/promo_bg/08_volcano_boss.gif">
 					</div>
+					<img class="promo_boss_shadow" src="/assets/promo_bg/shadow_large.png">
 				</div>
 			</div>
 
-			<div id="col_right">
-				<div class="lanes desert">
-					<a id="lane0" class="lane active" href="#" data-lane="0">
-						<span class="label">Lane 1</span>
-						<div class="bar"><div></div></div>
-						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
-						--><div class="lane_enemy enemy_icon_2" id="lane0_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></div><!--
-						--><div class="lane_enemy enemy_icon_4" id="lane0_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></div>
-					</a><a id="lane1" class="lane" href="#" data-lane="1">
-						<span class="label">Lane 2</span>
-						<div class="bar"><div></div></div>
-						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
-						--><div class="lane_enemy enemy_icon_2" id="lane1_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></div><!--
-						--><div class="lane_enemy enemy_icon_4" id="lane1_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></div>
-					</a><a id="lane2" class="lane" href="#" data-lane="2">
-						<span class="label">Lane 3</span>
-						<div class="bar"><div></div></div>
-						<div class="lane_element" data-tooltip-func="fnTooltipLaneElementDesc"><span></span></div><!--
-						--><div class="lane_enemy enemy_icon_2" id="lane2_enemy_icon_2" data-tooltip-content="There is a Boss Monster in this lane!" style="display: none;"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></div><!--
-						--><div class="lane_enemy enemy_icon_4" id="lane2_enemy_icon_4" data-tooltip-content="There is a Treasure Monster in this lane!<br><br>Treasure Monsters drop lots of gold, but disappear very quickly!" style="display: none;"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></div>
-					</a>
+
+			<div class="section_play">
+				<div class="logo">
+					<img src="/assets/images/logo_main_english.png">
 				</div>
 
-				<div class="teamdpscontainer">
-					<span class="title_teamdps">Team DPS</span>
-					<div id="teamdps"></div>
-				</div><div class="teamhealthcontainer">
-					<span class="title_teamhealth">Team Health</span>
-					<div><div class="teamhealth" id="teamhealth_0"><div></div></div><div class="teamhealth" id="teamhealth_1"><div></div></div><div class="teamhealth" id="teamhealth_2"><div></div></div><div class="teamhealth" id="teamhealth_3"><div></div></div><div class="teamhealth" id="teamhealth_4"><div></div></div><div class="teamhealth" id="teamhealth_5"><div></div></div><div class="teamhealth" id="teamhealth_6"><div></div></div><div class="teamhealth" id="teamhealth_7"><div></div></div><div class="teamhealth" id="teamhealth_8"><div></div></div><div class="teamhealth" id="teamhealth_9"><div></div></div>					</div>
-				</div>
 
-				<div id="activeinlanecontainer">
-					<span class="title_active">Abilities active in lane</span>
-				</div>
-
-				<div id="activitylog">
-					<table class="player_activity">
-						<tr>
-							<td title="Players in current lane">Lane</td>
-							<td title="Active players in game">Active</td>
-							<td title="Total players in game">Total</td>
-						</tr>
-						<tr>
-							<td id="players_in_lane">0</td>
-							<td id="active_players">0</td>
-							<td id="total_players">0</td>
-						</tr>
-					</table>
-					<div id="activitycontainer"><div></div></div><div id="activityscroll"><div></div></div>
-
-					<form id="chatform" class="chatform">
-						<textarea name="message" maxlength="500" placeholder="Your chat message"></textarea>
-						<button type="submit" name="button">Send</button>
-					</form>
-				</div>
-			</div>
-
-			<div id="row_top">
-				<div id="level_container">
-					<div class="game_time">
-						Game Time<br>
-						<span id="game_time"></span>
-					</div>
-
-					<div class="level_container2">
-						Level <div id="level"></div>
-					</div>
-
-					<div class="level_time">
-						Level Time<br>
-						<span id="level_time"></span>
-					</div>
-				</div>
-			</div>
-
-			<div id="waiting_for_players_dialog" style="display: none">
-				<div class="waiting_for_players_ctn">
-					<div class="title_waiting">Waiting for more players to join the game</div>
-					<div class="num_players_waiting_info">
-						<div class="num_players_waiting_bar">
-							<div></div>
-						</div>
-						<span id="num_players_waiting"></span> / <span id="num_players_minimum"></span>
-					</div>
-				</div>
-			</div>
-
-			<div id="game_over_dialog" style="display: none">
-				<div class="player_dead_ctn">
-					<div class="title_dead">Game Over</div>
-					<div class="title_dead_break">This game is over.</div>
-				</div>
-			</div>
-
-			<div id="player_dead_dialog" style="display: none">
-				<div class="player_dead_ctn">
-					<div class="title_dead">You are dead</div>
-					<div class="title_dead_sub">Don't worry, you'll still be in this game helping to take down the monsters and earning in-game gold and items.</div>
-					<div class="cannot_respawn">
-						Can respawn in: 						<span class="timeleft"></span>
-					</div>
-					<span class="btn_respawn" id="player_respawn_btn">
-						<span>Respawn Now</span>
-					</span>
-					<div class="automatically_respawn">
-						You will respawn<br>automatically in: 						<span class="timeleft"></span>
-					</div>
-					<div style="clear: left"></div>
-				</div>
-			</div>
-
-			<div id="spend_badge_points_dialog" style="display: none">
-				<div class="spend_badge_ponts_border">
-					<div class="spend_badge_ponts_ctn">
-						<div class="welcome_back">Welcome Back!</div>
-						<div class="desc">You have badge points to spend. You can use badge points to purchase one-time use special items below.</div>
-						<div class="badge_points"><span id="num_badge_points"></span>&nbsp;Badge Points available</div>
-						<div id="badge_items"></div>
-					</div>
-				</div>
-			</div>
-
-			<div id="loot_notification" style="display: none">
-				<span>Loot dropped: </span><br><span id="loot_name"></span>
-			</div>
-
-			<div class="player_ctn">
-				<div class="player">
-					<div id="avatar_container">
-						<img src="<?php echo $_SESSION[ 'Avatar' ]; ?>" alt="You!">
-					</div>
-					<div id="info_block">
-						<div id="info_hp"></div>
-						<div class="bar" id="health_bar">
-							<div></div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div id="row_bottom" style="width: 960px;">
-				<div id="abilities">
-					<div id="abilitiescontainer"></div>
-				</div>
-			</div>
-
-			<div id="newplayer">
-				Click monsters to attack
-			</div>
-
-			<div id="nextlevel">
-				Level <span class="level"></span>!
-			</div>
-		</div>
-	</div>
-
-	<div class="game_options">
-		<span class="toggle_sfx_btn" id="toggle_sfx_btn">
-			<span>Toggle SFX</span>
-		</span>
-
-		<span class="toggle_music_btn" id="toggle_music_btn">
-			<span>Toggle Music</span>
-		</span>
-
-		<a href="#" class="leave_game_btn">
-			<span>Close<br>Game</span>
-		</a>
-
-		<div class="leave_game_helper" id="leave_game_helper">You can safely close the game or leave this screen at any time—you will continue collecting gold and damaging monsters even while away from your computer. Check back occasionally to see how you're doing and use in-game gold to purchase upgrades.</div>
-	</div>
-
-	<div style="width: 700px;margin: 0 auto;">
-		<table id="stats" style="margin: 0 auto;float: left;width: 350px;background-color: #222;padding: 6px 20px;text-align: right;"></table>
-		<table id="player_stats" style="margin: 0 auto;float: left;width: 350px;background-color: #222;padding: 6px 20px;text-align: right;"></table>	
-	</div>
-
-	<div hidden>
-		<!-- Templates -->
-
-		<div id="purchase_ability_item_template" class="purchase_ability_item ta_tip" data-tooltip-func="fnTooltipAbilityDesc">
-			<img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png">
-			<span class="nameblock">
-				<span class="name"></span>
-				<span class="cost"></span>
-			</span>
-			<span class="purchase_options">
-				<div class="sub_item ten">
-					x10
-				</div>
-				<div class="sub_item hundred">
-					x100
-				</div>
-			</span>
-		</div>
-
-		<div id="upgradetemplate">
-			<div class="upgrade">
-				<div class="info">
-					<div class="name"></div>
-					<div class="level"></div>
-					<div class="subcontainer">
-
-					</div>
-				</div>
-
-				<a class="link" href="#" data-tooltip-func="fnTooltipUpgradeDesc">
-					<span class="upgrade_text">Upgrade</span>
-					<div class="cost"></div>
-				</a>
-			</div>
-		</div>
-
-		<div id="purchasetemplate">
-			<div class="upgrade purchase">
-				<div class="info">
+				<!-- Play Button -->
+				<div class="current_game">
 					<div>
-						<img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png" class="icon">
-						<span class="name"></span>
+<?php
+	if( isset( $_SESSION[ 'SteamID' ] ) ):
+?>
+						<a href="/play/" class="main_btn">
+							<span>Resume Your Game</span>
+						</a>
+<?php
+	else:
+?>
+						<a href="/login.php" class="main_btn">
+							<span>Login with Steam</span>
+						</a>
+<?php
+	endif;
+?>
 					</div>
-					<div class="level"></div>
-					<div class="subcontainer">
+				</div>
 
+				<!-- Player count -->
+				<div class="player_count">
+					? people playing
+				</div>
+
+			</div>
+			<br clear="both">
+
+			<div class="section_status">
+				<div class="section_yours" style="height: 122px;">
+					<div class="your_stats" style="padding-top: 11px;">
+						<div class="title">Your stats</div>
+						<div class="stat_ctn" style="height:70px">
+							<div class="stat">
+								Highest Level
+								<br>
+								<span id="player_stat_highest_level">?</span>
+							</div>
+							<div class="stat">
+								Most Gold
+								<br>
+								<span id="player_stat_most_gold">?</span>
+							</div>
+							<div class="stat">
+								Most Damage
+								<br>
+								<span id="player_stat_most_damage">?</span>
+							</div>
+							<div class="stat">
+								Wormholes Used
+								<br>
+								<span id="player_stat_wormholes_used">?</span>
+							</div>
+						</div>
 					</div>
 				</div>
+				<div class="section_today" style="height: 95px;">
+					<div class="title">Today's Game</div>
 
-				<a class="link" href="#" data-tooltip-func="fnTooltipUpgradeDesc">
-					<div class="cost"></div>
-				</a>
-			</div>
-		</div>
+					<div class="stat">
+						Your Level
+						<br>
+						<span id="player_current_level">?</span>
+					</div>
+					<div class="stat two">
+						Your Gold
+						<br>
+						<span id="player_gold">?</span>
+					</div>
+					<br clear="both">
 
-		<div id="abilitytemplate" class="abilitytemplate">
-			<a class="link ta_tip" href="#" data-tooltip-func="fnTooltipAbilityDesc">
-				<img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png">
-				<div class="timeleft"></div>
-			</a>
-		</div>
-
-		<div id="abilityitemtemplate" class="abilitytemplate">
-			<a class="link ta_tip" href="#" data-tooltip-func="fnTooltipAbilityDesc">
-				<img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png">
-				<div class="timeleft abilityitem"></div>
-				<div class="abilityitemquantity"></div>
-			</a>
-		</div>
-
-		<div id="activitytemplate" class="activitytemplate" data-tooltip-func="fnTooltipAbilityDesc">
-			<span class="icon"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></span>
-			<span class="ability_text">
-				<span class="name"></span> used <span class="ability"></span>
-			</span>
-		</div>
-
-		<div id="chattemplate" class="activitytemplate chattemplate">
-			<span class="icon"><img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png"></span>
-			<span class="ability_text">
-				<span class="name"></span> <span class="action">said:</span> <div class="ability"></div>
-			</span>
-		</div>
-
-		<div id="servertemplate" class="activitytemplate chattemplate">
-			<span class="icon"><img src="<?php echo $CDN; ?>/assets/emoticons/happy_creep.png"></span>
-			<span class="ability_text">
-				<span class="name">Game Notice</span>
-				<div class="ability"></div>
-			</span>
-		</div>
-
-		<div id="activeinlanetemplate" class="activeinlanetemplate" data-tooltip-func="fnTooltipAbilityDesc">
-			<div class="icon">
-				<img src="<?php echo $CDN; ?>/assets/images/ability_template_ph.png">
-				<div class="quantity"></div>
-			</div>
-		</div>
-
-		<div id="healthbartemplate" class="healthbartemplate">
-			<div>
-				<div class="name_wrapper">
-					<div class="name"></div>
 				</div>
-				<div class="barwrapper">
-					<div class="bar"><div></div></div>
-					<div class="text"></div>
+			</div>
+
+		</div>
+
+		<!-- HOW IT WORKS -->
+		<div class="section_how_it_works">
+			<div class="title">
+				<span>How it works</span>
+			</div>
+
+			<div class="section_hiw_left">
+				<div class="one">
+					<div class="title">A fair warning</div>
+					<p class="subtitle">This game is a clone, and is not affiliated with Valve. All assets are used without permission.</p>
 				</div>
+				<div class="two">
+					<div class="title"></div>
+					<p></p>
+				</div>
+			</div>
+
+			<div class="section_hiw_right">
+				<div class="one">
+					<div class="title">Play Monster Game</div>
+					<p>Join a game and fight the enemy monsters as you help your team level up, unlock new abilities, and achieve community milestones. Plus, get Summer Sale Trading Cards just for playing.</p>
+				</div>
+				<div class="two">
+					<div class="title">Get Upgrades And
+						<br>Help Your Team</div>
+					<p>The more damage you do to the enemies, the more your team benefits. Plus, special abilities can heal your teammates or boost everyone’s damage and help the whole team level up faster.</p>
+				</div>
+				<div class="three">
+					<div class="title"></div>
+					<p></p>
+				</div>
+			</div>
+
+		</div>
+
+
+
+		<div class="section_credits">
+			<div class="title">
+				<span>Credits &amp; Acknowledgements</span>
+			</div>
+			<p>As you can probably tell from the style of the summer game, Valve has been kind of obsessed with a few clicker games that have become popular. It started a while ago with Cookie Clicker, then with <a href="http://store.steampowered.com/app/346900/">AdVenture Capitalist</a>				and more recently with <a href="http://store.steampowered.com/app/363970/">Clicker Heroes</a>. The Monster Summer Game is a bit of an homage to those clicker games as well as old pixel artwork from
+				generations of past favorites.</p>
+			<p>With the Monster Summer Game, we're also trying to take the opportunity to highlight as many of the great titles available on Steam as we can. One of the ways we're doing this is by utilizing the Steam Emoticons provided by a few titles and using them
+				as ability icons within the Monster Summer Game. If you're interested in learning more about the games behind these icons, check out the list here.</p>
+
+			<div class="credits_left">
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/244710-%3Ashelterwildfire%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:shelterwildfire:">
+					</a>
+					<a href="http://store.steampowered.com/app/244710/" class="name">Shelter</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/330450-%3Awaterrune%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:waterrune:">
+					</a>
+					<a href="http://store.steampowered.com/app/330450/" class="name">Runes of Brennos</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/303690-%3AFateTree%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:FateTree:">
+					</a>
+					<a href="http://store.steampowered.com/app/303690/" class="name">FATE: The Cursed King</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/288060-%3AWisp%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:Wisp:">
+					</a>
+					<a href="http://store.steampowered.com/app/288060/" class="name">Whispering Willows</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/346810-%3Alike_king%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:like_king:">
+					</a>
+					<a href="http://store.steampowered.com/app/346810/" class="name">Pre-Civilization Marble Age</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/295590-%3Ahgtreasure%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:hgtreasure:">
+					</a>
+					<a href="http://store.steampowered.com/app/295590/" class="name">Hero Generations</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/263880-%3Agoldenmilkminer%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:goldenmilkminer:">
+					</a>
+					<a href="http://store.steampowered.com/app/263880/" class="name">Aqua Kitty - Milk Mine Defender</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/239220-%3Acoinz%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:coinz:">
+					</a>
+					<a href="http://store.steampowered.com/app/239220/" class="name">The Mighty Quest For Epic Loot</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/270450-%3Add_target%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:dd_target:">
+					</a>
+					<a href="http://store.steampowered.com/app/270450/" class="name">Robot Roller-Derby Disco Dodgeball</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/214360-%3Atwteamrandom%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:twteamrandom:">
+					</a>
+					<a href="http://store.steampowered.com/app/214360/" class="name">Tower Wars</a>
+				</div>
+
+			</div>
+
+			<div class="credits_middle">
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/228260-%3Ahourglass%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:hourglass:">
+					</a>
+					<a href="http://store.steampowered.com/app/228260/" class="name">Fallen Enchantress: Legendary Heroes</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/294370-%3Ahealplz%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:healplz:">
+					</a>
+					<a href="http://store.steampowered.com/app/294370/" class="name">Crowntakers</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/302650-%3Ahappycyto%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:happycyto:">
+					</a>
+					<a href="http://store.steampowered.com/app/302650/" class="name">Cyto</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/277870-%3Alucky%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:lucky:">
+					</a>
+					<a href="http://store.steampowered.com/app/277870/" class="name">Diehard Dungeon</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/243950-%3Agoldstack%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:goldstack:">
+					</a>
+					<a href="http://store.steampowered.com/app/243950/" class="name">Divinity: Dragon Commander</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/25890-%3Aabomb%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:abomb:">
+					</a>
+					<a href="http://store.steampowered.com/app/25890/" class="name">Hearts of Iron III</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/227480-%3Agmbomb%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:gmbomb:">
+					</a>
+					<a href="http://store.steampowered.com/app/227480/" class="name">God Mode</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/35700-%3Ahealthvial%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:healthvial:">
+					</a>
+					<a href="http://store.steampowered.com/app/35700/" class="name">Trine</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/253030-%3Asunportal%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:sunportal:">
+					</a>
+					<a href="http://store.steampowered.com/app/253030/" class="name">Race The Sun</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/329130-%3Awormwarp%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:wormwarp:">
+					</a>
+					<a href="http://store.steampowered.com/app/329130/" class="name">Reassembly</a>
+				</div>
+
+			</div>
+
+			<div class="credits_right">
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/252570-%3Aburned%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:burned:">
+					</a>
+					<a href="http://store.steampowered.com/app/252570/" class="name">Depths of Fear :: Knossos</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href=" http://steamcommunity.com/market/listings/753/273070-%3AAlive%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:Alive:">
+					</a>
+					<a href="http://store.steampowered.com/app/273070/" class="name">The Last Federation</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/308360-%3Alogiaim%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:logiaim:">
+					</a>
+					<a href="http://store.steampowered.com/app/308360/" class="name">LogiGun</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/243780-%3Apjkaboom%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:pjkaboom:">
+					</a>
+					<a href="http://store.steampowered.com/app/243780/" class="name">PixelJunk™ Monsters Ultimate</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/249990-%3Atheorb%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:theorb:">
+					</a>
+					<a href="http://store.steampowered.com/app/249990/" class="name">FORCED</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/209670-%3Accgold%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:ccgold:">
+					</a>
+					<a href="http://store.steampowered.com/app/209670/" class="name">Cortex Command</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/231430-%3Acritical%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:critical:">
+					</a>
+					<a href="http://store.steampowered.com/app/231430/" class="name">Company of Heroes 2</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href=" http://steamcommunity.com/market/listings/753/293880-%3AFistpump%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:Fistpump:">
+					</a>
+					<a href="http://store.steampowered.com/app/293880/" class="name">Dark Scavenger</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/338140-%3AVeneticaGoldCoin%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:VeneticaGoldCoin:">
+					</a>
+					<a href="http://store.steampowered.com/app/338140/" class="name">Venetica</a>
+				</div>
+
+				<div class="icon_credit">
+					<a href="http://steamcommunity.com/market/listings/753/258010-%3Acooldown%3A" class="icon">
+						<img src="http://cdn.steamcommunity.com//economy/emoticon/:cooldown:">
+					</a>
+					<a href="http://store.steampowered.com/app/258010" class="name">Ring Runner: Flight of the Sages</a>
+				</div>
+
 			</div>
 		</div>
 	</div>
-
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/jquery-1.11.1.min.js"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/tooltip.js"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi.min.js"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-spine.min.js"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-particles.min.js"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/thirdparty/pixi-functions.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/thirdparty/pixi-functions.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/minigame.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/minigame.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/towerattack.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/towerattack.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/running.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/running.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/network.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/network.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/ui.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/ui.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/easing.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/easing.js' ); ?>"></script>
-	<script type="text/javascript" src="<?php echo $CDN; ?>/assets/javascript/enemies.js?v=<?php echo hash_file( 'crc32', __DIR__ . '/assets/javascript/enemies.js' ); ?>"></script>
 </body>
 </html>
