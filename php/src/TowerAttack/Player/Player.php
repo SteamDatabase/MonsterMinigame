@@ -89,7 +89,7 @@ class Player
 			$RequestedAbility[ 'ability' ] = (int)$RequestedAbility[ 'ability' ];
 			
 			if( $RequestedAbility[ 'ability' ] <= Enums\EAbility::Invalid
-			||  $RequestedAbility[ 'ability' ] >= Enums\EAbility::MaxAbilities
+			||  $RequestedAbility[ 'ability' ] >= Enums\EAbility::MaxAbilities )
 			{
 				Server::GetLogger()->debug( $this->AccountId . ' tried to use an invalid ability: ' . $RequestedAbility[ 'ability' ] );
 
