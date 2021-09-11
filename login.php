@@ -24,7 +24,7 @@
 		$c = cURL_Init( );
 
 		cURL_SetOpt_Array( $c, Array(
-			CURLOPT_USERAGENT      => 'Steam Database Party OpenID Login',
+			CURLOPT_USERAGENT      => 'MonsterMinigame (https://github.com/SteamDatabase/MonsterMinigame)',
 			CURLOPT_ENCODING       => 'gzip',
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_URL            => 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?format=json&key=' . $Config->Steam->APIKey . '&steamids=' . $CommunityID,
@@ -175,7 +175,7 @@
 			$c = cURL_Init( );
 
 			cURL_SetOpt_Array( $c, Array(
-				CURLOPT_USERAGENT      => 'Steam Database Party OpenID Login',
+				CURLOPT_USERAGENT      => 'MonsterMinigame (https://github.com/SteamDatabase/MonsterMinigame)',
 				CURLOPT_RETURNTRANSFER => true,
 				CURLOPT_URL            => self::STEAM_LOGIN,
 				CURLOPT_CONNECTTIMEOUT => 6,
